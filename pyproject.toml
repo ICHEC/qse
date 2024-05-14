@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qse"
+description = "Quantum Simulation Environment"
+readme = "README.md"
+authors = [{name = "Rajarshi Tiwari", email = "rajarshi.tiwari@ichec.ie"}]
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "ase",
+    "numpy",
+    "matplotlib",
+    "pulser",
+    "myqlm"
+]
+
+[project.urls]
+homepage = "https://github.com/rajarshitiwari/qse"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ipykernel"
+]
+
+[tool.mypy]
+ignore_missing_imports = true
+no_implicit_optional = false
+enable_error_code = 'ignore-without-code'
+
+[tool.coverage.run]
+source = ['qse']
