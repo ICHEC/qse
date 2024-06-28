@@ -6,14 +6,18 @@ https://pulser.readthedocs.io/en/stable/
 """
 
 
+from abc import ABCMeta
 import os
 import os.path
 from warnings import warn
 from subprocess import Popen, PIPE
 import numpy as np
+from qse.calc import signal
 import ase.io
 from qse.calc.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
 # from ase.calculators.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
+
+
 
 import pulser
 from pulser_simulation import Simulation, SimConfig, QutipEmulator
@@ -28,9 +32,9 @@ class Pulser(Calculator):
     quantum computation and simulation.
     Online documentation: https://pulser.readthedocs.io
     White paper: Quantum 6, 629 (2022)
-    Source code repository (go here for the latest docs): https://github.com/pasqal-io/Pulser
+    Source code: https://github.com/pasqal-io/Pulser
     License: Apache 2.0
-    – see [LICENSE](https://github.com/pasqal-io/Pulser/blob/master/LICENSE) for details
+    - see [LICENSE](https://github.com/pasqal-io/Pulser/blob/master/LICENSE) for details
 
     > TODO: if there is any config related to OMP_NUM_THREADS etc, place them here.
 
@@ -80,23 +84,80 @@ class Pulser(Calculator):
         auto_write=False,
         folder='./',
         max_scf=50,
-        print_level='LOW')
+        print_level='LOW', label='q', qbits=None)
 
-    def __init__(self, restart=None, qbits=None, pulse=None, emulator=None,
-                 label='pulser-run', debug=False, **kwargs):
-        """Construct pulser-calculator object."""
-        self.pulse = pulser.Pulse.ConstantPulse(400, 5*np.pi, 0, 0) if pulse is None else pulse
+    def __init__(self, qbits=None, amplitude=None, detuning=None,
+                 device=None, emulator=None, label='pulser-run'):
+        """Construct pulser-calculator object.
+        we need qubits, amplitude, detuning, device and emulator.
+        """
+        Calculator.__init__(self, label=label, qbits=qbits)
+        self.device = pulser.devices.MockDevice if device == None else device
         self.emulator = QutipEmulator if emulator is None else emulator
-        self._debug = debug
-        self.label = None
+        self.label = label
         self.parameters = None
         self.results = None
-        self.qbits = None
+        self.channel = "rydberg_global"
+        if amplitude is not None:
+            self.amplitude = amplitude if isinstance(amplitude, signal) else signal(amplitude)
+        if detuning is not None:
+            self.detuning = detuning if isinstance(detuning, signal) else signal(detuning)
+        #
+        # assert self.amplitude.duration == self.detuning.duration
+        self.duration = self.amplitude.duration
+        self.pulse = pulser.Pulse(
+            amplitude=pulser.waveforms.InterpolatedWaveform(
+                duration=self.duration,
+                values=self.amplitude.values),
+            detuning=pulser.waveforms.InterpolatedWaveform(
+                duration=self.duration,
+                values=self.detuning.values), phase=0
+        )
+        # pulser part which defines Hamiltonian parameters done. #
+        self._register, self._sequence, self._sim = None, None, None
+        self.qbits = qbits if qbits is not None else None
+    # end of init #
 
-        Calculator.__init__(self, restart=restart, label=label, qbits=qbits, **kwargs)
+    # defines properties #
+    @property
+    def qbits(self):
+        return self._qbits
+    @Calculator.qbits.setter
+    def qbits(self, qbits, prefix='q'):
+        if qbits is None:
+            self._qbits, self._coords, self._register = None, None, None
+        else:
+            self._qbits = qbits
+            self._coords = qbits.positions[:, :2]
+            self._register = pulser.Register.from_coordinates(self.coords, prefix=prefix)
+            self.sequence = pulser.Sequence
+    #
+    
+    @property
+    def coords(self):
+        return self._coords
+    @property
+    def register(self):
+        return self._register
 
-        if restart is not None:
-            self.read(restart)
+    @property
+    def sequence(self):
+        return self._sequence
+    @sequence.setter
+    def sequence(self, sequence):
+        self._sequence = sequence(self.register, self.device)
+        self._sequence.declare_channel("ch0", self.channel)
+        self._sequence.add(self.pulse, "ch0")
+        self._sequence.measure("ground-rydberg")
+        self._sim = self.emulator.from_sequence(self._sequence)
+    
+    @property
+    def sim(self):
+        return self._sim
+
+        
+    def build_sequence(self):
+        pass
 
     def __del__(self):
         """deleting process. Empty"""
@@ -104,8 +165,8 @@ class Pulser(Calculator):
 
     def set(self, **kwargs):
         """Set parameters like set(key1=value1, key2=value2, ...)."""
-        msg = '"%s" is not a known keyword for the CP2K calculator. ' \
-              'To access all features of CP2K by means of an input ' \
+        msg = '"%s" is not a known keyword for the Pulser calculator. ' \
+              'To access all features of Pulser by means of an input ' \
               'template, consider using the "inp" keyword instead.'
         for key in kwargs:
             if key not in self.default_parameters:
@@ -135,24 +196,25 @@ class Pulser(Calculator):
         #    self.results = read_json(fd)
         pass
 
-    def calculate(self, device=None, progress=True):
+    def calculate(self, progress=True):
         """Do the calculation.
         # system_changes=all_changes -> check it's relevance.
         """
-        coords = self.qbits.positions[:,:2]
-        reg = pulser.Register.from_coordinates(coords, prefix="q")
-        dev = pulser.devices.MockDevice if device == None else device
         # we need to have/add an attribute to calc for device
-        sequence = pulser.Sequence(reg, dev)
-        sequence.declare_channel("ch0", "rydberg_global")
-        sequence.add(self.pulse, "ch0")
-        sequence.measure("ground-rydberg")
-        sim = self.emulator.from_sequence(sequence)
         # check whether all the emulator `classes` have .from_sequence method.
-        self.results = sim.run(progress_bar=progress)
-        self.sequence = sequence
-        self.sim = sim
-        self.qbits.state = self.results.get_final_state()
-        if self.parameters.auto_write:
-            self.write(self.label)
+        self.results = self.sim.run(progress_bar=progress)
+        # self.qbits.states = self.results.get_final_state()
+        self.final_state = self.results.get_final_state()
+        #if self.parameters.auto_write:
+        #    self.write(self.label)
     #
+
+    def get_correlation(self, n_samples=1000):
+        """Compute spatial correlation."""
+        sample = self.results.sample_final_state(N_samples=n_samples)
+        arr = np.zeros(self.qbits.nqbits)
+        for k, v in sample.items():
+            local = np.array(list(k), dtype=float) * 2 - 1 
+            arr += local * v
+        arr /= n_samples
+        return arr

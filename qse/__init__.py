@@ -13,4 +13,5 @@ from qse.qbits import Qbits
 from ase import cell
 from qse.visualise import draw
 from qse import utils
-from qse.calc.pulser import Pulser
+# from qse.calc.pulser import Pulser
+import numpy as np

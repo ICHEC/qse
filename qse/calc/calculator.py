@@ -32,15 +32,12 @@ class CalculatorSetupError(CalculatorError):
 
 class EnvironmentError(CalculatorSetupError):
     """Raised if calculator is not properly set up with ASE.
-
     May be missing an executable or environment variables."""
 
 
 class InputError(CalculatorSetupError):
     """Raised if inputs given to the calculator were incorrect.
-
     Bad input keywords or values, or missing pseudopotentials.
-
     This may be raised before or during calculation, depending on
     when the problem is detected."""
 
@@ -118,16 +115,13 @@ all_properties = ['energy', 'energies'] # Rajarshi: this needs to populate accor
 all_changes = ['labels', 'positions', 'states', 'cell', 'pbc']
 
 # Recognized names of calculators sorted alphabetically:
-names = ['myqlm', 'pulser', 'qiskit', 'aims', 'amber', 'asap', 'eam', 'emt', 'lj', 'vasp']
+names = ['myqlm', 'pulser', 'qiskit']
 
 
 special = {
     'myqlm': 'MYQLM',
     'pulser': 'Pulser',
     'qiskit': 'Qiskit',
-    'eam': 'EAM',
-    'emt': 'EMT',
-    'lj': 'LennardJones',
     }
 
 
@@ -144,19 +138,15 @@ def register_calculator_class(name, cls):
 
 def get_calculator_class(name):
     """Return calculator class."""
-    if name == 'asap':
-        from asap3 import EMT as Calculator
-    elif name == 'vasp2':
-        from ase.calculators.vasp import Vasp2 as Calculator
-    elif name == 'ace':
-        from ase.calculators.acemolecule import ACE as Calculator
-    elif name == 'Psi4':
-        from ase.calculators.psi4 import Psi4 as Calculator
+    if name == 'pulser':
+        from qse.calc.pulser import Pulser as Calculator
+    elif name == 'myqlm':
+        from qse.calc.myqlm import MyQLM as Calculator
     elif name in external_calculators:
         Calculator = external_calculators[name]
     else:
         classname = special.get(name, name.title())
-        module = __import__('ase.calculators.' + name, {}, None, [classname])
+        module = __import__('qse.calculators.' + name, {}, None, [classname])
         Calculator = getattr(module, classname)
     return Calculator
 
@@ -201,13 +191,14 @@ def equal(a, b, tol=None, rtol=None, atol=None):
 
 # def kptdensity2monkhorstpack(atoms, kptdensity=3.5, even=True):  """Convert k-point density to Monkhorst-Pack grid size.
 
+"""
 class EigenvalOccupationMixin:
-    """Define 'eigenvalues' and 'occupations' properties on class.
-
-    eigenvalues and occupations will be arrays of shape (spin, kpts, nbands).
-
-    Classes must implement the old-fashioned get_eigenvalues and
-    get_occupations methods."""
+    #Define 'eigenvalues' and 'occupations' properties on class.
+    #
+    #eigenvalues and occupations will be arrays of shape (spin, kpts, nbands).
+    #
+    #Classes must implement the old-fashioned get_eigenvalues and
+    #get_occupations methods.
 
     @property
     def eigenvalues(self):
@@ -226,7 +217,7 @@ class EigenvalOccupationMixin:
             for k in range(nkpts):
                 arr[s, k, :] = getter(spin=s, kpt=k)
         return arr
-
+"""
 
 class Parameters(dict):
     """Dictionary for parameters.
@@ -308,23 +299,8 @@ class Calculator(GetPropertiesMixin):
 
     _deprecated = object()
 
-    def __init__(self, restart=None, ignore_bad_restart_file=_deprecated,
-                 label=None, qbits=None, directory='.',
-                 **kwargs):
+    def __init__(self, **kwargs):
         """Basic calculator implementation.
-
-        restart: str
-            Prefix for restart file.  May contain a directory. Default
-            is None: don't restart.
-        ignore_bad_restart_file: bool
-            Deprecated, please do not use.
-            Passing more than one positional argument to Calculator()
-            is deprecated and will stop working in the future.
-            Ignore broken or missing restart file.  By default, it is an
-            error if the restart file is missing or broken.
-        directory: str or PurePath
-            Working directory in which to read and write files and
-            perform calculations.
         label: str
             Name used for all files.  Not supported by all calculators.
             May contain a directory, but please use the directory parameter
@@ -334,124 +310,35 @@ class Calculator(GetPropertiesMixin):
             attached.  When restarting, qbits will get its positions and
             unit-cell updated from file.
         """
-        self.qbits = None  # copy of qbits object from last calculation
+        print(kwargs.keys())
+        self._qbits = kwargs.get('qbits') # copy of qbits object from last calculation
+        self._label = kwargs.get('label')
+        #self._label = label
+        #self.qbits = qbits
+        #self.label = kwargs.get('label')
         self.results = {}  # calculated properties (energy, forces, ...)
         self.parameters = None  # calculational parameters
-        self._directory = None  # Initialize
-
-        if ignore_bad_restart_file is self._deprecated:
-            ignore_bad_restart_file = False
-        else:
-            warnings.warn(FutureWarning(
-                'The keyword "ignore_bad_restart_file" is deprecated and '
-                'will be removed in a future version of ASE.  Passing more '
-                'than one positional argument to Calculator is also '
-                'deprecated and will stop functioning in the future.  '
-                'Please pass arguments by keyword (key=value) except '
-                'optionally the "restart" keyword.'
-            ))
-
-        if restart is not None:
-            try:
-                self.read(restart)  # read parameters, qbits and results
-            except ReadError:
-                if ignore_bad_restart_file:
-                    self.reset()
-                else:
-                    raise
-
-        self.directory = directory
         self.prefix = None
-        if label is not None:
-            if self.directory == '.' and '/' in label:
-                # We specified directory in label, and nothing in the diretory key
-                self.label = label
-            elif '/' not in label:
-                # We specified our directory in the directory keyword
-                # or not at all
-                self.label = '/'.join((self.directory, label))
-            else:
-                raise ValueError('Directory redundantly specified though '
-                                 'directory="{}" and label="{}".  '
-                                 'Please omit "/" in label.'
-                                 .format(self.directory, label))
-
+        #print(self.label)
         if self.parameters is None:
             # Use default parameters if they were not read from file:
             self.parameters = self.get_default_parameters()
 
-        if qbits is not None:
-            qbits.calc = self
-            if self.qbits is not None:
-                # Qbits were read from file.  Update qbits:
-                # rajarshi: -> originally, below, it was atoms.numbers that was compared. Need to test this
-                if not (equal(qbits.positions, self.qbits.positions) and
-                        (qbits.pbc == self.qbits.pbc).all()):
-                    raise CalculatorError('Qbits not compatible with file')
-                qbits.positions = self.qbits.positions
-                qbits.cell = self.qbits.cell
+        if self.qbits is not None:
+            self.qbits.calc = self
 
-        self.set(**kwargs)
+        #self.set(**kwargs)
 
         if not hasattr(self, 'name'):
             self.name = self.__class__.__name__.lower()
 
-        if not hasattr(self, 'get_spin_polarized'):
-            self.get_spin_polarized = self._deprecated_get_spin_polarized
-
-    @property
-    def directory(self) -> str:
-        return self._directory
-
-    @directory.setter
-    def directory(self, directory: Union[str, pathlib.PurePath]):
-        self._directory = str(pathlib.Path(directory))  # Normalize path.
-
     @property
     def label(self):
-        if self.directory == '.':
-            return self.prefix
-
-        # Generally, label ~ directory/prefix
-        #
-        # We use '/' rather than os.pathsep because
-        #   1) directory/prefix does not represent any actual path
-        #   2) We want the same string to work the same on all platforms
-        if self.prefix is None:
-            return self.directory + '/'
-
-        return '{}/{}'.format(self.directory, self.prefix)
+        return self._label
 
     @label.setter
     def label(self, label):
-        if label is None:
-            self.directory = '.'
-            self.prefix = None
-            return
-
-        tokens = label.rsplit('/', 1)
-        if len(tokens) == 2:
-            directory, prefix = tokens
-        else:
-            assert len(tokens) == 1
-            directory = '.'
-            prefix = tokens[0]
-        if prefix == '':
-            prefix = None
-        self.directory = directory
-        self.prefix = prefix
-
-
-    def set_label(self, label):
-        """Set label and convert label to directory and prefix.
-
-        Examples:
-
-        * label='abc': (directory='.', prefix='abc')
-        * label='dir1/abc': (directory='dir1', prefix='abc')
-        * label=None: (directory='.', prefix=None)
-        """
-        self.label = label
+        self._label = label
 
     def get_default_parameters(self):
         return Parameters(copy.deepcopy(self.default_parameters))
@@ -500,13 +387,21 @@ class Calculator(GetPropertiesMixin):
         if self.qbits is None:
             # raise ValueError('Calculator has no qbits')
             print("qbits is None")
-        qbits = self.qbits.copy()
-        qbits.calc = self
+            qbits = self.qbits
+        else:
+            qbits = self.qbits.copy()
+            qbits.calc = self
         return qbits
 
     #def set_qbits(self, qbits):
     #    self.qbits = qbits
     #    #qbits.calc = self
+    @property
+    def qbits(self):
+        return self._qbits
+    @qbits.setter
+    def qbits(self, qbits):
+        self._qbits = qbits
     
     #qbits = property(fget=get_qbits, fset=set_qbits, doc=f'qbits property, getter {get_qbits}, setter {set_qbits}')
     
@@ -551,7 +446,7 @@ class Calculator(GetPropertiesMixin):
         return compare_qbits(self.qbits, qbits, tol=tol,
                              excluded_properties=set(self.ignored_changes))
 
-    def get_potential_energy(self, qbits=None, force_consistent=False):
+    def get_energy(self, qbits=None, force_consistent=False):
         energy = self.get_property('energy', qbits)
         if force_consistent:
             if 'free_energy' not in self.results:
@@ -638,74 +533,6 @@ class Calculator(GetPropertiesMixin):
             self.qbits = qbits.copy()
         if not os.path.isdir(self._directory):
             os.makedirs(self._directory)
-
-    def calculate_numerical_forces(self, qbits, d=0.001):
-        """Calculate numerical forces using finite difference.
-
-        All qbits will be displaced by +d and -d in all directions."""
-
-        from ase.calculators.test import numeric_force
-        return np.array([[numeric_force(qbits, a, i, d)
-                          for i in range(3)] for a in range(len(qbits))])
-
-    def calculate_numerical_stress(self, qbits, d=1e-6, voigt=True):
-        """Calculate numerical stress using finite difference."""
-
-        stress = np.zeros((3, 3), dtype=float)
-
-        cell = qbits.cell.copy()
-        V = qbits.get_volume()
-        for i in range(3):
-            x = np.eye(3)
-            x[i, i] += d
-            qbits.set_cell(np.dot(cell, x), scale_qbits=True)
-            eplus = qbits.get_potential_energy(force_consistent=True)
-
-            x[i, i] -= 2 * d
-            qbits.set_cell(np.dot(cell, x), scale_qbits=True)
-            eminus = qbits.get_potential_energy(force_consistent=True)
-
-            stress[i, i] = (eplus - eminus) / (2 * d * V)
-            x[i, i] += d
-
-            j = i - 2
-            x[i, j] = d
-            x[j, i] = d
-            qbits.set_cell(np.dot(cell, x), scale_qbits=True)
-            eplus = qbits.get_potential_energy(force_consistent=True)
-
-            x[i, j] = -d
-            x[j, i] = -d
-            qbits.set_cell(np.dot(cell, x), scale_qbits=True)
-            eminus = qbits.get_potential_energy(force_consistent=True)
-
-            stress[i, j] = (eplus - eminus) / (4 * d * V)
-            stress[j, i] = stress[i, j]
-        qbits.set_cell(cell, scale_qbits=True)
-
-        if voigt:
-            return stress.flat[[0, 4, 8, 5, 2, 1]]
-        else:
-            return stress
-
-    def _deprecated_get_spin_polarized(self):
-        msg = ('This calculator does not implement get_spin_polarized().  '
-               'In the future, calc.get_spin_polarized() will work only on '
-               'calculator classes that explicitly implement this method or '
-               'inherit the method via specialized subclasses.')
-        warnings.warn(msg, FutureWarning)
-        return False
-
-    def band_structure(self):
-        """Create band-structure object for plotting."""
-        from ase.spectrum.band_structure import get_band_structure
-        # XXX This calculator is supposed to just have done a band structure
-        # calculation, but the calculator may not have the correct Fermi level
-        # if it updated the Fermi level after changing k-points.
-        # This will be a problem with some calculators (currently GPAW), and
-        # the user would have to override this by providing the Fermi level
-        # from the selfconsistent calculation.
-        return get_band_structure(calc=self)
 
     def calculate_properties(self, qbits, properties):
         """This method is experimental; currently for internal use."""
