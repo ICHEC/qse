@@ -125,7 +125,7 @@ class Pulser(Calculator):
     @Calculator.qbits.setter
     def qbits(self, qbits, prefix='q'):
         if qbits is None:
-            self._qbits, self._coords, self._register = None, None, None
+            self._qbits, self._coords, self._register, self._sequence = None, None, None, None
         else:
             self._qbits = qbits
             self._coords = qbits.positions[:, :2]
