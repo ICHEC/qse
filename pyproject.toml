@@ -9,13 +9,10 @@ readme = "README.md"
 authors = [{name = "Rajarshi Tiwari", email = "rajarshi.tiwari@ichec.ie"}]
 version = "0.1.0"
 requires-python = ">=3.10"
-dependencies = [
-    "ase",
-    "numpy",
-    "matplotlib",
-    "pulser",
-    "myqlm"
-]
+
+dynamic = ["dependencies"]
+[tool.setuptools.dynamic]
+dependencies = {file = "requirements.txt"}
 
 [project.urls]
 homepage = "https://github.com/rajarshitiwari/qse"
