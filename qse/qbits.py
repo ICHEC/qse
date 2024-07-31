@@ -21,7 +21,7 @@ from ase.geometry import (wrap_positions, find_mic, get_angles, get_distances,
                           get_dihedrals)
 from ase.utils import deprecated
 
-from qse.visualise import draw
+from qse.visualise import draw as _draw
 
 class Qbits:
     """Qbits object.
@@ -592,9 +592,16 @@ class Qbits:
         """We use pymatgen type of style to print Qbits class"""
         tokens = []
         insep = ' '
-        # N = len(self)
-        for i in self:
-            tokens.append('{0}'.format(i) + ',\n')
+        N = len(self)
+        if N < 33:
+            for i in self:
+                tokens.append('{0}'.format(i) + ',\n')
+        else:
+            for i in self[:3]:
+                tokens.append('{0}'.format(i) + ',\n')
+            tokens.append("...\n")
+            for i in self[-3:]:
+                tokens.append('{0}'.format(i) + ',\n')
 
         if self.pbc.any() and not self.pbc.all():
             txt = 'pbc={0}'.format(self.pbc.tolist())
@@ -786,7 +793,7 @@ class Qbits:
         return self
 
     def draw(self, ax=None, radius=None):
-        draw(self, ax=ax, radius=radius)
+        _draw(self, ax=ax, radius=radius)
     #
 
     def repeat(self, rep):
@@ -1543,45 +1550,7 @@ class Qbits:
     # some stage we may adopt similar approach depending on
     # the usage/usecase.
     # def edit(self): Modify qbits interactively through ASE's GUI viewer.
-    """
-    def __repr__(self):
-        tokens = []
 
-        # N = len(self)
-        labels = self.arrays['labels']
-        tokens.append("labels='{0}'".format(labels))
-
-        if self.pbc.any() and not self.pbc.all():
-            tokens.append('pbc={0}'.format(self.pbc.tolist()))
-        else:
-            tokens.append('pbc={0}'.format(self.pbc[0]))
-
-        cell = self.cell
-        if cell:
-            if cell.orthorhombic:
-                cell = cell.lengths().tolist()
-            else:
-                cell = cell.tolist()
-            tokens.append('cell={0}'.format(cell))
-
-        for name in sorted(self.arrays):
-            if name in ['numbers', 'positions']:
-                continue
-            tokens.append('{0}=...'.format(name))
-
-        if self.constraints:
-            if len(self.constraints) == 1:
-                constraint = self.constraints[0]
-            else:
-                constraint = self.constraints
-            tokens.append('constraint={0}'.format(repr(constraint)))
-
-        if self._calc is not None:
-            tokens.append('calculator={0}(...)'
-                          .format(self._calc.__class__.__name__))
-
-        return '{0}({1})'.format(self.__class__.__name__, ', '.join(tokens))
-    """
 
 def string2vector(v):
     """Used in rotate method to rotate qbit location"""
