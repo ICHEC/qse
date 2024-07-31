@@ -86,3 +86,4 @@ class signal(object):
 #
 
 from .pulser import Pulser
+from .myqlm import Myqlm
