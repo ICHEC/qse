@@ -98,3 +98,19 @@ Points to note
     - Sequence is a pair of waveforms one for $\Omega$ and one for $\delta$.
     - The output on the same time grid can be expressed as a waveform.
 - Checkout channel
+
+```mermaid
+graph TD
+
+L((Lattice))
+N((Non-lattice))
+A((Analog ))
+G((Gate-based))
+
+
+L---A
+N---G
+L---G
+N---A
+
+```
