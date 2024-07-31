@@ -48,7 +48,7 @@ def draw(qbits, ax=None, radius=None):
     ax = fig.add_subplot(projection='3d') if rank == 3 else fig.add_subplot()
     # set the aspect ratio to 1, so that the ratio is actually
     # proportional to data size in x, y, z direction.
-    ax.set_aspect(1)
+    ax.set_aspect('equal')
     #ax.set_xlabel('x', labelpad=-12)
     #ax.set_ylabel('y', labelpad=-12)
 
