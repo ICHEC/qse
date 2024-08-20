@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# notebook to use as scratch
+scratch.ipynb
+
 # C extensions
 *.so
 
