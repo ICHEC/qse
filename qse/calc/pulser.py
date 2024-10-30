@@ -20,7 +20,8 @@ from qse.calc.calculator import (Calculator, all_changes, Parameters, Calculator
 
 
 import pulser
-from pulser_simulation import Simulation, SimConfig, QutipEmulator
+#from pulser_simulation import Simulation, SimConfig, QutipEmulator
+from pulser_simulation import QutipEmulator
 
 class Pulser(Calculator):
     """QSE-Calculator for pulser.

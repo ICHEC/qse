@@ -25,11 +25,20 @@ class signal(object):
     we haven't made it useful or consistent for multi-dim usage.
     """
     #
-    __slots__ = ('duration', 'values')
+    #__slots__ = ('duration', 'values')
     def __init__(self, values, duration=None) -> None:
         self.values = np.asarray(values)
-        self.duration = len(self.values) if duration is None else int(duration)
+        self._duration = len(self.values) if duration is None else int(duration)
     #
+    @property
+    def duration(self):
+        """time duration of signal"""
+        return self._duration
+    
+    @duration.setter
+    def duration(self, value):
+        self._duration = value
+    
     def __iter__(self):
         return iter(self.values)
     #
@@ -82,7 +91,8 @@ class signal(object):
         return self
     #
     def __repr__(self) -> str:
-        return f"wave(duration={self.duration}, values={self.values})"
+        return f"signal(duration={self.duration}, values={self.values})"
+    # we need to define interpolating scheme to resample points if duration is changed externally.
 #
 
 from .pulser import Pulser
