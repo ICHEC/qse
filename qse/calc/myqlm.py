@@ -50,19 +50,22 @@ else:
 print(AQPU)
 
 # analogQPU imported based on what's available
+import qat
+# from qat.core.variables import Variable, heaviside
 
-from qat.core.variables import Variable, heaviside
 
 default_params = {'rydberg': {
         'amplitude': None,
         'detuning': None,
-        'C6': 5420158.53, # unit (rad/µs)(µm)**6
+        'C6': 5420158.53,        # unit (rad/µs)(µm)**6
         'min_omega': None,
-        'max_omega': 12.57, # rad/µs from pulser
+        'max_omega': 12.57,      # rad/µs from pulser
         'min_delta': None,
-        'max_delta': 125.7, # rad/µs from pulser
-        'min_atom_distance': 4, # µm from pulser
-        'max_duration': 4000 # ns from pulser (max sequence duration)
+        'max_delta': 125.7,      # rad/µs from pulser
+        'min_atom_distance': 4,  # µm from pulser
+        'max_duration': 4000,    # ns from pulser (max sequence duration),
+        'default_duration': 0.5,
+        'default_points': 6
         },
       'ssh': {},
       'fermion': {}
@@ -76,7 +79,7 @@ class Myqlm(Calculator):
     default_parameters = dict(label='q', qbits=None)
 
     def __init__(self, qbits=None,
-                amplitude=None, detuning=None,
+                amplitude=None, detuning=None, duration=None,
                 qpu=None, analog=True,
                 system='rydberg',
                 label='myqlm-run'):
@@ -88,16 +91,27 @@ class Myqlm(Calculator):
         self.params = dict(default_params[self.system])
         # if any of the default parameters are passed
         # as arguments, use them to update self.params
+        self.duration = duration if duration is not None else self.params['default_duration']
+        self.amp = amplitude if amplitude is not None else np.zeros(self.params['default_points'])
+        self.amplitude = self._waveform(self.amp, tmax=self.duration)
+        self.det = detuning if detuning is not None else np.zeros(self.params['default_points'])
+        self.detuning = self._waveform(self.det, tmax=self.duration)
+        #self.duration = len(self.amplitude) # needs to change for time independent problems
         self.C6 = self.params['C6']
         #
+        self.qpu = None
     
-    def occ_op(nqbits, qi):
+    def _occ_op(self, nqbits, qi):
         ti = qat.core.Term(1.0, 'Z', [qi])
         return (1 + qat.core.Observable(nqbits, pauli_terms=[ti])) / 2
 
+    @property
+    def Hamiltonian(self):
+        return self._get_hamiltonian()
+    
     def _get_hamiltonian(self):
         if self.system == 'rydberg':
-            ham = _generate_rydberg_hamiltonian()
+            ham = self._generate_rydberg_hamiltonian()
         else:
             ham = None
         return ham
@@ -105,7 +119,7 @@ class Myqlm(Calculator):
 
     def _generate_rydberg_hamiltonian(self):
         rij = self.qbits.get_all_distances()
-        nqbits = self.nqbits
+        nqbits = self.qbits.nqbits
         #> add checks for ensuring whether amplitudes/detunings etc
         #> are within allowed limits compatible with pulser virtual device
         amplitude = self.amplitude
@@ -118,19 +132,41 @@ class Myqlm(Calculator):
         H_interact = 0
         for i in range(nqbits):
             for j in range(i+1, nqbits):
-                H_interact += (self.C6 / rij[i, j]**6) * occ_op(nqbits, i) * occ_op(nqbits, j)
-        Hamiltonian = qat.core.Observable([
+                H_interact += (self.C6 / rij[i, j]**6) * self._occ_op(nqbits, i) * self._occ_op(nqbits, j)
+        Hamiltonian = [ # qat.core.Observable(
             (amplitude, H_amplitude),
             (detuning, H_detuning),
             (1, H_interact)
-        ])
+        ]
         return Hamiltonian
     #
 
+    def _waveform(self, vi, tmax):
+        ti = np.linspace(0, tmax, vi.shape[0])
+        vi_m = np.diff(vi)
+        ti_m = np.diff(ti)
+        vi_p = vi[1:] + vi[:-1]
+        ti_p = ti[1:] + ti[:-1]
+        a = vi_m / ti_m
+        b = 0.5 * (vi_p - a * ti_p)
+        arith_expr = 0
+        t_var = qat.core.Variable("t")
+        for i, (ai, bi) in enumerate(zip(a, b)):
+            # Create ax + b by calculating the slope and the offset
+            respective_line = ai * t_var + bi
+            arith_expr += qat.core.variables.heaviside(t_var, ti[i], ti[i+1]) * respective_line
+        return arith_expr
 
     def calculate(self, qbits=None, properties=..., system_changes=...):
         #return super().calculate(qbits, properties, system_changes)
-        pass
+        # self.Hamiltonian = self._get_hamiltonian()
+        self.schedule = qat.core.Schedule(
+            drive=self.Hamiltonian,
+            tmax=self.duration)
+        self.job = self.schedule.to_job()
+        self.qpu = AQPU()
+        self.async_result = self.qpu.submit(self.job)
+        self.result = self.async_result.join()
 
 
     
