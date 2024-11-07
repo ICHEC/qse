@@ -44,7 +44,8 @@ def draw(qbits, ax=None, radius=None):
         C = C / C.min()
     #
     # print(x.shape, y.shape, z.shape, X.shape, Y.shape, Z.shape, U.shape, V.shape, W.shape)
-    fig = plt.figure()
+    fig = plt.figure() if rank == 3 or rank == 2 else plt.figure(figsize=(12,3))
+    
     ax = fig.add_subplot(projection='3d') if rank == 3 else fig.add_subplot()
     # set the aspect ratio to 1, so that the ratio is actually
     # proportional to data size in x, y, z direction.
@@ -69,7 +70,7 @@ def draw(qbits, ax=None, radius=None):
     if rank == 1:
         # y = np.zeros(x.shape)
         if draw_bond:
-            ax.quiver(X, Y, U, V, linewidth=1, angles='xy', scale_units='xy', scale=1, headaxislength=0, headlength=0, color='gray', alpha=1/C**3)
+            ax.quiver(X, Y, U, V, linewidth=1, angles='xy', scale_units='xy', scale=3, headaxislength=0, headlength=0, color='gray', alpha=1/C**3)
         ax.plot(x, y, 'o', color='red')
     #
 #
