@@ -12,6 +12,8 @@ import os.path
 from warnings import warn
 from subprocess import Popen, PIPE
 import numpy as np
+import pulser.pulse
+import pulser.waveforms
 from qse.calc import signal
 import ase.io
 from qse.calc.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
@@ -100,20 +102,41 @@ class Pulser(Calculator):
         self.results = None
         self.channel = "rydberg_global"
         if amplitude is not None:
-            self.amplitude = amplitude if isinstance(amplitude, signal) else signal(amplitude)
+            if isinstance(amplitude, (signal, pulser.waveforms.Waveform)):
+                self.amplitude = amplitude
+            else:
+                self.amplitude = signal(amplitude)
         if detuning is not None:
-            self.detuning = detuning if isinstance(detuning, signal) else signal(detuning)
+            if isinstance(detuning, (signal, pulser.waveforms.Waveform)):
+                self.detuning = detuning
+            else:
+                self.detuning = signal(detuning)
         #
         # assert self.amplitude.duration == self.detuning.duration
         self.duration = self.amplitude.duration
-        self.pulse = pulser.Pulse(
-            amplitude=pulser.waveforms.InterpolatedWaveform(
-                duration=self.duration,
-                values=self.amplitude.values),
-            detuning=pulser.waveforms.InterpolatedWaveform(
-                duration=self.duration,
-                values=self.detuning.values), phase=0
-        )
+        wa = isinstance(self.amplitude, pulser.waveforms.Waveform)
+        wd = isinstance(self.detuning, pulser.waveforms.Waveform)
+        if wa:
+            amp = self.amplitude
+        else:
+            amp = pulser.waveforms.InterpolatedWaveform(
+                duration=self.duration, values=self.amplitude.values)
+        if wd:
+            det = self.detuning
+        else:
+            det = pulser.waveforms.InterpolatedWaveform(
+                duration=self.duration, values=self.detuning.values)
+        
+        self.pulse = pulser.Pulse(amplitude=amp, detuning=det, phase=0)
+
+        #self.pulse = pulser.Pulse(
+        #    amplitude=pulser.waveforms.InterpolatedWaveform(
+        #        duration=self.duration,
+        #        values=self.amplitude.values),
+        #        duration=self.duration,
+        #    detuning=pulser.waveforms.InterpolatedWaveform(
+        #        values=self.detuning.values), phase=0
+        #)
         # pulser part which defines Hamiltonian parameters done. #
         self._register, self._sequence, self._sim = None, None, None
         self.qbits = qbits if qbits is not None else None

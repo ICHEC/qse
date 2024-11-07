@@ -167,6 +167,26 @@ class Myqlm(Calculator):
         self.qpu = AQPU()
         self.async_result = self.qpu.submit(self.job)
         self.result = self.async_result.join()
+        # don't know why result.statevector is Nonetype, fill it with state
+        if hasattr(self.result[0], 'amplitude'):
+            self.result.statevector = np.fromiter((s.amplitude for s in self.result), dtype=complex)
+        self.statevector = self.result.statevector
+        self.probabities = np.fromiter((s.probability for s in self.result), dtype=float)
+        self.spins = self.get_spins()
+    
+    def get_spins(self):
+        if self.result is None:
+            self.calculate()
+        #
+        nqbits = self.result[0].state.nbqbits
+        szi = np.zeros(nqbits, dtype=float)
+        for ss in self.result:
+            prob = ss.probability
+            state = ss.state
+            zi = np.array([1-2*int(i) for i in list(state.bitstring)], dtype=float)
+            szi += prob * zi
+        #
+        return szi
 
 
     
