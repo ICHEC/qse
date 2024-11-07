@@ -45,18 +45,19 @@ def draw(qbits, ax=None, radius=None):
     #
     # print(x.shape, y.shape, z.shape, X.shape, Y.shape, Z.shape, U.shape, V.shape, W.shape)
     fig = plt.figure() if rank == 3 or rank == 2 else plt.figure(figsize=(12,3))
-    
+
     ax = fig.add_subplot(projection='3d') if rank == 3 else fig.add_subplot()
     # set the aspect ratio to 1, so that the ratio is actually
     # proportional to data size in x, y, z direction.
-    ax.set_aspect('equal')
+    if rank == 1:
+        ax.set_aspect(len(qbits))
+    else:
+        ax.set_aspect('equal')
     #ax.set_xlabel('x', labelpad=-12)
     #ax.set_ylabel('y', labelpad=-12)
-
     ax.set_xticks([])
     ax.set_yticks([])
-    if rank == 3:
-        #ax.set_zlabel('z', labelpad=-12)
+    if rank == 3: #ax.set_zlabel('z', labelpad=-12)
         ax.set_zticks([])
     
     if rank == 3:
@@ -70,7 +71,19 @@ def draw(qbits, ax=None, radius=None):
     if rank == 1:
         # y = np.zeros(x.shape)
         if draw_bond:
-            ax.quiver(X, Y, U, V, linewidth=1, angles='xy', scale_units='xy', scale=3, headaxislength=0, headlength=0, color='gray', alpha=1/C**3)
-        ax.plot(x, y, 'o', color='red')
+            ax.quiver(X, Y, U, V, linewidth=1, angles='xy', scale_units='xy', scale=1, headaxislength=0, headlength=0, color='gray', alpha=1/C**3)
+        ax.plot(x, y, 'o', ms=9, color='red')
     #
 #
+
+"""
+x, y, _ = lin.positions.T
+fig = plt.figure(figsize=(12,1))
+ax = fig.add_subplot()
+ax.set_aspect('auto')
+ax.set_xticks([])
+ax.set_yticks([])
+ax.plot(x, y, 'o', color='r')
+ax.scatter(x, y, s=360, c='g', alpha=0.5)
+plt.show()
+"""
