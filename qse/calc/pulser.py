@@ -231,6 +231,7 @@ class Pulser(Calculator):
         self.final_state = self.results.get_final_state()
         #if self.parameters.auto_write:
         #    self.write(self.label)
+        self.spins = self.get_spins()
     #
 
     def get_correlation(self, n_samples=1000):
@@ -242,3 +243,17 @@ class Pulser(Calculator):
             arr += local * v
         arr /= n_samples
         return arr
+    
+    def get_spins(self):
+        if self.results is None:
+            self.calculate()
+        #
+        nqbits = len(self.qbits)
+        szi = np.zeros(nqbits, dtype=float)
+        for ii, st in enumerate(self.final_state):
+            prob = (st * st.conj()).real
+            zi = np.array([1-2*int(i) for i in list(bin(ii)[2:].zfill(nqbits))], dtype=float)
+            szi += prob * zi
+        #
+        return szi
+
