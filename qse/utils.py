@@ -13,6 +13,19 @@ tri_cell = qse.cell.Cell([[a0, 0, 0], [a0/2, np.sqrt(3)*a0/2, 0], [0, 0, 0]])
 hex_cell = qse.cell.Cell([[3*a0/2, np.sqrt(3)*a0/2, 0], [3*a0/2, -np.sqrt(3)*a0/2, 0], [0, 0, 0]])
 kag_cell = qse.cell.Cell([[2*a0, 0, 0], [a0, np.sqrt(3)*a0, 0], [0, 0, 0]])
 
+
+def linear(a=a0, N=6):
+    """
+    Generate qse.Qbits object in linear chain geometry.
+    """
+    cell = qse.cell.Cell([[a0, 0, 0], [0, 0, 0], [0, 0, 0]])
+    cell = (a/a0) * cell
+    unit = qse.Qbits(positions=zerovec)
+    unit.cell = cell
+    linlattice = unit.repeat((N, 1, 1))
+    return linlattice
+
+
 def squarelattice(a=a0, N1=2, N2=2):
     """
     Generate qse.Qbits object in square lattice geometry.

@@ -310,7 +310,7 @@ class Calculator(GetPropertiesMixin):
             attached.  When restarting, qbits will get its positions and
             unit-cell updated from file.
         """
-        print(kwargs.keys())
+        # print(kwargs.keys())
         self._qbits = kwargs.get('qbits') # copy of qbits object from last calculation
         self._label = kwargs.get('label')
         #self._label = label
