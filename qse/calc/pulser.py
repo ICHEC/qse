@@ -250,7 +250,8 @@ class Pulser(Calculator):
         #
         nqbits = len(self.qbits)
         szi = np.zeros(nqbits, dtype=float)
-        for ii, st in enumerate(self.final_state):
+        for ii, ss in enumerate(self.final_state):
+            st = ss[0][0]
             prob = (st * st.conj()).real
             zi = np.array([1-2*int(i) for i in list(bin(ii)[2:].zfill(nqbits))], dtype=float)
             szi += prob * zi
