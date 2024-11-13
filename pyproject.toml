@@ -7,7 +7,7 @@ name = "qse"
 description = "Quantum Simulation Environment"
 readme = "README.md"
 authors = [{name = "Rajarshi Tiwari", email = "rajarshi.tiwari@ichec.ie"}]
-version = "0.1.0"
+version = "0.1.1"
 requires-python = ">=3.10"
 
 dynamic = ["dependencies"]
