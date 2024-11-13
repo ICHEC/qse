@@ -6,7 +6,7 @@ This package is adapted from Atomic Simulation Environment (ASE).
 """
 
 __all__ = ['Qbits', 'Qbit']
-__version__ = '0.1'
+__version__ = '0.1.1'
 
 from qse.qbit import Qbit
 from qse.qbits import Qbits
