@@ -6,6 +6,18 @@ More to elaborate later on.
 import numpy as np
 import qse
 
+def int2bin(x, width=32):
+    """
+    converts an integer array to array of equivalent binary strings.
+    Equivalent to:
+        int2bin = np.vectorize(lambda x, width=16: np.binary_repr(x,width=width))    
+    However vectorize version is a bit slower compared to the one below.
+    """
+    out = np.fromiter((np.binary_repr(i,width=width) for i in x), dtype=f'U{width}', count=x.shape[0])
+    return out
+
+
+
 a0 = 1.0
 zerovec = np.zeros((1,3))
 sqr_cell = qse.cell.Cell([[a0, 0, 0], [0, a0, 0], [0, 0, 0]])
