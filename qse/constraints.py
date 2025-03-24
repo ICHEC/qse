@@ -13,7 +13,7 @@ from ase.stress import (full_3x3_to_voigt_6_stress,
 
 __all__ = [
     'FixCartesian', 'FixBondLength', 'FixedMode',
-    'FixConstraintSingle', 'FixAtoms', 'UnitCellFilter', 'ExpCellFilter',
+    'FixConstraintSingle', 'FixQbits', 'UnitCellFilter', 'ExpCellFilter',
     'FixScaled', 'StrainFilter', 'FixCom', 'FixedPlane', 'Filter',
     'FixConstraint', 'FixedLine', 'FixBondLengths', 'FixLinearTriatomic',
     'FixInternals', 'Hookean', 'ExternalForce', 'MirrorForce', 'MirrorTorque',
@@ -203,8 +203,8 @@ class FixQbits(FixConstraint):
         Required for removing qbits with existing FixQbits constraints.
         """
 
-        i = np.zeros(nqbits, int) - 1
-        new = np.delete(np.arange(nqbits), indices)
+        i = np.zeros(qbits, int) - 1
+        new = np.delete(np.arange(qbits), indices)
         i[new] = np.arange(len(new))
         index = i[self.index]
         self.index = index[index >= 0]
