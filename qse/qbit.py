@@ -1,6 +1,5 @@
 
 import numpy as np
-# import pulser
 
 # functions adapted from ASE's Qbit/Qbits styled objects
 names = {'label': ('labels', 'R'),
@@ -23,24 +22,6 @@ def qbitproperty(name, doc):
     return property(getter, setter, deleter, doc)
 
 
-def abcproperty(index):
-    """Helper function to easily create Qbit ABC-property."""
-
-    def getter(self):
-        return self.scaled_position[index]
-
-    def setter(self, value):
-        # We can't just do self.scaled_position[i] = value
-        # because scaled_position is a new buffer, not a view into
-        # something we can write back to.
-        # This is a clear bug!
-        spos = self.scaled_position
-        spos[index] = value
-        self.scaled_position = spos
-
-    return property(getter, setter, doc='ABC'[index] + '-coordinate')
-
-
 def xyzproperty(index):
     """Helper function to easily create Qbit XYZ-property."""
 
@@ -54,19 +35,29 @@ def xyzproperty(index):
 
 
 class Qbit:
-    """Class for representing a single qbit.
+    """
+    Class for representing a single qbit.
 
-    Parameters:
-
+    Parameters
+    ----------
     label: str or int
         Can be a str or an int label.
-    position: sequence of 3 floats qubit position.
+    state: list or tuple or np.ndarray
+        Quantum state of the qubit
+    position: 
+        Sequence of 3 floats qubit position.
     tag: int
         Special purpose tag.
+    qbits:
+        ...
+    index:
+        ...
+
+    Notes
+    -----
     Typically one can create an a qubit object
     just by
     q = Qbit()
-    
     """
     __slots__ = ['data', 'qbits', 'index']
 
@@ -80,16 +71,16 @@ class Qbit:
                 d['label'] = label
             else:
                 d['label'] = 'X'
+
             if isinstance(state, np.ndarray):
                 d['state'] = state / np.linalg.norm(state) # normalise
             else:
                 t = np.array(state, complex)
                 d['state'] = t / np.linalg.norm(t)
                 del t
-            #
+
             d['position'] = np.array(position, float)
             d['tag'] = tag
-            d['label'] = str(label)
         self.index = index
         self.qbits = qbits
 
@@ -129,9 +120,6 @@ class Qbit:
 
     def get_raw(self, name):
         """Get name attribute, return None if not explicitly set."""
-        #if name == 'symbol':
-        #    return chemical_symbols[self.get_raw('number')]
-
         if self.qbits is None:
             return self.data[name]
 
@@ -150,10 +138,6 @@ class Qbit:
 
     def set(self, name, value):
         """Set name attribute to value."""
-        #if name == 'symbol':
-        #    name = 'number'
-        #    value = atomic_numbers[value]
-
         if self.qbits is None:
             assert name in names
             if name == 'state':
@@ -164,18 +148,11 @@ class Qbit:
             plural, default = names[name]
             if plural in self.qbits.arrays:
                 array = self.qbits.arrays[plural]
-                #if name == 'magmom' and array.ndim == 2:
-                #    assert len(value) == 3
                 if plural == 'states':
                     array[self.index] = value / np.linalg.norm(value)
                 else:
                     array[self.index] = value
             else:
-                #if name == 'magmom' and np.asarray(value).ndim == 1:
-                #    array = np.zeros((len(self.atoms), 3))
-                #elif name == 'mass':
-                #    array = self.atoms.get_masses()
-                #else:
                 default = np.asarray(default)
                 array = np.zeros((len(self.atoms),) + default.shape,
                                      default.dtype)
@@ -191,14 +168,6 @@ class Qbit:
     label = qbitproperty('label', 'Integer label asigned to qubit')
     position = qbitproperty('position', 'XYZ-coordinates')
     tag = qbitproperty('tag', 'Integer tag')
-    #momentum = qbitproperty('momentum', 'XYZ-momentum')
-    #mass = qbitproperty('mass', 'Atomic mass')
-    #magmom = qbitproperty('magmom', 'Initial magnetic moment')
-    #charge = qbitproperty('charge', 'Initial atomic charge')
     x = xyzproperty(0)
     y = xyzproperty(1)
     z = xyzproperty(2)
-
-    #a = abcproperty(0)
-    #b = abcproperty(1)
-    #c = abcproperty(2)

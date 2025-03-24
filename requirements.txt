@@ -1,5 +1,3 @@
 ase
 numpy
 matplotlib
-pulser
-myqlm
