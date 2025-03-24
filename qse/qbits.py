@@ -10,18 +10,26 @@ import numbers
 from math import cos, sin, pi
 
 import numpy as np
+
 ONE = np.array([1, 0], dtype=complex)
 TWO = np.array([0, 1], dtype=complex)
 
 import ase.units as units
 from qse.qbit import Qbit
 from ase.cell import Cell
-#from ase.stress import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
-from ase.geometry import (wrap_positions, find_mic, get_angles, get_distances,
-                          get_dihedrals)
+
+# from ase.stress import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
+from ase.geometry import (
+    wrap_positions,
+    find_mic,
+    get_angles,
+    get_distances,
+    get_dihedrals,
+)
 from ase.utils import deprecated
 
 from qse.visualise import draw as _draw
+
 
 class Qbits:
     """Qbits object.
@@ -119,7 +127,7 @@ class Qbits:
     ...           pbc=(1, 0, 0))
     """
 
-    qse_objtype = 'qbits'  # For JSONability
+    qse_objtype = "qbits"  # For JSONability
     """
     Following could be the typical ways to initialise
     the Qbits object which we should focus on -
@@ -131,25 +139,40 @@ class Qbits:
     2. Provide positions only, then labels are assigned X,
     and state is initialised as (1,0)
     """
-    def __init__(self, labels=None, tags=None, states=None,
-                 positions=None, scaled_positions=None,
-                 cell=None, pbc=None, celldisp=None,
-                 constraint=None, calculator=None, info=None):
-        
+
+    def __init__(
+        self,
+        labels=None,
+        tags=None,
+        states=None,
+        positions=None,
+        scaled_positions=None,
+        cell=None,
+        pbc=None,
+        celldisp=None,
+        constraint=None,
+        calculator=None,
+        info=None,
+    ):
+
         self._cellobj = Cell.new()
         self._pbc = np.zeros(3, bool)
 
         qbits = None
 
-        if hasattr(labels, 'get_positions'):
+        if hasattr(labels, "get_positions"):
             qbits = labels
             labels = None
-        elif (isinstance(labels, (list, tuple)) and
-              len(labels) > 0 and isinstance(labels[0], Qbit)):
+        elif (
+            isinstance(labels, (list, tuple))
+            and len(labels) > 0
+            and isinstance(labels[0], Qbit)
+        ):
             # Get data from a list or tuple of Qbit objects:
-            data = [[qbit.get_raw(name) for qbit in labels]
-                    for name in
-                    ['label', 'state', 'position', 'tag']]
+            data = [
+                [qbit.get_raw(name) for qbit in labels]
+                for name in ["label", "state", "position", "tag"]
+            ]
             qbits = self.__class__(None, *data)
             labels = None
 
@@ -159,7 +182,7 @@ class Qbits:
                 raise NotImplementedError
             if positions is None:
                 positions = qbits.get_positions()
-            if tags is None and qbits.has('tags'):
+            if tags is None and qbits.has("tags"):
                 tags = qbits.get_tags()
             if cell is None:
                 cell = qbits.get_cell()
@@ -183,7 +206,7 @@ class Qbits:
                 nqbits = len(scaled_positions)
             else:
                 nqbits = 0
-            self.new_array('labels', np.arange(nqbits), int)
+            self.new_array("labels", np.arange(nqbits), int)
 
         if cell is None:
             cell = np.zeros((3, 3))
@@ -193,25 +216,25 @@ class Qbits:
             celldisp = np.zeros(shape=(3, 1))
         self.set_celldisp(celldisp)
 
-        #print(type(positions), len(positions), type(positions[0]))
-        #print(type(scaled_positions), len(scaled_positions), type(scaled_positions[0]))
+        # print(type(positions), len(positions), type(positions[0]))
+        # print(type(scaled_positions), len(scaled_positions), type(scaled_positions[0]))
         if positions is None:
             if scaled_positions is None:
-                positions = np.zeros((len(self.arrays['labels']), 3))
+                positions = np.zeros((len(self.arrays["labels"]), 3))
             else:
                 assert self.cell.rank == 3
                 positions = np.dot(scaled_positions, self.cell)
         else:
             if scaled_positions is not None:
-                #raise TypeError(
+                # raise TypeError(
                 #    'Use only one of "symbols" and "numbers".')
                 print("Both positions and scaled positions are not None!")
-        self.new_array('positions', positions, float, (3,))
+        self.new_array("positions", positions, float, (3,))
 
         if states is None:
             states = np.zeros((positions.shape[0], 2), dtype=complex)
             states[:, 1] += 1
-        self.new_array('states', states, complex, (2,))
+        self.new_array("states", states, complex, (2,))
         self.set_constraint(constraint)
         self.set_tags(default(tags, 0))
         if pbc is None:
@@ -225,16 +248,16 @@ class Qbits:
 
         self.calc = calculator
 
-    #@deprecated(DeprecationWarning('Please use qbits.calc = calc'))
-    #def set_calculator(self, calc=None):
+    # @deprecated(DeprecationWarning('Please use qbits.calc = calc'))
+    # def set_calculator(self, calc=None):
     #    """Attach calculator object.
     #
     #    Please use the equivalent qbits.calc = calc instead of this
     #    method."""
     #    self.calc = calc
 
-    #@deprecated(DeprecationWarning('Please use qbits.calc'))
-    #def get_calculator(self):
+    # @deprecated(DeprecationWarning('Please use qbits.calc'))
+    # def get_calculator(self):
     #    """Get currently attached calculator object.
     #
     #    Please use the equivalent qbits.calc instead of
@@ -249,17 +272,17 @@ class Qbits:
     @calc.setter
     def calc(self, calc):
         self._calc = calc
-        if hasattr(calc, 'set_qbits'):
+        if hasattr(calc, "set_qbits"):
             calc.set_qbits(self)
 
-    #@calc.deleter  # type: ignore
-    #@deprecated(DeprecationWarning('Please use qbits.calc = None'))
-    #def calc(self):
+    # @calc.deleter  # type: ignore
+    # @deprecated(DeprecationWarning('Please use qbits.calc = None'))
+    # def calc(self):
     #    self._calc = None
 
-    #@property  # type: ignore
-    #@deprecated('Please use qbits.cell.rank instead')
-    #def number_of_lattice_vectors(self):
+    # @property  # type: ignore
+    # @deprecated('Please use qbits.cell.rank instead')
+    # def number_of_lattice_vectors(self):
     #    """Number of (non-zero) lattice vectors."""
     #    return self.cell.rank
 
@@ -284,8 +307,9 @@ class Qbits:
     def _del_constraints(self):
         self._constraints = []
 
-    constraints = property(_get_constraints, set_constraint, _del_constraints,
-                           'Constraints of the qbits.')
+    constraints = property(
+        _get_constraints, set_constraint, _del_constraints, "Constraints of the qbits."
+    )
 
     def set_cell(self, cell, scale_qbits=False, apply_constraint=True):
         """Set unit cell vectors.
@@ -334,9 +358,9 @@ class Qbits:
         cell = Cell.new(cell)
 
         # XXX not working well during initialize due to missing _constraints
-        if apply_constraint and hasattr(self, '_constraints'):
+        if apply_constraint and hasattr(self, "_constraints"):
             for constraint in self.constraints:
-                if hasattr(constraint, 'adjust_cell'):
+                if hasattr(constraint, "adjust_cell"):
                     constraint.adjust_cell(self, cell)
 
         if scale_qbits:
@@ -366,7 +390,7 @@ class Qbits:
 
         return cell
 
-    @deprecated('Please use qbits.cell.cellpar() instead')
+    @deprecated("Please use qbits.cell.cellpar() instead")
     def get_cell_lengths_and_angles(self):
         """Get unit cell parameters. Sequence of 6 numbers.
 
@@ -379,7 +403,7 @@ class Qbits:
         """
         return self.cell.cellpar()
 
-    @deprecated('Please use qbits.cell.reciprocal()')
+    @deprecated("Please use qbits.cell.reciprocal()")
     def get_reciprocal_cell(self):
         """Get the three reciprocal lattice vectors as a 3x3 ndarray.
 
@@ -391,7 +415,7 @@ class Qbits:
     @property
     def nqbits(self):
         return len(self)
-    
+
     @property
     def pbc(self):
         """Reference to pbc-flags for in-place manipulations."""
@@ -415,27 +439,30 @@ class Qbits:
         If *shape* is not *None*, the shape of *a* will be checked."""
 
         if dtype is not None:
-            a = np.array(a, dtype, order='C')
+            a = np.array(a, dtype, order="C")
             if len(a) == 0 and shape is not None:
                 a.shape = (-1,) + shape
         else:
-            if not a.flags['C_CONTIGUOUS']:
+            if not a.flags["C_CONTIGUOUS"]:
                 a = np.ascontiguousarray(a)
             else:
                 a = a.copy()
 
         if name in self.arrays:
-            raise RuntimeError('Array {} already present'.format(name))
+            raise RuntimeError("Array {} already present".format(name))
 
         for b in self.arrays.values():
             if len(a) != len(b):
-                raise ValueError('Array "%s" has wrong length: %d != %d.' %
-                                 (name, len(a), len(b)))
+                raise ValueError(
+                    'Array "%s" has wrong length: %d != %d.' % (name, len(a), len(b))
+                )
             break
 
         if shape is not None and a.shape[1:] != shape:
-            raise ValueError('Array "%s" has wrong shape %s != %s.' %
-                             (name, a.shape, (a.shape[0:1] + shape)))
+            raise ValueError(
+                'Array "%s" has wrong shape %s != %s.'
+                % (name, a.shape, (a.shape[0:1] + shape))
+            )
 
         self.arrays[name] = a
 
@@ -465,8 +492,10 @@ class Qbits:
             else:
                 a = np.asarray(a)
                 if a.shape != b.shape:
-                    raise ValueError('Array "%s" has wrong shape %s != %s.' %
-                                     (name, a.shape, b.shape))
+                    raise ValueError(
+                        'Array "%s" has wrong shape %s != %s.'
+                        % (name, a.shape, b.shape)
+                    )
                 b[:] = a
 
     def has(self, name):
@@ -482,12 +511,12 @@ class Qbits:
         applied to all qbits."""
         if isinstance(tags, int):
             tags = [tags] * len(self)
-        self.set_array('tags', tags, int, ())
+        self.set_array("tags", tags, int, ())
 
     def get_tags(self):
         """Get integer array of tags."""
-        if 'tags' in self.arrays:
-            return self.arrays['tags'].copy()
+        if "tags" in self.arrays:
+            return self.arrays["tags"].copy()
         else:
             return np.zeros(len(self), int)
 
@@ -499,7 +528,7 @@ class Qbits:
             for constraint in self.constraints:
                 constraint.adjust_positions(self, newpositions)
 
-        self.set_array('positions', newpositions, shape=(3,))
+        self.set_array("positions", newpositions, shape=(3,))
 
     def get_positions(self, wrap=False, **wrap_kw):
         """Get array of positions.
@@ -513,23 +542,24 @@ class Qbits:
             see :func:`ase.geometry.wrap_positions`
         """
         if wrap:
-            if 'pbc' not in wrap_kw:
-                wrap_kw['pbc'] = self.pbc
+            if "pbc" not in wrap_kw:
+                wrap_kw["pbc"] = self.pbc
             return wrap_positions(self.positions, self.cell, **wrap_kw)
         else:
-            return self.arrays['positions'].copy()
+            return self.arrays["positions"].copy()
 
     def get_properties(self, properties):
         """This method is experimental; currently for internal use."""
         # XXX Something about constraints.
         if self._calc is None:
-            raise RuntimeError('Qbits object has no calculator.')
+            raise RuntimeError("Qbits object has no calculator.")
         return self._calc.calculate_properties(self, properties)
 
     def copy(self):
         """Return a copy."""
-        qbits = self.__class__(cell=self.cell, pbc=self.pbc, info=self.info,
-                               celldisp=self._celldisp.copy())
+        qbits = self.__class__(
+            cell=self.cell, pbc=self.pbc, info=self.info, celldisp=self._celldisp.copy()
+        )
 
         qbits.arrays = {}
         for name, a in self.arrays.items():
@@ -541,17 +571,17 @@ class Qbits:
         """For basic JSON (non-database) support."""
         # d = dict(self.arrays)
         d = {}
-        d['labels'] = self.arrays['labels']
-        d['positions'] = self.arrays['positions']
-        d['states'] = self.arrays['states']
-        d['cell'] = self.cell # np.asarray(self.cell)
-        d['pbc'] = self.pbc
+        d["labels"] = self.arrays["labels"]
+        d["positions"] = self.arrays["positions"]
+        d["states"] = self.arrays["states"]
+        d["cell"] = self.cell  # np.asarray(self.cell)
+        d["pbc"] = self.pbc
         if self._celldisp.any():
-            d['celldisp'] = self._celldisp
+            d["celldisp"] = self._celldisp
         if self.constraints:
-            d['constraints'] = self.constraints
+            d["constraints"] = self.constraints
         if self.info:
-            d['info'] = self.info
+            d["info"] = self.info
         # Calculator...  trouble.
         return d
 
@@ -560,21 +590,22 @@ class Qbits:
         """Rebuild qbits object from dictionary representation (todict)."""
         dct = dct.copy()
         kw = {}
-        for name in ['labels', 'positions', 'states', 'cell', 'pbc']:
+        for name in ["labels", "positions", "states", "cell", "pbc"]:
             kw[name] = dct.pop(name)
 
-        constraints = dct.pop('constraints', None)
+        constraints = dct.pop("constraints", None)
         if constraints:
             from ase.constraints import dict2constraint
+
             constraints = [dict2constraint(d) for d in constraints]
-        
+
         # labels = dct.pop('labels', None)
 
-        info = dct.pop('info', None)
+        info = dct.pop("info", None)
 
-        qbits = cls(constraint=constraints,
-                    celldisp=dct.pop('celldisp', None),
-                    info=info, **kw)
+        qbits = cls(
+            constraint=constraints, celldisp=dct.pop("celldisp", None), info=info, **kw
+        )
         nqbits = len(qbits)
 
         # Some arrays are named differently from the qbits __init__ keywords.
@@ -586,28 +617,28 @@ class Qbits:
         return qbits
 
     def __len__(self):
-        return len(self.arrays['positions'])
+        return len(self.arrays["positions"])
 
     def __repr__(self):
         """We use pymatgen type of style to print Qbits class"""
         tokens = []
-        insep = ' '
+        insep = " "
         N = len(self)
         if N < 33:
             for i in self:
-                tokens.append('{0}'.format(i) + ',\n')
+                tokens.append("{0}".format(i) + ",\n")
         else:
             for i in self[:3]:
-                tokens.append('{0}'.format(i) + ',\n')
+                tokens.append("{0}".format(i) + ",\n")
             tokens.append("...\n")
             for i in self[-3:]:
-                tokens.append('{0}'.format(i) + ',\n')
+                tokens.append("{0}".format(i) + ",\n")
 
         if self.pbc.any() and not self.pbc.all():
-            txt = 'pbc={0}'.format(self.pbc.tolist())
+            txt = "pbc={0}".format(self.pbc.tolist())
         else:
-            txt = 'pbc={0}'.format(self.pbc[0])
-        tokens.append(txt + ',\n')
+            txt = "pbc={0}".format(self.pbc[0])
+        tokens.append(txt + ",\n")
 
         cell = self.cell
         if cell:
@@ -615,11 +646,12 @@ class Qbits:
                 cell = cell.lengths().tolist()
             else:
                 cell = cell.tolist()
-            tokens.append('cell={0}'.format(cell) + ',\n')
+            tokens.append("cell={0}".format(cell) + ",\n")
         if self._calc is not None:
-            tokens.append('calculator={0}'
-                          .format(self._calc.__class__.__name__))
-        txt = '{0}(\n{1}{2})'.format(self.__class__.__name__,insep, insep.join(tokens) + '...')
+            tokens.append("calculator={0}".format(self._calc.__class__.__name__))
+        txt = "{0}(\n{1}{2})".format(
+            self.__class__.__name__, insep, insep.join(tokens) + "..."
+        )
         return txt
 
     def __add__(self, other):
@@ -638,7 +670,7 @@ class Qbits:
         for name, a1 in self.arrays.items():
             a = np.zeros((n1 + n2,) + a1.shape[1:], a1.dtype)
             a[:n1] = a1
-            if name == 'masses':
+            if name == "masses":
                 a2 = other.get_masses()
             else:
                 a2 = other.arrays.get(name)
@@ -651,7 +683,7 @@ class Qbits:
                 continue
             a = np.empty((n1 + n2,) + a2.shape[1:], a2.dtype)
             a[n1:] = a2
-            if name == 'masses':
+            if name == "masses":
                 a[:n1] = self.get_masses()[:n1]
             else:
                 a[:n1] = 0
@@ -687,7 +719,7 @@ class Qbits:
         if isinstance(i, numbers.Integral):
             nqbits = len(self)
             if i < -nqbits or i >= nqbits:
-                raise IndexError('Index out of range.')
+                raise IndexError("Index out of range.")
 
             return Qbit(qbits=self, index=i)
         elif not isinstance(i, slice):
@@ -695,9 +727,10 @@ class Qbits:
             # if i is a mask
             if i.dtype == bool:
                 if len(i) != len(self):
-                    raise IndexError('Length of mask {} must equal '
-                                     'number of qbits {}'
-                                     .format(len(i), len(self)))
+                    raise IndexError(
+                        "Length of mask {} must equal "
+                        "number of qbits {}".format(len(i), len(self))
+                    )
                 i = np.arange(len(self))[i]
 
         import copy
@@ -712,9 +745,13 @@ class Qbits:
             else:
                 conadd.append(con)
 
-        qbits = self.__class__(cell=self.cell, pbc=self.pbc, info=self.info,
-                               # should be communicated to the slice as well
-                               celldisp=self._celldisp)
+        qbits = self.__class__(
+            cell=self.cell,
+            pbc=self.pbc,
+            info=self.info,
+            # should be communicated to the slice as well
+            celldisp=self._celldisp,
+        )
         # TODO: Do we need to shuffle indices in adsorbate_info too?
 
         qbits.arrays = {}
@@ -726,10 +763,12 @@ class Qbits:
 
     def __delitem__(self, i):
         from qse.constraints import FixQbits
+
         for c in self._constraints:
             if not isinstance(c, FixQbits):
-                raise RuntimeError('Remove constraint using set_constraint() '
-                                   'before deleting qbits.')
+                raise RuntimeError(
+                    "Remove constraint using set_constraint() " "before deleting qbits."
+                )
 
         if isinstance(i, list) and len(i) > 0:
             # Make sure a list of booleans will work correctly and not be
@@ -767,8 +806,7 @@ class Qbits:
 
         for x, vec in zip(m, self.cell):
             if x != 1 and not vec.any():
-                raise ValueError('Cannot repeat along undefined lattice '
-                                 'vector')
+                raise ValueError("Cannot repeat along undefined lattice " "vector")
 
         M = np.product(m)
         n = len(self)
@@ -776,7 +814,7 @@ class Qbits:
         for name, a in self.arrays.items():
             self.arrays[name] = np.tile(a, (M,) + (1,) * (len(a.shape) - 1))
 
-        positions = self.arrays['positions']
+        positions = self.arrays["positions"]
         i0 = 0
         for m0 in range(m[0]):
             for m1 in range(m[1]):
@@ -794,6 +832,7 @@ class Qbits:
 
     def draw(self, ax=None, radius=None):
         _draw(self, ax=ax, radius=radius)
+
     #
 
     def repeat(self, rep):
@@ -816,7 +855,7 @@ class Qbits:
         The displacement argument can be a float an xyz vector or an
         nx3 array (where n is the number of qbits)."""
 
-        self.arrays['positions'] += np.array(displacement)
+        self.arrays["positions"] += np.array(displacement)
 
     def center(self, vacuum=None, axis=(0, 1, 2), about=None):
         """Center qbits in unit cell.
@@ -903,9 +942,11 @@ class Qbits:
 
         If scaled=True the center of mass in scaled coordinates
         is returned."""
-        #masses = self.get_masses()
-        #com = masses @ self.positions / masses.sum()
-        com = np.ones(self.positions.shape[0]) @ self.positions / self.positions.shape[0]
+        # masses = self.get_masses()
+        # com = masses @ self.positions / masses.sum()
+        com = (
+            np.ones(self.positions.shape[0]) @ self.positions / self.positions.shape[0]
+        )
         if scaled:
             return self.cell.scaled_positions(com)
         else:
@@ -968,7 +1009,7 @@ class Qbits:
         normv = norm(v)
 
         if normv == 0.0:
-            raise ZeroDivisionError('Cannot rotate: norm(v) == 0')
+            raise ZeroDivisionError("Cannot rotate: norm(v) == 0")
 
         if isinstance(a, numbers.Real):
             a *= pi / 180
@@ -980,7 +1021,7 @@ class Qbits:
             v /= normv
             normv2 = np.linalg.norm(v2)
             if normv2 == 0:
-                raise ZeroDivisionError('Cannot rotate: norm(a) == 0')
+                raise ZeroDivisionError("Cannot rotate: norm(a) == 0")
             v2 /= norm(v2)
             c = np.dot(v, v2)
             v = np.cross(v, v2)
@@ -999,28 +1040,29 @@ class Qbits:
 
         center = self._centering_as_array(center)
 
-        p = self.arrays['positions'] - center
-        self.arrays['positions'][:] = (c * p -
-                                       np.cross(p, s * v) +
-                                       np.outer(np.dot(p, v), (1.0 - c) * v) +
-                                       center)
+        p = self.arrays["positions"] - center
+        self.arrays["positions"][:] = (
+            c * p - np.cross(p, s * v) + np.outer(np.dot(p, v), (1.0 - c) * v) + center
+        )
         if rotate_cell:
             rotcell = self.get_cell()
-            rotcell[:] = (c * rotcell -
-                          np.cross(rotcell, s * v) +
-                          np.outer(np.dot(rotcell, v), (1.0 - c) * v))
+            rotcell[:] = (
+                c * rotcell
+                - np.cross(rotcell, s * v)
+                + np.outer(np.dot(rotcell, v), (1.0 - c) * v)
+            )
             self.set_cell(rotcell)
 
     def _centering_as_array(self, center):
         if isinstance(center, str):
-            if center.lower() == 'com':
+            if center.lower() == "com":
                 center = self.get_center_of_mass()
-            elif center.lower() == 'cop':
+            elif center.lower() == "cop":
                 center = self.get_positions().mean(axis=0)
-            elif center.lower() == 'cou':
+            elif center.lower() == "cou":
                 center = self.get_cell().sum(axis=0) / 2
             else:
-                raise ValueError('Cannot interpret center')
+                raise ValueError("Cannot interpret center")
         else:
             center = np.array(center, float)
         return center
@@ -1055,17 +1097,21 @@ class Qbits:
         # so there is no need to play with the Kronecker product.
         rcoords = self.positions - center
         # First Euler rotation about z in matrix form
-        D = np.array(((cos(phi), sin(phi), 0.),
-                      (-sin(phi), cos(phi), 0.),
-                      (0., 0., 1.)))
+        D = np.array(
+            ((cos(phi), sin(phi), 0.0), (-sin(phi), cos(phi), 0.0), (0.0, 0.0, 1.0))
+        )
         # Second Euler rotation about x:
-        C = np.array(((1., 0., 0.),
-                      (0., cos(theta), sin(theta)),
-                      (0., -sin(theta), cos(theta))))
+        C = np.array(
+            (
+                (1.0, 0.0, 0.0),
+                (0.0, cos(theta), sin(theta)),
+                (0.0, -sin(theta), cos(theta)),
+            )
+        )
         # Third Euler rotation, 2nd rotation about z:
-        B = np.array(((cos(psi), sin(psi), 0.),
-                      (-sin(psi), cos(psi), 0.),
-                      (0., 0., 1.)))
+        B = np.array(
+            ((cos(psi), sin(psi), 0.0), (-sin(psi), cos(psi), 0.0), (0.0, 0.0, 1.0))
+        )
         # Total Euler rotation
         A = np.dot(B, np.dot(C, D))
         # Do the rotation
@@ -1135,8 +1181,7 @@ class Qbits:
                 self.positions[i] = group[j].position
                 j += 1
 
-    def set_dihedral(self, a1, a2, a3, a4, angle,
-                     mask=None, indices=None):
+    def set_dihedral(self, a1, a2, a3, a4, angle, mask=None, indices=None):
         """Set the dihedral angle (degrees) between vectors a1->a2 and
         a3->a4 by changing the qbit indexed by a4.
 
@@ -1174,8 +1219,7 @@ class Qbits:
         center = self.positions[a3]
         self._masked_rotate(center, axis, diff, mask)
 
-    def rotate_dihedral(self, a1, a2, a3, a4,
-                        angle=None, mask=None, indices=None):
+    def rotate_dihedral(self, a1, a2, a3, a4, angle=None, mask=None, indices=None):
         """Rotate dihedral angle.
 
         Same usage as in :meth:`ase.Qbits.set_dihedral`: Rotate a group by a
@@ -1223,8 +1267,9 @@ class Qbits:
 
         return get_angles(v12, v32, cell=cell, pbc=pbc)
 
-    def set_angle(self, a1, a2=None, a3=None, angle=None, mask=None,
-                  indices=None, add=False):
+    def set_angle(
+        self, a1, a2=None, a3=None, angle=None, mask=None, indices=None, add=False
+    ):
         """Set angle (in degrees) formed by three qbits.
 
         Sets the angle between vectors *a2*->*a1* and *a2*->*a3*.
@@ -1237,7 +1282,7 @@ class Qbits:
         are not set, only *a3* is moved."""
 
         if any(a is None for a in [a2, a3, angle]):
-            raise ValueError('a2, a3, and angle must not be None')
+            raise ValueError("a2, a3, and angle must not be None")
 
         # If not provided, set mask to the last qbit in the angle description
         if mask is None and indices is None:
@@ -1271,18 +1316,17 @@ class Qbits:
         drawn from a normal distribution of standard deviation stdev.
 
         For a parallel calculation, it is important to use the same
-        seed on all processors!  """
+        seed on all processors!"""
 
         if seed is not None and rng is not None:
-            raise ValueError('Please do not provide both seed and rng.')
+            raise ValueError("Please do not provide both seed and rng.")
 
         if rng is None:
             if seed is None:
                 seed = 42
             rng = np.random.RandomState(seed)
-        positions = self.arrays['positions']
-        self.set_positions(positions +
-                           rng.normal(scale=stdev, size=positions.shape))
+        positions = self.arrays["positions"]
+        self.set_positions(positions + rng.normal(scale=stdev, size=positions.shape))
 
     def get_distance(self, a0, a1, mic=False, vector=False):
         """Return distance between two qbits.
@@ -1298,7 +1342,7 @@ class Qbits:
         Use mic=True to use the Minimum Image Convention.
         vector=True gives the distance vector (from a to self[indices]).
         """
-        R = self.arrays['positions']
+        R = self.arrays["positions"]
         p1 = [R[a]]
         p2 = R[indices]
 
@@ -1323,7 +1367,7 @@ class Qbits:
 
         Use mic=True to use the Minimum Image Convention.
         """
-        R = self.arrays['positions']
+        R = self.arrays["positions"]
 
         cell = None
         pbc = None
@@ -1339,8 +1383,18 @@ class Qbits:
         else:
             return D_len
 
-    def set_distance(self, a0, a1, distance, fix=0.5, mic=False,
-                     mask=None, indices=None, add=False, factor=False):
+    def set_distance(
+        self,
+        a0,
+        a1,
+        distance,
+        fix=0.5,
+        mic=False,
+        mask=None,
+        indices=None,
+        add=False,
+        factor=False,
+    ):
         """Set the distance between two qbits.
 
         Set the distance between qbits *a0* and *a1* to *distance*.
@@ -1360,7 +1414,7 @@ class Qbits:
         with *a1*. If *fix=1*, only *a0* will therefore be moved."""
 
         if a0 % len(self) == a1 % len(self):
-            raise ValueError('a0 and a1 must not be the same')
+            raise ValueError("a0 and a1 must not be the same")
 
         if add:
             oldDist = self.get_distance(a0, a1, mic=mic)
@@ -1368,12 +1422,20 @@ class Qbits:
                 newDist = oldDist * distance
             else:
                 newDist = oldDist + distance
-            self.set_distance(a0, a1, newDist, fix=fix, mic=mic,
-                              mask=mask, indices=indices, add=False,
-                              factor=False)
+            self.set_distance(
+                a0,
+                a1,
+                newDist,
+                fix=fix,
+                mic=mic,
+                mask=mask,
+                indices=indices,
+                add=False,
+                factor=False,
+            )
             return
 
-        R = self.arrays['positions']
+        R = self.arrays["positions"]
         D = np.array([R[a1] - R[a0]])
 
         if mic:
@@ -1432,12 +1494,12 @@ class Qbits:
             see :func:`ase.geometry.wrap_positions`
         """
 
-        if 'pbc' not in wrap_kw:
-            wrap_kw['pbc'] = self.pbc
+        if "pbc" not in wrap_kw:
+            wrap_kw["pbc"] = self.pbc
 
         self.positions[:] = self.get_positions(wrap=True, **wrap_kw)
 
-    # Rajarshi: Removed this for the moment as there is no usage.
+    # Rajarshi: Removed this for the moment as there is no usage.
     # def get_temperature(self): """Get the temperature in Kelvin."""
 
     def __eq__(self, other):
@@ -1450,11 +1512,13 @@ class Qbits:
             return False
         a = self.arrays
         b = other.arrays
-        return (len(self) == len(other) and
-                (a['positions'] == b['positions']).all() and
-                (a['states'] == b['states']).all() and
-                (self.cell == other.cell).all() and
-                (self.pbc == other.pbc).all())
+        return (
+            len(self) == len(other)
+            and (a["positions"] == b["positions"]).all()
+            and (a["states"] == b["states"]).all()
+            and (self.cell == other.cell).all()
+            and (self.pbc == other.pbc).all()
+        )
 
     def __ne__(self, other):
         """Check if two qbits objects are not equal.
@@ -1475,47 +1539,56 @@ class Qbits:
         """Get volume of unit cell."""
         if self.cell.rank != 3:
             raise ValueError(
-                'You have {0} lattice vectors: volume not defined'
-                .format(self.cell.rank))
+                "You have {0} lattice vectors: volume not defined".format(
+                    self.cell.rank
+                )
+            )
         return self.cell.volume
 
     def _get_positions(self):
         """Return reference to positions-array for in-place manipulations."""
-        return self.arrays['positions']
+        return self.arrays["positions"]
 
     def _set_positions(self, pos):
         """Set positions directly, bypassing constraints."""
-        self.arrays['positions'][:] = pos
+        self.arrays["positions"][:] = pos
 
-    positions = property(_get_positions, _set_positions,
-                         doc='Attribute for direct ' +
-                         'manipulation of the positions.')
+    positions = property(
+        _get_positions,
+        _set_positions,
+        doc="Attribute for direct " + "manipulation of the positions.",
+    )
 
-    # Rajarshi: Below these three written to add attribute of states 
+    # Rajarshi: Below these three written to add attribute of states
     def _get_states(self):
         """Return reference to states-array for in-place manipulations."""
-        return self.arrays['states']
+        return self.arrays["states"]
 
     def _set_states(self, sts):
         """Set states directly, bypassing constraints."""
-        self.arrays['states'][:] = sts# (sts.T / np.linalg.norm(sts, axis=1)).T # need to be normalized
+        self.arrays["states"][
+            :
+        ] = sts  # (sts.T / np.linalg.norm(sts, axis=1)).T # need to be normalized
 
     # below is equivalent to defining @property states
-    states = property(_get_states, _set_states,
-                         doc='Attribute for direct ' +
-                         'manipulation of the states.')
+    states = property(
+        _get_states,
+        _set_states,
+        doc="Attribute for direct " + "manipulation of the states.",
+    )
 
     # Rajarshi: Write method to get labels
     def _get_labels(self):
-        """ Return array of labels"""
-        return self.arrays['labels']
-    
+        """Return array of labels"""
+        return self.arrays["labels"]
+
     def _set_labels(self, lbs):
         """Set the labels directly."""
-        self.arrays['labels'][:] = lbs
-    
-    labels = property(_get_labels, _set_labels, 
-                        doc='Attribute for direct manipulation of labels')
+        self.arrays["labels"][:] = lbs
+
+    labels = property(
+        _get_labels, _set_labels, doc="Attribute for direct manipulation of labels"
+    )
 
     @property
     def cell(self):
@@ -1534,17 +1607,19 @@ class Qbits:
         kwargs are passed to ase.io.write.
         """
         from pickle import dump
-        dump(obj=self.todict(), file=open(filename, 'wb'), **kwargs)
+
+        dump(obj=self.todict(), file=open(filename, "wb"), **kwargs)
 
     def iterimages(self):
         yield self
 
-
     def to_pulser(self):
         from pulser import Register
-        return Register.from_coordinates(self.positions[:, :2], prefix='q')
+
+        return Register.from_coordinates(self.positions[:, :2], prefix="q")
+
     #
-    
+
     # Rajarshi: Deleted the edit method, which in original
     # ASE approach lets users manipulate Atoms object. At
     # some stage we may adopt similar approach depending on
@@ -1555,10 +1630,10 @@ class Qbits:
 def string2vector(v):
     """Used in rotate method to rotate qbit location"""
     if isinstance(v, str):
-        if v[0] == '-':
+        if v[0] == "-":
             return -string2vector(v[1:])
         w = np.zeros(3)
-        w['xyz'.index(v)] = 1.0
+        w["xyz".index(v)] = 1.0
         return w
     return np.array(v, float)
 

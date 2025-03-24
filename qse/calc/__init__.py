@@ -1,12 +1,13 @@
 """Interface to different QSE calculators."""
 
-__all__ = ['abc', 'calculator', 'signal']
+__all__ = ["abc", "calculator", "signal"]
 import qse.calc.abc
 import qse.calc.calculator
 
 from typing import Union
 
 np = qse.np
+
 
 class signal(object):
     """
@@ -24,43 +25,52 @@ class signal(object):
     arrays as well. However, it should be used for 1D only,
     we haven't made it useful or consistent for multi-dim usage.
     """
+
     #
-    #__slots__ = ('duration', 'values')
+    # __slots__ = ('duration', 'values')
     def __init__(self, values, duration=None) -> None:
         self.values = np.asarray(values)
         self._duration = len(self.values) if duration is None else int(duration)
+
     #
     @property
     def duration(self):
         """time duration of signal"""
         return self._duration
-    
+
     @duration.setter
     def duration(self, value):
         self._duration = value
-    
+
     def __iter__(self):
         return iter(self.values)
+
     #
     def __getitem__(self, i):
         return self.values[i]
+
     #
     def __eq__(self, other) -> bool:
         return (self.duration == other.duration) and (self.values == other.values).all()
+
     #
     def __add__(self, other):
         if isinstance(other, signal):
-            res = signal(values=np.append(self.values, other.values),
-                       duration=self.duration + other.duration)
+            res = signal(
+                values=np.append(self.values, other.values),
+                duration=self.duration + other.duration,
+            )
         else:
             if isinstance(other, Union[float, int]):
                 res = signal(values=self.values + other, duration=self.duration)
             else:
                 raise TypeError(f"wrong type for operand {type(other)}")
         return res
+
     #
     def __radd__(self, other):
         return self.__add__(other)
+
     #
     def __iadd__(self, other):
         if isinstance(other, signal):
@@ -72,6 +82,7 @@ class signal(object):
             else:
                 raise TypeError(f"wrong type for operand {type(other)}")
         return self
+
     #
     def __mul__(self, other):
         if isinstance(other, Union[float, int]):
@@ -79,9 +90,11 @@ class signal(object):
         else:
             raise TypeError(f"wrong type for operand {type(other)}")
         return res
+
     #
     def __rmul__(self, other):
         return self.__mul__(other)
+
     #
     def __imul__(self, other):
         if isinstance(other, Union[float, int]):
@@ -89,10 +102,14 @@ class signal(object):
         else:
             raise TypeError(f"wrong type for operand {type(other)}")
         return self
+
     #
     def __repr__(self) -> str:
         return f"signal(duration={self.duration}, values={self.values})"
+
     # we need to define interpolating scheme to resample points if duration is changed externally.
+
+
 #
 
 from .pulser import Pulser

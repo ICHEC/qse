@@ -1,11 +1,13 @@
-
 import numpy as np
 
 # functions adapted from ASE's Qbit/Qbits styled objects
-names = {'label': ('labels', 'R'),
-         'state': ('states', np.array([0, 1], dtype=complex)),
-        'position': ('positions', np.zeros(3)),
-         'tag': ('tags', 0)}
+names = {
+    "label": ("labels", "R"),
+    "state": ("states", np.array([0, 1], dtype=complex)),
+    "position": ("positions", np.zeros(3)),
+    "tag": ("tags", 0),
+}
+
 
 def qbitproperty(name, doc):
     """Helper function to easily create Qbit attribute property."""
@@ -31,7 +33,7 @@ def xyzproperty(index):
     def setter(self, value):
         self.position[index] = value
 
-    return property(getter, setter, doc='XYZ'[index] + '-coordinate')
+    return property(getter, setter, doc="XYZ"[index] + "-coordinate")
 
 
 class Qbit:
@@ -44,7 +46,7 @@ class Qbit:
         Can be a str or an int label.
     state: list or tuple or np.ndarray
         Quantum state of the qubit
-    position: 
+    position:
         Sequence of 3 floats qubit position.
     tag: int
         Special purpose tag.
@@ -59,31 +61,39 @@ class Qbit:
     just by
     q = Qbit()
     """
-    __slots__ = ['data', 'qbits', 'index']
 
-    def __init__(self, label='X', state=(1, 0), position=(0, 0, 0), tag=None, qbits=None, index=None):
+    __slots__ = ["data", "qbits", "index"]
+
+    def __init__(
+        self,
+        label="X",
+        state=(1, 0),
+        position=(0, 0, 0),
+        tag=None,
+        qbits=None,
+        index=None,
+    ):
 
         self.data = d = {}
 
         if qbits is None:
             # This qbit is not part of any Qbits object:
             if isinstance(label, str):
-                d['label'] = label
+                d["label"] = label
             else:
-                d['label'] = 'X'
+                d["label"] = "X"
 
             if isinstance(state, np.ndarray):
-                d['state'] = state / np.linalg.norm(state) # normalise
+                d["state"] = state / np.linalg.norm(state)  # normalise
             else:
                 t = np.array(state, complex)
-                d['state'] = t / np.linalg.norm(t)
+                d["state"] = t / np.linalg.norm(t)
                 del t
 
-            d['position'] = np.array(position, float)
-            d['tag'] = tag
+            d["position"] = np.array(position, float)
+            d["tag"] = tag
         self.index = index
         self.qbits = qbits
-
 
     @property
     def scaled_position(self):
@@ -97,18 +107,18 @@ class Qbit:
         self.position = pos
 
     def __repr__(self):
-        #s = "Qbit('%s', %s, %s" % (self.label, list(self.position), list(self.state))
+        # s = "Qbit('%s', %s, %s" % (self.label, list(self.position), list(self.state))
         s = "Qbit(label='%s'" % (self.label)
-        for name in ['position', 'state', 'tag']:
+        for name in ["position", "state", "tag"]:
             value = self.get_raw(name)
             if value is not None:
                 if isinstance(value, np.ndarray):
                     value = value.tolist()
-                s += ', %s=%s' % (name, value)
+                s += ", %s=%s" % (name, value)
         if self.qbits is None:
-            s += ')'
+            s += ")"
         else:
-            s += ', index=%d)' % self.index
+            s += ", index=%d)" % self.index
         return s
 
     def cut_reference_to_qbits(self):
@@ -140,7 +150,7 @@ class Qbit:
         """Set name attribute to value."""
         if self.qbits is None:
             assert name in names
-            if name == 'state':
+            if name == "state":
                 self.data[name] = value / np.linalg.norm(value)
             else:
                 self.data[name] = value
@@ -148,26 +158,26 @@ class Qbit:
             plural, default = names[name]
             if plural in self.qbits.arrays:
                 array = self.qbits.arrays[plural]
-                if plural == 'states':
+                if plural == "states":
                     array[self.index] = value / np.linalg.norm(value)
                 else:
                     array[self.index] = value
             else:
                 default = np.asarray(default)
-                array = np.zeros((len(self.atoms),) + default.shape,
-                                     default.dtype)
+                array = np.zeros((len(self.atoms),) + default.shape, default.dtype)
                 array[self.index] = value
                 self.atoms.new_array(plural, array)
 
     def delete(self, name):
         """Delete name attribute."""
         assert self.atoms is None
-        assert name not in ['label', 'tag', 'position', 'state']
+        assert name not in ["label", "tag", "position", "state"]
         self.data[name] = None
-    state = qbitproperty('state', 'Quantum state of qubit as 2-column')
-    label = qbitproperty('label', 'Integer label asigned to qubit')
-    position = qbitproperty('position', 'XYZ-coordinates')
-    tag = qbitproperty('tag', 'Integer tag')
+
+    state = qbitproperty("state", "Quantum state of qubit as 2-column")
+    label = qbitproperty("label", "Integer label asigned to qubit")
+    position = qbitproperty("position", "XYZ-coordinates")
+    tag = qbitproperty("tag", "Integer tag")
     x = xyzproperty(0)
     y = xyzproperty(1)
     z = xyzproperty(2)
