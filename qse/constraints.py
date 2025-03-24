@@ -2,14 +2,14 @@ from math import sqrt
 from warnings import warn
 
 import numpy as np
-from scipy.linalg import expm, logm
 from ase.calculators.calculator import PropertyNotImplementedError
-from ase.geometry import (find_mic, wrap_positions, get_distances_derivatives,
-                          get_angles_derivatives, get_dihedrals_derivatives,
-                          conditional_find_mic, get_angles, get_dihedrals)
+from ase.geometry import (conditional_find_mic, find_mic, get_angles,
+                          get_angles_derivatives, get_dihedrals,
+                          get_dihedrals_derivatives, get_distances_derivatives,
+                          wrap_positions)
+from ase.stress import full_3x3_to_voigt_6_stress, voigt_6_to_full_3x3_stress
 from ase.utils.parsemath import eval_expression
-from ase.stress import (full_3x3_to_voigt_6_stress,
-                        voigt_6_to_full_3x3_stress)
+from scipy.linalg import expm, logm
 
 __all__ = [
     'FixCartesian', 'FixBondLength', 'FixedMode',

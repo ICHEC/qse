@@ -4,7 +4,9 @@ Utility functions for a variety of usage within and outside of QSE.
 More to elaborate later on.
 """
 import numpy as np
+
 import qse
+
 
 def int2bin(x, width=32):
     """

@@ -1,10 +1,10 @@
 """Interface to different QSE calculators."""
 
 __all__ = ['abc', 'calculator', 'signal']
+from typing import Union
+
 import qse.calc.abc
 import qse.calc.calculator
-
-from typing import Union
 
 np = qse.np
 
@@ -95,5 +95,5 @@ class signal(object):
     # we need to define interpolating scheme to resample points if duration is changed externally.
 #
 
-from .pulser import Pulser
 from .myqlm import Myqlm
+from .pulser import Pulser

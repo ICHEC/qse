@@ -7,21 +7,23 @@ This module defines the central object in the QSE package: the Qbits object.
 """
 import copy
 import numbers
-from math import cos, sin, pi
+from math import cos, pi, sin
 
 import numpy as np
+
 ONE = np.array([1, 0], dtype=complex)
 TWO = np.array([0, 1], dtype=complex)
 
 import ase.units as units
-from qse.qbit import Qbit
 from ase.cell import Cell
 #from ase.stress import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
-from ase.geometry import (wrap_positions, find_mic, get_angles, get_distances,
-                          get_dihedrals)
+from ase.geometry import (find_mic, get_angles, get_dihedrals, get_distances,
+                          wrap_positions)
 from ase.utils import deprecated
 
+from qse.qbit import Qbit
 from qse.visualise import draw as _draw
+
 
 class Qbits:
     """Qbits object.

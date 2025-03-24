@@ -1,10 +1,12 @@
 #!/bin/env python3
 
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+
 import qse
-from qse.utils import squarelattice, triangularlattice, hexagonlattice, kagomelattice
+from qse.utils import (hexagonlattice, kagomelattice, squarelattice,
+                       triangularlattice)
 
 # square lattice
 square_reg = squarelattice(1, 6, 6)

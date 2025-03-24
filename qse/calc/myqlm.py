@@ -6,6 +6,7 @@ https://myqlm.github.io/
 """
 
 import numpy as np
+
 from qse.calc.calculator import Calculator, all_changes
 
 qat_available = False
@@ -51,6 +52,7 @@ print(AQPU)
 
 # analogQPU imported based on what's available
 import qat
+
 # from qat.core.variables import Variable, heaviside
 
 
