@@ -17,12 +17,17 @@ import numpy as np
 import pulser
 import pulser.pulse
 import pulser.waveforms
+
 #from pulser_simulation import Simulation, SimConfig, QutipEmulator
 from pulser_simulation import QutipEmulator
 
 from qse.calc import signal
-from qse.calc.calculator import (Calculator, CalculatorSetupError, Parameters,
-                                 all_changes)
+from qse.calc.calculator import (
+    Calculator,
+    CalculatorSetupError,
+    Parameters,
+    all_changes,
+)
 
 # from ase.calculators.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
 

@@ -16,9 +16,15 @@ TWO = np.array([0, 1], dtype=complex)
 
 import ase.units as units
 from ase.cell import Cell
+
 #from ase.stress import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
-from ase.geometry import (find_mic, get_angles, get_dihedrals, get_distances,
-                          wrap_positions)
+from ase.geometry import (
+    find_mic,
+    get_angles,
+    get_dihedrals,
+    get_distances,
+    wrap_positions,
+)
 from ase.utils import deprecated
 
 from qse.qbit import Qbit

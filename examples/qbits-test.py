@@ -5,8 +5,7 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 
 import qse
-from qse.utils import (hexagonlattice, kagomelattice, squarelattice,
-                       triangularlattice)
+from qse.utils import hexagonlattice, kagomelattice, squarelattice, triangularlattice
 
 # square lattice
 square_reg = squarelattice(1, 6, 6)
