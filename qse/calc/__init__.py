@@ -1,6 +1,8 @@
 """Interface to different QSE calculators."""
 
 __all__ = ["abc", "calculator", "signal"]
+from typing import Union
+
 import qse.calc.abc
 import qse.calc.calculator
 
