@@ -16,10 +16,10 @@ class GetPropertiesMixin(ABC):
     def get_property(self, name, qbits=None, allow_calculation=True):
         """Get the named property."""
 
-    #def get_energies(self, qbits=None):
+    # def get_energies(self, qbits=None):
     #    return self.get_property('energies', qbits)
 
-    #def get_moment(self, qbits=None):
+    # def get_moment(self, qbits=None):
     #    return self.get_property('magmom', qbits)
 
 

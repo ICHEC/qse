@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
@@ -33,7 +32,7 @@ def draw(qbits, ax=None, radius=None):
         else:
             rcut = radius
             draw_bond = True
-    
+
     print(f"rcut is {rcut}")
     nns = rij <= rcut
     np.fill_diagonal(nns, False)
@@ -45,36 +44,75 @@ def draw(qbits, ax=None, radius=None):
         C = C / C.min()
     #
     # print(x.shape, y.shape, z.shape, X.shape, Y.shape, Z.shape, U.shape, V.shape, W.shape)
-    fig = plt.figure() if rank == 3 or rank == 2 else plt.figure(figsize=(12,3))
+    fig = plt.figure() if rank == 3 or rank == 2 else plt.figure(figsize=(12, 3))
 
-    ax = fig.add_subplot(projection='3d') if rank == 3 else fig.add_subplot()
+    ax = fig.add_subplot(projection="3d") if rank == 3 else fig.add_subplot()
     # set the aspect ratio to 1, so that the ratio is actually
     # proportional to data size in x, y, z direction.
     if rank == 1:
         ax.set_aspect(len(qbits))
     else:
-        ax.set_aspect('equal')
-    #ax.set_xlabel('x', labelpad=-12)
-    #ax.set_ylabel('y', labelpad=-12)
+        ax.set_aspect("equal")
+    # ax.set_xlabel('x', labelpad=-12)
+    # ax.set_ylabel('y', labelpad=-12)
     ax.set_xticks([])
     ax.set_yticks([])
-    if rank == 3: #ax.set_zlabel('z', labelpad=-12)
+    if rank == 3:  # ax.set_zlabel('z', labelpad=-12)
         ax.set_zticks([])
-    
+
     if rank == 3:
         if draw_bond:
-            ax.quiver(X, Y, Z, U, V, W, arrow_length_ratio=0, linewidth=0.3, color='gray', alpha=1/C**3)
-        ax.scatter(x, y, z, 'o', color='blue')
+            ax.quiver(
+                X,
+                Y,
+                Z,
+                U,
+                V,
+                W,
+                arrow_length_ratio=0,
+                linewidth=0.3,
+                color="gray",
+                alpha=1 / C**3,
+            )
+        ax.scatter(x, y, z, "o", color="blue")
     if rank == 2:
         if draw_bond:
-            ax.quiver(X, Y, U, V, linewidth=1, angles='xy', scale_units='xy', scale=2, headaxislength=0, headlength=0, color='gray', alpha=1/C**3)
-        ax.plot(x, y, 'o', color='green')
+            ax.quiver(
+                X,
+                Y,
+                U,
+                V,
+                linewidth=1,
+                angles="xy",
+                scale_units="xy",
+                scale=2,
+                headaxislength=0,
+                headlength=0,
+                color="gray",
+                alpha=1 / C**3,
+            )
+        ax.plot(x, y, "o", color="green")
     if rank == 1:
         # y = np.zeros(x.shape)
         if draw_bond:
-            ax.quiver(X, Y, U, V, linewidth=1, angles='xy', scale_units='xy', scale=1, headaxislength=0, headlength=0, color='gray', alpha=1/C**3)
-        ax.plot(x, y, 'o', ms=9, color='red')
+            ax.quiver(
+                X,
+                Y,
+                U,
+                V,
+                linewidth=1,
+                angles="xy",
+                scale_units="xy",
+                scale=1,
+                headaxislength=0,
+                headlength=0,
+                color="gray",
+                alpha=1 / C**3,
+            )
+        ax.plot(x, y, "o", ms=9, color="red")
     #
+
+
 #
 
 """

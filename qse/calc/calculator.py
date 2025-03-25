@@ -83,11 +83,10 @@ def compare_qbits(qbits1, qbits2, tol=1e-15, excluded_properties=None):
 
         # Check properties that aren't in Qbits.arrays but are attributes of
         # Qbits objects
-        for prop in ['cell', 'pbc']:
+        for prop in ["cell", "pbc"]:
             if prop in properties_to_check:
                 properties_to_check.remove(prop)
-                if not equal(getattr(qbits1, prop), getattr(qbits2, prop),
-                             atol=tol):
+                if not equal(getattr(qbits1, prop), getattr(qbits2, prop), atol=tol):
                     system_changes.append(prop)
 
         arrays1 = set(qbits1.arrays)
@@ -109,27 +108,30 @@ def compare_qbits(qbits1, qbits2, tol=1e-15, excluded_properties=None):
     return system_changes
 
 
-all_properties = ['energy', 'energies'] # Rajarshi: this needs to populate according to usage
+all_properties = [
+    "energy",
+    "energies",
+]  # Rajarshi: this needs to populate according to usage
 
 
-all_changes = ['labels', 'positions', 'states', 'cell', 'pbc']
+all_changes = ["labels", "positions", "states", "cell", "pbc"]
 
 # Recognized names of calculators sorted alphabetically:
-names = ['myqlm', 'pulser', 'qiskit']
+names = ["myqlm", "pulser", "qiskit"]
 
 
 special = {
-    'myqlm': 'MYQLM',
-    'pulser': 'Pulser',
-    'qiskit': 'Qiskit',
-    }
+    "myqlm": "MYQLM",
+    "pulser": "Pulser",
+    "qiskit": "Qiskit",
+}
 
 
 external_calculators = {}
 
 
 def register_calculator_class(name, cls):
-    """ Add the class into the database. """
+    """Add the class into the database."""
     assert name not in external_calculators
     external_calculators[name] = cls
     names.append(name)
@@ -138,15 +140,15 @@ def register_calculator_class(name, cls):
 
 def get_calculator_class(name):
     """Return calculator class."""
-    if name == 'pulser':
+    if name == "pulser":
         from qse.calc.pulser import Pulser as Calculator
-    elif name == 'myqlm':
+    elif name == "myqlm":
         from qse.calc.myqlm import MyQLM as Calculator
     elif name in external_calculators:
         Calculator = external_calculators[name]
     else:
         classname = special.get(name, name.title())
-        module = __import__('qse.calculators.' + name, {}, None, [classname])
+        module = __import__("qse.calculators." + name, {}, None, [classname])
         Calculator = getattr(module, classname)
     return Calculator
 
@@ -158,10 +160,11 @@ def equal(a, b, tol=None, rtol=None, atol=None):
     #  * Infinite recursion for cyclic dicts
     #  * Can of worms is open
     if tol is not None:
-        msg = 'Use `equal(a, b, rtol=..., atol=...)` instead of `tol=...`'
+        msg = "Use `equal(a, b, rtol=..., atol=...)` instead of `tol=...`"
         warnings.warn(msg, DeprecationWarning)
-        assert rtol is None and atol is None, \
-            'Do not use deprecated `tol` with `atol` and/or `rtol`'
+        assert (
+            rtol is None and atol is None
+        ), "Do not use deprecated `tol` with `atol` and/or `rtol`"
         rtol = tol
         atol = tol
 
@@ -219,6 +222,7 @@ class EigenvalOccupationMixin:
         return arr
 """
 
+
 class Parameters(dict):
     """Dictionary for parameters.
 
@@ -240,10 +244,11 @@ class Parameters(dict):
         # We use ast to evaluate literals, avoiding eval()
         # for security reasons.
         import ast
+
         with open(filename) as fd:
             txt = fd.read().strip()
-        assert txt.startswith('dict(')
-        assert txt.endswith(')')
+        assert txt.startswith("dict(")
+        assert txt.endswith(")")
         txt = txt[5:-1]
 
         # The tostring() representation "dict(...)" is not actually
@@ -251,10 +256,10 @@ class Parameters(dict):
         # formatting that we did manually:
         dct = {}
         for line in txt.splitlines():
-            key, val = line.split('=', 1)
+            key, val = line.split("=", 1)
             key = key.strip()
             val = val.strip()
-            if val[-1] == ',':
+            if val[-1] == ",":
                 val = val[:-1]
             dct[key] = ast.literal_eval(val)
 
@@ -263,8 +268,11 @@ class Parameters(dict):
 
     def tostring(self):
         keys = sorted(self)
-        return 'dict(' + ',\n     '.join(
-            '{}={!r}'.format(key, self[key]) for key in keys) + ')\n'
+        return (
+            "dict("
+            + ",\n     ".join("{}={!r}".format(key, self[key]) for key in keys)
+            + ")\n"
+        )
 
     def write(self, filename):
         pathlib.Path(filename).write_text(self.tostring())
@@ -284,18 +292,18 @@ class Calculator(GetPropertiesMixin):
     """
 
     implemented_properties: List[str] = []
-    'Properties calculator can handle (energy, forces, ...)'
+    "Properties calculator can handle (energy, forces, ...)"
 
     default_parameters: Dict[str, Any] = {}
-    'Default parameters'
+    "Default parameters"
 
     ignored_changes: Set[str] = set()
-    'Properties of Qbits which we ignore for the purposes of cache '
-    'invalidation with check_state().'
+    "Properties of Qbits which we ignore for the purposes of cache "
+    "invalidation with check_state()."
 
     discard_results_on_any_change = False
-    'Whether we purge the results following any change in the set() method.  '
-    'Most (file I/O) calculators will probably want this.'
+    "Whether we purge the results following any change in the set() method.  "
+    "Most (file I/O) calculators will probably want this."
 
     _deprecated = object()
 
@@ -311,15 +319,15 @@ class Calculator(GetPropertiesMixin):
             unit-cell updated from file.
         """
         # print(kwargs.keys())
-        self._qbits = kwargs.get('qbits') # copy of qbits object from last calculation
-        self._label = kwargs.get('label')
-        #self._label = label
-        #self.qbits = qbits
-        #self.label = kwargs.get('label')
+        self._qbits = kwargs.get("qbits")  # copy of qbits object from last calculation
+        self._label = kwargs.get("label")
+        # self._label = label
+        # self.qbits = qbits
+        # self.label = kwargs.get('label')
         self.results = {}  # calculated properties (energy, forces, ...)
         self.parameters = None  # calculational parameters
         self.prefix = None
-        #print(self.label)
+        # print(self.label)
         if self.parameters is None:
             # Use default parameters if they were not read from file:
             self.parameters = self.get_default_parameters()
@@ -327,9 +335,9 @@ class Calculator(GetPropertiesMixin):
         if self.qbits is not None:
             self.qbits.calc = self
 
-        #self.set(**kwargs)
+        # self.set(**kwargs)
 
-        if not hasattr(self, 'name'):
+        if not hasattr(self, "name"):
             self.name = self.__class__.__name__.lower()
 
     @property
@@ -347,11 +355,11 @@ class Calculator(GetPropertiesMixin):
         defaults = self.get_default_parameters()
         dct = {}
         for key, value in self.parameters.items():
-            if hasattr(value, 'todict'):
+            if hasattr(value, "todict"):
                 value = value.todict()
             if skip_default:
-                default = defaults.get(key, '_no_default_')
-                if default != '_no_default_' and equal(value, default):
+                default = defaults.get(key, "_no_default_")
+                if default != "_no_default_" and equal(value, default):
                     continue
             dct[key] = value
         return dct
@@ -393,18 +401,19 @@ class Calculator(GetPropertiesMixin):
             qbits.calc = self
         return qbits
 
-    #def set_qbits(self, qbits):
+    # def set_qbits(self, qbits):
     #    self.qbits = qbits
     #    #qbits.calc = self
     @property
     def qbits(self):
         return self._qbits
+
     @qbits.setter
     def qbits(self, qbits):
         self._qbits = qbits
-    
-    #qbits = property(fget=get_qbits, fset=set_qbits, doc=f'qbits property, getter {get_qbits}, setter {set_qbits}')
-    
+
+    # qbits = property(fget=get_qbits, fset=set_qbits, doc=f'qbits property, getter {get_qbits}, setter {set_qbits}')
+
     @classmethod
     def read_qbits(cls, restart, **kwargs):
         return cls(restart=restart, label=restart, **kwargs).get_qbits()
@@ -423,8 +432,8 @@ class Calculator(GetPropertiesMixin):
         The special keyword 'parameters' can be used to read
         parameters from a file."""
 
-        if 'parameters' in kwargs:
-            filename = kwargs.pop('parameters')
+        if "parameters" in kwargs:
+            filename = kwargs.pop("parameters")
             parameters = Parameters.read(filename)
             parameters.update(kwargs)
             kwargs = parameters
@@ -443,27 +452,30 @@ class Calculator(GetPropertiesMixin):
 
     def check_state(self, qbits, tol=1e-15):
         """Check for any system changes since last calculation."""
-        return compare_qbits(self.qbits, qbits, tol=tol,
-                             excluded_properties=set(self.ignored_changes))
+        return compare_qbits(
+            self.qbits, qbits, tol=tol, excluded_properties=set(self.ignored_changes)
+        )
 
     def get_energy(self, qbits=None, force_consistent=False):
-        energy = self.get_property('energy', qbits)
+        energy = self.get_property("energy", qbits)
         if force_consistent:
-            if 'free_energy' not in self.results:
+            if "free_energy" not in self.results:
                 name = self.__class__.__name__
                 # XXX but we don't know why the energy is not there.
                 # We should raise PropertyNotPresent.  Discuss
                 raise PropertyNotImplementedError(
                     'Force consistent/free energy ("free_energy") '
-                    'not provided by {0} calculator'.format(name))
-            return self.results['free_energy']
+                    "not provided by {0} calculator".format(name)
+                )
+            return self.results["free_energy"]
         else:
             return energy
 
     def get_property(self, name, qbits=None, allow_calculation=True):
         if name not in self.implemented_properties:
-            raise PropertyNotImplementedError('{} property not implemented'
-                                              .format(name))
+            raise PropertyNotImplementedError(
+                "{} property not implemented".format(name)
+            )
 
         if qbits is None:
             qbits = self.qbits
@@ -480,8 +492,9 @@ class Calculator(GetPropertiesMixin):
         if name not in self.results:
             # For some reason the calculator was not able to do what we want,
             # and that is OK.
-            raise PropertyNotImplementedError('{} not present in this '
-                                              'calculation'.format(name))
+            raise PropertyNotImplementedError(
+                "{} not present in this " "calculation".format(name)
+            )
 
         result = self.results[name]
         if isinstance(result, np.ndarray):
@@ -498,8 +511,7 @@ class Calculator(GetPropertiesMixin):
                 return True
         return False
 
-    def calculate(self, qbits=None, properties=['energy'],
-                  system_changes=all_changes):
+    def calculate(self, qbits=None, properties=["energy"], system_changes=all_changes):
         """Do the calculation.
 
         properties: list of str
@@ -538,7 +550,7 @@ class Calculator(GetPropertiesMixin):
         """This method is experimental; currently for internal use."""
         for name in properties:
             if name not in all_outputs:
-                raise ValueError(f'No such property: {name}')
+                raise ValueError(f"No such property: {name}")
 
         # We ignore system changes for now.
         self.calculate(qbits, properties, system_changes=all_changes)
@@ -558,38 +570,46 @@ class FileIOCalculator(Calculator):
     """Base class for calculators that write/read input/output files."""
 
     command: Optional[str] = None
-    'Command used to start calculation'
+    "Command used to start calculation"
 
-    def __init__(self, restart=None,
-                 ignore_bad_restart_file=Calculator._deprecated,
-                 label=None, qbits=None, command=None, **kwargs):
+    def __init__(
+        self,
+        restart=None,
+        ignore_bad_restart_file=Calculator._deprecated,
+        label=None,
+        qbits=None,
+        command=None,
+        **kwargs,
+    ):
         """File-IO calculator.
 
         command: str
             Command used to start calculation.
         """
 
-        Calculator.__init__(self, restart, ignore_bad_restart_file, label,
-                            qbits, **kwargs)
+        Calculator.__init__(
+            self, restart, ignore_bad_restart_file, label, qbits, **kwargs
+        )
 
         if command is not None:
             self.command = command
         else:
-            name = 'ASE_' + self.name.upper() + '_COMMAND'
+            name = "ASE_" + self.name.upper() + "_COMMAND"
             self.command = os.environ.get(name, self.command)
 
-    def calculate(self, qbits=None, properties=['energy'],
-                  system_changes=all_changes):
+    def calculate(self, qbits=None, properties=["energy"], system_changes=all_changes):
         Calculator.calculate(self, qbits, properties, system_changes)
         self.write_input(self.qbits, properties, system_changes)
         if self.command is None:
             raise CalculatorSetupError(
-                'Please set ${} environment variable '
-                .format('ASE_' + self.name.upper() + '_COMMAND') +
-                'or supply the command keyword')
+                "Please set ${} environment variable ".format(
+                    "ASE_" + self.name.upper() + "_COMMAND"
+                )
+                + "or supply the command keyword"
+            )
         command = self.command
-        if 'PREFIX' in command:
-            command = command.replace('PREFIX', self.prefix)
+        if "PREFIX" in command:
+            command = command.replace("PREFIX", self.prefix)
 
         try:
             proc = subprocess.Popen(command, shell=True, cwd=self.directory)
@@ -605,9 +625,10 @@ class FileIOCalculator(Calculator):
 
         if errorcode:
             path = os.path.abspath(self.directory)
-            msg = ('Calculator "{}" failed with command "{}" failed in '
-                   '{} with error code {}'.format(self.name, command,
-                                                  path, errorcode))
+            msg = (
+                'Calculator "{}" failed with command "{}" failed in '
+                "{} with error code {}".format(self.name, command, path, errorcode)
+            )
             raise CalculationFailed(msg)
 
         self.read_results()

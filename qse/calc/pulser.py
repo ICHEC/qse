@@ -5,7 +5,6 @@ ASE calculator.
 https://pulser.readthedocs.io/en/stable/
 """
 
-
 import os
 import os.path
 from abc import ABCMeta
@@ -18,7 +17,7 @@ import pulser
 import pulser.pulse
 import pulser.waveforms
 
-#from pulser_simulation import Simulation, SimConfig, QutipEmulator
+# from pulser_simulation import Simulation, SimConfig, QutipEmulator
 from pulser_simulation import QutipEmulator
 
 from qse.calc import signal
@@ -30,8 +29,6 @@ from qse.calc.calculator import (
 )
 
 # from ase.calculators.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
-
-
 
 
 class Pulser(Calculator):
@@ -91,15 +88,25 @@ class Pulser(Calculator):
         Default is 'LOW'
     """
 
-    implemented_properties = ['energy', 'state', 'fidality']
+    implemented_properties = ["energy", "state", "fidality"]
     default_parameters = dict(
         auto_write=False,
-        folder='./',
+        folder="./",
         max_scf=50,
-        print_level='LOW', label='q', qbits=None)
+        print_level="LOW",
+        label="q",
+        qbits=None,
+    )
 
-    def __init__(self, qbits=None, amplitude=None, detuning=None,
-                 device=None, emulator=None, label='pulser-run'):
+    def __init__(
+        self,
+        qbits=None,
+        amplitude=None,
+        detuning=None,
+        device=None,
+        emulator=None,
+        label="pulser-run",
+    ):
         """Construct pulser-calculator object.
         we need qubits, amplitude, detuning, device and emulator.
         """
@@ -129,46 +136,59 @@ class Pulser(Calculator):
             amp = self.amplitude
         else:
             amp = pulser.waveforms.InterpolatedWaveform(
-                duration=self.duration, values=self.amplitude.values)
+                duration=self.duration, values=self.amplitude.values
+            )
         if wd:
             det = self.detuning
         else:
             det = pulser.waveforms.InterpolatedWaveform(
-                duration=self.duration, values=self.detuning.values)
-        
+                duration=self.duration, values=self.detuning.values
+            )
+
         self.pulse = pulser.Pulse(amplitude=amp, detuning=det, phase=0)
 
-        #self.pulse = pulser.Pulse(
+        # self.pulse = pulser.Pulse(
         #    amplitude=pulser.waveforms.InterpolatedWaveform(
         #        duration=self.duration,
         #        values=self.amplitude.values),
         #        duration=self.duration,
         #    detuning=pulser.waveforms.InterpolatedWaveform(
         #        values=self.detuning.values), phase=0
-        #)
+        # )
         # pulser part which defines Hamiltonian parameters done. #
         self._register, self._sequence, self._sim = None, None, None
         self.qbits = qbits if qbits is not None else None
+
     # end of init #
 
     # defines properties #
     @property
     def qbits(self):
         return self._qbits
+
     @Calculator.qbits.setter
-    def qbits(self, qbits, prefix='q'):
+    def qbits(self, qbits, prefix="q"):
         if qbits is None:
-            self._qbits, self._coords, self._register, self._sequence = None, None, None, None
+            self._qbits, self._coords, self._register, self._sequence = (
+                None,
+                None,
+                None,
+                None,
+            )
         else:
             self._qbits = qbits
             self._coords = qbits.positions[:, :2]
-            self._register = pulser.Register.from_coordinates(self.coords, prefix=prefix)
+            self._register = pulser.Register.from_coordinates(
+                self.coords, prefix=prefix
+            )
             self.sequence = pulser.Sequence
+
     #
-    
+
     @property
     def coords(self):
         return self._coords
+
     @property
     def register(self):
         return self._register
@@ -176,6 +196,7 @@ class Pulser(Calculator):
     @property
     def sequence(self):
         return self._sequence
+
     @sequence.setter
     def sequence(self, sequence):
         self._sequence = sequence(self.register, self.device)
@@ -183,12 +204,11 @@ class Pulser(Calculator):
         self._sequence.add(self.pulse, "ch0")
         self._sequence.measure("ground-rydberg")
         self._sim = self.emulator.from_sequence(self._sequence)
-    
+
     @property
     def sim(self):
         return self._sim
 
-        
     def build_sequence(self):
         pass
 
@@ -198,9 +218,11 @@ class Pulser(Calculator):
 
     def set(self, **kwargs):
         """Set parameters like set(key1=value1, key2=value2, ...)."""
-        msg = '"%s" is not a known keyword for the Pulser calculator. ' \
-              'To access all features of Pulser by means of an input ' \
-              'template, consider using the "inp" keyword instead.'
+        msg = (
+            '"%s" is not a known keyword for the Pulser calculator. '
+            "To access all features of Pulser by means of an input "
+            'template, consider using the "inp" keyword instead.'
+        )
         for key in kwargs:
             if key not in self.default_parameters:
                 raise CalculatorSetupError(msg % key)
@@ -210,22 +232,22 @@ class Pulser(Calculator):
             self.reset()
 
     def write(self, label):
-        'Write qbits, parameters and calculated results into restart files.'
-        #if self._debug:
+        "Write qbits, parameters and calculated results into restart files."
+        # if self._debug:
         #    print("Writing restart to: ", label)
-        #self.qbits.write(label + '_restart.traj')
-        #self.parameters.write(label + '_params.ase')
-        #from ase.io.jsonio import write_json
-        #with open(label + '_results.json', 'w') as fd:
+        # self.qbits.write(label + '_restart.traj')
+        # self.parameters.write(label + '_params.ase')
+        # from ase.io.jsonio import write_json
+        # with open(label + '_results.json', 'w') as fd:
         #    write_json(fd, self.results)
         pass
 
     def read(self, label):
-        'Read qbits, parameters and calculated results from restart files.'
-        #self.qbits = ase.io.read(label + '_restart.traj')
-        #self.parameters = Parameters.read(label + '_params.ase')
-        #from ase.io.jsonio import read_json
-        #with open(label + '_results.json') as fd:
+        "Read qbits, parameters and calculated results from restart files."
+        # self.qbits = ase.io.read(label + '_restart.traj')
+        # self.parameters = Parameters.read(label + '_params.ase')
+        # from ase.io.jsonio import read_json
+        # with open(label + '_results.json') as fd:
         #    self.results = read_json(fd)
         pass
 
@@ -238,9 +260,10 @@ class Pulser(Calculator):
         self.results = self.sim.run(progress_bar=progress)
         # self.qbits.states = self.results.get_final_state()
         self.final_state = self.results.get_final_state()
-        #if self.parameters.auto_write:
+        # if self.parameters.auto_write:
         #    self.write(self.label)
         self.spins = self.get_spins()
+
     #
 
     def get_correlation(self, n_samples=1000):
@@ -248,11 +271,11 @@ class Pulser(Calculator):
         sample = self.results.sample_final_state(N_samples=n_samples)
         arr = np.zeros(self.qbits.nqbits)
         for k, v in sample.items():
-            local = np.array(list(k), dtype=float) * 2 - 1 
+            local = np.array(list(k), dtype=float) * 2 - 1
             arr += local * v
         arr /= n_samples
         return arr
-    
+
     def get_spins(self):
         if self.results is None:
             self.calculate()
@@ -262,8 +285,9 @@ class Pulser(Calculator):
         for ii, ss in enumerate(self.final_state):
             st = ss[0][0]
             prob = (st * st.conj()).real
-            zi = np.array([1-2*int(i) for i in list(bin(ii)[2:].zfill(nqbits))], dtype=float)
+            zi = np.array(
+                [1 - 2 * int(i) for i in list(bin(ii)[2:].zfill(nqbits))], dtype=float
+            )
             szi += prob * zi
         #
         return szi
-
