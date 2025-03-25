@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install flake8 pytest
+        python -m pip install flake8 pytest black isort
         pip install .
     - name: Lint with flake8
       run: |
@@ -33,10 +33,10 @@ jobs:
         flake8 ./qse --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Sort imports with isort
       run: |
-        isort
+        isort .
     - name: Format code with black
       run: |
-        black
+        black .
     - name: Test with pytest
       run: |
         pytest
