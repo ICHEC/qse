@@ -27,3 +27,6 @@ dev = [
 ignore_missing_imports = true
 no_implicit_optional = false
 enable_error_code = 'ignore-without-code'
+
+[tool.isort]
+profile = "black"

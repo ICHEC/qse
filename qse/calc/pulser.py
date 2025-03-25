@@ -6,24 +6,33 @@ https://pulser.readthedocs.io/en/stable/
 """
 
 
-from abc import ABCMeta
 import os
 import os.path
+from abc import ABCMeta
+from subprocess import PIPE, Popen
 from warnings import warn
-from subprocess import Popen, PIPE
+
+import ase.io
 import numpy as np
+import pulser
 import pulser.pulse
 import pulser.waveforms
+
+#from pulser_simulation import Simulation, SimConfig, QutipEmulator
+from pulser_simulation import QutipEmulator
+
 from qse.calc import signal
-import ase.io
-from qse.calc.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
+from qse.calc.calculator import (
+    Calculator,
+    CalculatorSetupError,
+    Parameters,
+    all_changes,
+)
+
 # from ase.calculators.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
 
 
 
-import pulser
-#from pulser_simulation import Simulation, SimConfig, QutipEmulator
-from pulser_simulation import QutipEmulator
 
 class Pulser(Calculator):
     """QSE-Calculator for pulser.
