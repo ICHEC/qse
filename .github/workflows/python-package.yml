@@ -18,6 +18,8 @@ jobs:
     - uses: actions/checkout@v4
     - uses: psf/black@stable
     - uses: isort/isort-action@v1
+      with: 
+        --profile black
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
