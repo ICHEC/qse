@@ -4,7 +4,7 @@ boilerplace method definitions (i.e. duplication) in calculators.
 """
 
 from abc import ABC, abstractmethod
-from typing import Mapping, Any
+from typing import Any, Mapping
 
 
 class GetPropertiesMixin(ABC):

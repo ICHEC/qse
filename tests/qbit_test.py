@@ -1,6 +1,7 @@
-import qse
 import numpy as np
 import pytest
+
+import qse
 
 
 @pytest.mark.parametrize("label", ["a" * 3, "123a"])

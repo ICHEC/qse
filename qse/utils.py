@@ -5,6 +5,7 @@ More to elaborate later on.
 """
 
 import numpy as np
+
 import qse
 
 

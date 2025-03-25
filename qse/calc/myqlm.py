@@ -6,6 +6,7 @@ https://myqlm.github.io/
 """
 
 import numpy as np
+
 from qse.calc.calculator import Calculator, all_changes
 
 qat_available = False

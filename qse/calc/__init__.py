@@ -4,8 +4,6 @@ __all__ = ["abc", "calculator", "signal"]
 import qse.calc.abc
 import qse.calc.calculator
 
-from typing import Union
-
 np = qse.np
 
 
@@ -112,5 +110,5 @@ class signal(object):
 
 #
 
-from .pulser import Pulser
 from .myqlm import Myqlm
+from .pulser import Pulser
