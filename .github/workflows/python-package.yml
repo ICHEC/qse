@@ -32,7 +32,7 @@ jobs:
         flake8 ./qse --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Sort imports with isort
       run: |
-        isort .
+        isort . --check --diff
     - name: Format code with black
       run: |
         black .
