@@ -6,12 +6,12 @@
 This module defines the central object in the QSE package: the Qbits object.
 """
 import copy
-from math import cos, pi, sin
 import numbers
+from math import cos, pi, sin
 
 import numpy as np
 
-ONE = np.array([1, 0], dtype=complex)
+ONE = np.array([1, 0 ], dtype=complex)
 TWO = np.array([0, 1], dtype=complex)
 
 import ase.units as units
