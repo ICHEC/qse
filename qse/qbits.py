@@ -6,8 +6,8 @@
 This module defines the central object in the QSE package: the Qbits object.
 """
 import copy
-import numbers
 from math import cos, pi, sin
+import numbers
 
 import numpy as np
 
