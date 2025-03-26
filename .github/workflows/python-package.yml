@@ -35,7 +35,7 @@ jobs:
         isort . --check --diff
     - name: Format code with black
       run: |
-        black .
+        black . --check --diff
     - name: Install qse and dependencies
       run: |
         pip install .
