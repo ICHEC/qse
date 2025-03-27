@@ -57,10 +57,16 @@ We adhere to [PEP 8](https://peps.python.org/pep-0008/) style guidelines and use
 - [Flake8](https://flake8.pycqa.org/en/latest/) (for style guide enforcement)
 - [isort](https://pycqa.github.io/isort/) (for sorting imports)
 - [black](https://github.com/psf/black) (for code formatting)
+
 To install these tools use
 ```bash
-pip install pip install flake8 black isort
+pip install flake8 black isort
 ```
+or
+```bash
+pip install -r dev_requirements.txt
+```
+
 To run `black` on all python files within a directory, use
 ```bash
 black .
@@ -80,7 +86,7 @@ To run `pytest` use
 ```bash
 pytest
 ```
-this will search recursively for any files of the form `test_*.py` or `_test.py` (for imformation on how `pytest` searches for tests see [here](https://docs.pytest.org/en/7.1.x/explanation/goodpractices.html#conventions-for-python-test-discovery)). 
+this will search recursively for any files of the form `test_*.py` or `_test.py` (for information on how `pytest` searches for tests see [here](https://docs.pytest.org/en/7.1.x/explanation/goodpractices.html#conventions-for-python-test-discovery)). 
 To run `pytest` on a single file use
 ```bash
 pytest <filename>
