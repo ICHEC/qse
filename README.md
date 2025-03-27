@@ -58,9 +58,11 @@ We adhere to [PEP 8](https://peps.python.org/pep-0008/) style guidelines and use
 - [isort](https://pycqa.github.io/isort/) (for sorting imports)
 - [black](https://github.com/psf/black) (for code formatting)
 
+and we use [pytest](https://docs.pytest.org/en/stable/) for running unit tests.
+
 To install these tools use
 ```bash
-pip install flake8 black isort
+pip install flake8 black isort pytest
 ```
 or
 ```bash
@@ -77,10 +79,6 @@ isort .
 ```
 One can run `black` or `isort` on a single file by changing `.` to `<file_name>`.
 
-We test our code with [pytest](https://docs.pytest.org/en/stable/), it can be installed using
-```bash
-pip install pytest
-```
 All tests should be in the `tests` directory.
 To run `pytest` use
 ```bash
