@@ -1,14 +1,41 @@
-# qse
-Quantum Simulation Environment.
-
-
 # QSE
-The Quantum Simulation Environment (QSE) is package adapted from Atomic Simulation Environment (ASE) to suit the needs for an abstract representation for defining a `i. quantum computing system`, and 
-`ii. computing operations/simulations` in a vendor agnostic way. ASE's modular nature, and extensability make it very useful for a similar quantum computing application.
+The Quantum Simulation Environment (QSE) package is adapted from Atomic Simulation Environment (ASE) to suit the needs for an abstract representation for
+- `i. defining quantum computing systems`
+- `ii. computing operations/simulations`
+
+in a vendor agnostic way. ASE's modular nature, and extensability make it very useful for a similar quantum computing application.
 
 
-## Installation
+## Installation (new)
+It is recommmended to install within a new Conda environment.
+To create a new conda environment use
+```bash
+conda create -n <my-env>
+```
+then activate this environment with
+```bash
+conda activate <my-env>
+```
+Install pip using
+```bash
+conda install pip
+```
 
+Make sure you're in the directory where the `pyproject.toml` file is situated and install the package and its dependencies using `pip`
+```bash
+pip install .
+```
+If you want to be able to edit the code and have the changes immediately take place without requiring a new installation, use the editable flag
+```bash
+pip install -e .
+```
+You can verify the package and dependencies were installed correctly with
+```bash
+pip list
+```
+if you installed `qse` in editable mode, it should have a Editable project location.
+
+## Installation (old)
 Currently it's a pure python packages, so with the source all one needs is to save the repo somewhere, and add it to the `$PYTHONPATH`.
 
 One can make a python wheel for it by simply running the following in the downloaded folder where `pyproject.toml` file is situated, assuming you have build module installed in your python environment (it can be installed through `pip install build`).
@@ -25,6 +52,41 @@ pip install path-to-qse-wheel.whl
 
 >[TIP] Most of the dependencies are added in the packaging, so it's recommended to install the wheel in a fresh or empty python environment, whether created using conda, or venv.
 
+## Contributing
+We adhere to [PEP 8](https://peps.python.org/pep-0008/) style guidelines and use the following formatting tools:
+- [Flake8](https://flake8.pycqa.org/en/latest/) (for style guide enforcement)
+- [isort](https://pycqa.github.io/isort/) (for sorting imports)
+- [black](https://github.com/psf/black) (for code formatting)
+To install these tools use
+```bash
+pip install pip install flake8 black isort
+```
+To run `black` on all python files within a directory, use
+```bash
+black .
+```
+Similarly to run `isort` on all python files within a directory, use
+```bash
+isort .
+```
+One can run `black` or `isort` on a single file by changing `.` to `<file_name>`.
+
+We test our code with [pytest](https://docs.pytest.org/en/stable/), it can be installed using
+```bash
+pip install pytest
+```
+All tests should be in the `tests` directory.
+To run `pytest` use
+```bash
+pytest
+```
+this will search recursively for any files of the form `test_*.py` or `_test.py` (for imformation on how `pytest` searches for tests see [here](https://docs.pytest.org/en/7.1.x/explanation/goodpractices.html#conventions-for-python-test-discovery)). 
+To run `pytest` on a single file use
+```bash
+pytest <filename>
+```
+
+## QSE Overview
 Following are the primary classes for the QSE -
 
 |Class  | Description                            |
