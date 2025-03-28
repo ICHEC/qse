@@ -39,3 +39,17 @@ def test_get_all_distances():
     )
 
     assert np.allclose(qbits.get_all_distances(), distances)
+
+
+@pytest.mark.parametrize(
+    "positions",
+    [
+        np.array([[-1, 0, 0], [1, 0, 0]]),
+        np.array([[-1, 0, 0], [1, 0, 0], [1, 2, 0], [1, -2, 6], [-2, 0, -6]]),
+    ],
+)
+@pytest.mark.parametrize("center_of_mass", [0.0, 1.0])
+def test_centre_of_mass(positions, center_of_mass):
+    """Test get_center_of_mass, note the positions parametrized all have zero COM."""
+    qbits = qse.Qbits(positions=positions + center_of_mass)
+    assert np.allclose(qbits.get_center_of_mass(), [center_of_mass] * 3)

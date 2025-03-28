@@ -939,24 +939,19 @@ class Qbits:
 
         If scaled=True the center of mass in scaled coordinates
         is returned."""
-        # masses = self.get_masses()
-        # com = masses @ self.positions / masses.sum()
-        com = (
-            np.ones(self.positions.shape[0]) @ self.positions / self.positions.shape[0]
-        )
-        ####com = self.positions.mean(0)
+        center_of_mass = self.positions.mean(0)
         if scaled:
-            return self.cell.scaled_positions(com)
-        return com
+            return self.cell.scaled_positions(center_of_mass)
+        return center_of_mass
 
-    def set_center_of_mass(self, com, scaled=False):
+    def set_center_of_mass(self, center_of_mass, scaled=False):
         """Set the center of mass.
 
         If scaled=True the center of mass is expected in scaled coordinates.
         Constraints are considered for scaled=False.
         """
-        old_com = self.get_center_of_mass(scaled=scaled)
-        difference = old_com - com
+        old_center_of_mass = self.get_center_of_mass(scaled=scaled)
+        difference = old_center_of_mass - center_of_mass
         if scaled:
             self.set_scaled_positions(self.get_scaled_positions() + difference)
         else:
