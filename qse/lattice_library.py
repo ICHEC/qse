@@ -1,6 +1,4 @@
-"""
-A collection of convenience functions for creating common lattices.
-"""
+"""A collection of convenience functions for creating common lattices."""
 
 import numpy as np
 
@@ -8,9 +6,11 @@ import qse
 
 
 def _check_repeats(repeats, param_name):
+    """Validate the repeats parameter."""
     if not isinstance(repeats, int) or repeats < 2:
         raise Exception(
-            f"The {param_name} must be an integer greater than 1. {param_name}={repeats}"
+            "The {param_name} must be an integer greater than 1."
+            f"{param_name}={repeats}"
         )
 
 
@@ -21,10 +21,10 @@ def _lattice_creator(
     repeats_y: int,
     qubit_positions: list = [[0, 0, 0]],
 ):
-    """Create a Qbits object from a 2d cell, lattice_spacing, repeats and qubit positions."""
-
-    # add repeats check
-    """Helper function to create the lattices."""
+    """
+    Create a Qbits object from a 2d cell, lattice_spacing,
+    repeats and qubit positions.
+    """
     unit = qse.Qbits(positions=np.array(qubit_positions))
 
     # We add [[0, 0, 0]] to convert the unit cell into 3d.
