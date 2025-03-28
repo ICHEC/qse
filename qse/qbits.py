@@ -384,11 +384,8 @@ class Qbits:
         The Cell object resembles a 3x3 ndarray, and cell[i, j]
         is the jth Cartesian coordinate of the ith cell vector."""
         if complete:
-            cell = self.cell.complete()
-        else:
-            cell = self.cell.copy()
-
-        return cell
+            return self.cell.complete()
+        return self.cell.copy()
 
     @deprecated("Please use qbits.cell.cellpar() instead")
     def get_cell_lengths_and_angles(self):
@@ -947,10 +944,10 @@ class Qbits:
         com = (
             np.ones(self.positions.shape[0]) @ self.positions / self.positions.shape[0]
         )
+        ####com = self.positions.mean(0)
         if scaled:
             return self.cell.scaled_positions(com)
-        else:
-            return com
+        return com
 
     def set_center_of_mass(self, com, scaled=False):
         """Set the center of mass.
