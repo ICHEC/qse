@@ -935,14 +935,14 @@ class Qbits:
         self.positions += translation
 
     def get_center_of_mass(self, scaled=False):
-        """Get the center of mass.
+        """
+        Get the center of mass.
 
         If scaled=True the center of mass in scaled coordinates
         is returned."""
-        center_of_mass = self.positions.mean(0)
         if scaled:
-            return self.cell.scaled_positions(center_of_mass)
-        return center_of_mass
+            return self.cell.scaled_positions(self.positions.mean(0))
+        return self.positions.mean(0)
 
     def set_center_of_mass(self, center_of_mass, scaled=False):
         """Set the center of mass.
@@ -950,8 +950,7 @@ class Qbits:
         If scaled=True the center of mass is expected in scaled coordinates.
         Constraints are considered for scaled=False.
         """
-        old_center_of_mass = self.get_center_of_mass(scaled=scaled)
-        difference = old_center_of_mass - center_of_mass
+        difference = self.get_center_of_mass(scaled=scaled) - center_of_mass
         if scaled:
             self.set_scaled_positions(self.get_scaled_positions() + difference)
         else:
