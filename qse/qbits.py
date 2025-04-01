@@ -854,8 +854,9 @@ class Qbits:
 
         self.arrays["positions"] += np.array(displacement)
 
-    def center(self, vacuum=None, axis=(0, 1, 2), about=None):
-        """Center qbits in unit cell.
+    def center_in_unit_cell(self, vacuum=None, axis=(0, 1, 2), about=None):
+        """
+        Center qbits in unit cell.
 
         Centers the qbits in the unit cell, so there is the same
         amount of vacuum on all sides.
@@ -934,23 +935,45 @@ class Qbits:
 
         self.positions += translation
 
-    def get_center_of_mass(self, scaled=False):
+    def get_centroid(self, scaled=False):
         """
-        Get the center of mass.
+        Get the centroid of the positions.
 
-        If scaled=True the center of mass in scaled coordinates
-        is returned."""
+        Parameters
+        ----------
+        centroid : float or 3 vector
+            The new centroid.
+        scaled : bool
+            If scaled=True the centroid in scaled coordinates is returned.
+
+        Notes
+        -----
+        For a set of $k$ positions $\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k$
+        the centroid is given by
+        $\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.$
+        """
         if scaled:
             return self.cell.scaled_positions(self.positions.mean(0))
         return self.positions.mean(0)
 
-    def set_center_of_mass(self, center_of_mass, scaled=False):
-        """Set the center of mass.
-
-        If scaled=True the center of mass is expected in scaled coordinates.
-        Constraints are considered for scaled=False.
+    def set_centroid(self, centroid, scaled=False):
         """
-        difference = self.get_center_of_mass(scaled=scaled) - center_of_mass
+        Set the centroid of the positions.
+
+        Parameters
+        ----------
+        centroid : float or 3 vector
+            The new centroid.
+        scaled : bool
+            If scaled=True the centroid is expected in scaled coordinates.
+
+        Notes
+        -----
+        For a set of $k$ positions $\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k$
+        the centroid is given by
+        $\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.$
+        """
+        difference = centroid - self.get_centroid(scaled=scaled)
         if scaled:
             self.set_scaled_positions(self.get_scaled_positions() + difference)
         else:
