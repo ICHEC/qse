@@ -9,7 +9,7 @@ def _check_repeats(repeats, param_name):
     """Validate the repeats parameter."""
     if not isinstance(repeats, int) or repeats < 2:
         raise Exception(
-            "The {param_name} must be an integer greater than 1."
+            f"The {param_name} must be an integer greater than 1."
             f"{param_name}={repeats}"
         )
 
