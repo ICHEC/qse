@@ -10,7 +10,7 @@ def _check_repeats(repeats, param_name):
     if not isinstance(repeats, int) or repeats < 2:
         raise Exception(
             f"The {param_name} must be an integer greater than 1."
-            f"{param_name}={repeats}"
+            f" {param_name}={repeats}"
         )
 
 
