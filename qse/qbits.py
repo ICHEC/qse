@@ -847,11 +847,15 @@ class Qbits:
         return self.repeat(rep)
 
     def translate(self, displacement):
-        """Translate qbit positions.
+        """
+        Translate qbit positions.
 
-        The displacement argument can be a float an xyz vector or an
-        nx3 array (where n is the number of qbits)."""
-
+        Parameters
+        ----------
+        displacement : float | np.ndarray
+            The displacement argument can be a float an xyz vector or an
+            nx3 array (where n is the number of qbits).
+        """
         self.arrays["positions"] += np.array(displacement)
 
     def center_in_unit_cell(self, vacuum=None, axis=(0, 1, 2), about=None):
@@ -941,8 +945,6 @@ class Qbits:
 
         Parameters
         ----------
-        centroid : float or 3 vector
-            The new centroid.
         scaled : bool
             If scaled=True the centroid in scaled coordinates is returned.
 
@@ -962,8 +964,8 @@ class Qbits:
 
         Parameters
         ----------
-        centroid : float or 3 vector
-            The new centroid.
+        centroid : float | np.ndarray
+            The new centroid. Can be a float or a xyz vector
         scaled : bool
             If scaled=True the centroid is expected in scaled coordinates.
 

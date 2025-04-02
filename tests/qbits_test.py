@@ -101,3 +101,29 @@ def test_rattle(nqbits):
 
     assert qbits.get_positions().shape == positions.shape
     assert not np.allclose(qbits.get_positions(), positions)
+
+
+@pytest.mark.parametrize("nqbits", [1, 2, 3, 10])
+@pytest.mark.parametrize(
+    "type_of_disp", ["scalar", "vector", "matrix", "vector_error", "matrix_error"]
+)
+def test_translate(nqbits, type_of_disp):
+    """Test translate."""
+    positions = np.random.rand(nqbits, 3)
+    qbits = qse.Qbits(positions=positions)
+
+    shape_dict = {
+        "scalar": (),
+        "vector": (3,),
+        "matrix": (nqbits, 3),
+        "vector_error": (4,),
+        "matrix_error": (nqbits + 1, 3),
+    }
+    disp = np.random.rand(*shape_dict[type_of_disp])
+
+    if "error" in type_of_disp:
+        with pytest.raises(Exception):
+            qbits.translate(disp)
+    else:
+        qbits.translate(disp)
+        assert np.allclose(qbits.get_positions(), positions + disp)
