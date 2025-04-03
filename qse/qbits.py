@@ -950,29 +950,27 @@ class Qbits:
             self.set_positions(self.get_positions() + difference)
 
     def rotate(self, a, v, center=(0, 0, 0), rotate_cell=False):
-        """Rotate qbits based on a vector and an angle, or two vectors.
+        """
+        Rotate qbits based on a vector and an angle, or two vectors.
 
-        Parameters:
-
+        Parameters
+        ----------
         a = None:
             Angle that the qbits is rotated around the vector 'v'. 'a'
             can also be a vector and then 'a' is rotated
             into 'v'.
-
         v:
             Vector to rotate the qbits around. Vectors can be given as
             strings: 'x', '-x', 'y', ... .
-
         center = (0, 0, 0):
             The center is kept fixed under the rotation. Use 'COM' to fix
             the center of mass, 'COP' to fix the center of positions or
             'COU' to fix the center of cell.
-
         rotate_cell = False:
             If true the cell is also rotated.
 
-        Examples:
-
+        Examples
+        --------
         Rotate 90 degrees around the z-axis, so that the x-axis is
         rotated into the y-axis:
 
@@ -987,10 +985,9 @@ class Qbits:
         if not isinstance(a, numbers.Real):
             a, v = v, a
 
-        norm = np.linalg.norm
         v = string2vector(v)
 
-        normv = norm(v)
+        normv = np.linalg.norm(v)
 
         if normv == 0.0:
             raise ZeroDivisionError("Cannot rotate: norm(v) == 0")
@@ -1006,19 +1003,19 @@ class Qbits:
             normv2 = np.linalg.norm(v2)
             if normv2 == 0:
                 raise ZeroDivisionError("Cannot rotate: norm(a) == 0")
-            v2 /= norm(v2)
+            v2 /= np.linalg.norm(v2)
             c = np.dot(v, v2)
             v = np.cross(v, v2)
-            s = norm(v)
+            s = np.linalg.norm(v)
             # In case *v* and *a* are parallel, np.cross(v, v2) vanish
             # and can't be used as a rotation axis. However, in this
             # case any rotation axis perpendicular to v2 will do.
             eps = 1e-7
             if s < eps:
                 v = np.cross((0, 0, 1), v2)
-                if norm(v) < eps:
+                if np.linalg.norm(v) < eps:
                     v = np.cross((1, 0, 0), v2)
-                assert norm(v) >= eps
+                assert np.linalg.norm(v) >= eps
             elif s > 0:
                 v /= s
 
@@ -1052,23 +1049,23 @@ class Qbits:
         return center
 
     def euler_rotate(self, phi=0.0, theta=0.0, psi=0.0, center=(0, 0, 0)):
-        """Rotate qbits via Euler angles (in degrees).
+        """
+        Rotate qbits via Euler angles (in degrees).
 
         See e.g http://mathworld.wolfram.com/EulerAngles.html for explanation.
 
-        Parameters:
-
-        center :
-            The point to rotate about. A sequence of length 3 with the
-            coordinates, or 'COM' to select the center of mass, 'COP' to
-            select center of positions or 'COU' to select center of cell.
+        Parameters
+        ----------
         phi :
             The 1st rotation angle around the z axis.
         theta :
             Rotation around the x axis.
         psi :
             2nd rotation around the z axis.
-
+        center :
+            The point to rotate about. A sequence of length 3 with the
+            coordinates, or 'COM' to select the center of mass, 'COP' to
+            select center of positions or 'COU' to select center of cell.
         """
         center = self._centering_as_array(center)
 
@@ -1076,9 +1073,7 @@ class Qbits:
         theta *= pi / 180
         psi *= pi / 180
 
-        # First move the molecule to the origin In contrast to MATLAB,
-        # numpy broadcasts the smaller array to the larger row-wise,
-        # so there is no need to play with the Kronecker product.
+        # First move the molecule to the origin.
         rcoords = self.positions - center
         # First Euler rotation about z in matrix form
         D = np.array(

@@ -167,3 +167,92 @@ def test_get_item(indicies):
         qbits.get_positions(),
         positions[[i for i in range(nqbits) if i not in indicies]],
     )
+
+
+def test_rotate():
+    """Simple checks for rotate."""
+    unit_square = np.array(
+        [[1.0, 0.0, 0.0], [1.0, 1.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]]
+    )
+    qbits = qse.Qbits(positions=unit_square)
+    qbits.rotate(90, "z")
+
+    assert not np.allclose(qbits.get_positions(), unit_square)
+
+    unit_square_rt = np.array(
+        [[0.0, 1.0, 0.0], [-1.0, 1.0, 0.0], [-1.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
+    )
+    assert np.allclose(qbits.get_positions(), unit_square_rt)
+
+    # Check that a centered square is invariant (with relabelling).
+    square_centered = np.array(
+        [[1.0, 1.0, 0.0], [1.0, -1.0, 0.0], [-1.0, 1.0, 0.0], [-1.0, -1.0, 0.0]]
+    )
+    qbits = qse.Qbits(positions=square_centered)
+    qbits.rotate(90, "z")
+    assert np.allclose(qbits.get_positions(), square_centered[[2, 0, 3, 1]])
+
+
+@pytest.mark.parametrize("angle", [10, 20, 30])
+def rotation_square_z(angle):
+    positions = np.array(
+        [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0], [1.0, 0.0, 1.0]]
+    )
+    qbits = qse.Qbits(positions=positions)
+    qbits.rotate(angle, "z")
+
+    new_positions = np.array(
+        [
+            [0.0, 0.0, 0.0],
+            [np.cos(angle), np.sin(angle), 0.0],
+            [0.0, 0.0, 1.0],
+            [np.cos(angle), np.sin(angle), 1.0],
+        ]
+    )
+    assert np.alclose(qbits.positions(), new_positions)
+
+
+@pytest.mark.parametrize("a", ["x", "-y", (0.0, 2.0, 3)])
+@pytest.mark.parametrize("v", ["z", (1.0, 1.0, 0.0)])
+@pytest.mark.parametrize("center", [(0.0, 0.0, 0.0), (-1, 3, 0.2)])
+def test_rotate_distances(a, v, center):
+    """Check a random rotation preserves distances."""
+    positions = np.random.rand(4, 3)
+    qbits = qse.Qbits(positions=positions)
+    distances = qbits.get_all_distances()
+
+    qbits.rotate(a, v, center)
+
+    assert not np.allclose(qbits.get_positions(), positions)
+    assert np.allclose(qbits.get_all_distances(), distances)
+
+
+def test_euler_rotate():
+    """Test rotate and euler_rotate agree."""
+    ### Note that they rotate in different directions (clockwise & anti.)
+    ### May want to fix this.
+    positions = np.random.rand(4, 3)
+
+    qbits_1 = qse.Qbits(positions=positions)
+    qbits_1.rotate(34, "z")
+
+    qbits_2 = qse.Qbits(positions=positions)
+    qbits_2.euler_rotate(-34)
+
+    assert np.allclose(qbits_1.get_positions(), qbits_2.get_positions())
+
+
+@pytest.mark.parametrize("phi", [11.2, 45.0])
+@pytest.mark.parametrize("theta", [-3.0, 40])
+@pytest.mark.parametrize("psi", [18.2])
+@pytest.mark.parametrize("center", [(0.0, 0.0, 0.0), (-1, 3, 0.2)])
+def test_euler_rotate_distances(phi, theta, psi, center):
+    """Check a random euler rotation preserves distances."""
+    positions = np.random.rand(4, 3)
+    qbits = qse.Qbits(positions=positions)
+    distances = qbits.get_all_distances()
+
+    qbits.euler_rotate(phi, theta, psi, center)
+
+    assert not np.allclose(qbits.get_positions(), positions)
+    assert np.allclose(qbits.get_all_distances(), distances)
