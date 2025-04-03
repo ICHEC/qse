@@ -1207,19 +1207,32 @@ class Qbits:
         start = self.get_dihedral(a1, a2, a3, a4)
         self.set_dihedral(a1, a2, a3, a4, angle + start, mask, indices)
 
-    def get_angle(self, a1, a2, a3, mic=False):
-        """Get angle formed by three qbits.
-
-        Calculate angle in degrees between the vectors a2->a1 and
-        a2->a3.
-
-        Use mic=True to use the Minimum Image Convention and calculate the
-        angle across periodic boundaries.
+    def get_angle(self, index_1: int, index_2: int, index_3: int, mic: bool = False):
         """
-        return self.get_angles([[a1, a2, a3]], mic=mic)[0]
+        Get the angle in degress formed by three qbits.
+
+        Parameters
+        ----------
+        index_1 : int
+            The index of the first qubit.
+        index_2 : int
+            The index of the second qubit.
+        index_3 : int
+            The index of the third qubit.
+        mic : bool
+            Use mic=True to use the Minimum Image Convention and calculate the
+            angle across periodic boundaries.
+
+        Notes
+        -----
+        Let x1, x2, x3 be the vectors describing the positions of the three
+        qubits. Then we calcule the angle between x1-x2 and x3-x2.
+        """
+        return self.get_angles([[index_1, index_2, index_3]], mic=mic)[0]
 
     def get_angles(self, indices, mic=False):
-        """Get angle formed by three qbits for multiple groupings.
+        """
+        Get angle formed by three qbits for multiple groupings.
 
         Calculate angle in degrees between vectors between qbits a2->a1
         and a2->a3, where a1, a2, and a3 are in each row of indices.
@@ -1237,14 +1250,10 @@ class Qbits:
         v12 = a1s - a2s
         v32 = a3s - a2s
 
-        cell = None
-        pbc = None
-
         if mic:
-            cell = self.cell
-            pbc = self.pbc
+            return get_angles(v12, v32, cell=self.cell, pbc=self.pbc)
 
-        return get_angles(v12, v32, cell=cell, pbc=pbc)
+        return get_angles(v12, v32, cell=None, pbc=None)
 
     def set_angle(
         self, a1, a2=None, a3=None, angle=None, mask=None, indices=None, add=False
