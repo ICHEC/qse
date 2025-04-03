@@ -227,7 +227,7 @@ def test_rotate_distances(a, v, center):
     assert np.allclose(qbits.get_all_distances(), distances)
 
 
-def test_euler_rotate():
+def test_euler_rotate_and_rotate():
     """Test rotate and euler_rotate agree."""
     ### Note that they rotate in different directions (clockwise & anti.)
     ### May want to fix this.
