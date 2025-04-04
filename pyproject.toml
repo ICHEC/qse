@@ -23,13 +23,6 @@ dependencies = [
 homepage = "https://github.com/rajarshitiwari/qse"
 
 [project.optional-dependencies]
-dev = [
-    "pytest",
-    "ipykernel",
-    "black",
-    "isort",
-    "flake8",
-]
 pulser = ["pulser == 1.4.0"]
 muqlm = ["numpy == 1.26.4", "myqlm == 1.11.3"]
 
