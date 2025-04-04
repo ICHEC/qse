@@ -1,5 +1,0 @@
-ase == 3.24.0
-numpy == 1.26.4
-matplotlib == 3.10.1
-pulser == 1.4.0
-myqlm == 1.11.3
