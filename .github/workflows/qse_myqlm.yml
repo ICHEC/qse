@@ -24,3 +24,4 @@ jobs:
       run: |
         pip install .
         pip install "qse[myqlm]"
+        python qse_myqlm_spinup.py
