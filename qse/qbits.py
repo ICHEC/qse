@@ -1,7 +1,8 @@
 # Copyright 2008, 2009 CAMd
 # (see accompanying license files for details).
 
-"""Definition of the Qbits class.
+"""
+Definition of the Qbits class.
 
 This module defines the central object in the QSE package: the Qbits object.
 """
@@ -10,14 +11,7 @@ import numbers
 from math import cos, pi, sin
 
 import numpy as np
-
-ONE = np.array([1, 0], dtype=complex)
-TWO = np.array([0, 1], dtype=complex)
-
-import ase.units as units
 from ase.cell import Cell
-
-# from ase.stress import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
 from ase.geometry import (
     find_mic,
     get_angles,
@@ -950,29 +944,27 @@ class Qbits:
             self.set_positions(self.get_positions() + difference)
 
     def rotate(self, a, v, center=(0, 0, 0), rotate_cell=False):
-        """Rotate qbits based on a vector and an angle, or two vectors.
+        """
+        Rotate qbits based on a vector and an angle, or two vectors.
 
-        Parameters:
-
+        Parameters
+        ----------
         a = None:
             Angle that the qbits is rotated around the vector 'v'. 'a'
             can also be a vector and then 'a' is rotated
             into 'v'.
-
         v:
             Vector to rotate the qbits around. Vectors can be given as
             strings: 'x', '-x', 'y', ... .
-
         center = (0, 0, 0):
-            The center is kept fixed under the rotation. Use 'COM' to fix
-            the center of mass, 'COP' to fix the center of positions or
-            'COU' to fix the center of cell.
-
+            The center is kept fixed under the rotation. Use 'COP' to
+            fix the center of positions or 'COU' to fix the center of
+            cell.
         rotate_cell = False:
             If true the cell is also rotated.
 
-        Examples:
-
+        Examples
+        --------
         Rotate 90 degrees around the z-axis, so that the x-axis is
         rotated into the y-axis:
 
@@ -1039,10 +1031,8 @@ class Qbits:
 
     def _centering_as_array(self, center):
         if isinstance(center, str):
-            if center.lower() == "com":
-                center = self.get_center_of_mass()
-            elif center.lower() == "cop":
-                center = self.get_positions().mean(axis=0)
+            if center.lower() == "cop":
+                center = self.get_centroid()
             elif center.lower() == "cou":
                 center = self.get_cell().sum(axis=0) / 2
             else:
@@ -1060,8 +1050,8 @@ class Qbits:
 
         center :
             The point to rotate about. A sequence of length 3 with the
-            coordinates, or 'COM' to select the center of mass, 'COP' to
-            select center of positions or 'COU' to select center of cell.
+            coordinates, or 'COP' to select center of positions or
+            'COU' to select center of cell.
         phi :
             The 1st rotation angle around the z axis.
         theta :
