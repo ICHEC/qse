@@ -3,15 +3,10 @@ import os
 import pathlib
 import subprocess
 import warnings
-from math import pi, sqrt
 from typing import Any, Dict, List, Optional, Set, Union
 
 import numpy as np
-from ase.cell import Cell
 from ase.outputs import Properties, all_outputs
-from ase.utils import jsonable
-
-from qse.calc.abc import GetPropertiesMixin
 
 
 class CalculatorError(RuntimeError):
@@ -192,37 +187,6 @@ def equal(a, b, tol=None, rtol=None, atol=None):
     return np.allclose(a, b, rtol=rtol, atol=atol)
 
 
-# def kptdensity2monkhorstpack(atoms, kptdensity=3.5, even=True):  """Convert k-point density to Monkhorst-Pack grid size.
-
-"""
-class EigenvalOccupationMixin:
-    #Define 'eigenvalues' and 'occupations' properties on class.
-    #
-    #eigenvalues and occupations will be arrays of shape (spin, kpts, nbands).
-    #
-    #Classes must implement the old-fashioned get_eigenvalues and
-    #get_occupations methods.
-
-    @property
-    def eigenvalues(self):
-        return self.build_eig_occ_array(self.get_eigenvalues)
-
-    @property
-    def occupations(self):
-        return self.build_eig_occ_array(self.get_occupation_numbers)
-
-    def build_eig_occ_array(self, getter):
-        nspins = self.get_number_of_spins()
-        nkpts = len(self.get_ibz_k_points())
-        nbands = self.get_number_of_bands()
-        arr = np.zeros((nspins, nkpts, nbands))
-        for s in range(nspins):
-            for k in range(nkpts):
-                arr[s, k, :] = getter(spin=s, kpt=k)
-        return arr
-"""
-
-
 class Parameters(dict):
     """Dictionary for parameters.
 
@@ -278,8 +242,9 @@ class Parameters(dict):
         pathlib.Path(filename).write_text(self.tostring())
 
 
-class Calculator(GetPropertiesMixin):
-    """Base-class for all QSE calculators, adapted from ASE calculators.
+class Calculator:
+    """
+    Base-class for all QSE calculators, adapted from ASE calculators.
 
     A calculator must raise PropertyNotImplementedError if asked for a
     property that it can't calculate.  So, if calculation of the
