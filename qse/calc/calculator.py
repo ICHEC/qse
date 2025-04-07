@@ -14,7 +14,8 @@ class CalculatorError(RuntimeError):
 
 
 class CalculatorSetupError(CalculatorError):
-    """Calculation cannot be performed with the given parameters.
+    """
+    Calculation cannot be performed with the given parameters.
 
     Reasons to raise this errors are:
       * The calculator is not properly configured
@@ -22,23 +23,29 @@ class CalculatorSetupError(CalculatorError):
       * The given qbits object is not supported
       * Calculator parameters are unsupported
 
-    Typically raised before a calculation."""
+    Typically raised before a calculation.
+    """
 
 
 class EnvironmentError(CalculatorSetupError):
-    """Raised if calculator is not properly set up with ASE.
-    May be missing an executable or environment variables."""
+    """
+    Raised if calculator is not properly set up with ASE.
+    May be missing an executable or environment variables.
+    """
 
 
 class InputError(CalculatorSetupError):
-    """Raised if inputs given to the calculator were incorrect.
+    """
+    Raised if inputs given to the calculator were incorrect.
     Bad input keywords or values, or missing pseudopotentials.
     This may be raised before or during calculation, depending on
-    when the problem is detected."""
+    when the problem is detected.
+    """
 
 
 class CalculationFailed(CalculatorError):
-    """Calculation failed unexpectedly.
+    """
+    Calculation failed unexpectedly.
 
     Reasons to raise this error are:
       * Calculation did not converge
@@ -46,7 +53,8 @@ class CalculationFailed(CalculatorError):
       * Segmentation fault or other abnormal termination
       * Arithmetic trouble (singular matrices, NaN, ...)
 
-    Typically raised during calculation."""
+    Typically raised during calculation.
+    """
 
 
 class ReadError(CalculatorError):
@@ -58,10 +66,12 @@ class PropertyNotImplementedError(NotImplementedError):
 
 
 class PropertyNotPresent(CalculatorError):
-    """Requested property is missing.
+    """
+    Requested property is missing.
 
     Maybe it was never calculated, or for some reason was not extracted
-    with the rest of the results, without being a fatal ReadError."""
+    with the rest of the results, without being a fatal ReadError.
+    """
 
 
 def compare_qbits(qbits1, qbits2, tol=1e-15, excluded_properties=None):
