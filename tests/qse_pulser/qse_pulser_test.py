@@ -4,6 +4,7 @@ import pulser
 import qse
 
 
-def myqlm_test():
+def test_pulser():
     qbits = qse.Qbits(positions=np.ones((4, 3)))
     print("pulser", pulser.__version__)
+    assert True

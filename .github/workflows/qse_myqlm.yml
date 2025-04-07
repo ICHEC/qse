@@ -25,4 +25,6 @@ jobs:
         pip install .
         pip install "qse[myqlm]"
         pip install pytest
+    - name: Test with pytest
+      run: |
         pytest tests/qse_myqlm

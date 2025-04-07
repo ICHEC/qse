@@ -4,5 +4,6 @@ import qat.qpus
 import qse
 
 
-def qse_test():
+def test_qse():
     qbits = qse.Qbits(positions=np.ones((4, 3)))
+    assert True
