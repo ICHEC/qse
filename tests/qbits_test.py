@@ -150,7 +150,7 @@ def test_get_item():
 
 
 @pytest.mark.parametrize("indicies", [1, [0, 1, 3]])
-def test_get_item(indicies):
+def test_del_item(indicies):
     """Test __delitem__"""
     nqbits = 4
     positions = np.random.rand(nqbits, 3)
