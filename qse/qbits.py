@@ -1,7 +1,8 @@
 # Copyright 2008, 2009 CAMd
 # (see accompanying license files for details).
 
-"""Definition of the Qbits class.
+"""
+Definition of the Qbits class.
 
 This module defines the central object in the QSE package: the Qbits object.
 """
@@ -10,14 +11,7 @@ import numbers
 from math import cos, pi, sin
 
 import numpy as np
-
-ONE = np.array([1, 0], dtype=complex)
-TWO = np.array([0, 1], dtype=complex)
-
-import ase.units as units
 from ase.cell import Cell
-
-# from ase.stress import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
 from ase.geometry import (
     find_mic,
     get_angles,
