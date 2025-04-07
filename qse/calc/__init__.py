@@ -1,7 +1,6 @@
 """Interface to different QSE calculators."""
 
 __all__ = [
-    "abc",
     "calculator",
     "Signal",
     "PropertyNotImplementedError",
