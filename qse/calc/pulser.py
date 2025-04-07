@@ -4,6 +4,7 @@ the ASE's CP2K calculator, though at the end it may look very different from
 ASE calculator.
 https://pulser.readthedocs.io/en/stable/
 """
+
 import numpy as np
 import pulser
 import pulser.waveforms
@@ -12,13 +13,8 @@ import pulser.waveforms
 from pulser_simulation import QutipEmulator
 
 from qse.calc import signal
-from qse.calc.calculator import (
-    Calculator,
-    CalculatorSetupError,
-)
-from qse.calc.messages import (
-    CalculatorSetupError,
-)
+from qse.calc.calculator import Calculator, CalculatorSetupError
+from qse.calc.messages import CalculatorSetupError
 
 # from ase.calculators.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
 

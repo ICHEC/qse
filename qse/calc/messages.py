@@ -1,5 +1,6 @@
 """Messages that are thrown when using the calculator."""
 
+
 class CalculatorError(RuntimeError):
     """Base class of error types related to QSE calculators."""
 

@@ -7,7 +7,14 @@ from typing import Any, Dict, List, Optional, Set
 
 import numpy as np
 from ase.outputs import Properties, all_outputs
-from qse.calc.messages import PropertyNotImplementedError, PropertyNotPresent, CalculatorSetupError, CalculationFailed
+
+from qse.calc.messages import (
+    CalculationFailed,
+    CalculatorSetupError,
+    PropertyNotImplementedError,
+    PropertyNotPresent,
+)
+
 
 def compare_qbits(qbits1, qbits2, tol=1e-15, excluded_properties=None):
     """Check for system changes since last calculation.  Properties in
