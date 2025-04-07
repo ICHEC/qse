@@ -1,4 +1,4 @@
-"""The Signal class."""
+"""Definition of the Signal class."""
 
 from typing import Union
 
