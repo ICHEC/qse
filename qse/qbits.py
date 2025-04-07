@@ -1,7 +1,8 @@
 # Copyright 2008, 2009 CAMd
 # (see accompanying license files for details).
 
-"""Definition of the Qbits class.
+"""
+Definition of the Qbits class.
 
 This module defines the central object in the QSE package: the Qbits object.
 """
@@ -10,14 +11,7 @@ import numbers
 from math import cos, pi, sin
 
 import numpy as np
-
-ONE = np.array([1, 0], dtype=complex)
-TWO = np.array([0, 1], dtype=complex)
-
-import ase.units as units
 from ase.cell import Cell
-
-# from ase.stress import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
 from ase.geometry import (
     find_mic,
     get_angles,
@@ -384,11 +378,8 @@ class Qbits:
         The Cell object resembles a 3x3 ndarray, and cell[i, j]
         is the jth Cartesian coordinate of the ith cell vector."""
         if complete:
-            cell = self.cell.complete()
-        else:
-            cell = self.cell.copy()
-
-        return cell
+            return self.cell.complete()
+        return self.cell.copy()
 
     @deprecated("Please use qbits.cell.cellpar() instead")
     def get_cell_lengths_and_angles(self):
@@ -938,28 +929,22 @@ class Qbits:
         self.positions += translation
 
     def get_center_of_mass(self, scaled=False):
-        """Get the center of mass.
+        """
+        Get the center of mass.
 
         If scaled=True the center of mass in scaled coordinates
         is returned."""
-        # masses = self.get_masses()
-        # com = masses @ self.positions / masses.sum()
-        com = (
-            np.ones(self.positions.shape[0]) @ self.positions / self.positions.shape[0]
-        )
         if scaled:
-            return self.cell.scaled_positions(com)
-        else:
-            return com
+            return self.cell.scaled_positions(self.positions.mean(0))
+        return self.positions.mean(0)
 
-    def set_center_of_mass(self, com, scaled=False):
+    def set_center_of_mass(self, center_of_mass, scaled=False):
         """Set the center of mass.
 
         If scaled=True the center of mass is expected in scaled coordinates.
         Constraints are considered for scaled=False.
         """
-        old_com = self.get_center_of_mass(scaled=scaled)
-        difference = old_com - com
+        difference = self.get_center_of_mass(scaled=scaled) - center_of_mass
         if scaled:
             self.set_scaled_positions(self.get_scaled_positions() + difference)
         else:
