@@ -7,7 +7,7 @@ https://myqlm.github.io/
 
 import numpy as np
 
-from qse.calc.calculator import Calculator, all_changes
+from qse.calc.calculator import Calculator
 
 qat_available = False
 qlmaas_available = False
