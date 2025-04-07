@@ -78,7 +78,7 @@ default_params = {
 
 
 # for rydberg system we need additional parameters: mix,max of amplitude and detuning to set based on device.
-class Myqlm(Calculator):
+class MyQLM(Calculator):
     """QSE-Calculator for MyQLM"""
 
     implemented_properties = ["energy", "state", "fidality"]

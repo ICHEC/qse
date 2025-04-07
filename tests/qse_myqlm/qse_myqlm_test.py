@@ -2,6 +2,7 @@ import numpy as np
 import qat.qpus
 
 import qse
+from qse.calc.pulser import MyQLM
 
 
 def test_qse():
