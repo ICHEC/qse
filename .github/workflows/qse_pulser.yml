@@ -24,4 +24,4 @@ jobs:
       run: |
         pip install .
         pip install "qse[pulser]"
-        python qse_pulser_spin_up.py
+        pytest tests/qse_pulser
