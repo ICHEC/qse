@@ -1,7 +1,8 @@
 # Copyright 2008, 2009 CAMd
 # (see accompanying license files for details).
 
-"""Definition of the Qbits class.
+"""
+Definition of the Qbits class.
 
 This module defines the central object in the QSE package: the Qbits object.
 """
@@ -10,14 +11,7 @@ import numbers
 from math import cos, pi, sin
 
 import numpy as np
-
-ONE = np.array([1, 0], dtype=complex)
-TWO = np.array([0, 1], dtype=complex)
-
-import ase.units as units
 from ase.cell import Cell
-
-# from ase.stress import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
 from ase.geometry import (
     find_mic,
     get_angles,
@@ -384,11 +378,8 @@ class Qbits:
         The Cell object resembles a 3x3 ndarray, and cell[i, j]
         is the jth Cartesian coordinate of the ith cell vector."""
         if complete:
-            cell = self.cell.complete()
-        else:
-            cell = self.cell.copy()
-
-        return cell
+            return self.cell.complete()
+        return self.cell.copy()
 
     @deprecated("Please use qbits.cell.cellpar() instead")
     def get_cell_lengths_and_angles(self):
@@ -850,15 +841,20 @@ class Qbits:
         return self.repeat(rep)
 
     def translate(self, displacement):
-        """Translate qbit positions.
+        """
+        Translate qbit positions.
 
-        The displacement argument can be a float an xyz vector or an
-        nx3 array (where n is the number of qbits)."""
-
+        Parameters
+        ----------
+        displacement : float | np.ndarray
+            The displacement argument can be a float an xyz vector or an
+            nx3 array (where n is the number of qbits).
+        """
         self.arrays["positions"] += np.array(displacement)
 
-    def center(self, vacuum=None, axis=(0, 1, 2), about=None):
-        """Center qbits in unit cell.
+    def center_in_unit_cell(self, vacuum=None, axis=(0, 1, 2), about=None):
+        """
+        Center qbits in unit cell.
 
         Centers the qbits in the unit cell, so there is the same
         amount of vacuum on all sides.
@@ -937,58 +933,70 @@ class Qbits:
 
         self.positions += translation
 
-    def get_center_of_mass(self, scaled=False):
-        """Get the center of mass.
-
-        If scaled=True the center of mass in scaled coordinates
-        is returned."""
-        # masses = self.get_masses()
-        # com = masses @ self.positions / masses.sum()
-        com = (
-            np.ones(self.positions.shape[0]) @ self.positions / self.positions.shape[0]
-        )
-        if scaled:
-            return self.cell.scaled_positions(com)
-        else:
-            return com
-
-    def set_center_of_mass(self, com, scaled=False):
-        """Set the center of mass.
-
-        If scaled=True the center of mass is expected in scaled coordinates.
-        Constraints are considered for scaled=False.
+    def get_centroid(self, scaled=False):
         """
-        old_com = self.get_center_of_mass(scaled=scaled)
-        difference = old_com - com
+        Get the centroid of the positions.
+
+        Parameters
+        ----------
+        scaled : bool
+            If scaled=True the centroid in scaled coordinates is returned.
+
+        Notes
+        -----
+        For a set of $k$ positions $\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k$
+        the centroid is given by
+        $\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.$
+        """
+        if scaled:
+            return self.cell.scaled_positions(self.positions.mean(0))
+        return self.positions.mean(0)
+
+    def set_centroid(self, centroid, scaled=False):
+        """
+        Set the centroid of the positions.
+
+        Parameters
+        ----------
+        centroid : float | np.ndarray
+            The new centroid. Can be a float or a xyz vector
+        scaled : bool
+            If scaled=True the centroid is expected in scaled coordinates.
+
+        Notes
+        -----
+        For a set of $k$ positions $\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k$
+        the centroid is given by
+        $\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.$
+        """
+        difference = centroid - self.get_centroid(scaled=scaled)
         if scaled:
             self.set_scaled_positions(self.get_scaled_positions() + difference)
         else:
             self.set_positions(self.get_positions() + difference)
 
     def rotate(self, a, v, center=(0, 0, 0), rotate_cell=False):
-        """Rotate qbits based on a vector and an angle, or two vectors.
+        """
+        Rotate qbits based on a vector and an angle, or two vectors.
 
-        Parameters:
-
+        Parameters
+        ----------
         a = None:
             Angle that the qbits is rotated around the vector 'v'. 'a'
             can also be a vector and then 'a' is rotated
             into 'v'.
-
         v:
             Vector to rotate the qbits around. Vectors can be given as
             strings: 'x', '-x', 'y', ... .
-
         center = (0, 0, 0):
-            The center is kept fixed under the rotation. Use 'COM' to fix
-            the center of mass, 'COP' to fix the center of positions or
-            'COU' to fix the center of cell.
-
+            The center is kept fixed under the rotation. Use 'COP' to
+            fix the center of positions or 'COU' to fix the center of
+            cell.
         rotate_cell = False:
             If true the cell is also rotated.
 
-        Examples:
-
+        Examples
+        --------
         Rotate 90 degrees around the z-axis, so that the x-axis is
         rotated into the y-axis:
 
@@ -1055,10 +1063,8 @@ class Qbits:
 
     def _centering_as_array(self, center):
         if isinstance(center, str):
-            if center.lower() == "com":
-                center = self.get_center_of_mass()
-            elif center.lower() == "cop":
-                center = self.get_positions().mean(axis=0)
+            if center.lower() == "cop":
+                center = self.get_centroid()
             elif center.lower() == "cou":
                 center = self.get_cell().sum(axis=0) / 2
             else:
@@ -1076,8 +1082,8 @@ class Qbits:
 
         center :
             The point to rotate about. A sequence of length 3 with the
-            coordinates, or 'COM' to select the center of mass, 'COP' to
-            select center of positions or 'COU' to select center of cell.
+            coordinates, or 'COP' to select center of positions or
+            'COU' to select center of cell.
         phi :
             The 1st rotation angle around the z axis.
         theta :
