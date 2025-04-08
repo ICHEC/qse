@@ -208,7 +208,7 @@ def test_rotation_square_z(angle):
             [np.cos(angle), np.sin(angle), 1.0],
         ]
     )
-    assert np.alclose(qbits.positions(), new_positions)
+    assert np.allclose(qbits.positions(), new_positions)
 
 
 @pytest.mark.parametrize("a", ["x", "-y", (0.0, 2.0, 3)])
