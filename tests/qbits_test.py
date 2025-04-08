@@ -259,7 +259,8 @@ def test_euler_rotate_distances(phi, theta, psi, center):
 
 
 @pytest.mark.parametrize("angle", [90, 36.0])
-def get_angle(angle):
+def test_get_angle(angle):
+    """Test get_angle on a simple 3-qbit system."""
     angle_rads = np.pi * angle / 180
     positions = np.array(
         [

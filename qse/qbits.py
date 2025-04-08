@@ -210,8 +210,6 @@ class Qbits:
             celldisp = np.zeros(shape=(3, 1))
         self.set_celldisp(celldisp)
 
-        # print(type(positions), len(positions), type(positions[0]))
-        # print(type(scaled_positions), len(scaled_positions), type(scaled_positions[0]))
         if positions is None:
             if scaled_positions is None:
                 positions = np.zeros((len(self.arrays["labels"]), 3))
@@ -490,16 +488,20 @@ class Qbits:
                 b[:] = a
 
     def has(self, name):
-        """Check for existence of array.
+        """
+        Check for existence of array.
 
         name must be one of: 'tags', 'momenta', 'masses', 'initial_magmoms',
-        'initial_charges'."""
+        'initial_charges'.
+        """
         # XXX extend has to calculator properties
         return name in self.arrays
 
     def set_tags(self, tags):
-        """Set tags for all qbits. If only one tag is supplied, it is
-        applied to all qbits."""
+        """
+        Set tags for all qbits. If only one tag is supplied, it is
+        applied to all qbits.
+        """
         if isinstance(tags, int):
             tags = [tags] * len(self)
         self.set_array("tags", tags, int, ())
@@ -512,8 +514,10 @@ class Qbits:
             return np.zeros(len(self), int)
 
     def set_positions(self, newpositions, apply_constraint=True):
-        """Set positions, honoring any constraints. To ignore constraints,
-        use *apply_constraint=False*."""
+        """
+        Set positions, honoring any constraints. To ignore constraints,
+        use *apply_constraint=False*.
+        """
         if self.constraints and apply_constraint:
             newpositions = np.array(newpositions, float)
             for constraint in self.constraints:
@@ -522,7 +526,8 @@ class Qbits:
         self.set_array("positions", newpositions, shape=(3,))
 
     def get_positions(self, wrap=False, **wrap_kw):
-        """Get array of positions.
+        """
+        Get array of positions.
 
         Parameters:
 
@@ -949,17 +954,17 @@ class Qbits:
 
         Parameters
         ----------
-        a = None:
+        a :
             Angle that the qbits is rotated around the vector 'v'. 'a'
             can also be a vector and then 'a' is rotated
             into 'v'.
-        v:
+        v :
             Vector to rotate the qbits around. Vectors can be given as
             strings: 'x', '-x', 'y', ... .
-        center = (0, 0, 0):
+        center :
             The center is kept fixed under the rotation. Use 'COP' to
             fix the center of positions or 'COU' to fix the center of
-            cell.
+            cell. Defaults to = (0, 0, 0).
         rotate_cell = False:
             If true the cell is also rotated.
 
