@@ -135,35 +135,35 @@ def test_get_item():
     qbits = qse.Qbits(positions=positions)
 
     # test int
-    for indicies in [0, 2]:
-        assert isinstance(qbits[indicies], qse.Qbit)
-        assert np.allclose(qbits[indicies].position, positions[indicies])
+    for indices in [0, 2]:
+        assert isinstance(qbits[indices], qse.Qbit)
+        assert np.allclose(qbits[indices].position, positions[indices])
 
     # test list
-    for indicies in [[0, 2], [1, 3, 2]]:
-        assert isinstance(qbits[indicies], qse.Qbits)
-        assert np.allclose(qbits[indicies].get_positions(), positions[indicies])
+    for indices in [[0, 2], [1, 3, 2]]:
+        assert isinstance(qbits[indices], qse.Qbits)
+        assert np.allclose(qbits[indices].get_positions(), positions[indices])
 
     # test slice
     assert isinstance(qbits[1:3], qse.Qbits)
     assert np.allclose(qbits[1:3].get_positions(), positions[1:3])
 
 
-@pytest.mark.parametrize("indicies", [1, [0, 1, 3]])
-def test_del_item(indicies):
+@pytest.mark.parametrize("indices", [1, [0, 1, 3]])
+def test_del_item(indices):
     """Test __delitem__"""
     nqbits = 4
     positions = np.random.rand(nqbits, 3)
     qbits = qse.Qbits(positions=positions)
 
-    del qbits[indicies]
+    del qbits[indices]
 
-    if isinstance(indicies, int):
-        indicies = [indicies]
+    if isinstance(indices, int):
+        indices = [indices]
 
     assert isinstance(qbits, qse.Qbits)
-    assert len(qbits) == nqbits - len(indicies)
+    assert len(qbits) == nqbits - len(indices)
     assert np.allclose(
         qbits.get_positions(),
-        positions[[i for i in range(nqbits) if i not in indicies]],
+        positions[[i for i in range(nqbits) if i not in indices]],
     )
