@@ -135,36 +135,36 @@ def test_get_item():
     qbits = qse.Qbits(positions=positions)
 
     # test int
-    for indicies in [0, 2]:
-        assert isinstance(qbits[indicies], qse.Qbit)
-        assert np.allclose(qbits[indicies].position, positions[indicies])
+    for indices in [0, 2]:
+        assert isinstance(qbits[indices], qse.Qbit)
+        assert np.allclose(qbits[indices].position, positions[indices])
 
     # test list
-    for indicies in [[0, 2], [1, 3, 2]]:
-        assert isinstance(qbits[indicies], qse.Qbits)
-        assert np.allclose(qbits[indicies].get_positions(), positions[indicies])
+    for indices in [[0, 2], [1, 3, 2]]:
+        assert isinstance(qbits[indices], qse.Qbits)
+        assert np.allclose(qbits[indices].get_positions(), positions[indices])
 
     # test slice
     assert isinstance(qbits[1:3], qse.Qbits)
     assert np.allclose(qbits[1:3].get_positions(), positions[1:3])
 
 
-@pytest.mark.parametrize("indicies", [1, [0, 1, 3]])
-def test_get_item(indicies):
+@pytest.mark.parametrize("indices", [1, [0, 1, 3]])
+def test_del_item(indices):
     """Test __delitem__"""
     nqbits = 4
     positions = np.random.rand(nqbits, 3)
     qbits = qse.Qbits(positions=positions)
 
-    del qbits[indicies]
+    del qbits[indices]
 
-    if isinstance(indicies, int):
-        indicies = [indicies]
+    if isinstance(indices, int):
+        indices = [indices]
 
     _qbits_checker(
         qbits,
-        positions[[i for i in range(nqbits) if i not in indicies]],
-        nqbits - len(indicies),
+        positions[[i for i in range(nqbits) if i not in indices]],
+        nqbits - len(indices),
     )
 
 
@@ -283,8 +283,8 @@ def test_get_angle(angle):
 
 
 @pytest.mark.parametrize("angle", [11.2, 36.0])
-@pytest.mark.parametrize("indicies", [[0, 1, 2], [2, 4, 1], [0, 4, 2]])
-def test_set_angle(angle, indicies):
+@pytest.mark.parametrize("indices", [[0, 1, 2], [2, 4, 1], [0, 4, 2]])
+def test_set_angle(angle, indices):
     """Test set_angle on a simple 5-qbit system."""
     positions = np.array(
         [
@@ -296,6 +296,6 @@ def test_set_angle(angle, indicies):
         ]
     )
     qbits = qse.Qbits(positions=positions)
-    assert not np.isclose(angle, qbits.get_angle(*indicies))
-    qbits.set_angle(*indicies, angle)
-    assert np.isclose(angle, qbits.get_angle(*indicies))
+    assert not np.isclose(angle, qbits.get_angle(*indices))
+    qbits.set_angle(*indices, angle)
+    assert np.isclose(angle, qbits.get_angle(*indices))
