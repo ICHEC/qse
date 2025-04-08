@@ -693,39 +693,39 @@ class Qbits:
         for i in range(len(self)):
             yield self[i]
 
-    def __getitem__(self, indicies):
+    def __getitem__(self, indices):
         """
         Return a subset of the qbits.
 
         Parameters
         ----------
-        indicies : int | list | slice
-            The indicies to be returned.
+        indices : int | list | slice
+            The indices to be returned.
 
         Returns
         -------
         Qbit | Qbits.
-            If indicies is a scalar a Qbit object is returned. If indicies
+            If indices is a scalar a Qbit object is returned. If indices
             is a list or a slice, a Qbits object with the same cell, pbc, and
             other associated info as the original Qbits object is returned.
         """
 
-        if isinstance(indicies, numbers.Integral):
+        if isinstance(indices, numbers.Integral):
             nqbits = len(self)
-            if indicies < -nqbits or indicies >= nqbits:
+            if indices < -nqbits or indices >= nqbits:
                 raise IndexError("Index out of range.")
-            return Qbit(qbits=self, index=indicies)
+            return Qbit(qbits=self, index=indices)
 
-        if not isinstance(indicies, slice):
-            indicies = np.array(indicies)
-            # if i is a mask
-            if indicies.dtype == bool:
-                if len(indicies) != len(self):
+        if not isinstance(indices, slice):
+            indices = np.array(indices)
+            # if indices is a mask.
+            if indices.dtype == bool:
+                if len(indices) != len(self):
                     raise IndexError(
-                        "Length of mask {} must equal "
-                        "number of qbits {}".format(len(indicies), len(self))
+                        f"Length of mask {len(indices)} must equal "
+                        f"number of qbits {len(self)}"
                     )
-                indicies = np.arange(len(self))[indicies]
+                indices = np.arange(len(self))[indices]
 
         qbits = self.__class__(
             cell=self.cell,
@@ -736,26 +736,26 @@ class Qbits:
 
         qbits.arrays = {}
         for name, a in self.arrays.items():
-            qbits.arrays[name] = a[indicies].copy()
+            qbits.arrays[name] = a[indices].copy()
 
         return qbits
 
-    def __delitem__(self, indicies):
+    def __delitem__(self, indices):
         """
         Delete a subset of the qbits.
 
         Parameters
         ----------
-        indicies : int | list
-            The indicies to be deleted.
+        indices : int | list
+            The indices to be deleted.
         """
-        if isinstance(indicies, list) and len(indicies) > 0:
+        if isinstance(indices, list) and len(indices) > 0:
             # Make sure a list of booleans will work correctly and not be
             # interpreted at 0 and 1 indices.
-            indicies = np.array(indicies)
+            indices = np.array(indices)
 
         mask = np.ones(len(self), bool)
-        mask[indicies] = False
+        mask[indices] = False
         for name, a in self.arrays.items():
             self.arrays[name] = a[mask]
 
