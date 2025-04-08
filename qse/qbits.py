@@ -704,10 +704,10 @@ class Qbits:
 
         Returns
         -------
-        If indicies is a scalar, return an Qbit object.
-
-        If indicies is a list or a slice, return an Qbits object with the same cell, pbc, and
-        other associated info as the original Qbits object.
+        Qbit | Qbits.
+            If indicies is a scalar a Qbit object is returned. If indicies
+            is a list or a slice, a Qbits object with the same cell, pbc, and
+            other associated info as the original Qbits object is returned.
         """
 
         if isinstance(indicies, numbers.Integral):
@@ -741,6 +741,14 @@ class Qbits:
         return qbits
 
     def __delitem__(self, indicies):
+        """
+        Delete a subset of the qbits.
+
+        Parameters
+        ----------
+        indicies : int | list
+            The indicies to be deleted.
+        """
         if isinstance(indicies, list) and len(indicies) > 0:
             # Make sure a list of booleans will work correctly and not be
             # interpreted at 0 and 1 indices.
@@ -791,8 +799,6 @@ class Qbits:
 
     def draw(self, ax=None, radius=None):
         _draw(self, ax=ax, radius=radius)
-
-    #
 
     def repeat(self, rep):
         """Create new repeated qbits object.
