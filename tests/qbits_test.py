@@ -194,18 +194,20 @@ def test_rotate():
 
 @pytest.mark.parametrize("angle", [10, 20, 30])
 def test_rotation_square_z(angle):
+    """Test rotating a square system about the z axis."""
     positions = np.array(
         [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0], [1.0, 0.0, 1.0]]
     )
     qbits = qse.Qbits(positions=positions)
     qbits.rotate(angle, "z")
 
+    angle_rads = np.pi * angle / 180
     new_positions = np.array(
         [
             [0.0, 0.0, 0.0],
-            [np.cos(angle), np.sin(angle), 0.0],
+            [np.cos(angle_rads), np.sin(angle_rads), 0.0],
             [0.0, 0.0, 1.0],
-            [np.cos(angle), np.sin(angle), 1.0],
+            [np.cos(angle_rads), np.sin(angle_rads), 1.0],
         ]
     )
     assert np.allclose(qbits.get_positions(), new_positions)
@@ -265,7 +267,7 @@ def test_get_angle(angle):
         [
             [np.cos(angle_rads), np.sin(angle_rads), 0.0],
             [0.0, 0.0, 0.0],
-            [0.0, 1.0, 0.0],
+            [1.0, 0.0, 0.0],
         ]
     )
     qbits = qse.Qbits(positions=positions)
@@ -276,7 +278,7 @@ def test_get_angle(angle):
     assert np.isclose(qbits.get_angle(0, 1, 2), angle)
 
     # Angle should be invariant under global rotation.
-    qbits.euler_rotation(10, 20, -44.5)
+    qbits.euler_rotate(10, 20, -44.5)
     assert np.isclose(qbits.get_angle(0, 1, 2), angle)
 
 
