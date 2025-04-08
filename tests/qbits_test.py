@@ -294,6 +294,6 @@ def test_set_angle(angle, indicies):
         ]
     )
     qbits = qse.Qbits(positions=positions)
-    assert not np.isclose(angle, qbits.get_angle(indicies))
+    assert not np.isclose(angle, qbits.get_angle(*indicies))
     qbits.set_angle(*indicies, angle)
     assert np.isclose(angle, qbits.get_angle(*indicies))
