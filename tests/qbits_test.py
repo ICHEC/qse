@@ -127,3 +127,43 @@ def test_translate(nqbits, type_of_disp):
     else:
         qbits.translate(disp)
         assert np.allclose(qbits.get_positions(), positions + disp)
+
+
+def test_get_item():
+    """Test __getitem__"""
+    positions = np.random.rand(4, 3)
+    qbits = qse.Qbits(positions=positions)
+
+    # test int
+    for indices in [0, 2]:
+        assert isinstance(qbits[indices], qse.Qbit)
+        assert np.allclose(qbits[indices].position, positions[indices])
+
+    # test list
+    for indices in [[0, 2], [1, 3, 2]]:
+        assert isinstance(qbits[indices], qse.Qbits)
+        assert np.allclose(qbits[indices].get_positions(), positions[indices])
+
+    # test slice
+    assert isinstance(qbits[1:3], qse.Qbits)
+    assert np.allclose(qbits[1:3].get_positions(), positions[1:3])
+
+
+@pytest.mark.parametrize("indices", [1, [0, 1, 3]])
+def test_del_item(indices):
+    """Test __delitem__"""
+    nqbits = 4
+    positions = np.random.rand(nqbits, 3)
+    qbits = qse.Qbits(positions=positions)
+
+    del qbits[indices]
+
+    if isinstance(indices, int):
+        indices = [indices]
+
+    assert isinstance(qbits, qse.Qbits)
+    assert len(qbits) == nqbits - len(indices)
+    assert np.allclose(
+        qbits.get_positions(),
+        positions[[i for i in range(nqbits) if i not in indices]],
+    )
