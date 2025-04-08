@@ -161,11 +161,10 @@ def test_get_item(indicies):
     if isinstance(indicies, int):
         indicies = [indicies]
 
-    assert isinstance(qbits, qse.Qbits)
-    assert len(qbits) == nqbits - len(indicies)
-    assert np.allclose(
-        qbits.get_positions(),
+    _qbits_checker(
+        qbits,
         positions[[i for i in range(nqbits) if i not in indicies]],
+        nqbits - len(indicies),
     )
 
 
@@ -194,7 +193,7 @@ def test_rotate():
 
 
 @pytest.mark.parametrize("angle", [10, 20, 30])
-def rotation_square_z(angle):
+def test_rotation_square_z(angle):
     positions = np.array(
         [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0], [1.0, 0.0, 1.0]]
     )
@@ -279,3 +278,22 @@ def test_get_angle(angle):
     # Angle should be invariant under global rotation.
     qbits.euler_rotation(10, 20, -44.5)
     assert np.isclose(qbits.get_angle(0, 1, 2), angle)
+
+
+@pytest.mark.parametrize("angle", [11.2, 36.0])
+@pytest.mark.parametrize("indicies", [[0, 1, 2], [2, 4, 1], [0, 4, 2]])
+def test_set_angle(angle, indicies):
+    """Test set_angle on a simple 5-qbit system."""
+    positions = np.array(
+        [
+            [0.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0],
+            [1.0, 0.0, 0.0],
+            [1.0, 1.0, 0.0],
+            [0.5, 0.5, 1.0],
+        ]
+    )
+    qbits = qse.Qbits(positions=positions)
+    assert not np.isclose(angle, qbits.get_angle(indicies))
+    qbits.set_angle(*indicies, angle)
+    assert np.isclose(angle, qbits.get_angle(indicies))

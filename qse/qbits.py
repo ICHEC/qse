@@ -1255,7 +1255,8 @@ class Qbits:
     def set_angle(
         self, a1, a2=None, a3=None, angle=None, mask=None, indices=None, add=False
     ):
-        """Set angle (in degrees) formed by three qbits.
+        """
+        Set angle (in degrees) formed by three qbits.
 
         Sets the angle between vectors *a2*->*a1* and *a2*->*a3*.
 
@@ -1264,7 +1265,8 @@ class Qbits:
         Same usage as in :meth:`ase.Qbits.set_dihedral`.
         If *mask* and *indices*
         are given, *indices* overwrites *mask*. If *mask* and *indices*
-        are not set, only *a3* is moved."""
+        are not set, only *a3* is moved.
+        """
 
         if any(a is None for a in [a2, a3, angle]):
             raise ValueError("a2, a3, and angle must not be None")
