@@ -693,93 +693,69 @@ class Qbits:
         for i in range(len(self)):
             yield self[i]
 
-    def __getitem__(self, i):
-        """Return a subset of the qbits.
+    def __getitem__(self, indices):
+        """
+        Return a subset of the qbits.
 
-        i -- scalar integer, list of integers, or slice object
-        describing which qbits to return.
+        Parameters
+        ----------
+        indices : int | list | slice
+            The indices to be returned.
 
-        If i is a scalar, return an Qbit object. If i is a list or a
-        slice, return an Qbits object with the same cell, pbc, and
-        other associated info as the original Qbits object. The
-        indices of the constraints will be shuffled so that they match
-        the indexing in the subset returned.
-
+        Returns
+        -------
+        Qbit | Qbits.
+            If indices is a scalar a Qbit object is returned. If indices
+            is a list or a slice, a Qbits object with the same cell, pbc, and
+            other associated info as the original Qbits object is returned.
         """
 
-        if isinstance(i, numbers.Integral):
+        if isinstance(indices, numbers.Integral):
             nqbits = len(self)
-            if i < -nqbits or i >= nqbits:
+            if indices < -nqbits or indices >= nqbits:
                 raise IndexError("Index out of range.")
+            return Qbit(qbits=self, index=indices)
 
-            return Qbit(qbits=self, index=i)
-        elif not isinstance(i, slice):
-            i = np.array(i)
-            # if i is a mask
-            if i.dtype == bool:
-                if len(i) != len(self):
+        if not isinstance(indices, slice):
+            indices = np.array(indices)
+            # if indices is a mask.
+            if indices.dtype == bool:
+                if len(indices) != len(self):
                     raise IndexError(
-                        "Length of mask {} must equal "
-                        "number of qbits {}".format(len(i), len(self))
+                        f"Length of mask {len(indices)} must equal "
+                        f"number of qbits {len(self)}"
                     )
-                i = np.arange(len(self))[i]
-
-        import copy
-
-        conadd = []
-        # Constraints need to be deepcopied, but only the relevant ones.
-        for con in copy.deepcopy(self.constraints):
-            try:
-                con.index_shuffle(self, i)
-            except (IndexError, NotImplementedError):
-                pass
-            else:
-                conadd.append(con)
+                indices = np.arange(len(self))[indices]
 
         qbits = self.__class__(
             cell=self.cell,
             pbc=self.pbc,
             info=self.info,
-            # should be communicated to the slice as well
             celldisp=self._celldisp,
         )
-        # TODO: Do we need to shuffle indices in adsorbate_info too?
 
         qbits.arrays = {}
         for name, a in self.arrays.items():
-            qbits.arrays[name] = a[i].copy()
+            qbits.arrays[name] = a[indices].copy()
 
-        qbits.constraints = conadd
         return qbits
 
-    def __delitem__(self, i):
-        from qse.constraints import FixQbits
+    def __delitem__(self, indices):
+        """
+        Delete a subset of the qbits.
 
-        for c in self._constraints:
-            if not isinstance(c, FixQbits):
-                raise RuntimeError(
-                    "Remove constraint using set_constraint() " "before deleting qbits."
-                )
-
-        if isinstance(i, list) and len(i) > 0:
+        Parameters
+        ----------
+        indices : int | list
+            The indices to be deleted.
+        """
+        if isinstance(indices, list) and len(indices) > 0:
             # Make sure a list of booleans will work correctly and not be
             # interpreted at 0 and 1 indices.
-            i = np.array(i)
-
-        if len(self._constraints) > 0:
-            n = len(self)
-            i = np.arange(n)[i]
-            if isinstance(i, int):
-                i = [i]
-            constraints = []
-            for c in self._constraints:
-                c = c.delete_qbits(i, n)
-                if c is not None:
-                    constraints.append(c)
-            self.constraints = constraints
+            indices = np.array(indices)
 
         mask = np.ones(len(self), bool)
-        mask[i] = False
+        mask[indices] = False
         for name, a in self.arrays.items():
             self.arrays[name] = a[mask]
 
@@ -823,8 +799,6 @@ class Qbits:
 
     def draw(self, ax=None, radius=None):
         _draw(self, ax=ax, radius=radius)
-
-    #
 
     def repeat(self, rep):
         """Create new repeated qbits object.
