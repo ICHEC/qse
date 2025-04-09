@@ -1,3 +1,6 @@
+"""
+Note that these tests are run locally only.
+"""
 import numpy as np
 
 import qse
