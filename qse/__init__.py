@@ -12,8 +12,9 @@ __version__ = "0.1.1"
 import numpy as np
 from ase import cell
 
-from qse import calc, utils
+from qse import calc
 from qse.qbit import Qbit
 from qse.qbits import Qbits
 from qse.signal import Signal
+from qse.utils import *
 from qse.visualise import draw
