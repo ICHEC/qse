@@ -5,7 +5,7 @@ Quantum Simulation Environment.
 This package is adapted from Atomic Simulation Environment (ASE).
 """
 
-__all__ = ["Qbits", "Qbit"]
+__all__ = ["Qbits", "Qbit", "Signal"]
 __version__ = "0.1.1"
 
 # from qse.calc.pulser import Pulser
