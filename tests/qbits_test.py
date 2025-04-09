@@ -193,7 +193,7 @@ def test_rotate():
 
 
 @pytest.mark.parametrize("angle", [10, 20, 30])
-def test_rotation_square_z(angle):
+def test_rotate_square_z(angle):
     """Test rotating a square system about the z axis."""
     positions = np.array(
         [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0], [1.0, 0.0, 1.0]]
