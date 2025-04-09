@@ -1,6 +1,4 @@
 import numpy as np
-import qat.qpus
-
 import qse
 from qse.calc.myqlm import MyQLM
 
