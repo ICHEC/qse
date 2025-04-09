@@ -8,19 +8,16 @@ https://pulser.readthedocs.io/en/stable/
 import numpy as np
 import pulser
 import pulser.waveforms
-
-# from pulser_simulation import Simulation, SimConfig, QutipEmulator
 from pulser_simulation import QutipEmulator
 
 from qse.calc import signal
 from qse.calc.calculator import Calculator, CalculatorSetupError
 from qse.calc.messages import CalculatorSetupError
 
-# from ase.calculators.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
-
 
 class Pulser(Calculator):
-    """QSE-Calculator for pulser.
+    """
+    QSE-Calculator for pulser.
 
     Pulser is an open-source Python software package.
     It provides easy-to-use libraries for designing and
