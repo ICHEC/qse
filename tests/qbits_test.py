@@ -282,6 +282,24 @@ def test_get_angle(angle):
     assert np.isclose(qbits.get_angle(0, 1, 2), angle)
 
 
+def test_get_angles():
+    """Test get_angles."""
+    indices = np.array(
+        [
+            [0, 1, 2],
+            [0, 1, 3],
+            [0, 1, 4],
+            [0, 1, 2],
+        ]
+    )
+
+    qbits = qse.Qbits(positions=np.random.rand(6, 3))
+    angles = qbits.get_angles(indices)
+
+    assert angles.shape == (indices.shape[0],)
+    assert np.isclose(angles[0], angles[-1])
+
+
 @pytest.mark.parametrize("angle", [11.2, 36.0])
 @pytest.mark.parametrize("indices", [[0, 1, 2], [2, 4, 1], [0, 4, 2]])
 def test_set_angle(angle, indices):
