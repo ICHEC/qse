@@ -12,7 +12,7 @@ import pulser.waveforms
 # from pulser_simulation import Simulation, SimConfig, QutipEmulator
 from pulser_simulation import QutipEmulator
 
-from qse.calc import signal
+from qse import signal
 from qse.calc.calculator import Calculator, CalculatorSetupError
 from qse.calc.messages import CalculatorSetupError
 

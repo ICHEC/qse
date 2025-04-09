@@ -15,4 +15,5 @@ from ase import cell
 from qse import utils
 from qse.qbit import Qbit
 from qse.qbits import Qbits
+from qse.signal import Signal
 from qse.visualise import draw

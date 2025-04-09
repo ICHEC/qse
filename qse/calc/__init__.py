@@ -16,7 +16,6 @@ from qse.calc.messages import (
     PropertyNotImplementedError,
     PropertyNotPresent,
 )
-from qse.calc.signal import Signal
 
 from .myqlm import Myqlm
 from .pulser import Pulser
