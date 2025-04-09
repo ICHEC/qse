@@ -2,5 +2,20 @@
 
 __all__ = ["Calculator", "CalculatorSetupError", "Signal"]
 
-from qse.calc.calculator import Calculator, CalculatorSetupError
-from qse.calc.signal import Signal
+
+__all__ = [
+    "Calculator",
+    "Signal",
+    "PropertyNotImplementedError",
+    "PropertyNotPresent",
+    "CalculatorSetupError",
+    "CalculationFailed",
+]
+
+from qse.calc.calculator import Calculator
+from qse.calc.messages import (
+    CalculationFailed,
+    CalculatorSetupError,
+    PropertyNotImplementedError,
+    PropertyNotPresent,
+)

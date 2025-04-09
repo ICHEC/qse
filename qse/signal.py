@@ -1,11 +1,11 @@
-"""The Signal class."""
+"""Definition of the Signal class."""
 
 from typing import Union
 
 import numpy as np
 
 
-class Signal(object):
+class Signal:
     """
     Signal class to represent a a signal with a duration.
     It has two components: values, and duration.

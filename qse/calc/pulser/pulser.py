@@ -7,12 +7,12 @@ https://pulser.readthedocs.io/en/stable/
 
 import numpy as np
 import pulser
-import pulser.pulse
 import pulser.waveforms
 
 # from pulser_simulation import Simulation, SimConfig, QutipEmulator
 from pulser_simulation import QutipEmulator
 
+from qse import Signal
 from qse.calc import Calculator, CalculatorSetupError, Signal
 
 
