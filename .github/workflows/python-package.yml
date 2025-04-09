@@ -40,4 +40,13 @@ jobs:
         pip install .
     - name: Test with pytest
       run: |
-        pytest tests/qse
+        python -m pytest tests/qse
+    - name: Install Pulser
+      run: |
+        pip install "qse[pulser]"
+    - name: Test with pytest (pulser)
+      run: |
+        python -m pytest tests/qse_pulser
+    - name: Install MyQLM
+      run: |
+        pip install "qse[myqlm]"
