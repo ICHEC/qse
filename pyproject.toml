@@ -9,9 +9,6 @@ readme = "README.md"
 authors = [{name = "Rajarshi Tiwari", email = "rajarshi.tiwari@ichec.ie"}]
 version = "0.1.1"
 requires-python = ">=3.10"
-
-dynamic = ["dependencies"]
-[tool.setuptools.dynamic]
 dependencies = [
     "ase",
     "numpy",
@@ -19,7 +16,7 @@ dependencies = [
 ]
 
 [project.urls]
-homepage = "https://github.com/rajarshitiwari/qse"
+homepage = "https://github.com/ichec/qse"
 
 [project.optional-dependencies]
 dev = [
