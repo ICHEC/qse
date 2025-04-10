@@ -5,28 +5,16 @@ ASE calculator.
 https://pulser.readthedocs.io/en/stable/
 """
 
-import os
-import os.path
-from abc import ABCMeta
-from subprocess import PIPE, Popen
-from warnings import warn
-
-import ase.io
 import numpy as np
 import pulser
-import pulser.pulse
 import pulser.waveforms
 
 # from pulser_simulation import Simulation, SimConfig, QutipEmulator
 from pulser_simulation import QutipEmulator
 
-from qse.calc import signal
-from qse.calc.calculator import (
-    Calculator,
-    CalculatorSetupError,
-    Parameters,
-    all_changes,
-)
+from qse import signal
+from qse.calc.calculator import Calculator, CalculatorSetupError
+from qse.calc.messages import CalculatorSetupError
 
 # from ase.calculators.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
 
