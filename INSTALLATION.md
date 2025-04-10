@@ -3,7 +3,7 @@ To create a new conda environment use
 ```bash
 conda create -n <my-env> python=<python_version>
 ```
-where we recommend 3.10, 3.11 or 3.12 for the version of python.
+where we recommend 3.10, 3.11 or 3.12 for the version of Python.
 The environment can then be activated with
 ```bash
 conda activate <my-env>

@@ -9,9 +9,9 @@ To install these tools use
 ```bash
 pip install flake8 black isort pytest
 ```
-or
+or (from inside the directory where the `pyproject.toml` is located)
 ```bash
-pip install -r dev_requirements.txt
+pip install ".[dev]"
 ```
 
 To run `black` on all python files within a directory, use
