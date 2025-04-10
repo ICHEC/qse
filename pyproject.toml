@@ -12,7 +12,11 @@ requires-python = ">=3.10"
 
 dynamic = ["dependencies"]
 [tool.setuptools.dynamic]
-dependencies = {file = "requirements.txt"}
+dependencies = [
+    "ase",
+    "numpy",
+    "matplotlib"
+]
 
 [project.urls]
 homepage = "https://github.com/rajarshitiwari/qse"
@@ -20,7 +24,11 @@ homepage = "https://github.com/rajarshitiwari/qse"
 [project.optional-dependencies]
 dev = [
     "pytest",
-    "ipykernel"
+    "ipykernel",
+    "flake8", 
+    "pytest", 
+    "black",
+    "isort"
 ]
 
 [tool.mypy]
@@ -30,3 +38,6 @@ enable_error_code = 'ignore-without-code'
 
 [tool.isort]
 profile = "black"
+
+[tool.pytest.ini_options]
+testpaths = "tests"
