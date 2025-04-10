@@ -8,6 +8,7 @@ description = "Quantum Simulation Environment"
 readme = "README.md"
 authors = [
     {name = "Rajarshi Tiwari", email = "rajarshi.tiwari@ichec.ie"},
+    {name = "Karthik Krishnakumar", email = "karthik.krishnakumar@ichec.ie"},
     {name = "James Nelson", email = "james.nelson@ichec.ie"},
     {name = "Sherry Blair", email = "sherry.blair@ichec.ie"}
     ]
