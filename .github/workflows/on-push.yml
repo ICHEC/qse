@@ -7,7 +7,6 @@ on: push
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -20,7 +19,7 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install pip and testing dependencies
+    - name: Install testing dependencies
       run: |
         python -m pip install ".[dev]"
     - name: Lint with flake8
