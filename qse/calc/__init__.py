@@ -1,21 +1,17 @@
 """Interface to different QSE calculators."""
 
 __all__ = [
-    "calculator",
-    "Signal",
+    "Calculator",
     "PropertyNotImplementedError",
     "PropertyNotPresent",
     "CalculatorSetupError",
     "CalculationFailed",
 ]
 
-import qse.calc.calculator
+from qse.calc.calculator import Calculator
 from qse.calc.messages import (
     CalculationFailed,
     CalculatorSetupError,
     PropertyNotImplementedError,
     PropertyNotPresent,
 )
-
-from .myqlm import Myqlm
-from .pulser import Pulser
