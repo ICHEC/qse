@@ -210,8 +210,6 @@ class Qbits:
             celldisp = np.zeros(shape=(3, 1))
         self.set_celldisp(celldisp)
 
-        # print(type(positions), len(positions), type(positions[0]))
-        # print(type(scaled_positions), len(scaled_positions), type(scaled_positions[0]))
         if positions is None:
             if scaled_positions is None:
                 positions = np.zeros((len(self.arrays["labels"]), 3))
@@ -490,16 +488,20 @@ class Qbits:
                 b[:] = a
 
     def has(self, name):
-        """Check for existence of array.
+        """
+        Check for existence of array.
 
         name must be one of: 'tags', 'momenta', 'masses', 'initial_magmoms',
-        'initial_charges'."""
+        'initial_charges'.
+        """
         # XXX extend has to calculator properties
         return name in self.arrays
 
     def set_tags(self, tags):
-        """Set tags for all qbits. If only one tag is supplied, it is
-        applied to all qbits."""
+        """
+        Set tags for all qbits. If only one tag is supplied, it is
+        applied to all qbits.
+        """
         if isinstance(tags, int):
             tags = [tags] * len(self)
         self.set_array("tags", tags, int, ())
@@ -512,8 +514,10 @@ class Qbits:
             return np.zeros(len(self), int)
 
     def set_positions(self, newpositions, apply_constraint=True):
-        """Set positions, honoring any constraints. To ignore constraints,
-        use *apply_constraint=False*."""
+        """
+        Set positions, honoring any constraints. To ignore constraints,
+        use *apply_constraint=False*.
+        """
         if self.constraints and apply_constraint:
             newpositions = np.array(newpositions, float)
             for constraint in self.constraints:
@@ -522,7 +526,8 @@ class Qbits:
         self.set_array("positions", newpositions, shape=(3,))
 
     def get_positions(self, wrap=False, **wrap_kw):
-        """Get array of positions.
+        """
+        Get array of positions.
 
         Parameters:
 
@@ -955,17 +960,17 @@ class Qbits:
 
         Parameters
         ----------
-        a = None:
+        a :
             Angle that the qbits is rotated around the vector 'v'. 'a'
             can also be a vector and then 'a' is rotated
             into 'v'.
-        v:
+        v :
             Vector to rotate the qbits around. Vectors can be given as
             strings: 'x', '-x', 'y', ... .
-        center = (0, 0, 0):
+        center :
             The center is kept fixed under the rotation. Use 'COP' to
             fix the center of positions or 'COU' to fix the center of
-            cell.
+            cell. Defaults to = (0, 0, 0).
         rotate_cell = False:
             If true the cell is also rotated.
 
@@ -985,10 +990,9 @@ class Qbits:
         if not isinstance(a, numbers.Real):
             a, v = v, a
 
-        norm = np.linalg.norm
         v = string2vector(v)
 
-        normv = norm(v)
+        normv = np.linalg.norm(v)
 
         if normv == 0.0:
             raise ZeroDivisionError("Cannot rotate: norm(v) == 0")
@@ -1004,19 +1008,19 @@ class Qbits:
             normv2 = np.linalg.norm(v2)
             if normv2 == 0:
                 raise ZeroDivisionError("Cannot rotate: norm(a) == 0")
-            v2 /= norm(v2)
+            v2 /= np.linalg.norm(v2)
             c = np.dot(v, v2)
             v = np.cross(v, v2)
-            s = norm(v)
+            s = np.linalg.norm(v)
             # In case *v* and *a* are parallel, np.cross(v, v2) vanish
             # and can't be used as a rotation axis. However, in this
             # case any rotation axis perpendicular to v2 will do.
             eps = 1e-7
             if s < eps:
                 v = np.cross((0, 0, 1), v2)
-                if norm(v) < eps:
+                if np.linalg.norm(v) < eps:
                     v = np.cross((1, 0, 0), v2)
-                assert norm(v) >= eps
+                assert np.linalg.norm(v) >= eps
             elif s > 0:
                 v /= s
 
@@ -1048,23 +1052,23 @@ class Qbits:
         return center
 
     def euler_rotate(self, phi=0.0, theta=0.0, psi=0.0, center=(0, 0, 0)):
-        """Rotate qbits via Euler angles (in degrees).
+        """
+        Rotate qbits via Euler angles (in degrees).
 
         See e.g http://mathworld.wolfram.com/EulerAngles.html for explanation.
 
-        Parameters:
-
+        Parameters
+        ----------
+        phi : float
+            The 1st rotation angle around the z axis.
+        theta : float
+            Rotation around the x axis.
+        psi : float
+            2nd rotation around the z axis.
         center :
             The point to rotate about. A sequence of length 3 with the
-            coordinates, or 'COP' to select center of positions or
-            'COU' to select center of cell.
-        phi :
-            The 1st rotation angle around the z axis.
-        theta :
-            Rotation around the x axis.
-        psi :
-            2nd rotation around the z axis.
-
+            coordinates, or 'COM' to select the center of mass, 'COP' to
+            select center of positions or 'COU' to select center of cell.
         """
         center = self._centering_as_array(center)
 
@@ -1072,9 +1076,7 @@ class Qbits:
         theta *= pi / 180
         psi *= pi / 180
 
-        # First move the molecule to the origin In contrast to MATLAB,
-        # numpy broadcasts the smaller array to the larger row-wise,
-        # so there is no need to play with the Kronecker product.
+        # First move the molecule to the origin.
         rcoords = self.positions - center
         # First Euler rotation about z in matrix form
         D = np.array(
@@ -1208,19 +1210,32 @@ class Qbits:
         start = self.get_dihedral(a1, a2, a3, a4)
         self.set_dihedral(a1, a2, a3, a4, angle + start, mask, indices)
 
-    def get_angle(self, a1, a2, a3, mic=False):
-        """Get angle formed by three qbits.
-
-        Calculate angle in degrees between the vectors a2->a1 and
-        a2->a3.
-
-        Use mic=True to use the Minimum Image Convention and calculate the
-        angle across periodic boundaries.
+    def get_angle(self, index_1: int, index_2: int, index_3: int, mic: bool = False):
         """
-        return self.get_angles([[a1, a2, a3]], mic=mic)[0]
+        Get the angle in degress formed by three qbits.
+
+        Parameters
+        ----------
+        index_1 : int
+            The index of the first qubit.
+        index_2 : int
+            The index of the second qubit.
+        index_3 : int
+            The index of the third qubit.
+        mic : bool
+            Use mic=True to use the Minimum Image Convention and calculate the
+            angle across periodic boundaries.
+
+        Notes
+        -----
+        Let x1, x2, x3 be the vectors describing the positions of the three
+        qubits. Then we calcule the angle between x1-x2 and x3-x2.
+        """
+        return self.get_angles([[index_1, index_2, index_3]], mic=mic)[0]
 
     def get_angles(self, indices, mic=False):
-        """Get angle formed by three qbits for multiple groupings.
+        """
+        Get angle formed by three qbits for multiple groupings.
 
         Calculate angle in degrees between vectors between qbits a2->a1
         and a2->a3, where a1, a2, and a3 are in each row of indices.
@@ -1238,19 +1253,16 @@ class Qbits:
         v12 = a1s - a2s
         v32 = a3s - a2s
 
-        cell = None
-        pbc = None
-
         if mic:
-            cell = self.cell
-            pbc = self.pbc
+            return get_angles(v12, v32, cell=self.cell, pbc=self.pbc)
 
-        return get_angles(v12, v32, cell=cell, pbc=pbc)
+        return get_angles(v12, v32, cell=None, pbc=None)
 
     def set_angle(
         self, a1, a2=None, a3=None, angle=None, mask=None, indices=None, add=False
     ):
-        """Set angle (in degrees) formed by three qbits.
+        """
+        Set angle (in degrees) formed by three qbits.
 
         Sets the angle between vectors *a2*->*a1* and *a2*->*a3*.
 
@@ -1259,7 +1271,8 @@ class Qbits:
         Same usage as in :meth:`ase.Qbits.set_dihedral`.
         If *mask* and *indices*
         are given, *indices* overwrites *mask*. If *mask* and *indices*
-        are not set, only *a3* is moved."""
+        are not set, only *a3* is moved.
+        """
 
         if any(a is None for a in [a2, a3, angle]):
             raise ValueError("a2, a3, and angle must not be None")
