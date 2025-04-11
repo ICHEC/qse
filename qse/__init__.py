@@ -5,12 +5,12 @@ Quantum Simulation Environment.
 This package is adapted from Atomic Simulation Environment (ASE).
 """
 
-__all__ = ["calc", "cell", "utils", "draw", "Qbits", "Qbit", "Signal"]
+__all__ = ["cell", "utils", "draw", "Qbits", "Qbit", "Signal"]
 __version__ = "0.1.1"
 
 from ase import cell
 
-from qse import calc, utils
+from qse import utils
 from qse.qbit import Qbit
 from qse.qbits import Qbits
 from qse.signal import Signal

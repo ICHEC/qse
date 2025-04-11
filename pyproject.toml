@@ -21,7 +21,7 @@ dependencies = [
 ]
 
 [project.urls]
-homepage = "https://github.com/ichec/qse"
+homepage = "https://github.com/rajarshitiwari/qse"
 
 [project.optional-dependencies]
 dev = [
