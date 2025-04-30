@@ -21,9 +21,10 @@ homepage = "https://github.com/rajarshitiwari/qse"
 [project.optional-dependencies]
 dev = [
     "pytest",
+    "pytest-cov",
+    "pytest-sugar",
     "ipykernel",
     "flake8", 
-    "pytest", 
     "black",
     "isort"
 ]
@@ -38,3 +39,4 @@ profile = "black"
 
 [tool.pytest.ini_options]
 testpaths = "tests"
+addopts = "--cov=qse"
