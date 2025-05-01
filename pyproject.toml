@@ -6,7 +6,12 @@ build-backend = "setuptools.build_meta"
 name = "qse"
 description = "Quantum Simulation Environment"
 readme = "README.md"
-authors = [{name = "Rajarshi Tiwari", email = "rajarshi.tiwari@ichec.ie"}]
+authors = [
+    {name = "Rajarshi Tiwari", email = "rajarshi.tiwari@ichec.ie"},
+    {name = "Karthik Krishnakumar", email = "karthik.krishnakumar@ichec.ie"},
+    {name = "James Nelson", email = "james.nelson@ichec.ie"},
+    {name = "Sherry Blair", email = "sherry.blair@ichec.ie"}
+    ]
 version = "0.1.1"
 requires-python = ">=3.10"
 dependencies = [
@@ -16,7 +21,7 @@ dependencies = [
 ]
 
 [project.urls]
-homepage = "https://github.com/rajarshitiwari/qse"
+homepage = "https://github.com/ichec/qse"
 
 [project.optional-dependencies]
 dev = [
