@@ -30,7 +30,7 @@ dev = [
     "pytest-sugar",
     "ipykernel",
     "flake8", 
-    "black",
+    "black[jupyter]",
     "isort"
 ]
 
