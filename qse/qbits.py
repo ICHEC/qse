@@ -26,7 +26,8 @@ from qse.visualise import draw as _draw
 
 
 class Qbits:
-    """Qbits object.
+    """
+    Qbits object.
 
     The Qbits object can represent an isolated molecule, or a
     periodically repeated structure.  It has a unit cell and
@@ -43,13 +44,14 @@ class Qbits:
     Qbits object is supposed to look similar to Register object.
 
 
-    Parameters:
-
+    Parameters
+    ----------
     labels: str or list of str
         Can be a list of symbols or a list of Qbit objects.
         Examples: 'H2O', 'COPt12', ['H', 'H', 'O'],
         [Qbit('Ne', (x, y, z)), ...].
-    states: list of 2-length arrays. State of each qubit.
+    states: list of 2-length arrays 
+        State of each qubit.
     positions: list of xyz-positions
         Qubit positions.  Anything that can be converted to an
         ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),
@@ -95,7 +97,8 @@ class Qbits:
         user-defined object, its base class is importable.  One should
         not make any assumptions about the existence of keys.
 
-    Examples:
+    Examples
+    --------
     Empty Qbits object:
     qs = Qbits()
     These three are equivalent:

@@ -11,9 +11,11 @@ import qse
 
 def int2bin(x, width=32):
     """
-    converts an integer array to array of equivalent binary strings.
+    Converts an integer array to array of equivalent binary strings.
+
     Equivalent to:
         int2bin = np.vectorize(lambda x, width=16: np.binary_repr(x,width=width))
+
     However vectorize version is a bit slower compared to the one below.
     """
     out = np.fromiter(
