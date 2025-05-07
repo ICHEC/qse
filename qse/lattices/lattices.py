@@ -29,7 +29,7 @@ def _lattice_creator(
     return unit.repeat(repeats + (1,))
 
 
-def linear_chain(lattice_spacing: float = 1.0, repeats: int = 6):
+def chain(lattice_spacing: float = 1.0, repeats: int = 6):
     """
     Generate a Qbits object in linear chain geometry.
 
@@ -49,9 +49,7 @@ def linear_chain(lattice_spacing: float = 1.0, repeats: int = 6):
     return _lattice_creator([[1, 0, 0], [0, 0, 0]], lattice_spacing, (repeats, 1))
 
 
-def square_lattice(
-    lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2
-):
+def square(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2):
     """
     Generate a Qbits object in square lattice geometry.
 
@@ -76,9 +74,7 @@ def square_lattice(
     )
 
 
-def triangular_lattice(
-    lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2
-):
+def triangular(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2):
     """
     Generate a Qbits object in triangular lattice geometry.
 
@@ -103,9 +99,7 @@ def triangular_lattice(
     )
 
 
-def hexagonal_lattice(
-    lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2
-):
+def hexagonal(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2):
     """
     Generate a Qbits object in hexagonal lattice geometry.
 
@@ -136,9 +130,7 @@ def hexagonal_lattice(
     )
 
 
-def kagome_lattice(
-    lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2
-):
+def kagome(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2):
     """
     Generate a Qbits object in kagome lattice geometry.
 

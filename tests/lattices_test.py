@@ -3,11 +3,11 @@ import pytest
 
 import qse
 from qse.lattices import (
-    hexagonal_lattice,
-    kagome_lattice,
-    linear_chain,
-    square_lattice,
-    triangular_lattice,
+    chain,
+    hexagonal,
+    kagome,
+    square,
+    triangular,
 )
 
 _lattice_spacings = [0.5, 3.1]
@@ -29,7 +29,7 @@ def _lattice_checker(qbits, expected_qbits, lattice_spacing, expected_cellpar):
 @pytest.mark.parametrize("lattice_spacing", _lattice_spacings)
 @pytest.mark.parametrize("N", _repeats)
 def test_linear(lattice_spacing, N):
-    qbits = linear_chain(lattice_spacing, N)
+    qbits = chain(lattice_spacing, N)
     _lattice_checker(qbits, N, lattice_spacing, [lattice_spacing * N, 0, 0, 90, 90, 90])
 
 
@@ -37,7 +37,7 @@ def test_linear_fail():
     with pytest.raises(
         Exception, match="The repeats must be an integer greater than 1. repeats=1"
     ):
-        linear_chain(1.0, 1)
+        chain(1.0, 1)
 
 
 @pytest.mark.parametrize("lattice_spacing", _lattice_spacings)
@@ -46,8 +46,8 @@ def test_linear_fail():
 @pytest.mark.parametrize(
     "lattice_func, angles",
     [
-        (square_lattice, [90, 90, 90]),
-        (triangular_lattice, [90, 90, 60]),
+        (square, [90, 90, 90]),
+        (triangular, [90, 90, 60]),
     ],
 )
 def test_square_and_triangular(lattice_func, lattice_spacing, N1, N2, angles):
@@ -64,7 +64,7 @@ def test_square_and_triangular(lattice_func, lattice_spacing, N1, N2, angles):
 @pytest.mark.parametrize("N1", _repeats)
 @pytest.mark.parametrize("N2", _repeats)
 def test_hexagonal(lattice_spacing, N1, N2):
-    qbits = hexagonal_lattice(lattice_spacing, N1, N2)
+    qbits = hexagonal(lattice_spacing, N1, N2)
     _lattice_checker(
         qbits,
         N1 * N2 * 2,
@@ -78,7 +78,7 @@ def test_hexagonal(lattice_spacing, N1, N2):
 @pytest.mark.parametrize("N1", _repeats)
 @pytest.mark.parametrize("N2", _repeats)
 def test_kagome(lattice_spacing, N1, N2):
-    qbits = kagome_lattice(lattice_spacing, N1, N2)
+    qbits = kagome(lattice_spacing, N1, N2)
     _lattice_checker(
         qbits,
         N1 * N2 * 3,
@@ -90,10 +90,10 @@ def test_kagome(lattice_spacing, N1, N2):
 @pytest.mark.parametrize(
     "lattice_func",
     [
-        square_lattice,
-        triangular_lattice,
-        hexagonal_lattice,
-        kagome_lattice,
+        square,
+        triangular,
+        hexagonal,
+        kagome,
     ],
 )
 def test_lattices_fail(lattice_func):
