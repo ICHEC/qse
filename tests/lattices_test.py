@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 import qse
-from qse.lattice_library import (
+from qse.lattices import (
     hexagonal_lattice,
     kagome_lattice,
     linear_chain,
