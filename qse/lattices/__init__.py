@@ -9,9 +9,9 @@ __all__ = [
 ]
 
 from .lattices import (
+    hexagonal_lattice,
+    kagome_lattice,
     linear_chain,
     square_lattice,
     triangular_lattice,
-    hexagonal_lattice,
-    kagome_lattice,
 )
