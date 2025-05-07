@@ -12,7 +12,7 @@ __version__ = "0.1.1"
 import numpy as np
 from ase import cell
 
-from qse import lattice_library, utils
+from qse import lattices, utils
 from qse.qbit import Qbit
 from qse.qbits import Qbits
 from qse.visualise import draw
