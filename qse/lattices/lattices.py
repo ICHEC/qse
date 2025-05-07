@@ -1,5 +1,3 @@
-"""A collection of convenience functions for creating common lattices."""
-
 import numpy as np
 
 import qse
