@@ -17,8 +17,7 @@ def _check_repeats(repeats, param_name):
 def _lattice_creator(
     unit_cell_2d: list,
     lattice_spacing: float,
-    repeats_x: int,
-    repeats_y: int,
+    repeats: tuple[int],
     qubit_positions: list = [[0, 0, 0]],
 ):
     """
@@ -29,7 +28,7 @@ def _lattice_creator(
 
     # We add [[0, 0, 0]] to convert the unit cell into 3d.
     unit.cell = lattice_spacing * qse.cell.Cell(unit_cell_2d + [[0, 0, 0]])
-    return unit.repeat((repeats_x, repeats_y, 1))
+    return unit.repeat(repeats + (1,))
 
 
 def linear_chain(lattice_spacing: float = 1.0, repeats: int = 6):
@@ -49,7 +48,7 @@ def linear_chain(lattice_spacing: float = 1.0, repeats: int = 6):
         The Qbits lattice.
     """
     _check_repeats(repeats, "repeats")
-    return _lattice_creator([[1, 0, 0], [0, 0, 0]], lattice_spacing, repeats, 1)
+    return _lattice_creator([[1, 0, 0], [0, 0, 0]], lattice_spacing, (repeats, 1))
 
 
 def square_lattice(
@@ -75,7 +74,7 @@ def square_lattice(
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
     return _lattice_creator(
-        [[1, 0, 0], [0, 1, 0]], lattice_spacing, repeats_x, repeats_y
+        [[1, 0, 0], [0, 1, 0]], lattice_spacing, (repeats_x, repeats_y)
     )
 
 
@@ -102,7 +101,7 @@ def triangular_lattice(
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
     return _lattice_creator(
-        [[1, 0, 0], [0.5, np.sqrt(3) / 2, 0]], lattice_spacing, repeats_x, repeats_y
+        [[1, 0, 0], [0.5, np.sqrt(3) / 2, 0]], lattice_spacing, (repeats_x, repeats_y)
     )
 
 
@@ -134,8 +133,7 @@ def hexagonal_lattice(
             [3 / 2, -np.sqrt(3) / 2, 0],
         ],
         lattice_spacing,
-        repeats_x,
-        repeats_y,
+        (repeats_x, repeats_y),
         [[0, 0, 0], [lattice_spacing, 0, 0]],
     )
 
@@ -165,8 +163,7 @@ def kagome_lattice(
     return _lattice_creator(
         [[2, 0, 0], [1, np.sqrt(3), 0]],
         lattice_spacing,
-        repeats_x,
-        repeats_y,
+        (repeats_x, repeats_y),
         [
             [0, 0, 0],
             [lattice_spacing, 0, 0],
