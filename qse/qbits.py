@@ -1,7 +1,8 @@
 # Copyright 2008, 2009 CAMd
 # (see accompanying license files for details).
 
-"""Definition of the Qbits class.
+"""
+Definition of the Qbits class.
 
 This module defines the central object in the QSE package: the Qbits object.
 """
@@ -10,14 +11,7 @@ import numbers
 from math import cos, pi, sin
 
 import numpy as np
-
-ONE = np.array([1, 0], dtype=complex)
-TWO = np.array([0, 1], dtype=complex)
-
-import ase.units as units
 from ase.cell import Cell
-
-# from ase.stress import voigt_6_to_full_3x3_stress, full_3x3_to_voigt_6_stress
 from ase.geometry import (
     find_mic,
     get_angles,
@@ -216,8 +210,6 @@ class Qbits:
             celldisp = np.zeros(shape=(3, 1))
         self.set_celldisp(celldisp)
 
-        # print(type(positions), len(positions), type(positions[0]))
-        # print(type(scaled_positions), len(scaled_positions), type(scaled_positions[0]))
         if positions is None:
             if scaled_positions is None:
                 positions = np.zeros((len(self.arrays["labels"]), 3))
@@ -384,11 +376,8 @@ class Qbits:
         The Cell object resembles a 3x3 ndarray, and cell[i, j]
         is the jth Cartesian coordinate of the ith cell vector."""
         if complete:
-            cell = self.cell.complete()
-        else:
-            cell = self.cell.copy()
-
-        return cell
+            return self.cell.complete()
+        return self.cell.copy()
 
     @deprecated("Please use qbits.cell.cellpar() instead")
     def get_cell_lengths_and_angles(self):
@@ -499,16 +488,20 @@ class Qbits:
                 b[:] = a
 
     def has(self, name):
-        """Check for existence of array.
+        """
+        Check for existence of array.
 
         name must be one of: 'tags', 'momenta', 'masses', 'initial_magmoms',
-        'initial_charges'."""
+        'initial_charges'.
+        """
         # XXX extend has to calculator properties
         return name in self.arrays
 
     def set_tags(self, tags):
-        """Set tags for all qbits. If only one tag is supplied, it is
-        applied to all qbits."""
+        """
+        Set tags for all qbits. If only one tag is supplied, it is
+        applied to all qbits.
+        """
         if isinstance(tags, int):
             tags = [tags] * len(self)
         self.set_array("tags", tags, int, ())
@@ -521,8 +514,10 @@ class Qbits:
             return np.zeros(len(self), int)
 
     def set_positions(self, newpositions, apply_constraint=True):
-        """Set positions, honoring any constraints. To ignore constraints,
-        use *apply_constraint=False*."""
+        """
+        Set positions, honoring any constraints. To ignore constraints,
+        use *apply_constraint=False*.
+        """
         if self.constraints and apply_constraint:
             newpositions = np.array(newpositions, float)
             for constraint in self.constraints:
@@ -531,7 +526,8 @@ class Qbits:
         self.set_array("positions", newpositions, shape=(3,))
 
     def get_positions(self, wrap=False, **wrap_kw):
-        """Get array of positions.
+        """
+        Get array of positions.
 
         Parameters:
 
@@ -702,93 +698,69 @@ class Qbits:
         for i in range(len(self)):
             yield self[i]
 
-    def __getitem__(self, i):
-        """Return a subset of the qbits.
+    def __getitem__(self, indices):
+        """
+        Return a subset of the qbits.
 
-        i -- scalar integer, list of integers, or slice object
-        describing which qbits to return.
+        Parameters
+        ----------
+        indices : int | list | slice
+            The indices to be returned.
 
-        If i is a scalar, return an Qbit object. If i is a list or a
-        slice, return an Qbits object with the same cell, pbc, and
-        other associated info as the original Qbits object. The
-        indices of the constraints will be shuffled so that they match
-        the indexing in the subset returned.
-
+        Returns
+        -------
+        Qbit | Qbits.
+            If indices is a scalar a Qbit object is returned. If indices
+            is a list or a slice, a Qbits object with the same cell, pbc, and
+            other associated info as the original Qbits object is returned.
         """
 
-        if isinstance(i, numbers.Integral):
+        if isinstance(indices, numbers.Integral):
             nqbits = len(self)
-            if i < -nqbits or i >= nqbits:
+            if indices < -nqbits or indices >= nqbits:
                 raise IndexError("Index out of range.")
+            return Qbit(qbits=self, index=indices)
 
-            return Qbit(qbits=self, index=i)
-        elif not isinstance(i, slice):
-            i = np.array(i)
-            # if i is a mask
-            if i.dtype == bool:
-                if len(i) != len(self):
+        if not isinstance(indices, slice):
+            indices = np.array(indices)
+            # if indices is a mask.
+            if indices.dtype == bool:
+                if len(indices) != len(self):
                     raise IndexError(
-                        "Length of mask {} must equal "
-                        "number of qbits {}".format(len(i), len(self))
+                        f"Length of mask {len(indices)} must equal "
+                        f"number of qbits {len(self)}"
                     )
-                i = np.arange(len(self))[i]
-
-        import copy
-
-        conadd = []
-        # Constraints need to be deepcopied, but only the relevant ones.
-        for con in copy.deepcopy(self.constraints):
-            try:
-                con.index_shuffle(self, i)
-            except (IndexError, NotImplementedError):
-                pass
-            else:
-                conadd.append(con)
+                indices = np.arange(len(self))[indices]
 
         qbits = self.__class__(
             cell=self.cell,
             pbc=self.pbc,
             info=self.info,
-            # should be communicated to the slice as well
             celldisp=self._celldisp,
         )
-        # TODO: Do we need to shuffle indices in adsorbate_info too?
 
         qbits.arrays = {}
         for name, a in self.arrays.items():
-            qbits.arrays[name] = a[i].copy()
+            qbits.arrays[name] = a[indices].copy()
 
-        qbits.constraints = conadd
         return qbits
 
-    def __delitem__(self, i):
-        from qse.constraints import FixQbits
+    def __delitem__(self, indices):
+        """
+        Delete a subset of the qbits.
 
-        for c in self._constraints:
-            if not isinstance(c, FixQbits):
-                raise RuntimeError(
-                    "Remove constraint using set_constraint() " "before deleting qbits."
-                )
-
-        if isinstance(i, list) and len(i) > 0:
+        Parameters
+        ----------
+        indices : int | list
+            The indices to be deleted.
+        """
+        if isinstance(indices, list) and len(indices) > 0:
             # Make sure a list of booleans will work correctly and not be
             # interpreted at 0 and 1 indices.
-            i = np.array(i)
-
-        if len(self._constraints) > 0:
-            n = len(self)
-            i = np.arange(n)[i]
-            if isinstance(i, int):
-                i = [i]
-            constraints = []
-            for c in self._constraints:
-                c = c.delete_qbits(i, n)
-                if c is not None:
-                    constraints.append(c)
-            self.constraints = constraints
+            indices = np.array(indices)
 
         mask = np.ones(len(self), bool)
-        mask[i] = False
+        mask[indices] = False
         for name, a in self.arrays.items():
             self.arrays[name] = a[mask]
 
@@ -833,8 +805,6 @@ class Qbits:
     def draw(self, ax=None, radius=None):
         _draw(self, ax=ax, radius=radius)
 
-    #
-
     def repeat(self, rep):
         """Create new repeated qbits object.
 
@@ -850,15 +820,20 @@ class Qbits:
         return self.repeat(rep)
 
     def translate(self, displacement):
-        """Translate qbit positions.
+        """
+        Translate qbit positions.
 
-        The displacement argument can be a float an xyz vector or an
-        nx3 array (where n is the number of qbits)."""
-
+        Parameters
+        ----------
+        displacement : float | np.ndarray
+            The displacement argument can be a float an xyz vector or an
+            nx3 array (where n is the number of qbits).
+        """
         self.arrays["positions"] += np.array(displacement)
 
-    def center(self, vacuum=None, axis=(0, 1, 2), about=None):
-        """Center qbits in unit cell.
+    def center_in_unit_cell(self, vacuum=None, axis=(0, 1, 2), about=None):
+        """
+        Center qbits in unit cell.
 
         Centers the qbits in the unit cell, so there is the same
         amount of vacuum on all sides.
@@ -937,58 +912,70 @@ class Qbits:
 
         self.positions += translation
 
-    def get_center_of_mass(self, scaled=False):
-        """Get the center of mass.
-
-        If scaled=True the center of mass in scaled coordinates
-        is returned."""
-        # masses = self.get_masses()
-        # com = masses @ self.positions / masses.sum()
-        com = (
-            np.ones(self.positions.shape[0]) @ self.positions / self.positions.shape[0]
-        )
-        if scaled:
-            return self.cell.scaled_positions(com)
-        else:
-            return com
-
-    def set_center_of_mass(self, com, scaled=False):
-        """Set the center of mass.
-
-        If scaled=True the center of mass is expected in scaled coordinates.
-        Constraints are considered for scaled=False.
+    def get_centroid(self, scaled=False):
         """
-        old_com = self.get_center_of_mass(scaled=scaled)
-        difference = old_com - com
+        Get the centroid of the positions.
+
+        Parameters
+        ----------
+        scaled : bool
+            If scaled=True the centroid in scaled coordinates is returned.
+
+        Notes
+        -----
+        For a set of $k$ positions $\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k$
+        the centroid is given by
+        $\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.$
+        """
+        if scaled:
+            return self.cell.scaled_positions(self.positions.mean(0))
+        return self.positions.mean(0)
+
+    def set_centroid(self, centroid, scaled=False):
+        """
+        Set the centroid of the positions.
+
+        Parameters
+        ----------
+        centroid : float | np.ndarray
+            The new centroid. Can be a float or a xyz vector
+        scaled : bool
+            If scaled=True the centroid is expected in scaled coordinates.
+
+        Notes
+        -----
+        For a set of $k$ positions $\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k$
+        the centroid is given by
+        $\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.$
+        """
+        difference = centroid - self.get_centroid(scaled=scaled)
         if scaled:
             self.set_scaled_positions(self.get_scaled_positions() + difference)
         else:
             self.set_positions(self.get_positions() + difference)
 
     def rotate(self, a, v, center=(0, 0, 0), rotate_cell=False):
-        """Rotate qbits based on a vector and an angle, or two vectors.
+        """
+        Rotate qbits based on a vector and an angle, or two vectors.
 
-        Parameters:
-
-        a = None:
+        Parameters
+        ----------
+        a :
             Angle that the qbits is rotated around the vector 'v'. 'a'
             can also be a vector and then 'a' is rotated
             into 'v'.
-
-        v:
+        v :
             Vector to rotate the qbits around. Vectors can be given as
             strings: 'x', '-x', 'y', ... .
-
-        center = (0, 0, 0):
-            The center is kept fixed under the rotation. Use 'COM' to fix
-            the center of mass, 'COP' to fix the center of positions or
-            'COU' to fix the center of cell.
-
+        center :
+            The center is kept fixed under the rotation. Use 'COP' to
+            fix the center of positions or 'COU' to fix the center of
+            cell. Defaults to = (0, 0, 0).
         rotate_cell = False:
             If true the cell is also rotated.
 
-        Examples:
-
+        Examples
+        --------
         Rotate 90 degrees around the z-axis, so that the x-axis is
         rotated into the y-axis:
 
@@ -1003,10 +990,9 @@ class Qbits:
         if not isinstance(a, numbers.Real):
             a, v = v, a
 
-        norm = np.linalg.norm
         v = string2vector(v)
 
-        normv = norm(v)
+        normv = np.linalg.norm(v)
 
         if normv == 0.0:
             raise ZeroDivisionError("Cannot rotate: norm(v) == 0")
@@ -1022,19 +1008,19 @@ class Qbits:
             normv2 = np.linalg.norm(v2)
             if normv2 == 0:
                 raise ZeroDivisionError("Cannot rotate: norm(a) == 0")
-            v2 /= norm(v2)
+            v2 /= np.linalg.norm(v2)
             c = np.dot(v, v2)
             v = np.cross(v, v2)
-            s = norm(v)
+            s = np.linalg.norm(v)
             # In case *v* and *a* are parallel, np.cross(v, v2) vanish
             # and can't be used as a rotation axis. However, in this
             # case any rotation axis perpendicular to v2 will do.
             eps = 1e-7
             if s < eps:
                 v = np.cross((0, 0, 1), v2)
-                if norm(v) < eps:
+                if np.linalg.norm(v) < eps:
                     v = np.cross((1, 0, 0), v2)
-                assert norm(v) >= eps
+                assert np.linalg.norm(v) >= eps
             elif s > 0:
                 v /= s
 
@@ -1055,10 +1041,8 @@ class Qbits:
 
     def _centering_as_array(self, center):
         if isinstance(center, str):
-            if center.lower() == "com":
-                center = self.get_center_of_mass()
-            elif center.lower() == "cop":
-                center = self.get_positions().mean(axis=0)
+            if center.lower() == "cop":
+                center = self.get_centroid()
             elif center.lower() == "cou":
                 center = self.get_cell().sum(axis=0) / 2
             else:
@@ -1068,23 +1052,23 @@ class Qbits:
         return center
 
     def euler_rotate(self, phi=0.0, theta=0.0, psi=0.0, center=(0, 0, 0)):
-        """Rotate qbits via Euler angles (in degrees).
+        """
+        Rotate qbits via Euler angles (in degrees).
 
         See e.g http://mathworld.wolfram.com/EulerAngles.html for explanation.
 
-        Parameters:
-
+        Parameters
+        ----------
+        phi : float
+            The 1st rotation angle around the z axis.
+        theta : float
+            Rotation around the x axis.
+        psi : float
+            2nd rotation around the z axis.
         center :
             The point to rotate about. A sequence of length 3 with the
             coordinates, or 'COM' to select the center of mass, 'COP' to
             select center of positions or 'COU' to select center of cell.
-        phi :
-            The 1st rotation angle around the z axis.
-        theta :
-            Rotation around the x axis.
-        psi :
-            2nd rotation around the z axis.
-
         """
         center = self._centering_as_array(center)
 
@@ -1092,9 +1076,7 @@ class Qbits:
         theta *= pi / 180
         psi *= pi / 180
 
-        # First move the molecule to the origin In contrast to MATLAB,
-        # numpy broadcasts the smaller array to the larger row-wise,
-        # so there is no need to play with the Kronecker product.
+        # First move the molecule to the origin.
         rcoords = self.positions - center
         # First Euler rotation about z in matrix form
         D = np.array(
@@ -1228,19 +1210,32 @@ class Qbits:
         start = self.get_dihedral(a1, a2, a3, a4)
         self.set_dihedral(a1, a2, a3, a4, angle + start, mask, indices)
 
-    def get_angle(self, a1, a2, a3, mic=False):
-        """Get angle formed by three qbits.
-
-        Calculate angle in degrees between the vectors a2->a1 and
-        a2->a3.
-
-        Use mic=True to use the Minimum Image Convention and calculate the
-        angle across periodic boundaries.
+    def get_angle(self, index_1: int, index_2: int, index_3: int, mic: bool = False):
         """
-        return self.get_angles([[a1, a2, a3]], mic=mic)[0]
+        Get the angle in degress formed by three qbits.
+
+        Parameters
+        ----------
+        index_1 : int
+            The index of the first qubit.
+        index_2 : int
+            The index of the second qubit.
+        index_3 : int
+            The index of the third qubit.
+        mic : bool
+            Use mic=True to use the Minimum Image Convention and calculate the
+            angle across periodic boundaries.
+
+        Notes
+        -----
+        Let x1, x2, x3 be the vectors describing the positions of the three
+        qubits. Then we calcule the angle between x1-x2 and x3-x2.
+        """
+        return self.get_angles([[index_1, index_2, index_3]], mic=mic)[0]
 
     def get_angles(self, indices, mic=False):
-        """Get angle formed by three qbits for multiple groupings.
+        """
+        Get angle formed by three qbits for multiple groupings.
 
         Calculate angle in degrees between vectors between qbits a2->a1
         and a2->a3, where a1, a2, and a3 are in each row of indices.
@@ -1258,19 +1253,16 @@ class Qbits:
         v12 = a1s - a2s
         v32 = a3s - a2s
 
-        cell = None
-        pbc = None
-
         if mic:
-            cell = self.cell
-            pbc = self.pbc
+            return get_angles(v12, v32, cell=self.cell, pbc=self.pbc)
 
-        return get_angles(v12, v32, cell=cell, pbc=pbc)
+        return get_angles(v12, v32, cell=None, pbc=None)
 
     def set_angle(
         self, a1, a2=None, a3=None, angle=None, mask=None, indices=None, add=False
     ):
-        """Set angle (in degrees) formed by three qbits.
+        """
+        Set angle (in degrees) formed by three qbits.
 
         Sets the angle between vectors *a2*->*a1* and *a2*->*a3*.
 
@@ -1279,7 +1271,8 @@ class Qbits:
         Same usage as in :meth:`ase.Qbits.set_dihedral`.
         If *mask* and *indices*
         are given, *indices* overwrites *mask*. If *mask* and *indices*
-        are not set, only *a3* is moved."""
+        are not set, only *a3* is moved.
+        """
 
         if any(a is None for a in [a2, a3, angle]):
             raise ValueError("a2, a3, and angle must not be None")
