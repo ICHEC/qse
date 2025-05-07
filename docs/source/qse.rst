@@ -1,2 +1,5 @@
 .. automodule:: qse
-    :members:
+   :imported-members:
+   :members:
+   :undoc-members:
+   :show-inheritance:

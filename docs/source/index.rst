@@ -1,10 +1,16 @@
 .. mdinclude:: ../../README.md
+------------------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Table of Contents
+   :caption: qse
 
    qse
+
+.. toctree::
+   :maxdepth: 2
+   :caption: utils
+
    utils
 
 Indices and tables

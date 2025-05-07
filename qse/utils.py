@@ -41,6 +41,18 @@ kag_cell = qse.cell.Cell([[2 * a0, 0, 0], [a0, np.sqrt(3) * a0, 0], [0, 0, 0]])
 def linear(a=a0, N=6):
     """
     Generate qse.Qbits object in linear chain geometry.
+
+    Parameters
+    ----------
+    a : float
+        The lattice spacing
+    N : int
+        The number of repeats:
+    
+    Returns
+    -------
+    qse.Qbits
+        The generated lattice.
     """
     cell = qse.cell.Cell([[a0, 0, 0], [0, 0, 0], [0, 0, 0]])
     cell = (a / a0) * cell
