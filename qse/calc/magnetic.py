@@ -23,7 +23,7 @@ def syop(b: np.ndarray[bool], i):
     return (s,c)
 
 def get_index(arr, val):
-    return np.where((arr == s).all(axis=1))[0][0]
+    return np.where((arr == val).all(axis=1))[0][0]
 
 def get_spins(statevector, ibasis, N):
     szi = np.zeros(N, dtype=float)
