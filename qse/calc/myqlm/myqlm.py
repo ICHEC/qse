@@ -58,26 +58,23 @@ import qat
 # from qat.core.variables import Variable, heaviside
 
 
-def get_default_parameters(system_type):
-    """Function to return default parameters."""
-    param_dict = {
-        "rydberg": {
-            "amplitude": None,
-            "detuning": None,
-            "C6": 5420158.53,  # unit (rad/µs)(µm)**6
-            "min_omega": None,
-            "max_omega": 12.57,  # rad/µs from pulser
-            "min_delta": None,
-            "max_delta": 125.7,  # rad/µs from pulser
-            "min_atom_distance": 4,  # µm from pulser
-            "max_duration": 4000,  # ns from pulser (max sequence duration),
-            "default_duration": 0.5,
-            "default_points": 6,
-        },
-        "ssh": {},
-        "fermion": {},
-    }
-    return param_dict[system_type]
+default_params = {
+    "rydberg": {
+        "amplitude": None,
+        "detuning": None,
+        "C6": 5420158.53,  # unit (rad/µs)(µm)**6
+        "min_omega": None,
+        "max_omega": 12.57,  # rad/µs from pulser
+        "min_delta": None,
+        "max_delta": 125.7,  # rad/µs from pulser
+        "min_atom_distance": 4,  # µm from pulser
+        "max_duration": 4000,  # ns from pulser (max sequence duration),
+        "default_duration": 0.5,
+        "default_points": 6,
+    },
+    "ssh": {},
+    "fermion": {},
+}
 
 
 # for rydberg system we need additional parameters: mix,max of amplitude and detuning to set based on device.
@@ -103,7 +100,7 @@ class Myqlm(Calculator):
         self.label = label
         self.results = None
         self.system = system
-        self.params = get_default_parameters(self.system)
+        self.params = dict(default_params[self.system])
         # if any of the default parameters are passed
         # as arguments, use them to update self.params
         self.duration = (
