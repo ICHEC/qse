@@ -1,30 +1,17 @@
-# qse
-Quantum Simulation Environment.
-
-
 # QSE
-The Quantum Simulation Environment (QSE) is package adapted from Atomic Simulation Environment (ASE) to suit the needs for an abstract representation for defining a `i. quantum computing system`, and 
-`ii. computing operations/simulations` in a vendor agnostic way. ASE's modular nature, and extensability make it very useful for a similar quantum computing application.
+The Quantum Simulation Environment (QSE) package is adapted from Atomic Simulation Environment (ASE) to suit the needs for an abstract representation for
+- `i. defining quantum computing systems`
+- `ii. computing operations/simulations`
 
+in a vendor agnostic way. ASE's modular nature, and extensability make it very useful for a similar quantum computing application.
 
 ## Installation
+See the [installation page](https://github.com/ICHEC/qse/blob/1_new_readme/INSTALLATION.md).
 
-Currently it's a pure python packages, so with the source all one needs is to save the repo somewhere, and add it to the `$PYTHONPATH`.
+## Contributing
+See the [contributing page](https://github.com/ICHEC/qse/blob/1_new_readme/CONTRIBUTIONS.md).
 
-One can make a python wheel for it by simply running the following in the downloaded folder where `pyproject.toml` file is situated, assuming you have build module installed in your python environment (it can be installed through `pip install build`).
-
-```bash
-python3 -m build
-```
-
-The above creates the python wheel for the package, and places in the dist folder. You can install the package using pip in any python environment as following -
-
-```bash
-pip install path-to-qse-wheel.whl
-```
-
->[TIP] Most of the dependencies are added in the packaging, so it's recommended to install the wheel in a fresh or empty python environment, whether created using conda, or venv.
-
+## QSE Overview
 Following are the primary classes for the QSE -
 
 |Class  | Description                            |
