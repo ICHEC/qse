@@ -207,9 +207,7 @@ class Myqlm(Calculator):
         self.probabities = np.fromiter(
             (s.probability for s in self.results), dtype=float
         )
-        self.basis = np.fromiter(
-            (s.state.int for s in self.results), dtype=int
-        )
+        self.basis = np.fromiter((s.state.int for s in self.results), dtype=int)
         # don't know why result.statevector is Nonetype, fill it with state
         if hasattr(self.results[0], "amplitude"):
             statevector = np.fromiter(
@@ -229,6 +227,7 @@ class Myqlm(Calculator):
         if self.wtimes:
             t2 = time()
             print(f"time in compute and simulation = {t2 - t1} s.")
+
     #
 
     def get_spins(self):
@@ -239,7 +238,6 @@ class Myqlm(Calculator):
         ibasis = magnetic.get_basis(2**nqbits, nqbits)
         si = magnetic.get_spins(self.statevector, ibasis, nqbits)
         return si
-    
 
     def get_sij(self):
         if self.results is None:
@@ -249,9 +247,7 @@ class Myqlm(Calculator):
         ibasis = magnetic.get_basis(2**nqbits, nqbits)
         sij = magnetic.get_sisj(self.statevector, ibasis, nqbits)
         return sij
-    
-    def structure_factor_from_sij(self, L1, L2, L3):
-        struc_fac = magnetic.structure_factor_from_sij(
-            L1, L2, L3, self.qbits, self.sij)
-        return struc_fac
 
+    def structure_factor_from_sij(self, L1, L2, L3):
+        struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
+        return struc_fac

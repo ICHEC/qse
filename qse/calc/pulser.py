@@ -261,10 +261,11 @@ class Pulser(Calculator):
         #    self.write(self.label)
         self.spins = self.get_spins()
         self.sij = self.get_sij()
-        #self.struc_fac = self.structure_factor_from_sij()
+        # self.struc_fac = self.structure_factor_from_sij()
         if self.wtimes:
             t2 = time()
             print(f"time in compute and simulation = {t2 - t1} s.")
+
     #
 
     def get_spins(self):
@@ -275,7 +276,7 @@ class Pulser(Calculator):
         ibasis = magnetic.get_basis(2**nqbits, nqbits)
         si = magnetic.get_spins(self.statevector, ibasis, nqbits)
         return si
-    
+
     def get_sij(self):
         if self.results is None:
             self.calculate()
@@ -284,9 +285,7 @@ class Pulser(Calculator):
         ibasis = magnetic.get_basis(2**nqbits, nqbits)
         sij = magnetic.get_sisj(self.final_state, ibasis, nqbits)
         return sij
-    
-    def structure_factor_from_sij(self, L1, L2, L3):
-        struc_fac = magnetic.structure_factor_from_sij(
-            L1, L2, L3, self.qbits, self.sij)
-        return struc_fac
 
+    def structure_factor_from_sij(self, L1, L2, L3):
+        struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
+        return struc_fac

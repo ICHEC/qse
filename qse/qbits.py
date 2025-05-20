@@ -148,7 +148,6 @@ class Qbits:
         calculator=None,
         info=None,
     ):
-
         self._cellobj = Cell.new()
         self._pbc = np.zeros(3, bool)
 
