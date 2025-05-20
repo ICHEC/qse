@@ -255,7 +255,7 @@ class Pulser(Calculator):
         self.results = self.sim.run(progress_bar=progress)
         # self.qbits.states = self.results.get_final_state()
         final_state = self.results.get_final_state()
-        self.final_state = qutip.core.dimensions.to_tensor_rep(final_state).flatten()
+        self.statevector = qutip.core.dimensions.to_tensor_rep(final_state).flatten()
         # if self.parameters.auto_write:
         #    self.write(self.label)
         self.spins = self.get_spins()
@@ -272,7 +272,7 @@ class Pulser(Calculator):
         #
         nqbits = len(self.qbits)
         ibasis = magnetic.get_basis(2**nqbits, nqbits)
-        si = magnetic.get_spins(self.final_state, ibasis, nqbits)
+        si = magnetic.get_spins(self.statevector, ibasis, nqbits)
         return si
     
     def get_sij(self):
