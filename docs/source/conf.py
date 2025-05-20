@@ -30,14 +30,13 @@ extensions = [
     "sphinx_multitoc_numbering",
     "autoapi.extension",
 ]
-autoapi_dirs = ["../qse"]  # for sphinx-autoapi
+autoapi_dirs = ["../../qse"]  # for sphinx-autoapi
 autoapi_options = ['members']  # https://sphinx-autoapi.readthedocs.io/en/latest/reference/config.html#confval-autoapi_options
 
 external_toc_exclude_missing = False
 external_toc_path = "_toc.yml"
 html_baseurl = ""
 html_favicon = ""
-html_logo = "logo.png"
 html_sourcelink_suffix = ""
 html_theme = "sphinx_book_theme"
 html_theme_options = {
@@ -51,8 +50,8 @@ html_theme_options = {
         "deepnote_url": "",
     },
     "path_to_docs": "docs",
-    "repository_url": "https://github.com/executablebooks/jupyter-book",
-    "repository_branch": "master",
+    "repository_url": "https://github.com/ICHEC/qse",
+    "repository_branch": "main",
     "extra_footer": "",
     "home_page_in_toc": True,
     "announcement": "",
@@ -65,7 +64,7 @@ html_theme_options = {
     "use_edit_page_button": False,
     "use_issues_button": True,
 }
-html_title = "My sample book"
+html_title = "QSE"
 latex_engine = "pdflatex"
 myst_enable_extensions = [
     "colon_fence",
