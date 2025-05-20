@@ -4,8 +4,8 @@
 # re-generate this one.
 ###############################################################################
 author = "The Jupyter Book Community"
-autosummary_generate = True
-bibtex_bibfiles = ["references.bib"]
+#autosummary_generate = True
+bibtex_bibfiles = []
 comments_config = {"hypothesis": False, "utterances": False}
 copyright = "2023"
 exclude_patterns = ["**.ipynb_checkpoints", ".DS_Store", "Thumbs.db", "_build"]
@@ -31,7 +31,11 @@ extensions = [
     "autoapi.extension",
 ]
 autoapi_dirs = ["../../qse"]  # for sphinx-autoapi
-autoapi_options = ['members']  # https://sphinx-autoapi.readthedocs.io/en/latest/reference/config.html#confval-autoapi_options
+autoapi_options = [  # https://sphinx-autoapi.readthedocs.io/en/latest/reference/config.html#confval-autoapi_options
+    'members',
+    'show-module-summary',
+    'show-inheritance',
+    ]  
 
 external_toc_exclude_missing = False
 external_toc_path = "_toc.yml"

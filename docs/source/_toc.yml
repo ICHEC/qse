@@ -3,9 +3,10 @@
 
 format: jb-book
 root: intro
-chapters:
+chapters:  # use symlinks for readme + notebooks in examples
 - file: readme
 - file: examples/generating_lattices
 - file: examples/creating_and_manipulating_qbits
 - file: examples/pulser-myqlm-conversion
 - file: api.rst
+- file: api_alternative.rst
