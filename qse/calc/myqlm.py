@@ -7,8 +7,9 @@ https://myqlm.github.io/
 
 import numpy as np
 
-from qse.calc.calculator import Calculator
 from qse import Signal
+from qse.calc.calculator import Calculator
+
 qat_available = False
 qlmaas_available = False
 
@@ -52,10 +53,13 @@ else:
     print("qlmaas is not available")
 print(AQPU)
 
+from time import time
+
 # analogQPU imported based on what's available
 import qat
+
 import qse.calc.magnetic as magnetic
-from time import time
+
 # from qat.core.variables import Variable, heaviside
 
 

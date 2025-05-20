@@ -5,20 +5,21 @@ ASE calculator.
 https://pulser.readthedocs.io/en/stable/
 """
 
+from time import time
+
 import numpy as np
 import pulser
 import pulser.waveforms
+import qutip
 
 # from pulser_simulation import Simulation, SimConfig, QutipEmulator
 from pulser_simulation import QutipEmulator
 
 import qse.calc.magnetic as magnetic
-
 from qse import Signal
 from qse.calc.calculator import Calculator, CalculatorSetupError
 from qse.calc.messages import CalculatorSetupError
-import qutip
-from time import time
+
 # from ase.calculators.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
 
 
