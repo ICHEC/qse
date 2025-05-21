@@ -1,3 +1,4 @@
+# Contributing
 We adhere to [PEP 8](https://peps.python.org/pep-0008/) style guidelines and use the following formatting tools:
 - [Flake8](https://flake8.pycqa.org/en/latest/) (for style guide enforcement)
 - [isort](https://pycqa.github.io/isort/) (for sorting imports)

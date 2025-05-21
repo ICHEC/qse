@@ -1,3 +1,4 @@
+# Installation
 It is recommmended to install within a new Conda environment.
 To create a new conda environment use
 ```bash
