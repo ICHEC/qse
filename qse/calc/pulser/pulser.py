@@ -154,7 +154,7 @@ class Pulser(qse.calc.Calculator):
     def qbits(self):
         return self._qbits
 
-    @qse.qse.Calculator.qbits.setter
+    @qse.calc.Calculator.qbits.setter
     def qbits(self, qbits, prefix="q"):
         if qbits is None:
             self._qbits, self._coords, self._register, self._sequence = (
