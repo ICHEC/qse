@@ -8,10 +8,11 @@ description = "Quantum Simulation Environment"
 readme = "README.md"
 authors = [
     {name = "Rajarshi Tiwari", email = "rajarshi.tiwari@ichec.ie"},
+    {name = "Karthik Krishnakumar", email = "karthik.krishnakumar@ichec.ie"},
     {name = "James Nelson", email = "james.nelson@ichec.ie"},
-    {name = "Sherry Blair", email = "sherry.blair@ichec.ie"},
+    {name = "Sherry Blair", email = "sherry.blair@ichec.ie"}
     ]
-dynamic = ["version"]
+version = "0.1.1"
 requires-python = ">=3.10"
 dependencies = [
     "ase",
@@ -20,12 +21,20 @@ dependencies = [
 ]
 
 [project.urls]
-homepage = "https://github.com/rajarshitiwari/qse"
+homepage = "https://github.com/ichec/qse"
 
 [project.optional-dependencies]
 pulser = ["pulser == 1.4.0"]
 myqlm = ["numpy == 1.26.4", "myqlm == 1.11.3"]
-
+dev = [
+    "pytest",
+    "pytest-cov",
+    "pytest-sugar",
+    "ipykernel",
+    "flake8", 
+    "black[jupyter]",
+    "isort"
+]
 
 [tool.mypy]
 ignore_missing_imports = true
@@ -34,3 +43,7 @@ enable_error_code = 'ignore-without-code'
 
 [tool.isort]
 profile = "black"
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+addopts = "--cov=qse"
