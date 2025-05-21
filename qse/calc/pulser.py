@@ -5,14 +5,18 @@ ASE calculator.
 https://pulser.readthedocs.io/en/stable/
 """
 
+from time import time
+
 import numpy as np
 import pulser
 import pulser.waveforms
+import qutip
 
 # from pulser_simulation import Simulation, SimConfig, QutipEmulator
 from pulser_simulation import QutipEmulator
 
-from qse import signal
+import qse.calc.magnetic as magnetic
+from qse import Signal
 from qse.calc.calculator import Calculator, CalculatorSetupError
 from qse.calc.messages import CalculatorSetupError
 
@@ -94,6 +98,7 @@ class Pulser(Calculator):
         device=None,
         emulator=None,
         label="pulser-run",
+        wtimes=True,
     ):
         """Construct pulser-calculator object.
         we need qubits, amplitude, detuning, device and emulator.
@@ -102,19 +107,20 @@ class Pulser(Calculator):
         self.device = pulser.devices.MockDevice if device == None else device
         self.emulator = QutipEmulator if emulator is None else emulator
         self.label = label
+        self.wtimes = wtimes
         self.parameters = None
         self.results = None
         self.channel = "rydberg_global"
         if amplitude is not None:
-            if isinstance(amplitude, (signal, pulser.waveforms.Waveform)):
+            if isinstance(amplitude, (Signal, pulser.waveforms.Waveform)):
                 self.amplitude = amplitude
             else:
-                self.amplitude = signal(amplitude)
+                self.amplitude = Signal(amplitude)
         if detuning is not None:
-            if isinstance(detuning, (signal, pulser.waveforms.Waveform)):
+            if isinstance(detuning, (Signal, pulser.waveforms.Waveform)):
                 self.detuning = detuning
             else:
-                self.detuning = signal(detuning)
+                self.detuning = Signal(detuning)
         #
         # assert self.amplitude.duration == self.detuning.duration
         self.duration = self.amplitude.duration
@@ -245,37 +251,66 @@ class Pulser(Calculator):
         """
         # we need to have/add an attribute to calc for device
         # check whether all the emulator `classes` have .from_sequence method.
+        if self.wtimes:
+            t1 = time()
         self.results = self.sim.run(progress_bar=progress)
         # self.qbits.states = self.results.get_final_state()
-        self.final_state = self.results.get_final_state()
+        final_state = self.results.get_final_state()
+        self.statevector = qutip.core.dimensions.to_tensor_rep(final_state).flatten()
         # if self.parameters.auto_write:
         #    self.write(self.label)
         self.spins = self.get_spins()
+        self.sij = self.get_sij()
+        # self.struc_fac = self.structure_factor_from_sij()
+        if self.wtimes:
+            t2 = time()
+            print(f"time in compute and simulation = {t2 - t1} s.")
 
     #
 
-    def get_correlation(self, n_samples=1000):
-        """Compute spatial correlation."""
-        sample = self.results.sample_final_state(N_samples=n_samples)
-        arr = np.zeros(self.qbits.nqbits)
-        for k, v in sample.items():
-            local = np.array(list(k), dtype=float) * 2 - 1
-            arr += local * v
-        arr /= n_samples
-        return arr
-
     def get_spins(self):
+        """Get spin expectation values
+        If the hamiltonian isn't simulated, it triggers simulation first.
+
+        Returns:
+            np.ndarray: Array of Nx3 containing spin expectation values.
+        See :py.func: `qse.calc.magnetic.get_spins` for more details.
+        """
         if self.results is None:
             self.calculate()
         #
         nqbits = len(self.qbits)
-        szi = np.zeros(nqbits, dtype=float)
-        for ii, ss in enumerate(self.final_state):
-            st = ss[0][0]
-            prob = (st * st.conj()).real
-            zi = np.array(
-                [1 - 2 * int(i) for i in list(bin(ii)[2:].zfill(nqbits))], dtype=float
-            )
-            szi += prob * zi
+        ibasis = magnetic.get_basis(2**nqbits, nqbits)
+        si = magnetic.get_spins(self.statevector, ibasis, nqbits)
+        return si
+
+    def get_sij(self):
+        r"""Get spin correlation s_ij
+        If the hamiltonian isn't simulated, it triggers simulation first.
+
+        Returns:
+            np.ndarray: Array of NxN shape containing spin correlations.
+        See :py.func: `qse.calc.magnetic.get_sij` for more details.
+        """
+        if self.results is None:
+            self.calculate()
         #
-        return szi
+        nqbits = len(self.qbits)
+        ibasis = magnetic.get_basis(2**nqbits, nqbits)
+        sij = magnetic.get_sisj(self.statevector, ibasis, nqbits)
+        return sij
+
+    def structure_factor_from_sij(self, L1, L2, L3):
+        r"""Get the structure factor
+
+        Args:
+            L1 (int): Extent of lattice in x direction
+            L2 (int): Extent of lattice in y direction
+            L3 (int): Extent of lattice in z direction
+
+        Returns:
+            np.ndarray: Array containing the structure factor
+        See :py.func: `qse.calc.magnetic.structure_factor_from_sij` for more details.
+        """
+        struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
+        return struc_fac

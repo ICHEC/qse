@@ -6,7 +6,7 @@ This package is adapted from Atomic Simulation Environment (ASE).
 """
 
 __all__ = ["cell", "utils", "draw", "Qbits", "Qbit", "Signal"]
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 from ase import cell
 
