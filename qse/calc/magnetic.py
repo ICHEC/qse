@@ -3,7 +3,9 @@ r"""
 Functions for computing magnetic correlation
 """
 import numpy as np
+
 import qse
+
 
 def get_basis(hsize: int, N: int):
     """returns a boolean array representing basis in qubit product state.
