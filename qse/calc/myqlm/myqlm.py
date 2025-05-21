@@ -7,8 +7,7 @@ https://myqlm.github.io/
 
 import numpy as np
 
-from qse import Signal
-from qse.calc.calculator import Calculator
+import qse
 
 qat_available = False
 qlmaas_available = False
@@ -83,7 +82,7 @@ default_params = {
 
 
 # for rydberg system we need additional parameters: mix,max of amplitude and detuning to set based on device.
-class Myqlm(Calculator):
+class Myqlm(qse.calc.Calculator):
     """QSE-Calculator for MyQLM"""
 
     implemented_properties = ["energy", "state", "fidality"]

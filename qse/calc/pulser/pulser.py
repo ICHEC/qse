@@ -7,19 +7,16 @@ https://pulser.readthedocs.io/en/stable/
 
 from time import time
 
-import numpy as np
 import pulser
 import pulser.waveforms
 import qutip
 from pulser_simulation import QutipEmulator
 
+import qse
 import qse.calc.magnetic as magnetic
-from qse import Signal
-from qse.calc.calculator import Calculator, CalculatorSetupError
-from qse.calc.messages import CalculatorSetupError
 
 
-class Pulser(Calculator):
+class Pulser(qse.calc.Calculator):
     """
     QSE-Calculator for pulser.
 
@@ -100,7 +97,7 @@ class Pulser(Calculator):
         """Construct pulser-calculator object.
         we need qubits, amplitude, detuning, device and emulator.
         """
-        Calculator.__init__(self, label=label, qbits=qbits)
+        qse.calc.Calculator.__init__(self, label=label, qbits=qbits)
         self.device = pulser.devices.MockDevice if device == None else device
         self.emulator = QutipEmulator if emulator is None else emulator
         self.label = label
@@ -109,15 +106,15 @@ class Pulser(Calculator):
         self.results = None
         self.channel = "rydberg_global"
         if amplitude is not None:
-            if isinstance(amplitude, (Signal, pulser.waveforms.Waveform)):
+            if isinstance(amplitude, (qse.Signal, pulser.waveforms.Waveform)):
                 self.amplitude = amplitude
             else:
-                self.amplitude = Signal(amplitude)
+                self.amplitude = qse.Signal(amplitude)
         if detuning is not None:
-            if isinstance(detuning, (Signal, pulser.waveforms.Waveform)):
+            if isinstance(detuning, (qse.Signal, pulser.waveforms.Waveform)):
                 self.detuning = detuning
             else:
-                self.detuning = Signal(detuning)
+                self.detuning = qse.Signal(detuning)
         #
         # assert self.amplitude.duration == self.detuning.duration
         self.duration = self.amplitude.duration
@@ -157,7 +154,7 @@ class Pulser(Calculator):
     def qbits(self):
         return self._qbits
 
-    @Calculator.qbits.setter
+    @qse.qse.Calculator.qbits.setter
     def qbits(self, qbits, prefix="q"):
         if qbits is None:
             self._qbits, self._coords, self._register, self._sequence = (
@@ -216,9 +213,9 @@ class Pulser(Calculator):
         )
         for key in kwargs:
             if key not in self.default_parameters:
-                raise CalculatorSetupError(msg % key)
+                raise qse.calc.CalculatorSetupError(msg % key)
 
-        changed_parameters = Calculator.set(self, **kwargs)
+        changed_parameters = qse.calc.Calculator.set(self, **kwargs)
         if changed_parameters:
             self.reset()
 
