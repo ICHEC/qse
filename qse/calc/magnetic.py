@@ -187,7 +187,7 @@ def structure_factor_from_sij(L1: int, L2: int, L3: int, qbits: qse.Qbits, s_ij:
     for q, qvec in zip(Qi, Qvecs):
         exri = np.exp(1j * Rvecs @ qvec)
         exrj = exri.conj()
-        struc_fac[q] = np.einsum("ij,i,j->", sij, exri, exrj)
+        struc_fac[q] = np.einsum("ij,i,j->", s_ij, exri, exrj)
     struc_fac /= normalize
     struc_fac = struc_fac.real.copy()
     return struc_fac
