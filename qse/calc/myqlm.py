@@ -233,7 +233,7 @@ class Myqlm(Calculator):
     def get_spins(self):
         """Get spin expectation values
         If the hamiltonian isn't simulated, it triggers simulation first.
-        
+
         Returns:
             np.ndarray: Array of Nx3 containing spin expectation values.
         See :py.func: `qse.calc.magnetic.get_spins` for more details.

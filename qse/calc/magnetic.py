@@ -71,11 +71,13 @@ def get_index(arr: np.ndarray, val):
     return np.where((arr == val).all(axis=1))[0][0]
 
 
-def get_spins(statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int) -> np.ndarray[float]:
+def get_spins(
+    statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int
+) -> np.ndarray[float]:
     r"""Get the expectation value of the spin operators (Sx, Sy, Sz).
         With a list of qubits seen as spin 1/2 object, here one
         calculates the expectation value <Psi| (Sx, Sy, Sz) |Psi>
-        The state is given as follows: 
+        The state is given as follows:
         :math:`|\psi>  = \sum_i statevector[i] ibasis[i]`
     Args:
         statevector (np.ndarray[complex]): :math:`2^N` sized complex array representing the statevector.
@@ -116,12 +118,15 @@ def get_spins(statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int
     spins = np.array([sxi, syi, szi], dtype=complex).T.real
     return spins
 
+
 # checking the correction of the code
-def get_sisj(statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int) -> np.ndarray[float]:
+def get_sisj(
+    statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int
+) -> np.ndarray[float]:
     r"""Compute spin correlation function
         :math: `S_ij = <\psi| S_i \cdot S_j |\psi>.`
         With a list of qubits seen as spin 1/2 object, the spins operators are S_i = (Sx, Sy, Sz).
-        The state |Psi> given as follows: 
+        The state |Psi> given as follows:
         :math: `|\psi>  = \sum_i statevector[i] ibasis[i]`
 
     Args:
@@ -144,9 +149,7 @@ def get_sisj(statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int)
     # x-x and y-y part of the correlation
     for l, b in enumerate(ibasis):
         c_alpha = statevector[l]
-        states_ij = np.array(
-            [sxop(sxop(b, i), j) for i in range(N) for j in range(N)]
-        )
+        states_ij = np.array([sxop(sxop(b, i), j) for i in range(N) for j in range(N)])
         indices = np.array(
             [np.where((ibasis == s).all(axis=1))[0][0] for s in states_ij]
         ).reshape(N, N)
@@ -160,10 +163,14 @@ def get_sisj(statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int)
         np.fill_diagonal(tmp, 0)
         s_ij += 2 * tmp
     return s_ij
+
+
 #
 
 
-def structure_factor_from_sij(L1: int, L2: int, L3: int, qbits: qse.Qbits, s_ij: np.ndarray[float]) -> np.ndarray[float]:
+def structure_factor_from_sij(
+    L1: int, L2: int, L3: int, qbits: qse.Qbits, s_ij: np.ndarray[float]
+) -> np.ndarray[float]:
     """From spin correlation, compute the `structure factor`
         The structure factor is just fourier transform of the s_ij
         :math: `S[q] = \frac{1}{N^2} \sum_{ij} s_{ij} \exp{i q \cdot (x_i - x_j)}`
@@ -193,4 +200,6 @@ def structure_factor_from_sij(L1: int, L2: int, L3: int, qbits: qse.Qbits, s_ij:
     struc_fac /= normalize
     struc_fac = struc_fac.real.copy()
     return struc_fac
+
+
 #
