@@ -11,7 +11,6 @@ import numpy as np
 import pulser
 import pulser.waveforms
 import qutip
-
 from pulser_simulation import QutipEmulator
 
 import qse.calc.magnetic as magnetic
