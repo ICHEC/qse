@@ -231,6 +231,13 @@ class Myqlm(Calculator):
     #
 
     def get_spins(self):
+        """Get spin expectation values
+        If the hamiltonian isn't simulated, it triggers simulation first.
+        
+        Returns:
+            np.ndarray: Array of Nx3 containing spin expectation values.
+        See :py.func: `qse.calc.magnetic.get_spins` for more details.
+        """
         if self.results is None:
             self.calculate()
         #
@@ -240,6 +247,13 @@ class Myqlm(Calculator):
         return si
 
     def get_sij(self):
+        r"""Get spin correlation s_ij
+        If the hamiltonian isn't simulated, it triggers simulation first.
+
+        Returns:
+            np.ndarray: Array of NxN shape containing spin correlations.
+        See :py.func: `qse.calc.magnetic.get_sij` for more details.
+        """
         if self.results is None:
             self.calculate()
         #
@@ -248,6 +262,17 @@ class Myqlm(Calculator):
         sij = magnetic.get_sisj(self.statevector, ibasis, nqbits)
         return sij
 
-    def structure_factor_from_sij(self, L1, L2, L3):
+    def structure_factor_from_sij(self, L1: int, L2: int, L3: int):
+        r"""Get the structure factor
+
+        Args:
+            L1 (int): Extent of lattice in x direction
+            L2 (int): Extent of lattice in y direction
+            L3 (int): Extent of lattice in z direction
+
+        Returns:
+            np.ndarray: Array containing the structure factor
+        See :py.func: `qse.calc.magnetic.structure_factor_from_sij` for more details.
+        """
         struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
         return struc_fac
