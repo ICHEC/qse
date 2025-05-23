@@ -15,7 +15,7 @@ import qutip
 # from pulser_simulation import Simulation, SimConfig, QutipEmulator
 from pulser_simulation import QutipEmulator
 
-import qse.calc.magnetic as magnetic
+import qse.magnetic as magnetic
 from qse import Signal
 from qse.calc.calculator import Calculator, CalculatorSetupError
 from qse.calc.messages import CalculatorSetupError
@@ -274,7 +274,7 @@ class Pulser(Calculator):
 
         Returns:
             np.ndarray: Array of Nx3 containing spin expectation values.
-        See :py.func: `qse.calc.magnetic.get_spins` for more details.
+        See :py.func: `qse.magnetic.get_spins` for more details.
         """
         if self.results is None:
             self.calculate()
@@ -290,7 +290,7 @@ class Pulser(Calculator):
 
         Returns:
             np.ndarray: Array of NxN shape containing spin correlations.
-        See :py.func: `qse.calc.magnetic.get_sij` for more details.
+        See :py.func: `qse.magnetic.get_sij` for more details.
         """
         if self.results is None:
             self.calculate()
@@ -310,7 +310,7 @@ class Pulser(Calculator):
 
         Returns:
             np.ndarray: Array containing the structure factor
-        See :py.func: `qse.calc.magnetic.structure_factor_from_sij` for more details.
+        See :py.func: `qse.magnetic.structure_factor_from_sij` for more details.
         """
         struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
         return struc_fac
