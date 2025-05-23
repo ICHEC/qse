@@ -15,3 +15,4 @@ from qse.calc.messages import (
     PropertyNotImplementedError,
     PropertyNotPresent,
 )
+from qse.calc.pulser import Pulser
