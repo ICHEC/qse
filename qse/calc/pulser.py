@@ -8,19 +8,23 @@ https://pulser.readthedocs.io/en/stable/
 from time import time
 
 import numpy as np
-import pulser
-import pulser.waveforms
-import qutip
-
-# from pulser_simulation import Simulation, SimConfig, QutipEmulator
-from pulser_simulation import QutipEmulator
 
 import qse.calc.magnetic as magnetic
 from qse import Signal
 from qse.calc.calculator import Calculator, CalculatorSetupError
 from qse.calc.messages import CalculatorSetupError
 
-# from ase.calculators.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
+try:
+    import pulser
+    import pulser.waveforms
+    import qutip
+
+    # from pulser_simulation import Simulation, SimConfig, QutipEmulator
+    from pulser_simulation import QutipEmulator
+
+    CALCULATOR_AVAILABLE = True
+except ImportError:
+    CALCULATOR_AVAILABLE = False
 
 
 class Pulser(Calculator):
@@ -100,9 +104,13 @@ class Pulser(Calculator):
         label="pulser-run",
         wtimes=True,
     ):
-        """Construct pulser-calculator object.
+        """
+        Construct pulser-calculator object.
         we need qubits, amplitude, detuning, device and emulator.
         """
+        if CALCULATOR_AVAILABLE == False:
+            raise Exception("Pulser is not installed. Please install.")
+
         Calculator.__init__(self, label=label, qbits=qbits)
         self.device = pulser.devices.MockDevice if device == None else device
         self.emulator = QutipEmulator if emulator is None else emulator
