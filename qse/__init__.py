@@ -10,7 +10,7 @@ __version__ = "0.1.2"
 
 from ase import cell
 
-from qse import calc, utils, magnetic
+from qse import calc, magnetic, utils
 from qse.qbit import Qbit
 from qse.qbits import Qbits
 from qse.signal import Signal
