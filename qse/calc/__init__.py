@@ -4,6 +4,7 @@ __all__ = [
     "Calculator",
     "PropertyNotImplementedError",
     "PropertyNotPresent",
+    "Pulser",
     "CalculatorSetupError",
     "CalculationFailed",
 ]
