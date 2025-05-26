@@ -108,13 +108,14 @@ class Pulser(Calculator):
         Construct pulser-calculator object.
         we need qubits, amplitude, detuning, device and emulator.
         """
-        if CALCULATOR_AVAILABLE == False:
-            raise Exception(
-                "Pulser is not installed. To install, "
-                "see https://pulser.readthedocs.io/en/stable/installation.html."
-            )
+        installation_message = (
+            "Pulser is not installed. To install, "
+            "see https://pulser.readthedocs.io/en/stable/installation.html."
+        )
 
-        Calculator.__init__(self, label=label, qbits=qbits)
+        super.__init__(
+            self, CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
+        )
         self.device = pulser.devices.MockDevice if device == None else device
         self.emulator = QutipEmulator if emulator is None else emulator
         self.label = label

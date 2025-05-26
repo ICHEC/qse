@@ -55,12 +55,19 @@ print(AQPU)
 
 from time import time
 
-# analogQPU imported based on what's available
-import qat
-
 import qse.magnetic as magnetic
 
+# analogQPU imported based on what's available
+
+
 # from qat.core.variables import Variable, heaviside
+
+try:
+    import qat
+
+    CALCULATOR_AVAILABLE = True
+except ImportError:
+    CALCULATOR_AVAILABLE = False
 
 
 default_params = {
@@ -101,7 +108,15 @@ class Myqlm(Calculator):
         label="myqlm-run",
         wtimes=True,
     ):
-        super().__init__(label=label, qbits=qbits)
+        installation_message = (
+            "myQLM is not installed. To install, "
+            "see https://myqlm.github.io/01_getting_started/:myqlm:01_install.html."
+        )
+
+        super().__init__(
+            self, CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
+        )
+
         self.qpu = AQPU if qpu is None else qpu
         self.label = label
         self.wtimes = wtimes

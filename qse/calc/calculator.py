@@ -224,7 +224,12 @@ class Calculator:
 
     _deprecated = object()
 
-    def __init__(self, **kwargs):
+    def __init__(
+        self,
+        is_calculator_available: bool,
+        installation_message: str,
+        **kwargs,
+    ):
         """Basic calculator implementation.
         label: str
             Name used for all files.  Not supported by all calculators.
@@ -235,6 +240,9 @@ class Calculator:
             attached.  When restarting, qbits will get its positions and
             unit-cell updated from file.
         """
+        if not is_calculator_available:
+            raise Exception(installation_message)
+
         # print(kwargs.keys())
         self._qbits = kwargs.get("qbits")  # copy of qbits object from last calculation
         self._label = kwargs.get("label")

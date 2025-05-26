@@ -5,6 +5,7 @@ __all__ = [
     "PropertyNotImplementedError",
     "PropertyNotPresent",
     "Pulser",
+    "MyQLM",
     "CalculatorSetupError",
     "CalculationFailed",
 ]
@@ -16,4 +17,5 @@ from qse.calc.messages import (
     PropertyNotImplementedError,
     PropertyNotPresent,
 )
+from qse.calc.myqlm import MyQLM
 from qse.calc.pulser import Pulser
