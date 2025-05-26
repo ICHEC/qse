@@ -171,7 +171,7 @@ def get_sisj(
 def structure_factor_from_sij(
     L1: int, L2: int, L3: int, qbits: qse.Qbits, s_ij: np.ndarray[float]
 ) -> np.ndarray[float]:
-    """From spin correlation, compute the `structure factor`
+    r"""From spin correlation, compute the `structure factor`.
         The structure factor is just fourier transform of the s_ij
         :math: `S[q] = \frac{1}{N^2} \sum_{ij} s_{ij} \exp{i q \cdot (x_i - x_j)}`
         The (L1, L2, L3) are passed as shape of the lattice, and there is a qubit
