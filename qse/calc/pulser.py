@@ -113,8 +113,8 @@ class Pulser(Calculator):
             "see https://pulser.readthedocs.io/en/stable/installation.html."
         )
 
-        super.__init__(
-            self, CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
+        super().__init__(
+            CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
         )
         self.device = pulser.devices.MockDevice if device == None else device
         self.emulator = QutipEmulator if emulator is None else emulator
