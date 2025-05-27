@@ -6,10 +6,10 @@ The Quantum Simulation Environment (QSE) package is adapted from Atomic Simulati
 in a vendor agnostic way. ASE's modular nature, and extensability make it very useful for a similar quantum computing application.
 
 ## Installation
-See the [installation page](https://github.com/ICHEC/qse/blob/1_new_readme/INSTALLATION.md).
+See the [installation page](https://github.com/ICHEC/qse/blob/main/INSTALLATION.md).
 
 ## Contributing
-See the [contributing page](https://github.com/ICHEC/qse/blob/1_new_readme/CONTRIBUTIONS.md).
+See the [contributing page](https://github.com/ICHEC/qse/blob/main/CONTRIBUTIONS.md).
 
 ## QSE Overview
 Following are the primary classes for the QSE -
@@ -75,6 +75,10 @@ classDiagram
         get_state()
     }
 ```
+
+# Dependency tree
+
+![](./qse.svg)
 
 ---
 
