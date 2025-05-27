@@ -29,7 +29,7 @@ You can install Pulser with `qse` using
 ```bash
 pip install ".[pulser]"
 ```
-and MyQLM using
+and myQLM using
 ```bash
 pip install ".[myqlm]"
 ```
