@@ -6,6 +6,7 @@ __all__ = [
     "triangular",
     "hexagonal",
     "kagome",
+    "ring",
 ]
 
 from .lattices import (
@@ -14,4 +15,5 @@ from .lattices import (
     kagome,
     square,
     triangular,
+    ring,
 )

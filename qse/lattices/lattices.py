@@ -160,3 +160,26 @@ def kagome(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2)
             [lattice_spacing / 2, np.sqrt(3) * lattice_spacing / 2, 0],
         ],
     )
+
+def ring(center=np.zeros(3), radius=3.0, npoints=12):
+    """Generate Qbits object in ring geometry.
+
+    Args:
+        center (_type_, optional): _description_. Defaults to np.zeros(3).
+        radius (float, optional): _description_. Defaults to 3.0.
+        npoints (int, optional): _description_. Defaults to 12.
+
+    Returns
+    -------
+    Qbits
+        The Qbits lattice.
+    """
+    theta = np.arange(npoints, dtype=float)
+    theta *= (2.0 * np.pi / npoints)
+    positions = np.array([np.cos(theta), np.sin(theta), np.zeros(npoints)]).T
+    positions += center
+    qring = qse.Qbits(positions=positions)
+    return qring
+
+
+    
