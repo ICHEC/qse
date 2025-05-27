@@ -18,8 +18,6 @@ try:
     import pulser
     import pulser.waveforms
     import qutip
-
-    # from pulser_simulation import Simulation, SimConfig, QutipEmulator
     from pulser_simulation import QutipEmulator
 
     CALCULATOR_AVAILABLE = True

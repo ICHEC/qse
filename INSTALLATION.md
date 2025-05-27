@@ -23,3 +23,13 @@ You can verify the package and dependencies were installed correctly with
 pip list
 ```
 if you installed `qse` in editable mode, `pip list` should show it having an editable project location.
+
+## Installing optional dependencies
+You can install Pulser with `qse` using
+```bash
+pip install ".[pulser]"
+```
+and MyQLM using
+```bash
+pip install ".[myqlm]"
+```
