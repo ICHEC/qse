@@ -33,6 +33,8 @@ dev = [
     "black[jupyter]",
     "isort"
 ]
+pulser = ["pulser == 1.4.0"]
+myqlm = ["numpy == 1.26.4", "myqlm == 1.11.3"]
 
 [tool.mypy]
 ignore_missing_imports = true
