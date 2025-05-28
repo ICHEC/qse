@@ -4,6 +4,7 @@ from typing import Union
 
 import numpy as np
 
+
 class Signal:
     """
     Signal class represents a 1D signal with values and duration.
@@ -14,7 +15,7 @@ class Signal:
     - Adding a scalar to a Signal returns a new Signal with modified
     values and the same duration. Say W is a signal, then W + 3.0 returns
     a signal with same duration, and values W.values + 3.0.
-    
+
     - Adding two Signal instances concatenates their values and sums
     their durations. So if w1, w2 are instantiation of Signal, then
     w = w1 + w2 gives signal with concatenated values, i.e.,
@@ -105,10 +106,7 @@ class Signal:
         bool
             True if equal in both values and duration.
         """
-        return (
-            (self.duration == other.duration)
-        and (self.values == other.values).all()
-        )
+        return (self.duration == other.duration) and (self.values == other.values).all()
 
     def __add__(self, other):
         """
@@ -251,5 +249,3 @@ class Signal:
 
     # TODO: Define interpolating scheme to resample points
     # if duration is changed externally.
-
-
