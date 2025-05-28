@@ -40,7 +40,7 @@ def chain(lattice_spacing: float = 1.0, repeats: int = 6):
     repeats : int
         The number of repeats. Must be greater than 1.
 
-    Returns
+    Returns:
     -------
     Qbits
         The Qbits lattice.
@@ -62,7 +62,7 @@ def square(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2)
     repeats_y : int
         The number of repeats in the y direction. Must be greater than 1.
 
-    Returns
+    Returns:
     -------
     Qbits
         The Qbits lattice.
@@ -87,7 +87,7 @@ def triangular(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int 
     repeats_y : int
         The number of repeats in the y direction. Must be greater than 1.
 
-    Returns
+    Returns:
     -------
     Qbits
         The Qbits lattice.
@@ -112,7 +112,7 @@ def hexagonal(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int =
     repeats_y : int
         The number of repeats in the y direction. Must be greater than 1.
 
-    Returns
+    Returns:
     -------
     Qbits
         The Qbits lattice.
@@ -143,7 +143,7 @@ def kagome(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2)
     repeats_y : int
         The number of repeats in the y direction. Must be greater than 1.
 
-    Returns
+    Returns:
     -------
     Qbits
         The Qbits lattice.
@@ -161,25 +161,59 @@ def kagome(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2)
         ],
     )
 
+
 def ring(center=np.zeros(3), radius=3.0, npoints=12):
     """Generate Qbits object in ring geometry.
+        The ring is placed in xy plane at center.
 
     Args:
-        center (_type_, optional): _description_. Defaults to np.zeros(3).
-        radius (float, optional): _description_. Defaults to 3.0.
-        npoints (int, optional): _description_. Defaults to 12.
+        center (array_like, optional): 3D coordinate for the centre
+        of the ring. Defaults to np.zeros(3).
+        radius (float, optional): Radius of ring. Defaults to 3.0.
+        npoints (int, optional): Number of points on ring. Defaults to 12.
 
-    Returns
+    Returns:
     -------
     Qbits
-        The Qbits lattice.
+        The Qbits object with ring geometry.
     """
     theta = np.arange(npoints, dtype=float)
-    theta *= (2.0 * np.pi / npoints)
+    theta *= 2.0 * np.pi / npoints
     positions = np.array([np.cos(theta), np.sin(theta), np.zeros(npoints)]).T
     positions += center
     qring = qse.Qbits(positions=positions)
     return qring
 
 
-    
+def torus(N1=12, N2=12, Rin=1.0, Rout=3.0, center=np.zeros(3)):
+    """Generate Qbits object in a torus geometry.
+
+    Args:
+        N1 (int, optional): number of points in larger (outer) dimension.
+        Defaults to 12.
+        N2 (int, optional): Number of points in smaller (inner) dimension.
+        Defaults to 12.
+        Rin (float, optional): Inner radius. Defaults to 1.0.
+        Rout (float, optional): Outer radius. Defaults to 3.0.
+        center (_type_, optional): Center of the torus. Defaults to np.zeros(3).
+
+    Returns:
+        Qbits: The Qbits object with torus geometry.
+    """
+    theta = (2.0 * np.pi / N1) * np.arange(N1)
+    phi = (2.0 * np.pi / N2) * np.arange(N2)
+    #
+    positions = (
+        np.array(
+            [
+                np.outer(Rout + Rin * np.cos(theta), np.cos(phi)),
+                np.outer(Rout + Rin * np.cos(theta), np.sin(phi)),
+                np.outer(Rin * np.sin(theta), np.ones(phi.shape)),
+            ]
+        )
+        .reshape(3, N1 * N2)
+        .T
+    )
+    positions += center
+    qtorus = qse.Qbits(positions=positions)
+    return qtorus

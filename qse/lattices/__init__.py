@@ -15,5 +15,6 @@ from .lattices import (
     kagome,
     ring,
     square,
+    torus,
     triangular,
 )
