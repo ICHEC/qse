@@ -4,6 +4,7 @@ from typing import Union
 
 import numpy as np
 
+
 class Signal:
     """
     Signal class represents a 1D signal with values and duration.
