@@ -13,7 +13,7 @@ from .lattices import (
     chain,
     hexagonal,
     kagome,
+    ring,
     square,
     triangular,
-    ring,
 )
