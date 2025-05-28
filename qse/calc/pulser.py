@@ -8,19 +8,21 @@ https://pulser.readthedocs.io/en/stable/
 from time import time
 
 import numpy as np
-import pulser
-import pulser.waveforms
-import qutip
 
-# from pulser_simulation import Simulation, SimConfig, QutipEmulator
-from pulser_simulation import QutipEmulator
-
-import qse.calc.magnetic as magnetic
+import qse.magnetic as magnetic
 from qse import Signal
 from qse.calc.calculator import Calculator, CalculatorSetupError
 from qse.calc.messages import CalculatorSetupError
 
-# from ase.calculators.calculator import (Calculator, all_changes, Parameters, CalculatorSetupError)
+try:
+    import pulser
+    import pulser.waveforms
+    import qutip
+    from pulser_simulation import QutipEmulator
+
+    CALCULATOR_AVAILABLE = True
+except ImportError:
+    CALCULATOR_AVAILABLE = False
 
 
 class Pulser(Calculator):
@@ -100,10 +102,18 @@ class Pulser(Calculator):
         label="pulser-run",
         wtimes=True,
     ):
-        """Construct pulser-calculator object.
+        """
+        Construct pulser-calculator object.
         we need qubits, amplitude, detuning, device and emulator.
         """
-        Calculator.__init__(self, label=label, qbits=qbits)
+        installation_message = (
+            "Pulser is not installed. To install, "
+            "see https://pulser.readthedocs.io/en/stable/installation.html."
+        )
+
+        super().__init__(
+            CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
+        )
         self.device = pulser.devices.MockDevice if device == None else device
         self.emulator = QutipEmulator if emulator is None else emulator
         self.label = label
@@ -274,7 +284,7 @@ class Pulser(Calculator):
 
         Returns:
             np.ndarray: Array of Nx3 containing spin expectation values.
-        See :py.func: `qse.calc.magnetic.get_spins` for more details.
+        See :py.func: `qse.magnetic.get_spins` for more details.
         """
         if self.results is None:
             self.calculate()
@@ -290,7 +300,7 @@ class Pulser(Calculator):
 
         Returns:
             np.ndarray: Array of NxN shape containing spin correlations.
-        See :py.func: `qse.calc.magnetic.get_sij` for more details.
+        See :py.func: `qse.magnetic.get_sij` for more details.
         """
         if self.results is None:
             self.calculate()
@@ -310,7 +320,7 @@ class Pulser(Calculator):
 
         Returns:
             np.ndarray: Array containing the structure factor
-        See :py.func: `qse.calc.magnetic.structure_factor_from_sij` for more details.
+        See :py.func: `qse.magnetic.structure_factor_from_sij` for more details.
         """
         struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
         return struc_fac

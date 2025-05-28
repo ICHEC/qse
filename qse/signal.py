@@ -1,94 +1,236 @@
-"""Definition of the Signal class."""
+"""
+Represents a 1D signal with values and duration.
 
-from typing import Union
+The class supports arithmetic operations with other signals and scalars.
+Specifically:
+- Adding a scalar to a Signal returns a new Signal with modified values and the same duration.
+- Adding two Signal instances concatenates their values and sums their durations.
 
-import numpy as np
+Note
+----
+While multi-dimensional arrays can be used, the class is intended for 1D signals only.
 
+Parameters
+----------
+values : array_like
+    The signal values.
+duration : int, optional
+    Duration of the signal. If not provided, defaults to the length of `values`.
 
-class Signal:
+Attributes
+----------
+values : ndarray
+    The values of the signal.
+duration : int
+    Duration of the signal.
+"""
+
+def __init__(self, values, duration: Union[int, None] = None) -> None:
+    self.values = np.asarray(values)
+    self._duration = len(self.values) if duration is None else int(duration)
+
+@property
+def duration(self) -> int:
     """
-    Signal class to represent a a signal with a duration.
-    It has two components: values, and duration.
-    Instantiation of this class supports '+' in two ways.
-    If w1, w2 are instantiation of signal, then
-    - w1 + 3 gives a signal with values, w1.values + 3 and
-    same duration.
-    - w = w1 + w2 gives signal with concatenated values, i.e.,
-    w.values = [w1.values, w2.values], and added duration.
-    w.duration = w1.duration + w2.duration
+    Duration of the signal.
 
-    Note: Currently, the object gets created for multi-dim
-    arrays as well. However, it should be used for 1D only,
-    we haven't made it useful or consistent for multi-dim usage.
+    Returns
+    -------
+    int
+        The duration.
     """
+    return self._duration
 
-    def __init__(self, values, duration=None) -> None:
-        self.values = np.asarray(values)
-        self._duration = len(self.values) if duration is None else int(duration)
+@duration.setter
+def duration(self, value: int) -> None:
+    self._duration = value
 
-    @property
-    def duration(self):
-        """time duration of signal"""
-        return self._duration
+def __iter__(self):
+    """
+    Iterate over the signal values.
 
-    @duration.setter
-    def duration(self, value):
-        self._duration = value
+    Returns
+    -------
+    iterator
+        An iterator over the values.
+    """
+    return iter(self.values)
 
-    def __iter__(self):
-        return iter(self.values)
+def __getitem__(self, i):
+    """
+    Access individual signal value(s) by index or slice.
 
-    def __getitem__(self, i):
-        return self.values[i]
+    Parameters
+    ----------
+    i : int or slice
+        Index or slice to access.
 
-    def __eq__(self, other) -> bool:
-        return (self.duration == other.duration) and (self.values == other.values).all()
+    Returns
+    -------
+    scalar or ndarray
+        The corresponding value(s).
+    """
+    return self.values[i]
 
-    def __add__(self, other):
-        if isinstance(other, Signal):
-            res = Signal(
-                values=np.append(self.values, other.values),
-                duration=self.duration + other.duration,
-            )
-        else:
-            if isinstance(other, Union[float, int]):
-                res = Signal(values=self.values + other, duration=self.duration)
-            else:
-                raise TypeError(f"wrong type for operand {type(other)}")
-        return res
+def __eq__(self, other) -> bool:
+    """
+    Check for equality with another signal.
 
-    def __radd__(self, other):
-        return self.__add__(other)
+    Parameters
+    ----------
+    other : Signal
+        Signal to compare with.
 
-    def __iadd__(self, other):
-        if isinstance(other, Signal):
-            self.values = np.append(self.values, other.values)
-            self.duration += other.duration
-        else:
-            if isinstance(other, Union[float, int]):
-                self.values += other
-            else:
-                raise TypeError(f"wrong type for operand {type(other)}")
-        return self
+    Returns
+    -------
+    bool
+        True if equal in both values and duration.
+    """
+    return (
+        self.duration == other.duration
+        and np.array_equal(self.values, other.values)
+    )
 
-    def __mul__(self, other):
-        if isinstance(other, Union[float, int]):
-            res = Signal(values=self.values * other, duration=self.duration)
-        else:
-            raise TypeError(f"wrong type for operand {type(other)}")
-        return res
+def __add__(self, other):
+    """
+    Add another signal or scalar to this signal.
 
-    def __rmul__(self, other):
-        return self.__mul__(other)
+    Parameters
+    ----------
+    other : Signal or float or int
+        Signal to concatenate or scalar to add elementwise.
 
-    def __imul__(self, other):
-        if isinstance(other, Union[float, int]):
-            self.values *= other
-        else:
-            raise TypeError(f"wrong type for operand {type(other)}")
-        return self
+    Returns
+    -------
+    Signal
+        The resulting signal.
 
-    def __repr__(self) -> str:
-        return f"signal(duration={self.duration}, values={self.values})"
+    Raises
+    ------
+    TypeError
+        If the operand type is unsupported.
+    """
+    if isinstance(other, Signal):
+        return Signal(
+            values=np.append(self.values, other.values),
+            duration=self.duration + other.duration,
+        )
+    elif isinstance(other, (float, int)):
+        return Signal(values=self.values + other, duration=self.duration)
+    else:
+        raise TypeError(f"Unsupported operand type for +: {type(other)}")
 
-    # we need to define interpolating scheme to resample points if duration is changed externally.
+def __radd__(self, other):
+    """
+    Right addition operator.
+
+    Returns
+    -------
+    Signal
+        The resulting signal.
+    """
+    return self.__add__(other)
+
+def __iadd__(self, other):
+    """
+    In-place addition with another signal or scalar.
+
+    Parameters
+    ----------
+    other : Signal or float or int
+        Signal to concatenate or scalar to add elementwise.
+
+    Returns
+    -------
+    Signal
+        The updated signal.
+
+    Raises
+    ------
+    TypeError
+        If the operand type is unsupported.
+    """
+    if isinstance(other, Signal):
+        self.values = np.append(self.values, other.values)
+        self.duration += other.duration
+    elif isinstance(other, (float, int)):
+        self.values += other
+    else:
+        raise TypeError(f"Unsupported operand type for +=: {type(other)}")
+    return self
+
+def __mul__(self, other):
+    """
+    Multiply signal values by a scalar.
+
+    Parameters
+    ----------
+    other : float or int
+        Scalar multiplier.
+
+    Returns
+    -------
+    Signal
+        The resulting signal.
+
+    Raises
+    ------
+    TypeError
+        If the operand type is unsupported.
+    """
+    if isinstance(other, (float, int)):
+        return Signal(values=self.values * other, duration=self.duration)
+    else:
+        raise TypeError(f"Unsupported operand type for *: {type(other)}")
+
+def __rmul__(self, other):
+    """
+    Right multiplication by a scalar.
+
+    Returns
+    -------
+    Signal
+        The resulting signal.
+    """
+    return self.__mul__(other)
+
+def __imul__(self, other):
+    """
+    In-place multiplication by a scalar.
+
+    Parameters
+    ----------
+    other : float or int
+        Scalar multiplier.
+
+    Returns
+    -------
+    Signal
+        The updated signal.
+
+    Raises
+    ------
+    TypeError
+        If the operand type is unsupported.
+    """
+    if isinstance(other, (float, int)):
+        self.values *= other
+    else:
+        raise TypeError(f"Unsupported operand type for *=: {type(other)}")
+    return self
+
+def __repr__(self) -> str:
+    """
+    Return a string representation of the signal.
+
+    Returns
+    -------
+    str
+        String representation.
+    """
+    return f"Signal(duration={self.duration}, values={self.values})"
+
+# TODO: Define interpolating scheme to resample points
+# if duration is changed externally.
+
+

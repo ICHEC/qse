@@ -76,6 +76,10 @@ classDiagram
     }
 ```
 
+# Dependency tree
+
+![](./qse.svg)
+
 ---
 
 Points to note
