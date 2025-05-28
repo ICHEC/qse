@@ -3,18 +3,18 @@ import sys
 
 import tomli
 
-sys.path.insert(0, os.path.abspath('../'))
-sys.path.insert(0, os.path.abspath('../../'))
+sys.path.insert(0, os.path.abspath("../"))
+sys.path.insert(0, os.path.abspath("../../"))
 
 with open("../../pyproject.toml", "rb") as f:
     toml_dict = tomli.load(f)
 
 project = toml_dict["project"]["name"]
-copyright = '...'
-author = 'ICHEC'
+copyright = "..."
+author = "ICHEC"
 release = toml_dict["project"]["version"]
 
-#autosummary_generate = True
+# autosummary_generate = True
 bibtex_bibfiles = []
 comments_config = {"hypothesis": False, "utterances": False}
 exclude_patterns = ["**.ipynb_checkpoints", ".DS_Store", "Thumbs.db", "_build"]
@@ -41,10 +41,10 @@ extensions = [
 ]
 autoapi_dirs = ["../../qse"]  # for sphinx-autoapi
 autoapi_options = [  # https://sphinx-autoapi.readthedocs.io/en/latest/reference/config.html#confval-autoapi_options
-    'members',
-    'show-module-summary',
-    'show-inheritance',
-    ]  
+    "members",
+    "show-module-summary",
+    "show-inheritance",
+]
 
 external_toc_exclude_missing = False
 external_toc_path = "_toc.yml"
