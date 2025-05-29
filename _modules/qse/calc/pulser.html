@@ -1,0 +1,792 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qse.calc.pulser &#8212; QSE</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=1a9ffd16"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/qse/calc/pulser';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">QSE</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    QSE
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">QSE</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/generating_lattices.html">Generating Lattices</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/creating_and_manipulating_qbits.html">Creating and manipulating Qbits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/pulser-myqlm-conversion.html">Pulser-MyQLM Conversion</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api.html">API documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../_autosummary/qse.html">qse</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autosummary/qse.calc.html">qse.calc</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/qse.calc.calculator.html">qse.calc.calculator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/qse.calc.messages.html">qse.calc.messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/qse.calc.myqlm.html">qse.calc.myqlm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/qse.calc.pulser.html">qse.calc.pulser</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/qse.constraints.html">qse.constraints</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../_autosummary/qse.lattices.html">qse.lattices</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/qse.lattices.lattices.html">qse.lattices.lattices</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/qse.magnetic.html">qse.magnetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/qse.qbit.html">qse.qbit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/qse.qbits.html">qse.qbits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/qse.signal.html">qse.signal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/qse.utils.html">qse.utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/qse.visualise.html">qse.visualise</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api_alternative.html">API documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../qse.html"><code class="docutils literal notranslate"><span class="pre">Qbit</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../utils.html"><code class="docutils literal notranslate"><span class="pre">int2bin()</span></code></a></li>
+</ul>
+</details></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ICHEC/qse" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ICHEC/qse/issues/new?title=Issue%20on%20page%20%2F_modules/qse/calc/pulser.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for qse.calc.pulser</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module Provides QSE calculator interface to Pulser. It is derived from</span>
+<span class="sd">the ASE&#39;s CP2K calculator, though at the end it may look very different from</span>
+<span class="sd">ASE calculator.</span>
+<span class="sd">https://pulser.readthedocs.io/en/stable/</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">qse.magnetic</span> <span class="k">as</span> <span class="nn">magnetic</span>
+<span class="kn">from</span> <span class="nn">qse</span> <span class="kn">import</span> <span class="n">Signal</span>
+<span class="kn">from</span> <span class="nn">qse.calc.calculator</span> <span class="kn">import</span> <span class="n">Calculator</span><span class="p">,</span> <span class="n">CalculatorSetupError</span>
+<span class="kn">from</span> <span class="nn">qse.calc.messages</span> <span class="kn">import</span> <span class="n">CalculatorSetupError</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pulser</span>
+    <span class="kn">import</span> <span class="nn">pulser.waveforms</span>
+    <span class="kn">import</span> <span class="nn">qutip</span>
+    <span class="kn">from</span> <span class="nn">pulser_simulation</span> <span class="kn">import</span> <span class="n">QutipEmulator</span>
+
+    <span class="n">CALCULATOR_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">CALCULATOR_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="Pulser">
+<a class="viewcode-back" href="../../../autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser">[docs]</a>
+<span class="k">class</span> <span class="nc">Pulser</span><span class="p">(</span><span class="n">Calculator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;QSE-Calculator for pulser.</span>
+
+<span class="sd">    Pulser is an open-source Python software package.</span>
+<span class="sd">    It provides easy-to-use libraries for designing and</span>
+<span class="sd">    simulating pulse sequences that act on programmable</span>
+<span class="sd">    arrays of neutral qbits, a promising platform for</span>
+<span class="sd">    quantum computation and simulation.</span>
+<span class="sd">    Online documentation: https://pulser.readthedocs.io</span>
+<span class="sd">    White paper: Quantum 6, 629 (2022)</span>
+<span class="sd">    Source code: https://github.com/pasqal-io/Pulser</span>
+<span class="sd">    License: Apache 2.0</span>
+<span class="sd">    - see [LICENSE](https://github.com/pasqal-io/Pulser/blob/master/LICENSE) for details</span>
+
+<span class="sd">    &gt; TODO: if there is any config related to OMP_NUM_THREADS etc, place them here.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">    auto_write: bool</span>
+<span class="sd">        Flag to enable the auto-write mode. If enabled the</span>
+<span class="sd">        ``write()`` routine is called after every</span>
+<span class="sd">        calculation, which mimics the behavior of the</span>
+<span class="sd">        ``FileIOCalculator``. Default is ``False``.</span>
+<span class="sd">    basis_set: str</span>
+<span class="sd">        Name of the basis set to be use.</span>
+<span class="sd">        The default is ``DZVP-MOLOPT-SR-GTH``.</span>
+<span class="sd">    basis_set_file: str</span>
+<span class="sd">        Filename of the basis set file.</span>
+<span class="sd">        Default is ``BASIS_MOLOPT``.</span>
+<span class="sd">        Set the environment variable $CP2K_DATA_DIR</span>
+<span class="sd">        to enabled automatic file discovered.</span>
+<span class="sd">    charge: float</span>
+<span class="sd">        The total charge of the system.  Default is ``0``.</span>
+<span class="sd">    cutoff: float</span>
+<span class="sd">        The cutoff of the finest grid level.  Default is ``400 * Rydberg``.</span>
+<span class="sd">    debug: bool</span>
+<span class="sd">        Flag to enable debug mode. This will print all</span>
+<span class="sd">        communication between the CP2K-shell and the</span>
+<span class="sd">        CP2K-calculator. Default is ``False``.</span>
+<span class="sd">    force_eval_method: str</span>
+<span class="sd">        The method CP2K uses to evaluate energies and forces.</span>
+<span class="sd">        The default is ``Quickstep``, which is CP2K&#39;s</span>
+<span class="sd">        module for electronic structure methods like DFT.</span>
+
+<span class="sd">    max_scf: int</span>
+<span class="sd">        Maximum number of SCF iteration to be performed for</span>
+<span class="sd">        one optimization. Default is ``50``.</span>
+<span class="sd">    print_level: str</span>
+<span class="sd">        PRINT_LEVEL of global output.</span>
+<span class="sd">        Possible options are:</span>
+<span class="sd">        DEBUG Everything is written out, useful for debugging purposes only</span>
+<span class="sd">        HIGH Lots of output</span>
+<span class="sd">        LOW Little output</span>
+<span class="sd">        MEDIUM Quite some output</span>
+<span class="sd">        SILENT Almost no output</span>
+<span class="sd">        Default is &#39;LOW&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Pulser.implemented_properties">
+<a class="viewcode-back" href="../../../autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.implemented_properties">[docs]</a>
+    <span class="n">implemented_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;fidality&quot;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Pulser.default_parameters">
+<a class="viewcode-back" href="../../../autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.default_parameters">[docs]</a>
+    <span class="n">default_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">auto_write</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">folder</span><span class="o">=</span><span class="s2">&quot;./&quot;</span><span class="p">,</span>
+        <span class="n">max_scf</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">print_level</span><span class="o">=</span><span class="s2">&quot;LOW&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">,</span>
+        <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">amplitude</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">detuning</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">emulator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;pulser-run&quot;</span><span class="p">,</span>
+        <span class="n">wtimes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct pulser-calculator object.</span>
+<span class="sd">        we need qubits, amplitude, detuning, device and emulator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">installation_message</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;Pulser is not installed. To install, &quot;</span>
+            <span class="s2">&quot;see https://pulser.readthedocs.io/en/stable/installation.html.&quot;</span>
+        <span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">CALCULATOR_AVAILABLE</span><span class="p">,</span> <span class="n">installation_message</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">qbits</span><span class="o">=</span><span class="n">qbits</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">MockDevice</span> <span class="k">if</span> <span class="n">device</span> <span class="o">==</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">device</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span> <span class="o">=</span> <span class="n">QutipEmulator</span> <span class="k">if</span> <span class="n">emulator</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">emulator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span> <span class="o">=</span> <span class="n">wtimes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="s2">&quot;rydberg_global&quot;</span>
+        <span class="k">if</span> <span class="n">amplitude</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">amplitude</span><span class="p">,</span> <span class="p">(</span><span class="n">Signal</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="n">amplitude</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">detuning</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">detuning</span><span class="p">,</span> <span class="p">(</span><span class="n">Signal</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span> <span class="o">=</span> <span class="n">detuning</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="n">detuning</span><span class="p">)</span>
+        <span class="c1">#</span>
+        <span class="c1"># assert self.amplitude.duration == self.detuning.duration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="o">.</span><span class="n">duration</span>
+        <span class="n">wa</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">)</span>
+        <span class="n">wd</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detuning</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">wa</span><span class="p">:</span>
+            <span class="n">amp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">amp</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">InterpolatedWaveform</span><span class="p">(</span>
+                <span class="n">duration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="o">.</span><span class="n">values</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">wd</span><span class="p">:</span>
+            <span class="n">det</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">det</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">InterpolatedWaveform</span><span class="p">(</span>
+                <span class="n">duration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">detuning</span><span class="o">.</span><span class="n">values</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pulse</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">Pulse</span><span class="p">(</span><span class="n">amplitude</span><span class="o">=</span><span class="n">amp</span><span class="p">,</span> <span class="n">detuning</span><span class="o">=</span><span class="n">det</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># self.pulse = pulser.Pulse(</span>
+        <span class="c1">#    amplitude=pulser.waveforms.InterpolatedWaveform(</span>
+        <span class="c1">#        duration=self.duration,</span>
+        <span class="c1">#        values=self.amplitude.values),</span>
+        <span class="c1">#        duration=self.duration,</span>
+        <span class="c1">#    detuning=pulser.waveforms.InterpolatedWaveform(</span>
+        <span class="c1">#        values=self.detuning.values), phase=0</span>
+        <span class="c1"># )</span>
+        <span class="c1"># pulser part which defines Hamiltonian parameters done. #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sim</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qbits</span> <span class="k">if</span> <span class="n">qbits</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="c1"># end of init #</span>
+
+    <span class="c1"># defines properties #</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span>
+
+    <span class="nd">@Calculator</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">qbits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_register</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span> <span class="o">=</span> <span class="n">qbits</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_register</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">from_coordinates</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sequence</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">Sequence</span>
+
+    <span class="c1">#</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_register</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span>
+
+    <span class="nd">@sequence</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="o">.</span><span class="n">declare_channel</span><span class="p">(</span><span class="s2">&quot;ch0&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pulse</span><span class="p">,</span> <span class="s2">&quot;ch0&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="s2">&quot;ground-rydberg&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sim</span>
+
+    <span class="k">def</span> <span class="nf">build_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;deleting process. Empty&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Pulser.set">
+<a class="viewcode-back" href="../../../autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.set">[docs]</a>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set parameters like set(key1=value1, key2=value2, ...).&quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot; is not a known keyword for the Pulser calculator. &#39;</span>
+            <span class="s2">&quot;To access all features of Pulser by means of an input &quot;</span>
+            <span class="s1">&#39;template, consider using the &quot;inp&quot; keyword instead.&#39;</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_parameters</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">CalculatorSetupError</span><span class="p">(</span><span class="n">msg</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
+
+        <span class="n">changed_parameters</span> <span class="o">=</span> <span class="n">Calculator</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">changed_parameters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Pulser.write">
+<a class="viewcode-back" href="../../../autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.write">[docs]</a>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="s2">&quot;Write qbits, parameters and calculated results into restart files.&quot;</span>
+        <span class="c1"># if self._debug:</span>
+        <span class="c1">#    print(&quot;Writing restart to: &quot;, label)</span>
+        <span class="c1"># self.qbits.write(label + &#39;_restart.traj&#39;)</span>
+        <span class="c1"># self.parameters.write(label + &#39;_params.ase&#39;)</span>
+        <span class="c1"># from ase.io.jsonio import write_json</span>
+        <span class="c1"># with open(label + &#39;_results.json&#39;, &#39;w&#39;) as fd:</span>
+        <span class="c1">#    write_json(fd, self.results)</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Pulser.read">
+<a class="viewcode-back" href="../../../autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.read">[docs]</a>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="s2">&quot;Read qbits, parameters and calculated results from restart files.&quot;</span>
+        <span class="c1"># self.qbits = ase.io.read(label + &#39;_restart.traj&#39;)</span>
+        <span class="c1"># self.parameters = Parameters.read(label + &#39;_params.ase&#39;)</span>
+        <span class="c1"># from ase.io.jsonio import read_json</span>
+        <span class="c1"># with open(label + &#39;_results.json&#39;) as fd:</span>
+        <span class="c1">#    self.results = read_json(fd)</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Pulser.calculate">
+<a class="viewcode-back" href="../../../autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.calculate">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the calculation.</span>
+<span class="sd">        # system_changes=all_changes -&gt; check it&#39;s relevance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># we need to have/add an attribute to calc for device</span>
+        <span class="c1"># check whether all the emulator `classes` have .from_sequence method.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span><span class="p">:</span>
+            <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">progress_bar</span><span class="o">=</span><span class="n">progress</span><span class="p">)</span>
+        <span class="c1"># self.qbits.states = self.results.get_final_state()</span>
+        <span class="n">final_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">get_final_state</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statevector</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">to_tensor_rep</span><span class="p">(</span><span class="n">final_state</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="c1"># if self.parameters.auto_write:</span>
+        <span class="c1">#    self.write(self.label)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_spins</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sij</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sij</span><span class="p">()</span>
+        <span class="c1"># self.struc_fac = self.structure_factor_from_sij()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span><span class="p">:</span>
+            <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;time in compute and simulation = </span><span class="si">{</span><span class="n">t2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t1</span><span class="si">}</span><span class="s2"> s.&quot;</span><span class="p">)</span></div>
+
+
+    <span class="c1">#</span>
+
+<div class="viewcode-block" id="Pulser.get_spins">
+<a class="viewcode-back" href="../../../autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.get_spins">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_spins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get spin expectation values</span>
+<span class="sd">        If the hamiltonian isn&#39;t simulated, it triggers simulation first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Array of Nx3 containing spin expectation values.</span>
+<span class="sd">        See :py.func: `qse.magnetic.get_spins` for more details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
+        <span class="c1">#</span>
+        <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">)</span>
+        <span class="n">ibasis</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_basis</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
+        <span class="n">si</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_spins</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">statevector</span><span class="p">,</span> <span class="n">ibasis</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">si</span></div>
+
+
+<div class="viewcode-block" id="Pulser.get_sij">
+<a class="viewcode-back" href="../../../autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.get_sij">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_sij</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Get spin correlation s_ij</span>
+<span class="sd">        If the hamiltonian isn&#39;t simulated, it triggers simulation first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Array of NxN shape containing spin correlations.</span>
+<span class="sd">        See :py.func: `qse.magnetic.get_sij` for more details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
+        <span class="c1">#</span>
+        <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">)</span>
+        <span class="n">ibasis</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_basis</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
+        <span class="n">sij</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_sisj</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">statevector</span><span class="p">,</span> <span class="n">ibasis</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sij</span></div>
+
+
+<div class="viewcode-block" id="Pulser.structure_factor_from_sij">
+<a class="viewcode-back" href="../../../autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.structure_factor_from_sij">[docs]</a>
+    <span class="k">def</span> <span class="nf">structure_factor_from_sij</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">L3</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Get the structure factor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            L1 (int): Extent of lattice in x direction</span>
+<span class="sd">            L2 (int): Extent of lattice in y direction</span>
+<span class="sd">            L3 (int): Extent of lattice in z direction</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Array containing the structure factor</span>
+<span class="sd">        See :py.func: `qse.magnetic.structure_factor_from_sij` for more details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">struc_fac</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">structure_factor_from_sij</span><span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">L3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sij</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">struc_fac</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By ICHEC
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright ....
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
