@@ -509,7 +509,6 @@ class FixLinearTriatomic(FixConstraint):
         self.set_slices(p_n, p_m, p_o, p)
 
     def adjust_forces(self, atoms, forces):
-
         if self.bondlengths is None:
             self.initialize(atoms)
 
@@ -837,7 +836,6 @@ class FixInternals(FixConstraint):
         mic=False,
         epsilon=1.0e-7,
     ):
-
         # deprecate public API using radians; degrees is preferred
         warn_msg = "Please specify {} in degrees using the {} argument."
         if angles:
@@ -1230,7 +1228,6 @@ class FixInternals(FixConstraint):
 
 
 class FixParametricRelations(FixConstraint):
-
     def __init__(
         self,
         indices,
@@ -1507,7 +1504,6 @@ class FixParametricRelations(FixConstraint):
 
 
 class FixScaledParametricRelations(FixParametricRelations):
-
     def __init__(
         self,
         indices,
@@ -1584,7 +1580,6 @@ class FixScaledParametricRelations(FixParametricRelations):
 
 
 class FixCartesianParametricRelations(FixParametricRelations):
-
     def __init__(
         self,
         indices,

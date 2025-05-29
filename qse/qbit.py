@@ -69,7 +69,6 @@ class Qbit:
         qbits=None,
         index=None,
     ):
-
         self.data = d = {}
 
         if qbits is None:

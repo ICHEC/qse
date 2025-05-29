@@ -7,7 +7,8 @@ https://myqlm.github.io/
 
 import numpy as np
 
-from qse.calc.calculator import Calculator, all_changes
+from qse import Signal
+from qse.calc.calculator import Calculator
 
 qat_available = False
 qlmaas_available = False
@@ -52,10 +53,21 @@ else:
     print("qlmaas is not available")
 print(AQPU)
 
+from time import time
+
+import qse.magnetic as magnetic
+
 # analogQPU imported based on what's available
-import qat
+
 
 # from qat.core.variables import Variable, heaviside
+
+try:
+    import qat
+
+    CALCULATOR_AVAILABLE = True
+except ImportError:
+    CALCULATOR_AVAILABLE = False
 
 
 default_params = {
@@ -94,10 +106,20 @@ class Myqlm(Calculator):
         analog=True,
         system="rydberg",
         label="myqlm-run",
+        wtimes=True,
     ):
-        super().__init__(label=label, qbits=qbits)
+        installation_message = (
+            "myQLM is not installed. To install, "
+            "see https://myqlm.github.io/01_getting_started/:myqlm:01_install.html."
+        )
+
+        super().__init__(
+            CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
+        )
+
         self.qpu = AQPU if qpu is None else qpu
         self.label = label
+        self.wtimes = wtimes
         self.results = None
         self.system = system
         self.params = dict(default_params[self.system])
@@ -190,32 +212,82 @@ class Myqlm(Calculator):
     def calculate(self, qbits=None, properties=..., system_changes=...):
         # return super().calculate(qbits, properties, system_changes)
         # self.Hamiltonian = self._get_hamiltonian()
+        if self.wtimes:
+            t1 = time()
         self.schedule = qat.core.Schedule(drive=self.Hamiltonian, tmax=self.duration)
         self.job = self.schedule.to_job()
         self.qpu = AQPU()
         self.async_result = self.qpu.submit(self.job)
         self.results = self.async_result.join()
-        # don't know why result.statevector is Nonetype, fill it with state
-        if hasattr(self.results[0], "amplitude"):
-            self.results.statevector = np.fromiter(
-                (s.amplitude for s in self.results), dtype=complex
-            )
-        self.statevector = self.results.statevector
         self.probabities = np.fromiter(
             (s.probability for s in self.results), dtype=float
         )
+        self.basis = np.fromiter((s.state.int for s in self.results), dtype=int)
+        # don't know why result.statevector is Nonetype, fill it with state
+        if hasattr(self.results[0], "amplitude"):
+            statevector = np.fromiter(
+                (s.amplitude for s in self.results), dtype=complex
+            )
+            N = len(self.qbits)
+            hsize = 2**N
+            ibasis = magnetic.get_basis(hsize=hsize, N=N)
+            if statevector.shape[0] < hsize:
+                coeff0 = np.zeros(hsize, dtype=complex)
+                coeff0[self.basis] = statevector
+                statevector = coeff0
+            self.statevector = statevector
+            del ibasis
         self.spins = self.get_spins()
+        self.sij = self.get_sij()
+        if self.wtimes:
+            t2 = time()
+            print(f"time in compute and simulation = {t2 - t1} s.")
+
+    #
 
     def get_spins(self):
+        """Get spin expectation values
+        If the hamiltonian isn't simulated, it triggers simulation first.
+
+        Returns:
+            np.ndarray: Array of Nx3 containing spin expectation values.
+        See :py.func: `qse.magnetic.get_spins` for more details.
+        """
         if self.results is None:
             self.calculate()
         #
-        nqbits = self.results[0].state.nbqbits
-        szi = np.zeros(nqbits, dtype=float)
-        for ss in self.results:
-            prob = ss.probability
-            state = ss.state
-            zi = np.array([1 - 2 * int(i) for i in list(state.bitstring)], dtype=float)
-            szi += prob * zi
+        nqbits = len(self.qbits)
+        ibasis = magnetic.get_basis(2**nqbits, nqbits)
+        si = magnetic.get_spins(self.statevector, ibasis, nqbits)
+        return si
+
+    def get_sij(self):
+        r"""Get spin correlation s_ij
+        If the hamiltonian isn't simulated, it triggers simulation first.
+
+        Returns:
+            np.ndarray: Array of NxN shape containing spin correlations.
+        See :py.func: `qse.magnetic.get_sij` for more details.
+        """
+        if self.results is None:
+            self.calculate()
         #
-        return szi
+        nqbits = len(self.qbits)
+        ibasis = magnetic.get_basis(2**nqbits, nqbits)
+        sij = magnetic.get_sisj(self.statevector, ibasis, nqbits)
+        return sij
+
+    def structure_factor_from_sij(self, L1: int, L2: int, L3: int):
+        r"""Get the structure factor
+
+        Args:
+            L1 (int): Extent of lattice in x direction
+            L2 (int): Extent of lattice in y direction
+            L3 (int): Extent of lattice in z direction
+
+        Returns:
+            np.ndarray: Array containing the structure factor
+        See :py.func: `qse.magnetic.structure_factor_from_sij` for more details.
+        """
+        struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
+        return struc_fac

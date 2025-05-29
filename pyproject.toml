@@ -6,22 +6,35 @@ build-backend = "setuptools.build_meta"
 name = "qse"
 description = "Quantum Simulation Environment"
 readme = "README.md"
-authors = [{name = "Rajarshi Tiwari", email = "rajarshi.tiwari@ichec.ie"}]
+authors = [
+    {name = "Rajarshi Tiwari", email = "rajarshi.tiwari@ichec.ie"},
+    {name = "Karthik Krishnakumar", email = "karthik.krishnakumar@ichec.ie"},
+    {name = "James Nelson", email = "james.nelson@ichec.ie"},
+    {name = "Sherry Blair", email = "sherry.blair@ichec.ie"}
+    ]
 version = "0.1.1"
 requires-python = ">=3.10"
-
-dynamic = ["dependencies"]
-[tool.setuptools.dynamic]
-dependencies = {file = "requirements.txt"}
+dependencies = [
+    "ase",
+    "numpy",
+    "matplotlib"
+]
 
 [project.urls]
-homepage = "https://github.com/rajarshitiwari/qse"
+homepage = "https://github.com/ichec/qse"
 
 [project.optional-dependencies]
 dev = [
     "pytest",
-    "ipykernel"
+    "pytest-cov",
+    "pytest-sugar",
+    "ipykernel",
+    "flake8", 
+    "black[jupyter]",
+    "isort"
 ]
+pulser = ["pulser == 1.4.0"]
+myqlm = ["numpy == 1.26.4", "myqlm == 1.11.3"]
 
 [tool.mypy]
 ignore_missing_imports = true
@@ -30,3 +43,7 @@ enable_error_code = 'ignore-without-code'
 
 [tool.isort]
 profile = "black"
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+addopts = "--cov=qse"

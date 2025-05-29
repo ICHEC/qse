@@ -3,70 +3,17 @@ import os
 import pathlib
 import subprocess
 import warnings
-from math import pi, sqrt
-from typing import Any, Dict, List, Optional, Set, Union
+from typing import Any, Dict, List, Optional, Set
 
 import numpy as np
-from ase.cell import Cell
 from ase.outputs import Properties, all_outputs
-from ase.utils import jsonable
 
-from qse.calc.abc import GetPropertiesMixin
-
-
-class CalculatorError(RuntimeError):
-    """Base class of error types related to ASE calculators."""
-
-
-class CalculatorSetupError(CalculatorError):
-    """Calculation cannot be performed with the given parameters.
-
-    Reasons to raise this errors are:
-      * The calculator is not properly configured
-        (missing executable, environment variables, ...)
-      * The given qbits object is not supported
-      * Calculator parameters are unsupported
-
-    Typically raised before a calculation."""
-
-
-class EnvironmentError(CalculatorSetupError):
-    """Raised if calculator is not properly set up with ASE.
-    May be missing an executable or environment variables."""
-
-
-class InputError(CalculatorSetupError):
-    """Raised if inputs given to the calculator were incorrect.
-    Bad input keywords or values, or missing pseudopotentials.
-    This may be raised before or during calculation, depending on
-    when the problem is detected."""
-
-
-class CalculationFailed(CalculatorError):
-    """Calculation failed unexpectedly.
-
-    Reasons to raise this error are:
-      * Calculation did not converge
-      * Calculation ran out of memory
-      * Segmentation fault or other abnormal termination
-      * Arithmetic trouble (singular matrices, NaN, ...)
-
-    Typically raised during calculation."""
-
-
-class ReadError(CalculatorError):
-    """Unexpected irrecoverable error while reading calculation results."""
-
-
-class PropertyNotImplementedError(NotImplementedError):
-    """Raised if a calculator does not implement the requested property."""
-
-
-class PropertyNotPresent(CalculatorError):
-    """Requested property is missing.
-
-    Maybe it was never calculated, or for some reason was not extracted
-    with the rest of the results, without being a fatal ReadError."""
+from qse.calc.messages import (
+    CalculationFailed,
+    CalculatorSetupError,
+    PropertyNotImplementedError,
+    PropertyNotPresent,
+)
 
 
 def compare_qbits(qbits1, qbits2, tol=1e-15, excluded_properties=None):
@@ -192,37 +139,6 @@ def equal(a, b, tol=None, rtol=None, atol=None):
     return np.allclose(a, b, rtol=rtol, atol=atol)
 
 
-# def kptdensity2monkhorstpack(atoms, kptdensity=3.5, even=True):  """Convert k-point density to Monkhorst-Pack grid size.
-
-"""
-class EigenvalOccupationMixin:
-    #Define 'eigenvalues' and 'occupations' properties on class.
-    #
-    #eigenvalues and occupations will be arrays of shape (spin, kpts, nbands).
-    #
-    #Classes must implement the old-fashioned get_eigenvalues and
-    #get_occupations methods.
-
-    @property
-    def eigenvalues(self):
-        return self.build_eig_occ_array(self.get_eigenvalues)
-
-    @property
-    def occupations(self):
-        return self.build_eig_occ_array(self.get_occupation_numbers)
-
-    def build_eig_occ_array(self, getter):
-        nspins = self.get_number_of_spins()
-        nkpts = len(self.get_ibz_k_points())
-        nbands = self.get_number_of_bands()
-        arr = np.zeros((nspins, nkpts, nbands))
-        for s in range(nspins):
-            for k in range(nkpts):
-                arr[s, k, :] = getter(spin=s, kpt=k)
-        return arr
-"""
-
-
 class Parameters(dict):
     """Dictionary for parameters.
 
@@ -278,8 +194,9 @@ class Parameters(dict):
         pathlib.Path(filename).write_text(self.tostring())
 
 
-class Calculator(GetPropertiesMixin):
-    """Base-class for all QSE calculators, adapted from ASE calculators.
+class Calculator:
+    """
+    Base-class for all QSE calculators, adapted from ASE calculators.
 
     A calculator must raise PropertyNotImplementedError if asked for a
     property that it can't calculate.  So, if calculation of the
@@ -307,7 +224,12 @@ class Calculator(GetPropertiesMixin):
 
     _deprecated = object()
 
-    def __init__(self, **kwargs):
+    def __init__(
+        self,
+        is_calculator_available: bool,
+        installation_message: str,
+        **kwargs,
+    ):
         """Basic calculator implementation.
         label: str
             Name used for all files.  Not supported by all calculators.
@@ -318,6 +240,9 @@ class Calculator(GetPropertiesMixin):
             attached.  When restarting, qbits will get its positions and
             unit-cell updated from file.
         """
+        if not is_calculator_available:
+            raise Exception(installation_message)
+
         # print(kwargs.keys())
         self._qbits = kwargs.get("qbits")  # copy of qbits object from last calculation
         self._label = kwargs.get("label")
