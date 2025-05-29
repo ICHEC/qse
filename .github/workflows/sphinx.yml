@@ -11,6 +11,9 @@ jobs:
     - uses: actions/checkout@v4
       with:
         persist-credentials: false
+    - name: Install qse and testing dependencies
+      run: |
+      python -m pip install ".[dev]"
     - name: Build HTML
       uses: ammaraskar/sphinx-action@master
       with:
