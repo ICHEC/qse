@@ -484,7 +484,8 @@ class Qbits:
         Check for existence of array.
 
         name must be one of: 'momenta', 'masses', 'initial_magmoms',
-        'initial_charges'."""
+        'initial_charges'.
+        """
         # XXX extend has to calculator properties
         return name in self.arrays
 
