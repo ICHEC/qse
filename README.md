@@ -76,7 +76,7 @@ classDiagram
     }
 ```
 
-# Dependency tree
+## Dependency tree
 
 ![](./qse.svg)
 

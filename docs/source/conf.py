@@ -37,13 +37,16 @@ extensions = [
     "sphinxcontrib.bibtex",
     "sphinx_jupyterbook_latex",
     "sphinx_multitoc_numbering",
-    "autoapi.extension",
+    'sphinx.ext.autodoc',
+    'autoapi.sphinx'
 ]
-autoapi_dirs = ["../../qse"]  # for sphinx-autoapi
-autoapi_options = [  # https://sphinx-autoapi.readthedocs.io/en/latest/reference/config.html#confval-autoapi_options
+autoapi_modules = {'qse': {"prune": True, "template": "module_template"}}
+autoapi_options = [
     "members",
-    "show-module-summary",
+    "undoc-members",
     "show-inheritance",
+    "show-module-summary",
+    "imported-members",
 ]
 
 external_toc_exclude_missing = False

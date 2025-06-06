@@ -1,8 +1,11 @@
-API documentation
-=================
+.. toctree::
+   :hidden:
 
-.. autosummary::
-   :toctree: _autosummary
-   :recursive:
+   qse/qse
 
-   qse
+
+Indices and tables
+==================
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
