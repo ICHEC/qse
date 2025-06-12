@@ -3,7 +3,7 @@ import numpy as np
 
 class Qbits:
     def __init__(self, positions):
-        self._positions = positions
+        self._positions = np.array(positions, dtype=float)
 
     @property
     def positions(self):
@@ -11,7 +11,7 @@ class Qbits:
 
     @positions.setter
     def positions(self, positions):
-        self._positions = positions
+        self._positions = np.array(positions, dtype=float)
 
     @property
     def nqbits(self):
@@ -72,7 +72,7 @@ class Qbits:
             The displacement argument can be a float an xyz vector or an
             nx3 array (where n is the number of qbits).
         """
-        self.positions += np.array(displacement)
+        self.positions += displacement
 
     def get_centroid(self):
         """
@@ -101,8 +101,7 @@ class Qbits:
         the centroid is given by
         $\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.$
         """
-        difference = centroid - self.get_centroid()
-        self.positions += difference
+        self.translate(centroid - self.get_centroid())
 
     def rotate(self, angle: float, vector="z", center=(0, 0, 0)):
         """
