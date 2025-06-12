@@ -3,6 +3,27 @@ import numpy as np
 import qse
 
 
+def repeat(unit_cell, lattice_vectors, repeats):
+
+    positions = []
+
+    for i in range(repeats[0]):
+        for j in range(repeats[1]):
+            for k in range(repeats[2]):
+                d_ijk = (
+                    lattice_vectors[0] * i
+                    + lattice_vectors[1] * j
+                    + lattice_vectors[2] * k
+                )
+                print(d_ijk)
+                for u in unit_cell:
+                    print(u)
+                    positions.append(u + d_ijk)
+
+    assert len(positions) == repeats[0] * repeats[1] * repeats[2] * len(unit_cell)
+    return qse.Qbits(np.array(positions))
+
+
 def _check_repeats(repeats, param_name):
     """Validate the repeats parameter."""
     if not isinstance(repeats, int) or repeats < 2:
