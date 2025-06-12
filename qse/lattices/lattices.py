@@ -3,24 +3,18 @@ import numpy as np
 import qse
 
 
-def repeat(unit_cell, lattice_vectors, repeats):
+def repeat(unit_cell, qubit_positions, repeats):
 
     positions = []
 
     for i in range(repeats[0]):
         for j in range(repeats[1]):
             for k in range(repeats[2]):
-                d_ijk = (
-                    lattice_vectors[0] * i
-                    + lattice_vectors[1] * j
-                    + lattice_vectors[2] * k
-                )
-                print(d_ijk)
-                for u in unit_cell:
-                    print(u)
+                d_ijk = unit_cell[0] * i + unit_cell[1] * j + unit_cell[2] * k
+                for u in qubit_positions:
                     positions.append(u + d_ijk)
 
-    assert len(positions) == repeats[0] * repeats[1] * repeats[2] * len(unit_cell)
+    assert len(positions) == repeats[0] * repeats[1] * repeats[2] * len(qubit_positions)
     return qse.Qbits(np.array(positions))
 
 
@@ -58,12 +52,13 @@ def _lattice_creator(
     Qbits
         Qbits object repeated along desired directions.
     """
-
-    unit = qse.Qbits(positions=np.array(qubit_positions))
-
     # We add [[0, 0, 0]] to convert the unit cell into 3d.
-    unit.cell = lattice_spacing * qse.cell.Cell(unit_cell_2d + [[0, 0, 0]])
-    return unit.repeat(repeats + (1,))
+    unit_cell = unit_cell_2d + [[0, 0, 0]]
+    return repeat(
+        np.array(unit_cell) * lattice_spacing,
+        np.array(qubit_positions) * lattice_spacing,
+        repeats + (1,),
+    )
 
 
 def chain(lattice_spacing: float = 1.0, repeats: int = 6):
