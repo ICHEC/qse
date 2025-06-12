@@ -114,7 +114,7 @@ def test_translate(nqbits, type_of_disp):
             qbits.translate(disp)
     else:
         qbits.translate(disp)
-        assert np.allclose(qbits.get_positions(), positions + disp)
+        assert np.allclose(qbits.positions, positions + disp)
 
 
 @pytest.mark.parametrize("indices", [1, [0, 1, 3]])
@@ -144,12 +144,12 @@ def test_rotate():
     qbits = qse.Qbits(positions=unit_square)
     qbits.rotate(90, "z")
 
-    assert not np.allclose(qbits.get_positions(), unit_square)
+    assert not np.allclose(qbits.positions, unit_square)
 
     unit_square_rt = np.array(
         [[0.0, 1.0, 0.0], [-1.0, 1.0, 0.0], [-1.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
     )
-    assert np.allclose(qbits.get_positions(), unit_square_rt)
+    assert np.allclose(qbits.positions, unit_square_rt)
 
     # Check that a centered square is invariant (with relabelling).
     square_centered = np.array(
@@ -157,7 +157,7 @@ def test_rotate():
     )
     qbits = qse.Qbits(positions=square_centered)
     qbits.rotate(90, "z")
-    assert np.allclose(qbits.get_positions(), square_centered[[2, 0, 3, 1]])
+    assert np.allclose(qbits.positions, square_centered[[2, 0, 3, 1]])
 
 
 @pytest.mark.parametrize("angle", [10, 20, 30])
@@ -178,7 +178,7 @@ def test_rotate_square_z(angle):
             [np.cos(angle_rads), np.sin(angle_rads), 1.0],
         ]
     )
-    assert np.allclose(qbits.get_positions(), new_positions)
+    assert np.allclose(qbits.positions, new_positions)
 
 
 @pytest.mark.parametrize("a", ["x", "-y", (0.0, 2.0, 3)])
@@ -192,7 +192,7 @@ def test_rotate_distances(a, v, center):
 
     qbits.rotate(a, v, center)
 
-    assert not np.allclose(qbits.get_positions(), positions)
+    assert not np.allclose(qbits.positions, positions)
     assert np.allclose(qbits.get_all_distances(), distances)
 
 

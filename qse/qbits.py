@@ -13,6 +13,10 @@ class Qbits:
     def positions(self, positions):
         self._positions = positions
 
+    @property
+    def nqbits(self):
+        return len(self)
+
     def __len__(self):
         return len(self.positions)
 
