@@ -181,8 +181,8 @@ def test_rotate_square_z(angle):
     assert np.allclose(qbits.positions, new_positions)
 
 
-@pytest.mark.parametrize("a", ["x", "-y", (0.0, 2.0, 3)])
-@pytest.mark.parametrize("v", ["z", (1.0, 1.0, 0.0)])
+@pytest.mark.parametrize("a", [11.1, 12.4, 50.4])
+@pytest.mark.parametrize("v", ["z", "-y", (1.0, 1.0, 0.0)])
 @pytest.mark.parametrize("center", [(0.0, 0.0, 0.0), (-1, 3, 0.2)])
 def test_rotate_distances(a, v, center):
     """Check a random rotation preserves distances."""

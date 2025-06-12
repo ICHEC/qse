@@ -3,7 +3,7 @@ import numpy as np
 
 class Qbits:
     def __init__(self, positions):
-        self._positions = np.array(positions, dtype=float)
+        self._positions = _format_positions(positions)
 
     @property
     def positions(self):
@@ -11,7 +11,7 @@ class Qbits:
 
     @positions.setter
     def positions(self, positions):
-        self._positions = np.array(positions, dtype=float)
+        self._positions = _format_positions(positions)
 
     @property
     def nqbits(self):
@@ -132,8 +132,11 @@ class Qbits:
         if isinstance(vector, str):
             vector_dict = {
                 "x": [1.0, 0.0, 0.0],
+                "-x": [-1.0, 0.0, 0.0],
                 "y": [0.0, 1.0, 0.0],
+                "-y": [0.0, -1.0, 0.0],
                 "z": [0.0, 0.0, 1.0],
+                "-z": [0.0, 0.0, -1.0],
             }
             vector = vector_dict[vector]
 
@@ -196,10 +199,16 @@ class Qbits:
         a2s = self.positions[indices[:, 1]]
         a3s = self.positions[indices[:, 2]]
 
-        v12 = _create_unit_vector(a1s - a2s)
-        v32 = _create_unit_vector(a3s - a2s)
+        v12 = a1s - a2s
+        d12 = np.linalg.norm(v12, 1)
+        v12 /= d12
 
-        return np.arccos(np.dot(v32, v12))
+        v32 = a3s - a2s
+        d32 = np.linalg.norm(v32, 1)
+        v32 /= d32
+
+        dots = np.array([np.dot(a_1, a_2) for a_1, a_2 in zip(v12, v32)])
+        return np.arccos(dots) * 180 / np.pi
 
     def get_distance(self, a0, a1, vector=False):
         """
@@ -233,6 +242,15 @@ class Qbits:
                 distances[i, j] = np.linalg.norm(self.positions[i] - self.positions[j])
                 distances[j, i] = distances[i, j]
         return distances
+
+
+def _format_positions(positions):
+    positions = np.array(positions, dtype=float)
+
+    if (positions.ndim != 2) or (positions.shape[1] != 3):
+        raise Exception("'positions' must be an array of shape (qubit_count, 3).")
+
+    return positions
 
 
 def _create_unit_vector(vector):
