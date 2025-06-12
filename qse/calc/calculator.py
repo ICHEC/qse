@@ -6,7 +6,6 @@ import warnings
 from typing import Any, Dict, List, Optional, Set
 
 import numpy as np
-from ase.outputs import Properties, all_outputs
 
 from qse.calc.messages import (
     CalculationFailed,
@@ -470,25 +469,6 @@ class Calculator:
             self.qbits = qbits.copy()
         if not os.path.isdir(self._directory):
             os.makedirs(self._directory)
-
-    def calculate_properties(self, qbits, properties):
-        """This method is experimental; currently for internal use."""
-        for name in properties:
-            if name not in all_outputs:
-                raise ValueError(f"No such property: {name}")
-
-        # We ignore system changes for now.
-        self.calculate(qbits, properties, system_changes=all_changes)
-
-        props = self.export_properties()
-
-        for name in properties:
-            if name not in props:
-                raise PropertyNotPresent(name)
-        return props
-
-    def export_properties(self):
-        return Properties(self.results)
 
 
 class FileIOCalculator(Calculator):

@@ -100,25 +100,21 @@ class Qbits:
         difference = centroid - self.get_centroid()
         self.positions += difference
 
-    def rotate(self, a, v, center=(0, 0, 0)):
+    def rotate(self, angle: float, vector="z", center=(0, 0, 0)):
         """
-        Rotate qbits based on a vector and an angle, or two vectors.
+        Rotate qbits based on an angle and vector.
 
         Parameters
         ----------
-        a :
-            Angle that the qbits is rotated around the vector 'v'. 'a'
-            can also be a vector and then 'a' is rotated
-            into 'v'.
-        v :
+        angle : float
+            Angle that the qbits is rotated around the vector.
+        vector :
             Vector to rotate the qbits around. Vectors can be given as
-            strings: 'x', '-x', 'y', ... .
+            strings: 'x', '-x', 'y', ... . Defaults to 'z'.
         center :
             The center is kept fixed under the rotation. Use 'COP' to
             fix the center of positions or 'COU' to fix the center of
             cell. Defaults to = (0, 0, 0).
-        rotate_cell = False:
-            If true the cell is also rotated.
 
         Examples
         --------
@@ -129,52 +125,30 @@ class Qbits:
         >>> qbits.rotate(90, 'z')
         >>> qbits.rotate(90, (0, 0, 1))
         >>> qbits.rotate(-90, '-z')
-        >>> qbits.rotate('x', 'y')
-        >>> qbits.rotate((1, 0, 0), (0, 1, 0))
         """
+        if isinstance(vector, str):
+            vector_dict = {
+                "x": [1.0, 0.0, 0.0],
+                "y": [0.0, 1.0, 0.0],
+                "z": [0.0, 0.0, 1.0],
+            }
+            vector = vector_dict[vector]
 
-        if not isinstance(a, numbers.Real):
-            a, v = v, a
+        vector = np.array(vector)
+        vector = _create_unit_vector(vector)
 
-        v = string2vector(v)
-
-        normv = np.linalg.norm(v)
-
-        if normv == 0.0:
-            raise ZeroDivisionError("Cannot rotate: norm(v) == 0")
-
-        if isinstance(a, numbers.Real):
-            a *= pi / 180
-            v /= normv
-            c = cos(a)
-            s = sin(a)
-        else:
-            v2 = string2vector(a)
-            v /= normv
-            normv2 = np.linalg.norm(v2)
-            if normv2 == 0:
-                raise ZeroDivisionError("Cannot rotate: norm(a) == 0")
-            v2 /= np.linalg.norm(v2)
-            c = np.dot(v, v2)
-            v = np.cross(v, v2)
-            s = np.linalg.norm(v)
-            # In case *v* and *a* are parallel, np.cross(v, v2) vanish
-            # and can't be used as a rotation axis. However, in this
-            # case any rotation axis perpendicular to v2 will do.
-            eps = 1e-7
-            if s < eps:
-                v = np.cross((0, 0, 1), v2)
-                if np.linalg.norm(v) < eps:
-                    v = np.cross((1, 0, 0), v2)
-                assert np.linalg.norm(v) >= eps
-            elif s > 0:
-                v /= s
+        angle *= np.pi / 180
+        c = np.cos(angle)
+        s = np.sin(angle)
 
         center = self._centering_as_array(center)
 
-        p = self.arrays["positions"] - center
-        self.arrays["positions"][:] = (
-            c * p - np.cross(p, s * v) + np.outer(np.dot(p, v), (1.0 - c) * v) + center
+        p = self.positions - center
+        self.positions = (
+            c * p
+            - np.cross(p, s * vector)
+            + np.outer(np.dot(p, vector), (1.0 - c) * vector)
+            + center
         )
 
     def _centering_as_array(self, center):
@@ -211,9 +185,6 @@ class Qbits:
 
         Calculate angle in degrees between vectors between qbits a2->a1
         and a2->a3, where a1, a2, and a3 are in each row of indices.
-
-        Use mic=True to use the Minimum Image Convention and calculate
-        the angle across periodic boundaries.
         """
         indices = np.array(indices)
         assert indices.shape[1] == 3
@@ -222,10 +193,10 @@ class Qbits:
         a2s = self.positions[indices[:, 1]]
         a3s = self.positions[indices[:, 2]]
 
-        v12 = a1s - a2s
-        v32 = a3s - a2s
+        v12 = _create_unit_vector(a1s - a2s)
+        v32 = _create_unit_vector(a3s - a2s)
 
-        return get_angles(v12, v32)
+        return np.arccos(np.dot(v32, v12))
 
     def get_distance(self, a0, a1, vector=False):
         """
@@ -259,3 +230,12 @@ class Qbits:
                 distances[i, j] = np.linalg.norm(self.positions[i] - self.positions[j])
                 distances[j, i] = distances[i, j]
         return distances
+
+
+def _create_unit_vector(vector):
+    normv = np.linalg.norm(vector)
+
+    if normv == 0.0:
+        raise ZeroDivisionError("Vector must have nonzero length.")
+
+    return vector / normv

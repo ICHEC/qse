@@ -18,8 +18,6 @@ __all__ = [
 ]
 __version__ = "0.1.2"
 
-from ase import cell
-
 from qse.qbits import Qbits
 from qse.signal import Signal
 from qse.visualise import draw
