@@ -163,8 +163,7 @@ class Qbits:
         ):
             # Get data from a list or tuple of Qbit objects:
             data = {
-                f"{name}s":
-                [qbit.get_raw(name) for qbit in labels]
+                f"{name}s": [qbit.get_raw(name) for qbit in labels]
                 for name in ["label", "state", "position", "tag"]
             }
             qbits = self.__class__(**data)
