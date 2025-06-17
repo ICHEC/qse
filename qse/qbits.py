@@ -90,29 +90,18 @@ class Qbits:
     --------
     Empty Qbits object:
 
-    >>> qs = Qbits()
+    >>> qs = qse.Qbits()
 
-    These three are equivalent:
+    These are equivalent:
 
     >>> d = 1.104  # N2 bondlength
-    >>> a = Qbits('N2', [(0, 0, 0), (0, 0, d)])
-    >>> a = Qbits(numbers=[7, 7], positions=[(0, 0, 0), (0, 0, d)])
-    >>> a = Qbits([Qbit('N', (0, 0, 0)), Qbit('N', (0, 0, d))])
-
-    FCC:
-
-    >>> a = 4.05  # Gold lattice constant
-    >>> b = a / 2
-    >>> fcc = Qbits('Au',
-    ...             cell=[(0, b, b), (b, 0, b), (b, b, 0)],
-    ...             pbc=True)
-
-    Wire:
-
-    >>> d = 0.9  # H-H distance
-    >>> h = Qbits('H', positions=[(0, 0, 0)],
-    ...           cell=(d, 0, 0),
-    ...           pbc=(1, 0, 0))
+    >>> a = Qbits(
+    ...     labels=['qb1', 'qb2'],
+    ...     positions=np.array([(0, 0, 0), (0, 0, d)])
+    ... )
+    >>> a = Qbits.from_qbit_list(
+    ...     [Qbit('qb1', (0, 0, 0)), Qbit('qb2', (0, 0, d))]
+    ... )
 
     Notes
     -----
