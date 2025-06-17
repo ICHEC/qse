@@ -30,10 +30,8 @@ class Qbits:
     The Qbits object can represent an isolated molecule, or a
     periodically repeated structure.  It has a unit cell and
     there may be periodic boundary conditions along any of the three
-    unit cell axes.
-    Information about the qbits (qubit state and position) is
-    stored in ndarrays.  Optionally, there can be information about
-    tags, and any other info to be added later.
+    unit cell axes. Information about the qbits (qubit state and position)
+    is stored in ndarrays.
 
     Parameters
     ----------
@@ -48,8 +46,6 @@ class Qbits:
     scaled_positions: list of scaled-positions
         Like positions, but given in units of the unit cell.
         Can not be set at the same time as positions.
-    tags: list of int
-        Special purpose tags.
     cell: 3x3 matrix or length 3 or 6 vector
         Unit cell vectors.  Can also be given as just three
         numbers for orthorhombic cells, or 6 numbers, where
@@ -72,19 +68,6 @@ class Qbits:
         optimization.
     calculator: calculator object
         Used to attach a calculator for doing computation.
-    info: dict of key-value pairs
-        Dictionary of key-value pairs with additional information
-        about the system.  The following keys may be used by ase:
-
-          - spacegroup: Spacegroup instance
-          - unit_cell: 'conventional' | 'primitive' | int | 3 ints
-          - adsorbate_info: Information about special adsorption sites
-
-        Items in the info attribute survives copy and slicing and can
-        be stored in and retrieved from trajectory files given that the
-        key is a string, the value is JSON-compatible and, if the value is a
-        user-defined object, its base class is importable.  One should
-        not make any assumptions about the existence of keys.
 
     Examples
     --------
@@ -111,7 +94,6 @@ class Qbits:
     def __init__(
         self,
         labels=None,
-        tags=None,
         states=None,
         positions=None,
         scaled_positions=None,
@@ -120,7 +102,6 @@ class Qbits:
         celldisp=None,
         constraint=None,
         calculator=None,
-        info=None,
     ):
         if (positions is not None) and (scaled_positions is not None):
             raise Exception(
@@ -174,9 +155,6 @@ class Qbits:
                 positions = np.dot(scaled_positions, self.cell)
         self.new_array("positions", positions, float, (3,))
 
-        # tags
-        self.set_tags(default(tags, 0))
-
         # states
         if states is None:
             states = np.zeros((positions.shape[0], 2), dtype=complex)
@@ -200,15 +178,13 @@ class Qbits:
         # calculator
         self.calc = calculator
 
-        # info
-        self.info = {} if info is None else dict(info)
 
     @classmethod
     def from_qbit_list(self, qbit_list):
         # Get data from a list or tuple of Qbit objects:
         data = {
             f"{name}s": [qbit.get_raw(name) for qbit in qbit_list]
-            for name in ["label", "state", "position", "tag"]
+            for name in ["label", "state", "position"]
         }
         return Qbits(**data)
 
@@ -435,28 +411,9 @@ class Qbits:
     def has(self, name):
         """
         Check for existence of array.
-
-        name must be one of: 'tags', 'momenta', 'masses', 'initial_magmoms',
-        'initial_charges'.
         """
         # XXX extend has to calculator properties
         return name in self.arrays
-
-    def set_tags(self, tags):
-        """
-        Set tags for all qbits. If only one tag is supplied, it is
-        applied to all qbits.
-        """
-        if isinstance(tags, int):
-            tags = [tags] * len(self)
-        self.set_array("tags", tags, int, ())
-
-    def get_tags(self):
-        """Get integer array of tags."""
-        if "tags" in self.arrays:
-            return self.arrays["tags"].copy()
-        else:
-            return np.zeros(len(self), int)
 
     def set_positions(self, newpositions, apply_constraint=True):
         """
@@ -499,7 +456,7 @@ class Qbits:
     def copy(self):
         """Return a copy."""
         qbits = self.__class__(
-            cell=self.cell, pbc=self.pbc, info=self.info, celldisp=self._celldisp.copy()
+            cell=self.cell, pbc=self.pbc, celldisp=self._celldisp.copy()
         )
 
         qbits.arrays = {}
@@ -521,9 +478,6 @@ class Qbits:
             d["celldisp"] = self._celldisp
         if self.constraints:
             d["constraints"] = self.constraints
-        if self.info:
-            d["info"] = self.info
-        # Calculator...  trouble.
         return d
 
     @classmethod
@@ -540,12 +494,9 @@ class Qbits:
 
             constraints = [dict2constraint(d) for d in constraints]
 
-        # labels = dct.pop('labels', None)
-
-        info = dct.pop("info", None)
 
         qbits = cls(
-            constraint=constraints, celldisp=dct.pop("celldisp", None), info=info, **kw
+            constraint=constraints, celldisp=dct.pop("celldisp", None), **kw
         )
         nqbits = len(qbits)
 
@@ -680,7 +631,6 @@ class Qbits:
         qbits = self.__class__(
             cell=self.cell,
             pbc=self.pbc,
-            info=self.info,
             celldisp=self._celldisp,
         )
 
