@@ -94,13 +94,12 @@ class Qbits:
 
     These are equivalent:
 
-    >>> d = 1.104  # N2 bondlength
-    >>> a = Qbits(
+    >>> a = qse.Qbits(
     ...     labels=['qb1', 'qb2'],
-    ...     positions=np.array([(0, 0, 0), (0, 0, d)])
+    ...     positions=np.array([(0, 0, 0), (0, 0, 2)])
     ... )
-    >>> a = Qbits.from_qbit_list(
-    ...     [Qbit('qb1', (0, 0, 0)), Qbit('qb2', (0, 0, d))]
+    >>> a = qse.Qbits.from_qbit_list(
+    ...     [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))]
     ... )
 
     Notes
