@@ -37,10 +37,8 @@ class Qbits:
 
     Parameters
     ----------
-    labels: str or list of str
-        Can be a list of symbols or a list of Qbit objects.
-        Examples: 'H2O', 'COPt12', ['H', 'H', 'O'],
-        [Qbit('Ne', (x, y, z)), ...].
+    labels: list of str
+        A list of strings corresponding to a label for each qubit.
     states: list of 2-length arrays.
         State of each qubit.
     positions: list of xyz-positions
@@ -91,15 +89,18 @@ class Qbits:
     Examples
     --------
     Empty Qbits object:
+
     >>> qs = Qbits()
 
     These three are equivalent:
+
     >>> d = 1.104  # N2 bondlength
     >>> a = Qbits('N2', [(0, 0, 0), (0, 0, d)])
     >>> a = Qbits(numbers=[7, 7], positions=[(0, 0, 0), (0, 0, d)])
     >>> a = Qbits([Qbit('N', (0, 0, 0)), Qbit('N', (0, 0, d))])
 
     FCC:
+
     >>> a = 4.05  # Gold lattice constant
     >>> b = a / 2
     >>> fcc = Qbits('Au',
@@ -107,6 +108,7 @@ class Qbits:
     ...             pbc=True)
 
     Wire:
+
     >>> d = 0.9  # H-H distance
     >>> h = Qbits('H', positions=[(0, 0, 0)],
     ...           cell=(d, 0, 0),
@@ -117,19 +119,6 @@ class Qbits:
     In order to do computation, a calculator object has to attached
     to the qbits object.
     """
-
-    # Rajarshi: What should be the starting point of the qubits object.
-    # That is, what are possible scenarios to construct the object from.
-    # Qbits object is supposed to look similar to Register object.
-    # Following could be the typical ways to initialise
-    # the Qbits object which we should focus on -
-    # 1. Give labels only: in which case we generate
-    # the Qbits with each of those labels, and located
-    # randomly. If labels is list of str, coordinates are
-    # random. If labels is list of Qbit, coordinates are
-    # those of each Qbit. The states are initialised as (1, 0)
-    # 2. Provide positions only, then labels are assigned X,
-    # and state is initialised as (1,0)
 
     def __init__(
         self,
@@ -162,6 +151,8 @@ class Qbits:
             else:
                 nqbits = 0
         else:
+            if not isinstance(labels, list):
+                raise Exception("'labels' must be a list.")
             nqbits = len(labels)
 
         if (positions is not None) and (len(positions) != nqbits):
@@ -178,7 +169,7 @@ class Qbits:
         if labels is None:
             self.new_array("labels", np.arange(nqbits), int)
         else:
-            self.new_array("labels", labels, type(labels[0]))
+            self.new_array("labels", labels, str)
 
         # cell
         self._cellobj = Cell.new()
