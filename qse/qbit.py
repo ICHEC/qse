@@ -1,5 +1,12 @@
 import numpy as np
 
+# functions adapted from ASE's Qbit/Qbits styled objects
+names = {
+    "label": ("labels", "R"),
+    "state": ("states", np.array([0, 1], dtype=complex)),
+    "position": ("positions", np.zeros(3)),
+}
+
 
 def qbitproperty(name, doc):
     """Helper function to easily create Qbit attribute property."""
@@ -40,8 +47,6 @@ class Qbit:
         Quantum state of the qubit
     position:
         Sequence of 3 floats qubit position.
-    tag: int
-        Special purpose tag.
     qbits:
         ...
     index:
@@ -61,7 +66,6 @@ class Qbit:
         label="X",
         state=np.array([1, 0]),
         position=np.zeros(3),
-        tag=None,
         qbits=None,
         index=None,
     ):
@@ -70,9 +74,10 @@ class Qbit:
         if qbits is None:
             # This qbit is not part of any Qbits object:
             self.data["label"] = str(label)
-            self.data["state"] = np.array(state, complex) / np.linalg.norm(state)  # normalise
+            self.data["state"] = np.array(state, complex) / np.linalg.norm(
+                state
+            )  # normalise
             self.data["position"] = np.array(position, float)
-            self.data["tag"] = tag
         self.index = index
         self.qbits = qbits
 
@@ -90,7 +95,7 @@ class Qbit:
     def __repr__(self):
         # s = "Qbit('%s', %s, %s" % (self.label, list(self.position), list(self.state))
         s = "Qbit(label='%s'" % (self.label)
-        for name in ["position", "state", "tag"]:
+        for name in ["position", "state"]:
             value = self.get_raw(name)
             if value is not None:
                 if isinstance(value, np.ndarray):
@@ -147,13 +152,12 @@ class Qbit:
     def delete(self, name):
         """Delete name attribute."""
         assert self.atoms is None
-        assert name not in ["label", "tag", "position", "state"]
+        assert name not in ["label", "position", "state"]
         self.data[name] = None
 
     state = qbitproperty("state", "Quantum state of qubit as 2-column")
     label = qbitproperty("label", "Integer label asigned to qubit")
     position = qbitproperty("position", "XYZ-coordinates")
-    tag = qbitproperty("tag", "Integer tag")
     x = xyzproperty(0)
     y = xyzproperty(1)
     z = xyzproperty(2)
