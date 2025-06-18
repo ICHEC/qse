@@ -111,7 +111,7 @@ class Qbits:
     ... qlat = qdim.repeat([3,3,3])
 
     The qdim will have shape = (2,1,1) and qlat will have shape = (6, 3, 3)
-    
+
     Notes
     -----
     In order to do computation, a calculator object has to attached
@@ -225,19 +225,17 @@ class Qbits:
         }
         return Qbits(**data)
 
-
     @property
     def shape(self):
         """The shape of the qbits"""
         return self._shape
-    
+
     @shape.setter
     def shape(self, new_shape):
         """Update the shape to new shape"""
         if self.nqbits != np.prod(new_shape):
             raise AssertionError(f"no. of qubits= {self.nqbits}, yet shape {new_shape}")
         self._shape = new_shape
-
 
     @property
     def calc(self):
@@ -534,7 +532,7 @@ class Qbits:
             qbits.arrays[name] = a.copy()
         qbits.constraints = copy.deepcopy(self.constraints)
         #
-        qbits.shape = self.shape # this was necessary, and took long time to realise!
+        qbits.shape = self.shape  # this was necessary, and took long time to realise!
 
         return qbits
 
