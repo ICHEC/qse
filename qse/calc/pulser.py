@@ -236,7 +236,7 @@ class Pulser(Calculator):
             self.reset()
 
     def write(self, label):
-        """"Write qbits, parameters and calculated results into restart files.
+        """ "Write qbits, parameters and calculated results into restart files.
             Not yet implemented.
 
         Parameters
@@ -247,7 +247,7 @@ class Pulser(Calculator):
         pass
 
     def read(self, label):
-        """"Read qbits, parameters and calculated results from restart files.
+        """ "Read qbits, parameters and calculated results from restart files.
             Not yet implemented.
 
         Parameters
@@ -277,6 +277,7 @@ class Pulser(Calculator):
         if self.wtimes:
             t2 = time()
             print(f"time in compute and simulation = {t2 - t1} s.")
+
     #
 
     def get_spins(self):
