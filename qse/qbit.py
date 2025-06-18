@@ -58,26 +58,21 @@ class Qbit:
 
     def __init__(
         self,
-        label=None,
-        state=None,
-        position=None,
+        label="X",
+        state=np.array([1, 0]),
+        position=np.zeros(3),
         tag=None,
         qbits=None,
         index=None,
     ):
-        self.data = d = {}
+        self.data = {}
 
         if qbits is None:
             # This qbit is not part of any Qbits object:
-            d["label"] = "X" if label is None else str(label)
-
-            state = (1, 0) if state is None else state
-            d["state"] = np.array(state, complex) / np.linalg.norm(state)  # normalise
-
-            position = np.zeros(3) if position is None else position
-            d["position"] = np.array(position, float)
-
-            d["tag"] = tag
+            self.data["label"] = str(label)
+            self.data["state"] = np.array(state, complex) / np.linalg.norm(state)  # normalise
+            self.data["position"] = np.array(position, float)
+            self.data["tag"] = tag
         self.index = index
         self.qbits = qbits
 
