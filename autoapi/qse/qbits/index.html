@@ -413,7 +413,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits"><code class="docutils literal notranslate"><span class="pre">Qbits</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.qse_objtype"><code class="docutils literal notranslate"><span class="pre">Qbits.qse_objtype</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.calc"><code class="docutils literal notranslate"><span class="pre">Qbits.calc</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_constraint"><code class="docutils literal notranslate"><span class="pre">Qbits.set_constraint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.set_cell()</span></code></a></li>
@@ -491,7 +490,7 @@ document.write(`
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#qse.qbits.Qbits" title="qse.qbits.Qbits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Qbits</span></code></a></p></td>
-<td><p>Qbits object.</p></td>
+<td><p>The Qbits object can represent an isolated molecule, or a</p></td>
 </tr>
 </tbody>
 </table>
@@ -516,61 +515,42 @@ document.write(`
 <dl class="py class">
 <dt class="sig sig-object py" id="qse.qbits.Qbits">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.qbits.</span></span><span class="sig-name descname"><span class="pre">Qbits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaled_positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">celldisp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbits.html#Qbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbits.Qbits" title="Link to this definition">#</a></dt>
-<dd><p>Qbits object.</p>
-<p>The Qbits object can represent an isolated molecule, or a
+<dd><p>The Qbits object can represent an isolated molecule, or a
 periodically repeated structure.  It has a unit cell and
 there may be periodic boundary conditions along any of the three
 unit cell axes.
 Information about the qbits (qubit state and position) is
 stored in ndarrays.  Optionally, there can be information about
 tags, and any other info to be added later.</p>
-<p>In order to do computation, a calculator object has to attached to the qbits object.</p>
-<p>Rajarshi: What should be the starting point of the qubits object.
-That is, what are possible scenarios to construct the object from.
-Qbits object is supposed to look similar to Register object.</p>
-<p>Parameters:</p>
-<dl class="simple">
-<dt>labels: str or list of str</dt><dd><p>Can be a list of symbols or a list of Qbit objects.
-Examples: ‘H2O’, ‘COPt12’, [‘H’, ‘H’, ‘O’],
-[Qbit(‘Ne’, (x, y, z)), …].</p>
-</dd>
-</dl>
-<p>states: list of 2-length arrays. State of each qubit.
-positions: list of xyz-positions</p>
-<blockquote>
-<div><p>Qubit positions.  Anything that can be converted to an
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul>
+<li><p><strong>labels</strong> (<em>list of str</em>) – A list of strings corresponding to a label for each qubit.</p></li>
+<li><p><strong>states</strong> (<em>list of 2-length arrays.</em>) – State of each qubit.</p></li>
+<li><p><strong>positions</strong> (<em>list of xyz-positions</em>) – Qubit positions.  Anything that can be converted to an
 ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),
-…].</p>
-</div></blockquote>
-<dl>
-<dt>scaled_positions: list of scaled-positions</dt><dd><p>Like positions, but given in units of the unit cell.
-Can not be set at the same time as positions.</p>
-</dd>
-<dt>tags: list of int</dt><dd><p>Special purpose tags.</p>
-</dd>
-<dt>cell: 3x3 matrix or length 3 or 6 vector</dt><dd><p>Unit cell vectors.  Can also be given as just three
+…].</p></li>
+<li><p><strong>scaled_positions</strong> (<em>list of scaled-positions</em>) – Like positions, but given in units of the unit cell.
+Can not be set at the same time as positions.</p></li>
+<li><p><strong>tags</strong> (<em>list of int</em>) – Special purpose tags.</p></li>
+<li><p><strong>cell</strong> (<em>3x3 matrix or length 3 or 6 vector</em>) – Unit cell vectors.  Can also be given as just three
 numbers for orthorhombic cells, or 6 numbers, where
 first three are lengths of unit cell vectors, and the
 other three are angles between them (in degrees), in following order:
 [len(a), len(b), len(c), angle(b,c), angle(a,c), angle(a,b)].
 First vector will lie in x-direction, second in xy-plane,
 and the third one in z-positive subspace.
-Default value: [0, 0, 0].</p>
-</dd>
-<dt>celldisp: Vector</dt><dd><p>Unit cell displacement vector. To visualize a displaced cell
+Default value: [0, 0, 0].</p></li>
+<li><p><strong>celldisp</strong> (<em>Vector</em>) – Unit cell displacement vector. To visualize a displaced cell
 around the center of mass of a Systems of qbits. Default value
-= (0,0,0)</p>
-</dd>
-<dt>pbc: one or three bool</dt><dd><p>Periodic boundary conditions flags.  Examples: True,
+= (0,0,0)</p></li>
+<li><p><strong>pbc</strong> (<em>one or three bool</em>) – Periodic boundary conditions flags.  Examples: True,
 False, 0, 1, (1, 1, 0), (True, False, False).  Default
-value: False.</p>
-</dd>
-<dt>constraint: constraint object(s)</dt><dd><p>Used for applying one or more constraints during structure
-optimization.</p>
-</dd>
-<dt>calculator: calculator object</dt><dd><p>Used to attach a calculator for doing computation.</p>
-</dd>
-<dt>info: dict of key-value pairs</dt><dd><p>Dictionary of key-value pairs with additional information
+value: False.</p></li>
+<li><p><strong>constraint</strong> (<em>constraint object(s)</em>) – Used for applying one or more constraints during structure
+optimization.</p></li>
+<li><p><strong>calculator</strong> (<em>calculator object</em>) – Used to attach a calculator for doing computation.</p></li>
+<li><p><strong>info</strong> (<em>dict of key-value pairs</em>) – Dictionary of key-value pairs with additional information
 about the system.  The following keys may be used by ase:</p>
 <blockquote>
 <div><ul class="simple">
@@ -584,47 +564,28 @@ be stored in and retrieved from trajectory files given that the
 key is a string, the value is JSON-compatible and, if the value is a
 user-defined object, its base class is importable.  One should
 not make any assumptions about the existence of keys.</p>
+</li>
+</ul>
 </dd>
 </dl>
-<p>Examples:
-Empty Qbits object:
-qs = Qbits()
-These three are equivalent:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="mf">1.104</span>  <span class="c1"># N2 bondlength</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Qbits</span><span class="p">(</span><span class="s1">&#39;N2&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="p">)])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Qbits</span><span class="p">(</span><span class="n">numbers</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="n">positions</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="p">)])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Qbits</span><span class="p">([</span><span class="n">Qbit</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="n">Qbit</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="p">))])</span>
+<p class="rubric">Examples</p>
+<p>Empty Qbits object:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qs</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>FCC:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mf">4.05</span>  <span class="c1"># Gold lattice constant</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="mi">2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fcc</span> <span class="o">=</span> <span class="n">Qbits</span><span class="p">(</span><span class="s1">&#39;Au&#39;</span><span class="p">,</span>
-<span class="gp">... </span>            <span class="n">cell</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
-<span class="gp">... </span>            <span class="n">pbc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<p>These are equivalent:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;qb1&#39;</span><span class="p">,</span> <span class="s1">&#39;qb2&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">positions</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="o">.</span><span class="n">from_qbit_list</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="n">Qbit</span><span class="p">(</span><span class="s1">&#39;qb1&#39;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="n">Qbit</span><span class="p">(</span><span class="s1">&#39;qb2&#39;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))]</span>
+<span class="gp">... </span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Wire:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="mf">0.9</span>  <span class="c1"># H-H distance</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">Qbits</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
-<span class="gp">... </span>          <span class="n">cell</span><span class="o">=</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-<span class="gp">... </span>          <span class="n">pbc</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-</pre></div>
-</div>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="qse.qbits.Qbits.qse_objtype">
-<span class="sig-name descname"><span class="pre">qse_objtype</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'qbits'</span></em><a class="reference internal" href="../../../_modules/qse/qbits.html#Qbits.qse_objtype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbits.Qbits.qse_objtype" title="Link to this definition">#</a></dt>
-<dd><p>Following could be the typical ways to initialise
-the Qbits object which we should focus on -
-1. Give labels only: in which case we generate
-the Qbits with each of those labels, and located
-randomly. If labels is list of str, coordinates are
-random. If labels is list of Qbit, coordinates are
-those of each Qbit. The states are initialised as (1, 0)
-2. Provide positions only, then labels are assigned X,
-and state is initialised as (1,0)</p>
-</dd></dl>
-
+<p class="rubric">Notes</p>
+<p>In order to do computation, a calculator object has to attached
+to the qbits object.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="qse.qbits.Qbits.calc">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calc</span></span><a class="reference internal" href="../../../_modules/qse/qbits.html#Qbits.calc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbits.Qbits.calc" title="Link to this definition">#</a></dt>
@@ -1234,7 +1195,6 @@ kwargs are passed to ase.io.write.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits"><code class="docutils literal notranslate"><span class="pre">Qbits</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.qse_objtype"><code class="docutils literal notranslate"><span class="pre">Qbits.qse_objtype</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.calc"><code class="docutils literal notranslate"><span class="pre">Qbits.calc</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_constraint"><code class="docutils literal notranslate"><span class="pre">Qbits.set_constraint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.set_cell()</span></code></a></li>

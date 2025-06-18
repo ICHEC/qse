@@ -33,8 +33,6 @@ Module Contents
 
 .. py:class:: Qbits(labels=None, tags=None, states=None, positions=None, scaled_positions=None, cell=None, pbc=None, celldisp=None, constraint=None, calculator=None, info=None)
 
-   Qbits object.
-
    The Qbits object can represent an isolated molecule, or a
    periodically repeated structure.  It has a unit cell and
    there may be periodic boundary conditions along any of the three
@@ -43,104 +41,64 @@ Module Contents
    stored in ndarrays.  Optionally, there can be information about
    tags, and any other info to be added later.
 
-   In order to do computation, a calculator object has to attached to the qbits object.
+   :Parameters: * **labels** (*list of str*) -- A list of strings corresponding to a label for each qubit.
+                * **states** (*list of 2-length arrays.*) -- State of each qubit.
+                * **positions** (*list of xyz-positions*) -- Qubit positions.  Anything that can be converted to an
+                  ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),
+                  ...].
+                * **scaled_positions** (*list of scaled-positions*) -- Like positions, but given in units of the unit cell.
+                  Can not be set at the same time as positions.
+                * **tags** (*list of int*) -- Special purpose tags.
+                * **cell** (*3x3 matrix or length 3 or 6 vector*) -- Unit cell vectors.  Can also be given as just three
+                  numbers for orthorhombic cells, or 6 numbers, where
+                  first three are lengths of unit cell vectors, and the
+                  other three are angles between them (in degrees), in following order:
+                  [len(a), len(b), len(c), angle(b,c), angle(a,c), angle(a,b)].
+                  First vector will lie in x-direction, second in xy-plane,
+                  and the third one in z-positive subspace.
+                  Default value: [0, 0, 0].
+                * **celldisp** (*Vector*) -- Unit cell displacement vector. To visualize a displaced cell
+                  around the center of mass of a Systems of qbits. Default value
+                  = (0,0,0)
+                * **pbc** (*one or three bool*) -- Periodic boundary conditions flags.  Examples: True,
+                  False, 0, 1, (1, 1, 0), (True, False, False).  Default
+                  value: False.
+                * **constraint** (*constraint object(s)*) -- Used for applying one or more constraints during structure
+                  optimization.
+                * **calculator** (*calculator object*) -- Used to attach a calculator for doing computation.
+                * **info** (*dict of key-value pairs*) -- Dictionary of key-value pairs with additional information
+                  about the system.  The following keys may be used by ase:
 
-   Rajarshi: What should be the starting point of the qubits object.
-   That is, what are possible scenarios to construct the object from.
-   Qbits object is supposed to look similar to Register object.
+                    - spacegroup: Spacegroup instance
+                    - unit_cell: 'conventional' | 'primitive' | int | 3 ints
+                    - adsorbate_info: Information about special adsorption sites
 
+                  Items in the info attribute survives copy and slicing and can
+                  be stored in and retrieved from trajectory files given that the
+                  key is a string, the value is JSON-compatible and, if the value is a
+                  user-defined object, its base class is importable.  One should
+                  not make any assumptions about the existence of keys.
 
-   Parameters:
+   .. rubric:: Examples
 
-   labels: str or list of str
-       Can be a list of symbols or a list of Qbit objects.
-       Examples: 'H2O', 'COPt12', ['H', 'H', 'O'],
-       [Qbit('Ne', (x, y, z)), ...].
-   states: list of 2-length arrays. State of each qubit.
-   positions: list of xyz-positions
-       Qubit positions.  Anything that can be converted to an
-       ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),
-       ...].
-   scaled_positions: list of scaled-positions
-       Like positions, but given in units of the unit cell.
-       Can not be set at the same time as positions.
-   tags: list of int
-       Special purpose tags.
-   cell: 3x3 matrix or length 3 or 6 vector
-       Unit cell vectors.  Can also be given as just three
-       numbers for orthorhombic cells, or 6 numbers, where
-       first three are lengths of unit cell vectors, and the
-       other three are angles between them (in degrees), in following order:
-       [len(a), len(b), len(c), angle(b,c), angle(a,c), angle(a,b)].
-       First vector will lie in x-direction, second in xy-plane,
-       and the third one in z-positive subspace.
-       Default value: [0, 0, 0].
-   celldisp: Vector
-       Unit cell displacement vector. To visualize a displaced cell
-       around the center of mass of a Systems of qbits. Default value
-       = (0,0,0)
-   pbc: one or three bool
-       Periodic boundary conditions flags.  Examples: True,
-       False, 0, 1, (1, 1, 0), (True, False, False).  Default
-       value: False.
-   constraint: constraint object(s)
-       Used for applying one or more constraints during structure
-       optimization.
-   calculator: calculator object
-       Used to attach a calculator for doing computation.
-   info: dict of key-value pairs
-       Dictionary of key-value pairs with additional information
-       about the system.  The following keys may be used by ase:
-
-         - spacegroup: Spacegroup instance
-         - unit_cell: 'conventional' | 'primitive' | int | 3 ints
-         - adsorbate_info: Information about special adsorption sites
-
-       Items in the info attribute survives copy and slicing and can
-       be stored in and retrieved from trajectory files given that the
-       key is a string, the value is JSON-compatible and, if the value is a
-       user-defined object, its base class is importable.  One should
-       not make any assumptions about the existence of keys.
-
-   Examples:
    Empty Qbits object:
-   qs = Qbits()
-   These three are equivalent:
 
-   >>> d = 1.104  # N2 bondlength
-   >>> a = Qbits('N2', [(0, 0, 0), (0, 0, d)])
-   >>> a = Qbits(numbers=[7, 7], positions=[(0, 0, 0), (0, 0, d)])
-   >>> a = Qbits([Qbit('N', (0, 0, 0)), Qbit('N', (0, 0, d))])
+   >>> qs = qse.Qbits()
 
-   FCC:
+   These are equivalent:
 
-   >>> a = 4.05  # Gold lattice constant
-   >>> b = a / 2
-   >>> fcc = Qbits('Au',
-   ...             cell=[(0, b, b), (b, 0, b), (b, b, 0)],
-   ...             pbc=True)
+   >>> a = qse.Qbits(
+   ...     labels=['qb1', 'qb2'],
+   ...     positions=np.array([(0, 0, 0), (0, 0, 2)])
+   ... )
+   >>> a = qse.Qbits.from_qbit_list(
+   ...     [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))]
+   ... )
 
-   Wire:
+   .. rubric:: Notes
 
-   >>> d = 0.9  # H-H distance
-   >>> h = Qbits('H', positions=[(0, 0, 0)],
-   ...           cell=(d, 0, 0),
-   ...           pbc=(1, 0, 0))
-
-
-   .. py:attribute:: qse_objtype
-      :value: 'qbits'
-
-
-      Following could be the typical ways to initialise
-      the Qbits object which we should focus on -
-      1. Give labels only: in which case we generate
-      the Qbits with each of those labels, and located
-      randomly. If labels is list of str, coordinates are
-      random. If labels is list of Qbit, coordinates are
-      those of each Qbit. The states are initialised as (1, 0)
-      2. Provide positions only, then labels are assigned X,
-      and state is initialised as (1,0)
+   In order to do computation, a calculator object has to attached
+   to the qbits object.
 
 
    .. py:property:: calc

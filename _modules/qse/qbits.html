@@ -395,8 +395,7 @@ document.write(`
 <div class="viewcode-block" id="Qbits">
 <a class="viewcode-back" href="../../qse.html#qse.qbits.Qbits">[docs]</a>
 <span class="k">class</span> <span class="nc">Qbits</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Qbits object.</span>
-
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Qbits object can represent an isolated molecule, or a</span>
 <span class="sd">    periodically repeated structure.  It has a unit cell and</span>
 <span class="sd">    there may be periodic boundary conditions along any of the three</span>
@@ -405,20 +404,12 @@ document.write(`
 <span class="sd">    stored in ndarrays.  Optionally, there can be information about</span>
 <span class="sd">    tags, and any other info to be added later.</span>
 
-<span class="sd">    In order to do computation, a calculator object has to attached to the qbits object.</span>
-
-<span class="sd">    Rajarshi: What should be the starting point of the qubits object.</span>
-<span class="sd">    That is, what are possible scenarios to construct the object from.</span>
-<span class="sd">    Qbits object is supposed to look similar to Register object.</span>
-
-
-<span class="sd">    Parameters:</span>
-
-<span class="sd">    labels: str or list of str</span>
-<span class="sd">        Can be a list of symbols or a list of Qbit objects.</span>
-<span class="sd">        Examples: &#39;H2O&#39;, &#39;COPt12&#39;, [&#39;H&#39;, &#39;H&#39;, &#39;O&#39;],</span>
-<span class="sd">        [Qbit(&#39;Ne&#39;, (x, y, z)), ...].</span>
-<span class="sd">    states: list of 2-length arrays. State of each qubit.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    labels: list of str</span>
+<span class="sd">        A list of strings corresponding to a label for each qubit.</span>
+<span class="sd">    states: list of 2-length arrays.</span>
+<span class="sd">        State of each qubit.</span>
 <span class="sd">    positions: list of xyz-positions</span>
 <span class="sd">        Qubit positions.  Anything that can be converted to an</span>
 <span class="sd">        ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),</span>
@@ -464,46 +455,26 @@ document.write(`
 <span class="sd">        user-defined object, its base class is importable.  One should</span>
 <span class="sd">        not make any assumptions about the existence of keys.</span>
 
-<span class="sd">    Examples:</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
 <span class="sd">    Empty Qbits object:</span>
-<span class="sd">    qs = Qbits()</span>
-<span class="sd">    These three are equivalent:</span>
 
-<span class="sd">    &gt;&gt;&gt; d = 1.104  # N2 bondlength</span>
-<span class="sd">    &gt;&gt;&gt; a = Qbits(&#39;N2&#39;, [(0, 0, 0), (0, 0, d)])</span>
-<span class="sd">    &gt;&gt;&gt; a = Qbits(numbers=[7, 7], positions=[(0, 0, 0), (0, 0, d)])</span>
-<span class="sd">    &gt;&gt;&gt; a = Qbits([Qbit(&#39;N&#39;, (0, 0, 0)), Qbit(&#39;N&#39;, (0, 0, d))])</span>
+<span class="sd">    &gt;&gt;&gt; qs = qse.Qbits()</span>
 
-<span class="sd">    FCC:</span>
+<span class="sd">    These are equivalent:</span>
 
-<span class="sd">    &gt;&gt;&gt; a = 4.05  # Gold lattice constant</span>
-<span class="sd">    &gt;&gt;&gt; b = a / 2</span>
-<span class="sd">    &gt;&gt;&gt; fcc = Qbits(&#39;Au&#39;,</span>
-<span class="sd">    ...             cell=[(0, b, b), (b, 0, b), (b, b, 0)],</span>
-<span class="sd">    ...             pbc=True)</span>
+<span class="sd">    &gt;&gt;&gt; a = qse.Qbits(</span>
+<span class="sd">    ...     labels=[&#39;qb1&#39;, &#39;qb2&#39;],</span>
+<span class="sd">    ...     positions=np.array([(0, 0, 0), (0, 0, 2)])</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; a = qse.Qbits.from_qbit_list(</span>
+<span class="sd">    ...     [Qbit(&#39;qb1&#39;, position=(0, 0, 0)), Qbit(&#39;qb2&#39;, position=(0, 0, 2))]</span>
+<span class="sd">    ... )</span>
 
-<span class="sd">    Wire:</span>
-
-<span class="sd">    &gt;&gt;&gt; d = 0.9  # H-H distance</span>
-<span class="sd">    &gt;&gt;&gt; h = Qbits(&#39;H&#39;, positions=[(0, 0, 0)],</span>
-<span class="sd">    ...           cell=(d, 0, 0),</span>
-<span class="sd">    ...           pbc=(1, 0, 0))</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="Qbits.qse_objtype">
-<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.qbits.Qbits.qse_objtype">[docs]</a>
-    <span class="n">qse_objtype</span> <span class="o">=</span> <span class="s2">&quot;qbits&quot;</span>  <span class="c1"># For JSONability</span></div>
-
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Following could be the typical ways to initialise</span>
-<span class="sd">    the Qbits object which we should focus on -</span>
-<span class="sd">    1. Give labels only: in which case we generate</span>
-<span class="sd">    the Qbits with each of those labels, and located</span>
-<span class="sd">    randomly. If labels is list of str, coordinates are</span>
-<span class="sd">    random. If labels is list of Qbit, coordinates are</span>
-<span class="sd">    those of each Qbit. The states are initialised as (1, 0)</span>
-<span class="sd">    2. Provide positions only, then labels are assigned X,</span>
-<span class="sd">    and state is initialised as (1,0)</span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    In order to do computation, a calculator object has to attached</span>
+<span class="sd">    to the qbits object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -520,50 +491,15 @@ document.write(`
         <span class="n">calculator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">info</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cellobj</span> <span class="o">=</span> <span class="n">Cell</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pbc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">scaled_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Both &#39;positions&#39; and &#39;scaled_positions&#39; cannot be passed at the same time.&quot;</span>
+            <span class="p">)</span>
 
-        <span class="n">qbits</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">scaled_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">cell</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;&#39;scaled_positions&#39; requires &#39;cell&#39; to not be None.&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="s2">&quot;get_positions&quot;</span><span class="p">):</span>
-            <span class="n">qbits</span> <span class="o">=</span> <span class="n">labels</span>
-            <span class="n">labels</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">elif</span> <span class="p">(</span>
-            <span class="nb">isinstance</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span>
-            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Qbit</span><span class="p">)</span>
-        <span class="p">):</span>
-            <span class="c1"># Get data from a list or tuple of Qbit objects:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">[</span><span class="n">qbit</span><span class="o">.</span><span class="n">get_raw</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">qbit</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">]</span>
-                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="s2">&quot;tag&quot;</span><span class="p">]</span>
-            <span class="p">]</span>
-            <span class="n">qbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
-            <span class="n">labels</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="k">if</span> <span class="n">qbits</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># Get data from another Qbits object:</span>
-            <span class="k">if</span> <span class="n">scaled_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">NotImplementedError</span>
-            <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">positions</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">get_positions</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">tags</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">qbits</span><span class="o">.</span><span class="n">has</span><span class="p">(</span><span class="s2">&quot;tags&quot;</span><span class="p">):</span>
-                <span class="n">tags</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">get_tags</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">cell</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">cell</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">get_cell</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">celldisp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">celldisp</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">get_celldisp</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">pbc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">pbc</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">get_pbc</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">constraint</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">constraint</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">qbits</span><span class="o">.</span><span class="n">constraints</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">calculator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">calculator</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">calc</span>
-            <span class="k">if</span> <span class="n">info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">info</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">qbits</span><span class="o">.</span><span class="n">info</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span> <span class="o">=</span> <span class="p">{}</span>
-
+        <span class="c1"># get number of qubits</span>
         <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
@@ -571,61 +507,82 @@ document.write(`
                 <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">scaled_positions</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">nqbits</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nqbits</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;&#39;labels&#39; must be a list.&quot;</span><span class="p">)</span>
+            <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="p">(</span><span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span> <span class="o">!=</span> <span class="n">nqbits</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Both &#39;positions&#39; and &#39;labels&#39; must have the same length.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">scaled_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scaled_positions</span><span class="p">)</span> <span class="o">!=</span> <span class="n">nqbits</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Both &#39;scaled_positions&#39; and &#39;labels&#39; must have the same length.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># labels</span>
+        <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nqbits</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+
+        <span class="c1"># cell</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cellobj</span> <span class="o">=</span> <span class="n">Cell</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">cell</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">celldisp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">celldisp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_celldisp</span><span class="p">(</span><span class="n">celldisp</span><span class="p">)</span>
-
+        <span class="c1"># positions</span>
         <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">scaled_positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]),</span> <span class="mi">3</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">3</span>
                 <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">scaled_positions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">scaled_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="c1"># raise TypeError(</span>
-                <span class="c1">#    &#39;Use only one of &quot;symbols&quot; and &quot;numbers&quot;.&#39;)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Both positions and scaled positions are not None!&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s2">&quot;positions&quot;</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
 
+        <span class="c1"># tags</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_tags</span><span class="p">(</span><span class="n">default</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+        <span class="c1"># states</span>
         <span class="k">if</span> <span class="n">states</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
             <span class="n">states</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s2">&quot;states&quot;</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="nb">complex</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_constraint</span><span class="p">(</span><span class="n">constraint</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_tags</span><span class="p">(</span><span class="n">default</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+        <span class="c1"># pbc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pbc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">pbc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">pbc</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_pbc</span><span class="p">(</span><span class="n">pbc</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+        <span class="c1"># celldisp</span>
+        <span class="k">if</span> <span class="n">celldisp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">celldisp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_celldisp</span><span class="p">(</span><span class="n">celldisp</span><span class="p">)</span>
 
+        <span class="c1"># constraint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_constraint</span><span class="p">(</span><span class="n">constraint</span><span class="p">)</span>
+
+        <span class="c1"># calculator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">calculator</span>
 
-    <span class="c1"># @deprecated(DeprecationWarning(&#39;Please use qbits.calc = calc&#39;))</span>
-    <span class="c1"># def set_calculator(self, calc=None):</span>
-    <span class="c1">#    &quot;&quot;&quot;Attach calculator object.</span>
-    <span class="c1">#</span>
-    <span class="c1">#    Please use the equivalent qbits.calc = calc instead of this</span>
-    <span class="c1">#    method.&quot;&quot;&quot;</span>
-    <span class="c1">#    self.calc = calc</span>
+        <span class="c1"># info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">info</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
 
-    <span class="c1"># @deprecated(DeprecationWarning(&#39;Please use qbits.calc&#39;))</span>
-    <span class="c1"># def get_calculator(self):</span>
-    <span class="c1">#    &quot;&quot;&quot;Get currently attached calculator object.</span>
-    <span class="c1">#</span>
-    <span class="c1">#    Please use the equivalent qbits.calc instead of</span>
-    <span class="c1">#    qbits.get_calculator().&quot;&quot;&quot;</span>
-    <span class="c1">#    return self.calc</span>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Qbits.from_qbit_list">
+<a class="viewcode-back" href="../../qse.html#qse.qbits.Qbits.from_qbit_list">[docs]</a>
+    <span class="k">def</span> <span class="nf">from_qbit_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbit_list</span><span class="p">):</span>
+        <span class="c1"># Get data from a list or tuple of Qbit objects:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">qbit</span><span class="o">.</span><span class="n">get_raw</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">qbit</span> <span class="ow">in</span> <span class="n">qbit_list</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="s2">&quot;tag&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">Qbits</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
 <div class="viewcode-block" id="Qbits.calc">
@@ -640,17 +597,6 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">_calc</span> <span class="o">=</span> <span class="n">calc</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">calc</span><span class="p">,</span> <span class="s2">&quot;set_qbits&quot;</span><span class="p">):</span>
             <span class="n">calc</span><span class="o">.</span><span class="n">set_qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-    <span class="c1"># @calc.deleter  # type: ignore</span>
-    <span class="c1"># @deprecated(DeprecationWarning(&#39;Please use qbits.calc = None&#39;))</span>
-    <span class="c1"># def calc(self):</span>
-    <span class="c1">#    self._calc = None</span>
-
-    <span class="c1"># @property  # type: ignore</span>
-    <span class="c1"># @deprecated(&#39;Please use qbits.cell.rank instead&#39;)</span>
-    <span class="c1"># def number_of_lattice_vectors(self):</span>
-    <span class="c1">#    &quot;&quot;&quot;Number of (non-zero) lattice vectors.&quot;&quot;&quot;</span>
-    <span class="c1">#    return self.cell.rank</span>
 
 <div class="viewcode-block" id="Qbits.set_constraint">
 <a class="viewcode-back" href="../../qse.html#qse.qbits.Qbits.set_constraint">[docs]</a>
@@ -1100,7 +1046,7 @@ document.write(`
     <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Extend qbits object by appending qbits from *other*.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Qbit</span><span class="p">):</span>
-            <span class="n">other</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">([</span><span class="n">other</span><span class="p">])</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_qbit_list</span><span class="p">([</span><span class="n">other</span><span class="p">])</span>
 
         <span class="n">n1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">n2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
