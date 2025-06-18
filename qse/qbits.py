@@ -8,6 +8,7 @@ This module defines the central object in the QSE package: the Qbits object.
 """
 import copy
 import numbers
+
 from math import cos, pi, sin
 
 import numpy as np
@@ -102,6 +103,16 @@ class Qbits:
     ...     [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))]
     ... )
 
+    >>> xd = np.array(
+    ...    [[0, 0, 0],
+    ...     [0.5, 0.5, 0.5]])
+    ... qdim = qse.Qbits(positions=xd)
+    ... qdim.cell = [1,1,1]
+    ... qdim.pbc = True
+    ... qlat = qdim.repeat([3,3,3])
+
+    The qdim will have shape = (2,1,1) and qlat will have shape = (6, 3, 3)
+    
     Notes
     -----
     In order to do computation, a calculator object has to attached
@@ -183,6 +194,9 @@ class Qbits:
             states[:, 1] += 1
         self.new_array("states", states, complex, (2,))
 
+        # shape
+        self._shape = (self.nqbits, 1, 1)
+
         # pbc
         self._pbc = np.zeros(3, bool)
         if pbc is None:
@@ -211,6 +225,20 @@ class Qbits:
             for name in ["label", "state", "position", "tag"]
         }
         return Qbits(**data)
+
+
+    @property
+    def shape(self):
+        """The shape of the qbits"""
+        return self._shape
+    
+    @shape.setter
+    def shape(self, new_shape):
+        """Update the shape to new shape"""
+        if self.nqbits != np.prod(new_shape):
+            raise AssertionError(f"no. of qubits= {self.nqbits}, yet shape {new_shape}")
+        self._shape = new_shape
+
 
     @property
     def calc(self):
@@ -506,6 +534,9 @@ class Qbits:
         for name, a in self.arrays.items():
             qbits.arrays[name] = a.copy()
         qbits.constraints = copy.deepcopy(self.constraints)
+        #
+        qbits.shape = self.shape # this was necessary, and took long time to realise!
+
         return qbits
 
     def todict(self):
@@ -745,6 +776,8 @@ class Qbits:
 
         self.cell = np.array([m[c] * self.cell[c] for c in range(3)])
 
+        new_shape = tuple(self.shape * np.array(m))
+        self.shape = new_shape
         return self
 
     def draw(self, ax=None, radius=None):
