@@ -36,6 +36,14 @@ def test_add(nqbits_1, nqbits_2):
     )
 
 
+def test_add_qbit():
+    qbits = qse.Qbits(positions=np.arange(9).reshape(-1, 3), labels=[1, 2, 3])
+    qbit = qse.Qbit(position=np.array([0.0, 0.0, 0.0]), label="q")
+    qbits += qbit
+    assert qbits.nqbits == 4
+    assert all(qbits.labels == [1, 2, 3, "q"])
+
+
 def test_get_all_distances():
     """Test get_all_distances on a simple set of qbits."""
     positions = np.array(
