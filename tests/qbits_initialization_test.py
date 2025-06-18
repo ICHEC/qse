@@ -33,6 +33,27 @@ def test_positions_fail(positions):
         qse.Qbits(positions=positions)
 
 
+def test_positions_and_scaled_fail():
+    with pytest.raises(
+        Exception,
+        match="Both 'positions' and 'scaled_positions' cannot be passed at the same time.",
+    ):
+        qse.Qbits(
+            positions=np.arange(9).reshape(-1, 3),
+            scaled_positions=np.arange(9).reshape(-1, 3),
+        )
+
+
+def test_scaled_positions_fail():
+    with pytest.raises(
+        Exception,
+        match="'scaled_positions' requires 'cell' to not be None.",
+    ):
+        qse.Qbits(
+            scaled_positions=np.arange(9).reshape(-1, 3),
+        )
+
+
 def test_labels_positions_fail():
     positions = np.arange(9).reshape(-1, 3)
     labels = ["a", "b"]
