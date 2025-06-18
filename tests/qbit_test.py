@@ -4,13 +4,13 @@ import pytest
 import qse
 
 
-@pytest.mark.parametrize("label", ["a" * 3, "123a"])
+@pytest.mark.parametrize("label", ["a" * 3, "123a", 14])
 def test_label(label):
     qbit = qse.Qbit(label=label)
-    assert qbit.data["label"] == label
+    assert qbit.data["label"] == str(label)
 
 
-@pytest.mark.parametrize("label", [None, 14])
+@pytest.mark.parametrize("label", [None])
 def test_label_default(label):
     qbit = qse.Qbit(label=label)
     assert qbit.data["label"] == "X"

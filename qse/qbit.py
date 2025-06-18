@@ -1,13 +1,5 @@
 import numpy as np
 
-# functions adapted from ASE's Qbit/Qbits styled objects
-names = {
-    "label": ("labels", "R"),
-    "state": ("states", np.array([0, 1], dtype=complex)),
-    "position": ("positions", np.zeros(3)),
-    "tag": ("tags", 0),
-}
-
 
 def qbitproperty(name, doc):
     """Helper function to easily create Qbit attribute property."""
@@ -66,9 +58,9 @@ class Qbit:
 
     def __init__(
         self,
-        label="X",
-        state=(1, 0),
-        position=(0, 0, 0),
+        label=None,
+        state=None,
+        position=None,
         tag=None,
         qbits=None,
         index=None,
@@ -77,19 +69,14 @@ class Qbit:
 
         if qbits is None:
             # This qbit is not part of any Qbits object:
-            if isinstance(label, str):
-                d["label"] = label
-            else:
-                d["label"] = "X"
+            d["label"] = "X" if label is None else str(label)
 
-            if isinstance(state, np.ndarray):
-                d["state"] = state / np.linalg.norm(state)  # normalise
-            else:
-                t = np.array(state, complex)
-                d["state"] = t / np.linalg.norm(t)
-                del t
+            state = (1, 0) if state is None else state
+            d["state"] = np.array(state, complex) / np.linalg.norm(state)  # normalise
 
+            position = np.zeros(3) if position is None else position
             d["position"] = np.array(position, float)
+
             d["tag"] = tag
         self.index = index
         self.qbits = qbits
@@ -131,12 +118,7 @@ class Qbit:
         """Get name attribute, return None if not explicitly set."""
         if self.qbits is None:
             return self.data[name]
-
-        plural = names[name][0]
-        if plural in self.qbits.arrays:
-            return self.qbits.arrays[plural][self.index]
-        else:
-            return None
+        return self.qbits.arrays[f"{name}s"][self.index]
 
     def get(self, name):
         """Get name attribute, return default if not explicitly set."""
