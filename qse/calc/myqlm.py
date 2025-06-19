@@ -7,7 +7,6 @@ https://myqlm.github.io/
 
 import numpy as np
 
-from qse import Signal
 from qse.calc.calculator import Calculator
 
 qat_available = False
