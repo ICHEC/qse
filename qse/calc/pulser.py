@@ -7,8 +7,6 @@ https://pulser.readthedocs.io/en/stable/
 
 from time import time
 
-import numpy as np
-
 import qse.magnetic as magnetic
 from qse import Signal
 from qse.calc.calculator import Calculator, CalculatorSetupError

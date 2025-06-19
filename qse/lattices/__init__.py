@@ -2,11 +2,12 @@
 
 __all__ = [
     "chain",
-    "square",
-    "triangular",
     "hexagonal",
     "kagome",
     "ring",
+    "square",
+    "torus",
+    "triangular",
 ]
 
 from .lattices import (
