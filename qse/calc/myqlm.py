@@ -42,24 +42,9 @@ else:
     else:
         AQPU = None
 
-if qat_available:
-    print("qat is available")
-else:
-    print("qat is not available")
-if qlmaas_available:
-    print("qlmaas is available")
-else:
-    print("qlmaas is not available")
-print(AQPU)
-
 from time import time
 
 import qse.magnetic as magnetic
-
-# analogQPU imported based on what's available
-
-
-# from qat.core.variables import Variable, heaviside
 
 try:
     import qat
