@@ -31,11 +31,6 @@ import qse  # import the qse
 import pulser  # we just need this for R_interatomic
 ------------------
 
------ stdout -----
-qat is not available
-qlmaas is not available
-None
-------------------
 
 [31m---------------------------------------------------------------------------[39m
 [31mModuleNotFoundError[39m                       Traceback (most recent call last)
