@@ -105,10 +105,10 @@ class Qbits:
     >>> xd = np.array(
     ...    [[0, 0, 0],
     ...     [0.5, 0.5, 0.5]])
-    ... qdim = qse.Qbits(positions=xd)
-    ... qdim.cell = [1,1,1]
-    ... qdim.pbc = True
-    ... qlat = qdim.repeat([3,3,3])
+    >>> qdim = qse.Qbits(positions=xd)
+    >>> qdim.cell = [1,1,1]
+    >>> qdim.pbc = True
+    >>> qlat = qdim.repeat([3,3,3])
 
     The qdim will have shape = (2,1,1) and qlat will have shape = (6, 3, 3)
 
