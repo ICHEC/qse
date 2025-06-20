@@ -25,6 +25,11 @@ def test_state_normalized(state):
 
 
 def test_from_qbits():
-    qbits = qse.Qbits(positions=np.zeros((4, 3)))
-    qbit = qse.Qbit(qbits=qbits, index=3)
-    assert qbit.state == (0, 1)
+    nqbit = 4
+    qbits = qse.Qbits(positions=np.arange(3*nqbit).reshape(-1, 3))
+
+    for i in range(nqbit):
+        qbit = qse.Qbit(qbits=qbits, index=i)
+        assert qbit.state == (0, 1)
+        assert qbit.label == "Q"
+        assert qbit.position == (3*i, 3*i+1, 3*i+2)
