@@ -428,8 +428,6 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.get_array"><code class="docutils literal notranslate"><span class="pre">Qbits.get_array()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_array"><code class="docutils literal notranslate"><span class="pre">Qbits.set_array()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.has"><code class="docutils literal notranslate"><span class="pre">Qbits.has()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_tags"><code class="docutils literal notranslate"><span class="pre">Qbits.set_tags()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.get_tags"><code class="docutils literal notranslate"><span class="pre">Qbits.get_tags()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.set_positions()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.get_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.get_positions()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.get_properties"><code class="docutils literal notranslate"><span class="pre">Qbits.get_properties()</span></code></a></li>
@@ -514,14 +512,12 @@ document.write(`
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="qse.qbits.Qbits">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.qbits.</span></span><span class="sig-name descname"><span class="pre">Qbits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaled_positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">celldisp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbits.html#Qbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbits.Qbits" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.qbits.</span></span><span class="sig-name descname"><span class="pre">Qbits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaled_positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">celldisp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbits.html#Qbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbits.Qbits" title="Link to this definition">#</a></dt>
 <dd><p>The Qbits object can represent an isolated molecule, or a
 periodically repeated structure.  It has a unit cell and
 there may be periodic boundary conditions along any of the three
-unit cell axes.
-Information about the qbits (qubit state and position) is
-stored in ndarrays.  Optionally, there can be information about
-tags, and any other info to be added later.</p>
+unit cell axes. Information about the qbits (qubit state and
+position) is stored in ndarrays.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul>
@@ -532,7 +528,6 @@ ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),
 …].</p></li>
 <li><p><strong>scaled_positions</strong> (<em>list of scaled-positions</em>) – Like positions, but given in units of the unit cell.
 Can not be set at the same time as positions.</p></li>
-<li><p><strong>tags</strong> (<em>list of int</em>) – Special purpose tags.</p></li>
 <li><p><strong>cell</strong> (<em>3x3 matrix or length 3 or 6 vector</em>) – Unit cell vectors.  Can also be given as just three
 numbers for orthorhombic cells, or 6 numbers, where
 first three are lengths of unit cell vectors, and the
@@ -727,21 +722,8 @@ If <em>a</em> is <em>None</em>, then the array is deleted.</p>
 <dt class="sig sig-object py" id="qse.qbits.Qbits.has">
 <span class="sig-name descname"><span class="pre">has</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbits.html#Qbits.has"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbits.Qbits.has" title="Link to this definition">#</a></dt>
 <dd><p>Check for existence of array.</p>
-<p>name must be one of: ‘tags’, ‘momenta’, ‘masses’, ‘initial_magmoms’,
+<p>name must be one of: ‘momenta’, ‘masses’, ‘initial_magmoms’,
 ‘initial_charges’.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.qbits.Qbits.set_tags">
-<span class="sig-name descname"><span class="pre">set_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tags</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbits.html#Qbits.set_tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbits.Qbits.set_tags" title="Link to this definition">#</a></dt>
-<dd><p>Set tags for all qbits. If only one tag is supplied, it is
-applied to all qbits.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.qbits.Qbits.get_tags">
-<span class="sig-name descname"><span class="pre">get_tags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbits.html#Qbits.get_tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbits.Qbits.get_tags" title="Link to this definition">#</a></dt>
-<dd><p>Get integer array of tags.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1210,8 +1192,6 @@ kwargs are passed to ase.io.write.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.get_array"><code class="docutils literal notranslate"><span class="pre">Qbits.get_array()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_array"><code class="docutils literal notranslate"><span class="pre">Qbits.set_array()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.has"><code class="docutils literal notranslate"><span class="pre">Qbits.has()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_tags"><code class="docutils literal notranslate"><span class="pre">Qbits.set_tags()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.get_tags"><code class="docutils literal notranslate"><span class="pre">Qbits.get_tags()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.set_positions()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.get_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.get_positions()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.get_properties"><code class="docutils literal notranslate"><span class="pre">Qbits.get_properties()</span></code></a></li>

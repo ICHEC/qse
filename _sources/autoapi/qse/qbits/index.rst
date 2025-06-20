@@ -31,15 +31,13 @@ Functions
 Module Contents
 ---------------
 
-.. py:class:: Qbits(labels=None, tags=None, states=None, positions=None, scaled_positions=None, cell=None, pbc=None, celldisp=None, constraint=None, calculator=None, info=None)
+.. py:class:: Qbits(labels=None, states=None, positions=None, scaled_positions=None, cell=None, pbc=None, celldisp=None, constraint=None, calculator=None, info=None)
 
    The Qbits object can represent an isolated molecule, or a
    periodically repeated structure.  It has a unit cell and
    there may be periodic boundary conditions along any of the three
-   unit cell axes.
-   Information about the qbits (qubit state and position) is
-   stored in ndarrays.  Optionally, there can be information about
-   tags, and any other info to be added later.
+   unit cell axes. Information about the qbits (qubit state and
+   position) is stored in ndarrays.
 
    :Parameters: * **labels** (*list of str*) -- A list of strings corresponding to a label for each qubit.
                 * **states** (*list of 2-length arrays.*) -- State of each qubit.
@@ -48,7 +46,6 @@ Module Contents
                   ...].
                 * **scaled_positions** (*list of scaled-positions*) -- Like positions, but given in units of the unit cell.
                   Can not be set at the same time as positions.
-                * **tags** (*list of int*) -- Special purpose tags.
                 * **cell** (*3x3 matrix or length 3 or 6 vector*) -- Unit cell vectors.  Can also be given as just three
                   numbers for orthorhombic cells, or 6 numbers, where
                   first three are lengths of unit cell vectors, and the
@@ -248,21 +245,8 @@ Module Contents
 
       Check for existence of array.
 
-      name must be one of: 'tags', 'momenta', 'masses', 'initial_magmoms',
+      name must be one of: 'momenta', 'masses', 'initial_magmoms',
       'initial_charges'.
-
-
-
-   .. py:method:: set_tags(tags)
-
-      Set tags for all qbits. If only one tag is supplied, it is
-      applied to all qbits.
-
-
-
-   .. py:method:: get_tags()
-
-      Get integer array of tags.
 
 
 
