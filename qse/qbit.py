@@ -1,12 +1,6 @@
 import numpy as np
 
-# functions adapted from ASE's Qbit/Qbits styled objects
-names = {
-    "label": ("labels", "R"),
-    "state": ("states", np.array([0, 1], dtype=complex)),
-    "position": ("positions", np.zeros(3)),
-}
-
+names = ["label", "state", "position"]
 
 def qbitproperty(name, doc):
     """Helper function to easily create Qbit attribute property."""
@@ -47,39 +41,41 @@ class Qbit:
         Quantum state of the qubit
     position:
         Sequence of 3 floats qubit position.
-    qbits:
-        ...
-    index:
-        ...
+    qbits: qse.Qbits
+        The Qbits object the Qbit class is attached to.
+        Defaults to None.
+    index: int
+        The index for the Qbit class in the Qbits object.
+        Defaults to None.
 
-    Notes
-    -----
-    Typically one can create an a qubit object
-    just by
-    q = Qbit()
+    Examples
+    --------
+    You can create an empty qubit object with
+
+    >>> q = Qbit()
     """
 
     __slots__ = ["data", "qbits", "index"]
 
     def __init__(
         self,
-        label="X",
-        state=np.array([1, 0]),
-        position=np.zeros(3),
+        label="Q",
+        state=[0,0],
+        position=[0,0,0,],
         qbits=None,
         index=None,
     ):
-        self.data = {}
-
         if qbits is None:
             # This qbit is not part of any Qbits object:
-            self.data["label"] = str(label)
-            self.data["state"] = np.array(state, complex) / np.linalg.norm(
-                state
-            )  # normalise
-            self.data["position"] = np.array(position, float)
-        self.index = index
+            self.data = {
+                "label": str(label),
+                "state": np.array(state, complex) / np.linalg.norm(
+                state),
+                "position": np.array(position, float),
+            }
+
         self.qbits = qbits
+        self.index = index
 
     @property
     def scaled_position(self):
@@ -93,7 +89,6 @@ class Qbit:
         self.position = pos
 
     def __repr__(self):
-        # s = "Qbit('%s', %s, %s" % (self.label, list(self.position), list(self.state))
         s = "Qbit(label='%s'" % (self.label)
         for name in ["position", "state"]:
             value = self.get_raw(name)
@@ -114,18 +109,11 @@ class Qbit:
         self.index = None
         self.qbits = None
 
-    def get_raw(self, name):
+    def get(self, name):
         """Get name attribute, return None if not explicitly set."""
         if self.qbits is None:
             return self.data[name]
         return self.qbits.arrays[f"{name}s"][self.index]
-
-    def get(self, name):
-        """Get name attribute, return default if not explicitly set."""
-        value = self.get_raw(name)
-        if value is None:
-            value = names[name][1]
-        return value
 
     def set(self, name, value):
         """Set name attribute to value."""
