@@ -30,10 +30,8 @@ class Qbits:
     The Qbits object can represent an isolated molecule, or a
     periodically repeated structure.  It has a unit cell and
     there may be periodic boundary conditions along any of the three
-    unit cell axes.
-    Information about the qbits (qubit state and position) is
-    stored in ndarrays.  Optionally, there can be information about
-    tags, and any other info to be added later.
+    unit cell axes. Information about the qbits (qubit state and
+    position) is stored in ndarrays.
 
     Parameters
     ----------
@@ -48,8 +46,6 @@ class Qbits:
     scaled_positions: list of scaled-positions
         Like positions, but given in units of the unit cell.
         Can not be set at the same time as positions.
-    tags: list of int
-        Special purpose tags.
     cell: 3x3 matrix or length 3 or 6 vector
         Unit cell vectors.  Can also be given as just three
         numbers for orthorhombic cells, or 6 numbers, where
@@ -111,7 +107,6 @@ class Qbits:
     def __init__(
         self,
         labels=None,
-        tags=None,
         states=None,
         positions=None,
         scaled_positions=None,
@@ -174,9 +169,6 @@ class Qbits:
                 positions = np.dot(scaled_positions, self.cell)
         self.new_array("positions", positions, float, (3,))
 
-        # tags
-        self.set_tags(default(tags, 0))
-
         # states
         if states is None:
             states = np.zeros((positions.shape[0], 2), dtype=complex)
@@ -208,7 +200,7 @@ class Qbits:
         # Get data from a list or tuple of Qbit objects:
         data = {
             f"{name}s": [qbit.get_raw(name) for qbit in qbit_list]
-            for name in ["label", "state", "position", "tag"]
+            for name in ["label", "state", "position"]
         }
         return Qbits(**data)
 
@@ -436,27 +428,11 @@ class Qbits:
         """
         Check for existence of array.
 
-        name must be one of: 'tags', 'momenta', 'masses', 'initial_magmoms',
+        name must be one of: 'momenta', 'masses', 'initial_magmoms',
         'initial_charges'.
         """
         # XXX extend has to calculator properties
         return name in self.arrays
-
-    def set_tags(self, tags):
-        """
-        Set tags for all qbits. If only one tag is supplied, it is
-        applied to all qbits.
-        """
-        if isinstance(tags, int):
-            tags = [tags] * len(self)
-        self.set_array("tags", tags, int, ())
-
-    def get_tags(self):
-        """Get integer array of tags."""
-        if "tags" in self.arrays:
-            return self.arrays["tags"].copy()
-        else:
-            return np.zeros(len(self), int)
 
     def set_positions(self, newpositions, apply_constraint=True):
         """
