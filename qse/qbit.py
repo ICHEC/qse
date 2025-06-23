@@ -2,6 +2,7 @@ import numpy as np
 
 names = ["label", "state", "position"]
 
+
 def qbitproperty(name, doc):
     """Helper function to easily create Qbit attribute property."""
 
@@ -60,8 +61,12 @@ class Qbit:
     def __init__(
         self,
         label="Q",
-        state=[0,0],
-        position=[0,0,0,],
+        state=[1, 0],
+        position=[
+            0,
+            0,
+            0,
+        ],
         qbits=None,
         index=None,
     ):
@@ -69,8 +74,7 @@ class Qbit:
             # This qbit is not part of any Qbits object:
             self.data = {
                 "label": str(label),
-                "state": np.array(state, complex) / np.linalg.norm(
-                state),
+                "state": np.array(state, complex) / np.linalg.norm(state),
                 "position": np.array(position, float),
             }
 
@@ -91,7 +95,7 @@ class Qbit:
     def __repr__(self):
         s = "Qbit(label='%s'" % (self.label)
         for name in ["position", "state"]:
-            value = self.get_raw(name)
+            value = self.get(name)
             if value is not None:
                 if isinstance(value, np.ndarray):
                     value = value.tolist()
@@ -105,7 +109,7 @@ class Qbit:
     def cut_reference_to_qbits(self):
         """Cut reference to qbits object."""
         for name in names:
-            self.data[name] = self.get_raw(name)
+            self.data[name] = self.get(name)
         self.index = None
         self.qbits = None
 

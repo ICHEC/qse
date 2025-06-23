@@ -6,7 +6,7 @@ import qse
 
 def test_default():
     qbit = qse.Qbit()
-    assert qbit.label == "X"
+    assert qbit.label == "Q"
     assert np.allclose(qbit.position, np.zeros(3))
     assert np.allclose(qbit.state, np.array([1, 0]))
 
@@ -26,10 +26,10 @@ def test_state_normalized(state):
 
 def test_from_qbits():
     nqbit = 4
-    qbits = qse.Qbits(positions=np.arange(3*nqbit).reshape(-1, 3))
+    qbits = qse.Qbits(positions=np.arange(3 * nqbit).reshape(-1, 3))
 
     for i in range(nqbit):
         qbit = qse.Qbit(qbits=qbits, index=i)
-        assert qbit.state == (0, 1)
-        assert qbit.label == "Q"
-        assert qbit.position == (3*i, 3*i+1, 3*i+2)
+        assert np.allclose(qbit.state, np.array([1, 0]))
+        assert qbit.label == i
+        assert np.allclose(qbit.position, np.array([3 * i, 3 * i + 1, 3 * i + 2]))

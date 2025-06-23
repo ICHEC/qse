@@ -172,7 +172,7 @@ class Qbits:
         # states
         if states is None:
             states = np.zeros((positions.shape[0], 2), dtype=complex)
-            states[:, 1] += 1
+            states[:, 0] += 1
         self.new_array("states", states, complex, (2,))
 
         # pbc
@@ -199,7 +199,7 @@ class Qbits:
     def from_qbit_list(self, qbit_list):
         # Get data from a list or tuple of Qbit objects:
         data = {
-            f"{name}s": [qbit.get_raw(name) for qbit in qbit_list]
+            f"{name}s": [qbit.get(name) for qbit in qbit_list]
             for name in ["label", "state", "position"]
         }
         return Qbits(**data)
