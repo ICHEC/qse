@@ -238,8 +238,8 @@ def test_rotate_distances(a, v, center):
 
 def test_euler_rotate_and_rotate():
     """Test rotate and euler_rotate agree."""
-    ### Note that they rotate in different directions (clockwise & anti.)
-    ### May want to fix this.
+    # Note that they rotate in different directions (clockwise & anti.)
+    # May want to fix this.
     positions = np.random.rand(4, 3)
 
     qbits_1 = qse.Qbits(positions=positions)
