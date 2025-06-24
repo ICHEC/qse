@@ -151,9 +151,7 @@ class Qbit:
             if plural in self.qbits.arrays:
                 if plural == "states":
                     value = _normalize_state(value)
-                print("value", value)
                 self.qbits.arrays[plural][self.index] = value
-                print("array", self.qbits.arrays[plural])
             else:
                 default = np.asarray(default_values[name])
                 array = np.zeros((len(self.atoms),) + default.shape, default.dtype)

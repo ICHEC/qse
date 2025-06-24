@@ -64,14 +64,18 @@ def test_from_set_qbits():
     index = 1
 
     qbit = qse.Qbit(qbits=qbits, index=index)
-    qbit.set("state", np.array([1.0, 1.0j]) / np.sqrt(2))
-    assert np.allclose(qbit.state, np.array([1.0, 1.0j]) / np.sqrt(2))
-    assert np.allclose(qbits.states[index], np.array([1.0, 1.0j]) / np.sqrt(2))
 
-    qbit.set("label", "g")
-    assert qbit.label == "g"
-    assert qbits.labels[index] == "g"
+    state = np.array([1.0, 1.0j]) / np.sqrt(2)
+    qbit.set("state", state)
+    assert np.allclose(qbit.state, state)
+    assert np.allclose(qbits.states[index], state)
 
-    qbit.set("position", np.ones(3))
-    assert np.allclose(qbit.position, np.ones(3))
-    assert np.allclose(qbits.positions[index], np.ones(3))
+    label = "test_qubit"
+    qbit.set("label", label)
+    assert qbit.label == label
+    assert qbits.labels[index] == label
+
+    position = 4 * np.ones(3)
+    qbit.set("position", position)
+    assert np.allclose(qbit.position, position)
+    assert np.allclose(qbits.positions[index], position)

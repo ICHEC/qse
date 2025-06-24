@@ -151,7 +151,11 @@ class Qbits:
         # labels
         if labels is None:
             labels = [str(i) for i in range(nqbits)]
-        self.new_array("labels", labels, str)
+        # We use np.dtypes.StringDType() to allow for variable length strings.
+        # Using str here instead could mean that strings get cut-off if the
+        # labels array is updated.
+        # See https://numpy.org/devdocs//user/basics.strings.html#variable-width-strings
+        self.new_array("labels", labels, np.dtypes.StringDType())
 
         # cell
         self._cellobj = Cell.new()
@@ -1497,7 +1501,7 @@ class Qbits:
 
     def _set_labels(self, lbs):
         """Set the labels directly."""
-        self.arrays["labels"][:] = lbs
+        self.arrays["labels"] = lbs
 
     labels = property(
         _get_labels, _set_labels, doc="Attribute for direct manipulation of labels"
