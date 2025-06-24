@@ -74,7 +74,7 @@ class Qbit:
             # This qbit is not part of any Qbits object:
             self.data = {
                 "label": str(label),
-                "state": np.array(state, complex) / np.linalg.norm(state),
+                "state": _normalize_state(state),
                 "position": np.array(position, float),
             }
 
@@ -124,17 +124,15 @@ class Qbit:
         if self.qbits is None:
             assert name in names
             if name == "state":
-                self.data[name] = value / np.linalg.norm(value)
-            else:
-                self.data[name] = value
+                value = _normalize_state(value)
+            self.data[name] = value
         else:
-            plural, default = names[name]
+            plural = name + "s"
             if plural in self.qbits.arrays:
                 array = self.qbits.arrays[plural]
                 if plural == "states":
-                    array[self.index] = value / np.linalg.norm(value)
-                else:
-                    array[self.index] = value
+                    value = _normalize_state(value)
+                array[self.index] = value
             else:
                 default = np.asarray(default)
                 array = np.zeros((len(self.atoms),) + default.shape, default.dtype)
@@ -153,3 +151,7 @@ class Qbit:
     x = xyzproperty(0)
     y = xyzproperty(1)
     z = xyzproperty(2)
+
+
+def _normalize_state(state):
+    return np.array(state, complex) / np.linalg.norm(state)
