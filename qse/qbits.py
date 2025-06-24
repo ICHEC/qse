@@ -150,9 +150,8 @@ class Qbits:
 
         # labels
         if labels is None:
-            self.new_array("labels", np.arange(nqbits), int)
-        else:
-            self.new_array("labels", labels, str)
+            labels = [str(i) for i in range(nqbits)]
+        self.new_array("labels", labels, str)
 
         # cell
         self._cellobj = Cell.new()
@@ -172,7 +171,7 @@ class Qbits:
         # states
         if states is None:
             states = np.zeros((positions.shape[0], 2), dtype=complex)
-            states[:, 1] += 1
+            states[:, 0] = 1
         self.new_array("states", states, complex, (2,))
 
         # pbc
