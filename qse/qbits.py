@@ -151,11 +151,8 @@ class Qbits:
         # labels
         if labels is None:
             labels = [str(i) for i in range(nqbits)]
-        # We use np.dtypes.StringDType() to allow for variable length strings.
-        # Using str here instead could mean that strings get cut-off if the
-        # labels array is updated.
-        # See https://numpy.org/devdocs//user/basics.strings.html#variable-width-strings
-        self.new_array("labels", labels, np.dtypes.StringDType())
+        # We allow for labels up to length 12.
+        self.new_array("labels", labels, "<U12")
 
         # cell
         self._cellobj = Cell.new()
