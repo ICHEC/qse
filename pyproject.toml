@@ -55,7 +55,6 @@ profile = "black"
 testpaths = "tests"
 addopts = "--cov=qse"
 
-
 [tool.flake8]
 count = true
 # Recommend matching the black line length (default 88)
