@@ -57,7 +57,7 @@ def test_set():
     assert np.allclose(qbit.position, np.ones(3))
 
 
-def test_from_set_qbits():
+def test_set_with_qbits():
     """Check the set method words when the Qbit is attached to a Qbits object."""
     nqbit = 4
     qbits = qse.Qbits(positions=np.arange(3 * nqbit).reshape(-1, 3))
