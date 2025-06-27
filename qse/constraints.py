@@ -28,8 +28,6 @@ __all__ = [
     "FixBondLengths",
     "FixInternals",
     "Hookean",
-    "ExternalForce",
-    "MirrorForce",
     "FixScaledParametricRelations",
     "FixCartesianParametricRelations",
 ]
