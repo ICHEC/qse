@@ -9,7 +9,7 @@ from time import time
 
 import qse.magnetic as magnetic
 from qse import Signal
-from qse.calc.calculator import Calculator, CalculatorSetupError
+from qse.calc.calculator import Calculator
 from qse.calc.messages import CalculatorSetupError
 
 try:
@@ -112,7 +112,7 @@ class Pulser(Calculator):
         super().__init__(
             CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
         )
-        self.device = pulser.devices.MockDevice if device == None else device
+        self.device = pulser.devices.MockDevice if device is None else device
         self.emulator = QutipEmulator if emulator is None else emulator
         self.label = label
         self.wtimes = wtimes
@@ -168,7 +168,7 @@ class Pulser(Calculator):
     def qbits(self):
         return self._qbits
 
-    @Calculator.qbits.setter
+    @qbits.setter
     def qbits(self, qbits, prefix="q"):
         if qbits is None:
             self._qbits, self._coords, self._register, self._sequence = (
