@@ -365,16 +365,21 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for qse.qbit</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Functions adapted from ASE&#39;s Qbit/Qbits styled objects.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
-<span class="c1"># functions adapted from ASE&#39;s Qbit/Qbits styled objects</span>
-<span class="n">names</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;states&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)),</span>
-    <span class="s2">&quot;position&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;positions&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">default_values</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">),</span>
+    <span class="s2">&quot;position&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
 <span class="p">}</span>
 
 
+<div class="viewcode-block" id="qbitproperty">
+<a class="viewcode-back" href="../../autoapi/qse/qbit/index.html#qse.qbit.qbitproperty">[docs]</a>
 <span class="k">def</span> <span class="nf">qbitproperty</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">doc</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper function to easily create Qbit attribute property.&quot;&quot;&quot;</span>
 
@@ -387,9 +392,12 @@ document.write(`
     <span class="k">def</span> <span class="nf">deleter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="nb">property</span><span class="p">(</span><span class="n">getter</span><span class="p">,</span> <span class="n">setter</span><span class="p">,</span> <span class="n">deleter</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">property</span><span class="p">(</span><span class="n">getter</span><span class="p">,</span> <span class="n">setter</span><span class="p">,</span> <span class="n">deleter</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span></div>
 
 
+
+<div class="viewcode-block" id="xyzproperty">
+<a class="viewcode-back" href="../../autoapi/qse/qbit/index.html#qse.qbit.xyzproperty">[docs]</a>
 <span class="k">def</span> <span class="nf">xyzproperty</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper function to easily create Qbit XYZ-property.&quot;&quot;&quot;</span>
 
@@ -399,11 +407,12 @@ document.write(`
     <span class="k">def</span> <span class="nf">setter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
-    <span class="k">return</span> <span class="nb">property</span><span class="p">(</span><span class="n">getter</span><span class="p">,</span> <span class="n">setter</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;XYZ&quot;</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;-coordinate&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">property</span><span class="p">(</span><span class="n">getter</span><span class="p">,</span> <span class="n">setter</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;XYZ&quot;</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;-coordinate&quot;</span><span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="Qbit">
-<a class="viewcode-back" href="../../qse.html#qse.Qbit">[docs]</a>
+<a class="viewcode-back" href="../../qse.html#qse.qbit.Qbit">[docs]</a>
 <span class="k">class</span> <span class="nc">Qbit</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class for representing a single qbit.</span>
@@ -414,18 +423,20 @@ document.write(`
 <span class="sd">        Can be a str or an int label.</span>
 <span class="sd">    state: list or tuple or np.ndarray</span>
 <span class="sd">        Quantum state of the qubit</span>
-<span class="sd">    position:</span>
+<span class="sd">    position: list or np.ndarray</span>
 <span class="sd">        Sequence of 3 floats qubit position.</span>
-<span class="sd">    qbits:</span>
-<span class="sd">        ...</span>
-<span class="sd">    index:</span>
-<span class="sd">        ...</span>
+<span class="sd">    qbits: qse.Qbits</span>
+<span class="sd">        The Qbits object that the Qbit is attached</span>
+<span class="sd">        to. Defaults to None.</span>
+<span class="sd">    index: int</span>
+<span class="sd">        The associated index of the Qbit in the</span>
+<span class="sd">        Qbits object. Defaults to None.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
-<span class="sd">    Typically one can create an a qubit object</span>
-<span class="sd">    just by</span>
-<span class="sd">    q = Qbit()</span>
+<span class="sd">    You can create a qbit object with</span>
+
+<span class="sd">    &gt;&gt;&gt; q = qse.Qbit()</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;qbits&quot;</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">]</span>
@@ -438,23 +449,17 @@ document.write(`
         <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="k">if</span> <span class="n">qbits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># This qbit is not part of any Qbits object:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">d</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">d</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;X&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;X&quot;</span>
 
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-                <span class="n">d</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># normalise</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="nb">complex</span><span class="p">)</span>
-                <span class="n">d</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-                <span class="k">del</span> <span class="n">t</span>
-
-            <span class="n">d</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_normalize_state</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qbits</span>
 
@@ -485,23 +490,23 @@ document.write(`
         <span class="k">return</span> <span class="n">s</span>
 
 <div class="viewcode-block" id="Qbit.cut_reference_to_qbits">
-<a class="viewcode-back" href="../../qse.html#qse.Qbit.cut_reference_to_qbits">[docs]</a>
+<a class="viewcode-back" href="../../qse.html#qse.qbit.Qbit.cut_reference_to_qbits">[docs]</a>
     <span class="k">def</span> <span class="nf">cut_reference_to_qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Cut reference to qbits object.&quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">default_values</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_raw</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="Qbit.get_raw">
-<a class="viewcode-back" href="../../qse.html#qse.Qbit.get_raw">[docs]</a>
+<a class="viewcode-back" href="../../qse.html#qse.qbit.Qbit.get_raw">[docs]</a>
     <span class="k">def</span> <span class="nf">get_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get name attribute, return None if not explicitly set.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
 
-        <span class="n">plural</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">plural</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span>
         <span class="k">if</span> <span class="n">plural</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">arrays</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="n">plural</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -509,42 +514,39 @@ document.write(`
 
 
 <div class="viewcode-block" id="Qbit.get">
-<a class="viewcode-back" href="../../qse.html#qse.Qbit.get">[docs]</a>
+<a class="viewcode-back" href="../../qse.html#qse.qbit.Qbit.get">[docs]</a>
     <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get name attribute, return default if not explicitly set.&quot;&quot;&quot;</span>
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_raw</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">default_values</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">value</span></div>
 
 
 <div class="viewcode-block" id="Qbit.set">
-<a class="viewcode-back" href="../../qse.html#qse.Qbit.set">[docs]</a>
+<a class="viewcode-back" href="../../qse.html#qse.qbit.Qbit.set">[docs]</a>
     <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set name attribute to value.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span>
+            <span class="k">assert</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">default_values</span>
             <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;state&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">_normalize_state</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">plural</span><span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="n">plural</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span>
             <span class="k">if</span> <span class="n">plural</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">arrays</span><span class="p">:</span>
-                <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="n">plural</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">plural</span> <span class="o">==</span> <span class="s2">&quot;states&quot;</span><span class="p">:</span>
-                    <span class="n">array</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">array</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">_normalize_state</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="n">plural</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">default</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+                <span class="n">default</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">default_values</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
                 <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">),)</span> <span class="o">+</span> <span class="n">default</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">default</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
                 <span class="n">array</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="n">plural</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="n">plural</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Qbit.delete">
-<a class="viewcode-back" href="../../qse.html#qse.Qbit.delete">[docs]</a>
+<a class="viewcode-back" href="../../qse.html#qse.qbit.Qbit.delete">[docs]</a>
     <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete name attribute.&quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="ow">is</span> <span class="kc">None</span>
@@ -559,6 +561,10 @@ document.write(`
     <span class="n">y</span> <span class="o">=</span> <span class="n">xyzproperty</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">xyzproperty</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
 
+
+
+<span class="k">def</span> <span class="nf">_normalize_state</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="nb">complex</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 </pre></div>
 
                 </article>

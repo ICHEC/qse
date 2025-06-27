@@ -520,16 +520,19 @@ document.write(`
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>label</strong> (<em>str or int</em>) – Can be a str or an int label.</p></li>
 <li><p><strong>state</strong> (<em>list or tuple or np.ndarray</em>) – Quantum state of the qubit</p></li>
-<li><p><strong>position</strong> – Sequence of 3 floats qubit position.</p></li>
-<li><p><strong>qbits</strong> – …</p></li>
-<li><p><strong>index</strong> – …</p></li>
+<li><p><strong>position</strong> (<em>list or np.ndarray</em>) – Sequence of 3 floats qubit position.</p></li>
+<li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The Qbits object that the Qbit is attached
+to. Defaults to None.</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – The associated index of the Qbit in the
+Qbits object. Defaults to None.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>Typically one can create an a qubit object
-just by
-q = Qbit()</p>
+<p>You can create a qbit object with</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbit</span><span class="p">()</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbit.cut_reference_to_qbits">
 <span class="sig-name descname"><span class="pre">cut_reference_to_qbits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbit.html#Qbit.cut_reference_to_qbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbit.cut_reference_to_qbits" title="Link to this definition">#</a></dt>

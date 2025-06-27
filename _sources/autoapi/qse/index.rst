@@ -21,6 +21,7 @@ Submodules
    /autoapi/qse/calc/index
    /autoapi/qse/lattices/index
    /autoapi/qse/magnetic/index
+   /autoapi/qse/qbit/index
    /autoapi/qse/qbits/index
    /autoapi/qse/signal/index
    /autoapi/qse/utils/index
