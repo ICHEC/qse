@@ -8,7 +8,6 @@ from ase.geometry import (
 __all__ = [
     "FixCartesian",
     "FixBondLength",
-    "FixedMode",
     "FixConstraintSingle",
     "FixQbits",
     "FixCom",
