@@ -11,7 +11,6 @@ from ase.geometry import (
     get_dihedrals_derivatives,
     get_distances_derivatives,
 )
-from ase.utils.parsemath import eval_expression
 
 __all__ = [
     "FixCartesian",
