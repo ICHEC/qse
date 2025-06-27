@@ -1,10 +1,13 @@
+"""
+Functions adapted from ASE's Qbit/Qbits styled objects.
+"""
+
 import numpy as np
 
-# functions adapted from ASE's Qbit/Qbits styled objects
-names = {
-    "label": ("labels", "R"),
-    "state": ("states", np.array([0, 1], dtype=complex)),
-    "position": ("positions", np.zeros(3)),
+default_values = {
+    "label": "X",
+    "state": np.array([1, 0], dtype=complex),
+    "position": np.zeros(3),
 }
 
 
@@ -45,18 +48,20 @@ class Qbit:
         Can be a str or an int label.
     state: list or tuple or np.ndarray
         Quantum state of the qubit
-    position:
+    position: list or np.ndarray
         Sequence of 3 floats qubit position.
-    qbits:
-        ...
-    index:
-        ...
+    qbits: qse.Qbits
+        The Qbits object that the Qbit is attached
+        to. Defaults to None.
+    index: int
+        The associated index of the Qbit in the
+        Qbits object. Defaults to None.
 
     Notes
     -----
-    Typically one can create an a qubit object
-    just by
-    q = Qbit()
+    You can create a qbit object with
+
+    >>> q = qse.Qbit()
     """
 
     __slots__ = ["data", "qbits", "index"]
@@ -69,23 +74,17 @@ class Qbit:
         qbits=None,
         index=None,
     ):
-        self.data = d = {}
+        self.data = {}
 
         if qbits is None:
             # This qbit is not part of any Qbits object:
             if isinstance(label, str):
-                d["label"] = label
+                self.data["label"] = label
             else:
-                d["label"] = "X"
+                self.data["label"] = "X"
 
-            if isinstance(state, np.ndarray):
-                d["state"] = state / np.linalg.norm(state)  # normalise
-            else:
-                t = np.array(state, complex)
-                d["state"] = t / np.linalg.norm(t)
-                del t
-
-            d["position"] = np.array(position, float)
+            self.data["state"] = _normalize_state(state)
+            self.data["position"] = np.array(position, float)
         self.index = index
         self.qbits = qbits
 
@@ -117,7 +116,7 @@ class Qbit:
 
     def cut_reference_to_qbits(self):
         """Cut reference to qbits object."""
-        for name in names:
+        for name in default_values:
             self.data[name] = self.get_raw(name)
         self.index = None
         self.qbits = None
@@ -127,7 +126,7 @@ class Qbit:
         if self.qbits is None:
             return self.data[name]
 
-        plural = names[name][0]
+        plural = name + "s"
         if plural in self.qbits.arrays:
             return self.qbits.arrays[plural][self.index]
         else:
@@ -137,30 +136,27 @@ class Qbit:
         """Get name attribute, return default if not explicitly set."""
         value = self.get_raw(name)
         if value is None:
-            value = names[name][1]
+            value = default_values[name][1]
         return value
 
     def set(self, name, value):
         """Set name attribute to value."""
         if self.qbits is None:
-            assert name in names
+            assert name in default_values
             if name == "state":
-                self.data[name] = value / np.linalg.norm(value)
-            else:
-                self.data[name] = value
+                value = _normalize_state(value)
+            self.data[name] = value
         else:
-            plural, default = names[name]
+            plural = name + "s"
             if plural in self.qbits.arrays:
-                array = self.qbits.arrays[plural]
                 if plural == "states":
-                    array[self.index] = value / np.linalg.norm(value)
-                else:
-                    array[self.index] = value
+                    value = _normalize_state(value)
+                self.qbits.arrays[plural][self.index] = value
             else:
-                default = np.asarray(default)
+                default = np.asarray(default_values[name])
                 array = np.zeros((len(self.atoms),) + default.shape, default.dtype)
                 array[self.index] = value
-                self.atoms.new_array(plural, array)
+                self.new_array(plural, array)
 
     def delete(self, name):
         """Delete name attribute."""
@@ -174,3 +170,7 @@ class Qbit:
     x = xyzproperty(0)
     y = xyzproperty(1)
     z = xyzproperty(2)
+
+
+def _normalize_state(state):
+    return np.array(state, complex) / np.linalg.norm(state)
