@@ -2323,5 +2323,3 @@ class UnitCellFilter(Filter):
 
     def __len__(self):
         return len(self.atoms) + 3
-
-
