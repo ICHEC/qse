@@ -8,7 +8,7 @@ def test_default():
     """Check default behaviour."""
     qbit = qse.Qbit()
     assert isinstance(qbit, qse.Qbit)
-    assert qbit.label == "X"
+    assert qbit.label == "Q"
     assert np.allclose(qbit.position, np.zeros(3))
     assert np.allclose(qbit.state, np.array([1, 0]))
 
@@ -17,17 +17,13 @@ def test_default():
 def test_label(label):
     """Check label is assigned correctly."""
     qbit = qse.Qbit(label=label)
-    if not isinstance(label, str):
-        # default behaviour
-        assert qbit.label == "X"
-    else:
-        assert qbit.label == label
+    assert qbit.label == str(label)
 
 
 @pytest.mark.parametrize("state", [np.ones(2) * 3, [1.0j, -4]])
 def test_state(state):
     """Check state is normalized."""
-    qbit = qse.Qbit(label="123", state=state)
+    qbit = qse.Qbit(state=state)
     assert isinstance(qbit, qse.Qbit)
     assert np.isclose(np.linalg.norm(qbit.state), 1.0)
 

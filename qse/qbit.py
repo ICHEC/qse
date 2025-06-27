@@ -1,11 +1,11 @@
 """
-Functions adapted from ASE's Qbit/Qbits styled objects.
+The Qbit class for representing single qubits.
 """
 
 import numpy as np
 
 default_values = {
-    "label": "X",
+    "label": "Q",
     "state": np.array([1, 0], dtype=complex),
     "position": np.zeros(3),
 }
@@ -40,35 +40,39 @@ def xyzproperty(index):
 
 class Qbit:
     """
-    Class for representing a single qbit.
+    Class for representing a single qubit.
 
     Parameters
     ----------
-    label: str or int
-        Can be a str or an int label.
+    label: str
+        A label for describing the qubit.
+        Defaults to "Q".
     state: list or tuple or np.ndarray
-        Quantum state of the qubit
-    position: list or np.ndarray
-        Sequence of 3 floats qubit position.
+        The Quantum state of the qubit.
+        Defaults to (1, 0).
+    position: list or tuple or np.ndarray
+        The coordinates of the qubit.
+        Defaults to (0, 0, 0).
     qbits: qse.Qbits
-        The Qbits object that the Qbit is attached
+        The Qbits object that the qubit is attached
         to. Defaults to None.
     index: int
-        The associated index of the Qbit in the
+        The associated index of the qubit in the
         Qbits object. Defaults to None.
 
-    Notes
-    -----
-    You can create a qbit object with
+    Examples
+    --------
+    You can create a Qbit object with
 
-    >>> q = qse.Qbit()
+    >>> qse.Qbit()
+    ... Qbit(label='Q', position=[0.0, 0.0, 0.0], state=[(1+0j), 0j])
     """
 
     __slots__ = ["data", "qbits", "index"]
 
     def __init__(
         self,
-        label="X",
+        label="Q",
         state=(1, 0),
         position=(0, 0, 0),
         qbits=None,
@@ -78,11 +82,7 @@ class Qbit:
 
         if qbits is None:
             # This qbit is not part of any Qbits object:
-            if isinstance(label, str):
-                self.data["label"] = label
-            else:
-                self.data["label"] = "X"
-
+            self.data["label"] = str(label)
             self.data["state"] = _normalize_state(state)
             self.data["position"] = np.array(position, float)
         self.index = index
@@ -100,7 +100,6 @@ class Qbit:
         self.position = pos
 
     def __repr__(self):
-        # s = "Qbit('%s', %s, %s" % (self.label, list(self.position), list(self.state))
         s = "Qbit(label='%s'" % (self.label)
         for name in ["position", "state"]:
             value = self.get_raw(name)
