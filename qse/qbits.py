@@ -1528,7 +1528,7 @@ class Qbits:
 
     def _set_labels(self, lbs):
         """Set the labels directly."""
-        self.arrays["labels"] = lbs
+        self.arrays["labels"][:] = lbs
 
     labels = property(
         _get_labels, _set_labels, doc="Attribute for direct manipulation of labels"
