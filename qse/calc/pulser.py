@@ -234,23 +234,25 @@ class Pulser(Calculator):
             self.reset()
 
     def write(self, label):
-        "Write qbits, parameters and calculated results into restart files."
-        # if self._debug:
-        #    print("Writing restart to: ", label)
-        # self.qbits.write(label + '_restart.traj')
-        # self.parameters.write(label + '_params.ase')
-        # from ase.io.jsonio import write_json
-        # with open(label + '_results.json', 'w') as fd:
-        #    write_json(fd, self.results)
+        """ "Write qbits, parameters and calculated results into restart files.
+            Not yet implemented.
+
+        Parameters
+        ----------
+        label : string
+            used in filename
+        """
         pass
 
     def read(self, label):
-        "Read qbits, parameters and calculated results from restart files."
-        # self.qbits = ase.io.read(label + '_restart.traj')
-        # self.parameters = Parameters.read(label + '_params.ase')
-        # from ase.io.jsonio import read_json
-        # with open(label + '_results.json') as fd:
-        #    self.results = read_json(fd)
+        """ "Read qbits, parameters and calculated results from restart files.
+            Not yet implemented.
+
+        Parameters
+        ----------
+        label : string
+            used in filename
+        """
         pass
 
     def calculate(self, progress=True):
@@ -268,7 +270,7 @@ class Pulser(Calculator):
         # if self.parameters.auto_write:
         #    self.write(self.label)
         self.spins = self.get_spins()
-        self.sij = self.get_sij()
+        # self.sij = self.get_sij()
         # self.struc_fac = self.structure_factor_from_sij()
         if self.wtimes:
             t2 = time()
