@@ -2,7 +2,7 @@ from math import sqrt
 from warnings import warn
 
 import numpy as np
-from ase.calculators.calculator import PropertyNotImplementedError
+from qse.calc import PropertyNotImplementedError
 from ase.geometry import (
     conditional_find_mic,
     find_mic,
