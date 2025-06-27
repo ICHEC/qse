@@ -14,8 +14,6 @@ from ase.geometry import (
 from ase.stress import full_3x3_to_voigt_6_stress, voigt_6_to_full_3x3_stress
 from ase.utils.parsemath import eval_expression
 
-from qse.calc import PropertyNotImplementedError
-
 __all__ = [
     "FixCartesian",
     "FixBondLength",
