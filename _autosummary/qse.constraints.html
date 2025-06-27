@@ -439,23 +439,11 @@ document.write(`
 <p class="rubric">Classes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExpCellFilter</span></code>(atoms[, mask, cell_factor, ...])</p></td>
-<td><p>Modify the supercell and the atom positions.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExternalForce</span></code>(a1, a2, f_ext)</p></td>
-<td><p>Constraint object for pulling two atoms apart by an external force.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Filter</span></code>(atoms[, indices, mask])</p></td>
-<td><p>Subset filter class.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixBondLengths</span></code>(pairs[, tolerance, ...])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixBondLengths</span></code>(pairs[, tolerance, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixCartesian</span></code>(a[, mask])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixCartesian</span></code>(a[, mask])</p></td>
 <td><p>Fix an atom index <em>a</em> in the directions of the cartesian coordinates.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixCartesianParametricRelations</span></code>(indices, ...)</p></td>
-<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixCom</span></code>()</p></td>
 <td><p>Constraint class for fixing the center of mass.</p></td>
@@ -466,47 +454,14 @@ document.write(`
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixConstraintSingle</span></code>(a)</p></td>
 <td><p>Base class for classes that fix a single atom.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixInternals</span></code>([bonds, angles, dihedrals, ...])</p></td>
-<td><p>Constraint object for fixing multiple internal coordinates.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixLinearTriatomic</span></code>(triples)</p></td>
-<td><p>Holonomic constraints for rigid linear triatomic molecules.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixParametricRelations</span></code>(indices, Jacobian, ...)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixQbits</span></code>([indices, mask])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixQbits</span></code>([indices, mask])</p></td>
 <td><p>Constraint object for fixing some chosen qbits.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixScaled</span></code>(cell, a[, mask])</p></td>
-<td><p>Fix an atom index <em>a</em> in the directions of the unit vectors.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixScaledParametricRelations</span></code>(indices, ...[, ...])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixedLine</span></code>(a, direction)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixedLine</span></code>(a, direction)</p></td>
 <td><p>Constrain an atom index <em>a</em> to move on a given line only.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixedMode</span></code>(mode)</p></td>
-<td><p>Constrain atoms to move along directions orthogonal to a given mode only.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FixedPlane</span></code>(a, direction)</p></td>
 <td><p>Constrain an atom index <em>a</em> to move in a given plane only.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Hookean</span></code>(a1, a2, k[, rt])</p></td>
-<td><p>Applies a Hookean restorative force between a pair of atoms, an atom and a point, or an atom and a plane.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">MirrorForce</span></code>(a1, a2[, max_dist, min_dist, fmax])</p></td>
-<td><p>Constraint object for mirroring the force between two atoms.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">MirrorTorque</span></code>(a1, a2, a3, a4[, max_angle, ...])</p></td>
-<td><p>Constraint object for mirroring the torque acting on a dihedral angle defined by four atoms.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">StrainFilter</span></code>(atoms[, mask, include_ideal_gas])</p></td>
-<td><p>Modify the supercell while keeping the scaled positions fixed.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnitCellFilter</span></code>(atoms[, mask, cell_factor, ...])</p></td>
-<td><p>Modify the supercell and the atom positions.</p></td>
 </tr>
 </tbody>
 </table>

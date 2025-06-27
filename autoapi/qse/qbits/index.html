@@ -414,6 +414,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits"><code class="docutils literal notranslate"><span class="pre">Qbits</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.calc"><code class="docutils literal notranslate"><span class="pre">Qbits.calc</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.shape"><code class="docutils literal notranslate"><span class="pre">Qbits.shape</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_constraint"><code class="docutils literal notranslate"><span class="pre">Qbits.set_constraint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.set_cell()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.set_celldisp()</span></code></a></li>
@@ -578,6 +579,16 @@ not make any assumptions about the existence of keys.</p>
 <span class="gp">... </span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qdim</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="n">xd</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qdim</span><span class="o">.</span><span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qdim</span><span class="o">.</span><span class="n">pbc</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qlat</span> <span class="o">=</span> <span class="n">qdim</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The qdim will have shape = (2,1,1) and qlat will have shape = (6, 3, 3)</p>
 <p class="rubric">Notes</p>
 <p>In order to do computation, a calculator object has to attached
 to the qbits object.</p>
@@ -585,6 +596,12 @@ to the qbits object.</p>
 <dt class="sig sig-object py" id="qse.qbits.Qbits.calc">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calc</span></span><a class="reference internal" href="../../../_modules/qse/qbits.html#Qbits.calc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbits.Qbits.calc" title="Link to this definition">#</a></dt>
 <dd><p>Calculator object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="qse.qbits.Qbits.shape">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><a class="reference internal" href="../../../_modules/qse/qbits.html#Qbits.shape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbits.Qbits.shape" title="Link to this definition">#</a></dt>
+<dd><p>The shape of the qbits</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1178,6 +1195,7 @@ kwargs are passed to ase.io.write.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits"><code class="docutils literal notranslate"><span class="pre">Qbits</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.calc"><code class="docutils literal notranslate"><span class="pre">Qbits.calc</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.shape"><code class="docutils literal notranslate"><span class="pre">Qbits.shape</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_constraint"><code class="docutils literal notranslate"><span class="pre">Qbits.set_constraint()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.set_cell()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbits.Qbits.set_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.set_celldisp()</span></code></a></li>

@@ -614,26 +614,28 @@ document.write(`
 <div class="viewcode-block" id="Pulser.write">
 <a class="viewcode-back" href="../../../autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.write">[docs]</a>
     <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-        <span class="s2">&quot;Write qbits, parameters and calculated results into restart files.&quot;</span>
-        <span class="c1"># if self._debug:</span>
-        <span class="c1">#    print(&quot;Writing restart to: &quot;, label)</span>
-        <span class="c1"># self.qbits.write(label + &#39;_restart.traj&#39;)</span>
-        <span class="c1"># self.parameters.write(label + &#39;_params.ase&#39;)</span>
-        <span class="c1"># from ase.io.jsonio import write_json</span>
-        <span class="c1"># with open(label + &#39;_results.json&#39;, &#39;w&#39;) as fd:</span>
-        <span class="c1">#    write_json(fd, self.results)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; &quot;Write qbits, parameters and calculated results into restart files.</span>
+<span class="sd">            Not yet implemented.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        label : string</span>
+<span class="sd">            used in filename</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="Pulser.read">
 <a class="viewcode-back" href="../../../autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.read">[docs]</a>
     <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-        <span class="s2">&quot;Read qbits, parameters and calculated results from restart files.&quot;</span>
-        <span class="c1"># self.qbits = ase.io.read(label + &#39;_restart.traj&#39;)</span>
-        <span class="c1"># self.parameters = Parameters.read(label + &#39;_params.ase&#39;)</span>
-        <span class="c1"># from ase.io.jsonio import read_json</span>
-        <span class="c1"># with open(label + &#39;_results.json&#39;) as fd:</span>
-        <span class="c1">#    self.results = read_json(fd)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; &quot;Read qbits, parameters and calculated results from restart files.</span>
+<span class="sd">            Not yet implemented.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        label : string</span>
+<span class="sd">            used in filename</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
 
@@ -654,7 +656,7 @@ document.write(`
         <span class="c1"># if self.parameters.auto_write:</span>
         <span class="c1">#    self.write(self.label)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_spins</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sij</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sij</span><span class="p">()</span>
+        <span class="c1"># self.sij = self.get_sij()</span>
         <span class="c1"># self.struc_fac = self.structure_factor_from_sij()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span><span class="p">:</span>
             <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>

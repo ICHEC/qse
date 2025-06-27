@@ -104,13 +104,19 @@ Module Contents
 
    .. py:method:: write(label)
 
-      Write qbits, parameters and calculated results into restart files.
+      "Write qbits, parameters and calculated results into restart files.
+          Not yet implemented.
+
+      :Parameters: **label** (*string*) -- used in filename
 
 
 
    .. py:method:: read(label)
 
-      Read qbits, parameters and calculated results from restart files.
+      "Read qbits, parameters and calculated results from restart files.
+          Not yet implemented.
+
+      :Parameters: **label** (*string*) -- used in filename
 
 
 

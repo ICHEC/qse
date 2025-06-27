@@ -92,6 +92,16 @@ Module Contents
    ...     [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))]
    ... )
 
+   >>> xd = np.array(
+   ...    [[0, 0, 0],
+   ...     [0.5, 0.5, 0.5]])
+   >>> qdim = qse.Qbits(positions=xd)
+   >>> qdim.cell = [1,1,1]
+   >>> qdim.pbc = True
+   >>> qlat = qdim.repeat([3,3,3])
+
+   The qdim will have shape = (2,1,1) and qlat will have shape = (6, 3, 3)
+
    .. rubric:: Notes
 
    In order to do computation, a calculator object has to attached
@@ -101,6 +111,11 @@ Module Contents
    .. py:property:: calc
 
       Calculator object.
+
+
+   .. py:property:: shape
+
+      The shape of the qbits
 
 
    .. py:method:: set_constraint(constraint=None)
