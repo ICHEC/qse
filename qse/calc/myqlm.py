@@ -222,7 +222,7 @@ class Myqlm(Calculator):
             self.statevector = statevector
             del ibasis
         self.spins = self.get_spins()
-        self.sij = self.get_sij()
+        # self.sij = self.get_sij()
         if self.wtimes:
             t2 = time()
             print(f"time in compute and simulation = {t2 - t1} s.")
@@ -259,6 +259,7 @@ class Myqlm(Calculator):
         nqbits = len(self.qbits)
         ibasis = magnetic.get_basis(2**nqbits, nqbits)
         sij = magnetic.get_sisj(self.statevector, ibasis, nqbits)
+        self.sij = sij # quick fix. TODO: proper property setup done
         return sij
 
     def structure_factor_from_sij(self, L1: int, L2: int, L3: int):
