@@ -535,6 +535,8 @@ document.write(`
         <span class="c1"># pulser part which defines Hamiltonian parameters done. #</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_register</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sim</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qbits</span> <span class="k">if</span> <span class="n">qbits</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spins</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sij</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># end of init #</span>
 
@@ -700,6 +702,7 @@ document.write(`
         <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">)</span>
         <span class="n">ibasis</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_basis</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
         <span class="n">sij</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_sisj</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">statevector</span><span class="p">,</span> <span class="n">ibasis</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sij</span> <span class="o">=</span> <span class="n">sij</span>  <span class="c1"># quick fix. TODO: proper property setup done</span>
         <span class="k">return</span> <span class="n">sij</span></div>
 
 
