@@ -5,8 +5,11 @@ ASE calculator.
 https://myqlm.github.io/
 """
 
+from time import time
+
 import numpy as np
 
+import qse.magnetic as magnetic
 from qse.calc.calculator import Calculator
 
 qat_available = False
@@ -41,10 +44,6 @@ else:
         AQPU = AQPU_remote
     else:
         AQPU = None
-
-from time import time
-
-import qse.magnetic as magnetic
 
 try:
     import qat
@@ -216,13 +215,11 @@ class Myqlm(Calculator):
             )
             N = len(self.qbits)
             hsize = 2**N
-            ibasis = magnetic.get_basis(hsize=hsize, N=N)
             if statevector.shape[0] < hsize:
                 coeff0 = np.zeros(hsize, dtype=complex)
                 coeff0[self.basis] = statevector
                 statevector = coeff0
             self.statevector = statevector
-            del ibasis
         self.spins = self.get_spins()
         # self.sij = self.get_sij()
         if self.wtimes:
