@@ -128,6 +128,8 @@ class Myqlm(Calculator):
         self.C6 = self.params["C6"]
         #
         self.qpu = None
+        self.spins = None
+        self.sij = None
 
     def _occ_op(self, nqbits, qi):
         ti = qat.core.Term(1.0, "Z", [qi])

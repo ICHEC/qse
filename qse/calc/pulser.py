@@ -160,6 +160,8 @@ class Pulser(Calculator):
         # pulser part which defines Hamiltonian parameters done. #
         self._register, self._sequence, self._sim = None, None, None
         self.qbits = qbits if qbits is not None else None
+        self.spins = None
+        self.sij = None
 
     # end of init #
 
