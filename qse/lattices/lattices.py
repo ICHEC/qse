@@ -17,7 +17,7 @@ def _lattice_creator(
     lattice_spacing: float,
     repeats: tuple[int],
     qubit_positions: list = [[0, 0, 0]],
-):
+) -> qse.Qbits:
     """Create a Qbits object from a 2d cell,
     lattice_spacing, repeats and qubit positions.
 
@@ -45,7 +45,7 @@ def _lattice_creator(
     return unit.repeat(repeats + (1,))
 
 
-def chain(lattice_spacing: float = 1.0, repeats: int = 6):
+def chain(lattice_spacing: float = 1.0, repeats: int = 6) -> qse.Qbits:
     """
     Generate a Qbits object in linear chain geometry.
 
@@ -65,7 +65,9 @@ def chain(lattice_spacing: float = 1.0, repeats: int = 6):
     return _lattice_creator([[1, 0, 0], [0, 0, 0]], lattice_spacing, (repeats, 1))
 
 
-def square(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2):
+def square(
+    lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2
+) -> qse.Qbits:
     """
     Generate a Qbits object in square lattice geometry.
 
@@ -90,7 +92,9 @@ def square(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2)
     )
 
 
-def triangular(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2):
+def triangular(
+    lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2
+) -> qse.Qbits:
     """
     Generate a Qbits object in triangular lattice geometry.
 
@@ -115,7 +119,9 @@ def triangular(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int 
     )
 
 
-def hexagonal(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2):
+def hexagonal(
+    lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2
+) -> qse.Qbits:
     """
     Generate a Qbits object in hexagonal lattice geometry.
 
@@ -146,7 +152,9 @@ def hexagonal(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int =
     )
 
 
-def kagome(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2):
+def kagome(
+    lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2
+) -> qse.Qbits:
     """
     Generate a Qbits object in kagome lattice geometry.
 
@@ -178,7 +186,7 @@ def kagome(lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2)
     )
 
 
-def ring(center=np.zeros(3), radius=3.0, npoints=12):
+def ring(center=np.zeros(3), radius=3.0, npoints=12) -> qse.Qbits:
     """Generate Qbits object in ring geometry.
         The ring is placed in xy plane at center.
 
@@ -206,7 +214,7 @@ def ring(center=np.zeros(3), radius=3.0, npoints=12):
     return qring
 
 
-def torus(N1=12, N2=12, Rin=1.0, Rout=3.0, center=np.zeros(3)):
+def torus(N1=12, N2=12, Rin=1.0, Rout=3.0, center=np.zeros(3)) -> qse.Qbits:
     """Generate Qbits object in a torus geometry.
 
     Parameters

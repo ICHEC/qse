@@ -3,6 +3,22 @@ import numpy as np
 
 
 def draw(qbits, ax=None, radius=None):
+    """
+    ...
+
+    Parameters
+    ----------
+    qbits: Qbits
+        ...
+    ax: ...
+        ...
+    radius: float
+        The radius
+    
+    Returns
+    -------
+    plt
+    """
     crank = qbits.cell.rank
     prank = np.linalg.matrix_rank(qbits.positions)
     # if crank is more than prank, it means that a higher dimensional cell is present, and actual
