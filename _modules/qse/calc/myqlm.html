@@ -372,8 +372,11 @@ document.write(`
 <span class="sd">https://myqlm.github.io/</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="kn">import</span> <span class="nn">qse.magnetic</span> <span class="k">as</span> <span class="nn">magnetic</span>
 <span class="kn">from</span> <span class="nn">qse.calc.calculator</span> <span class="kn">import</span> <span class="n">Calculator</span>
 
 <span class="n">qat_available</span> <span class="o">=</span> <span class="kc">False</span>
@@ -408,10 +411,6 @@ document.write(`
         <span class="n">AQPU</span> <span class="o">=</span> <span class="n">AQPU_remote</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">AQPU</span> <span class="o">=</span> <span class="kc">None</span>
-
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
-
-<span class="kn">import</span> <span class="nn">qse.magnetic</span> <span class="k">as</span> <span class="nn">magnetic</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">qat</span>
@@ -593,13 +592,11 @@ document.write(`
             <span class="p">)</span>
             <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">)</span>
             <span class="n">hsize</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">N</span>
-            <span class="n">ibasis</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_basis</span><span class="p">(</span><span class="n">hsize</span><span class="o">=</span><span class="n">hsize</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">statevector</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">hsize</span><span class="p">:</span>
                 <span class="n">coeff0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hsize</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
                 <span class="n">coeff0</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">]</span> <span class="o">=</span> <span class="n">statevector</span>
                 <span class="n">statevector</span> <span class="o">=</span> <span class="n">coeff0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">statevector</span> <span class="o">=</span> <span class="n">statevector</span>
-            <span class="k">del</span> <span class="n">ibasis</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_spins</span><span class="p">()</span>
         <span class="c1"># self.sij = self.get_sij()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span><span class="p">:</span>
