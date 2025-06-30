@@ -14,7 +14,7 @@ def draw(qbits, ax=None, radius=None):
         ...
     radius: float
         The radius
-    
+
     Returns
     -------
     plt
