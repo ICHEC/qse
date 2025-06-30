@@ -31,6 +31,9 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx_book_theme",
+    "sphinx_jupyterbook_latex",
+    "sphinx_togglebutton",
+    "sphinx_copybutton",
 ]
 templates_path = ["_templates"]
 exclude_patterns = []
