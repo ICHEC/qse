@@ -9,7 +9,7 @@ from time import time
 
 import qse.magnetic as magnetic
 from qse import Signal
-from qse.calc.calculator import Calculator, CalculatorSetupError
+from qse.calc.calculator import Calculator
 from qse.calc.messages import CalculatorSetupError
 
 try:
@@ -112,7 +112,7 @@ class Pulser(Calculator):
         super().__init__(
             CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
         )
-        self.device = pulser.devices.MockDevice if device == None else device
+        self.device = pulser.devices.MockDevice if device is None else device
         self.emulator = QutipEmulator if emulator is None else emulator
         self.label = label
         self.wtimes = wtimes
@@ -160,6 +160,8 @@ class Pulser(Calculator):
         # pulser part which defines Hamiltonian parameters done. #
         self._register, self._sequence, self._sim = None, None, None
         self.qbits = qbits if qbits is not None else None
+        self.spins = None
+        self.sij = None
 
     # end of init #
 
@@ -168,7 +170,7 @@ class Pulser(Calculator):
     def qbits(self):
         return self._qbits
 
-    @Calculator.qbits.setter
+    @qbits.setter
     def qbits(self, qbits, prefix="q"):
         if qbits is None:
             self._qbits, self._coords, self._register, self._sequence = (
@@ -308,6 +310,7 @@ class Pulser(Calculator):
         nqbits = len(self.qbits)
         ibasis = magnetic.get_basis(2**nqbits, nqbits)
         sij = magnetic.get_sisj(self.statevector, ibasis, nqbits)
+        self.sij = sij  # quick fix. TODO: proper property setup done
         return sij
 
     def structure_factor_from_sij(self, L1, L2, L3):
