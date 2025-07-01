@@ -8,17 +8,23 @@ import qse
 
 
 def get_basis(hsize: int, N: int):
-    """returns a boolean array representing basis in qubit product state.
-        Originally it is intended for the full qubit space, for which
-        hsize = $2^N$, however if we need a subset of the full, then hsize
-        can be smaller.
+    """
+    Returns a boolean array representing basis in qubit product state.
+    Originally it is intended for the full qubit space, for which
+    hsize = :math:`2^N`, however if we need a subset of the full, then hsize
+    can be smaller.
 
-    Args:
-        hsize (int): size of the hamiltonian or hilbert space.
-        N (int): number of qubits
+    Parameters
+    ----------
+    hsize: int
+        The size of the hamiltonian or hilbert space.
+    N: int
+        The number of qubits.
 
-    Returns:
-        np.ndarray: of shape (hsize, N)
+    Returns
+    -------
+    np.ndarray
+        The basis of shape (hsize, N).
     """
     ibasis = np.empty((hsize, N), dtype=bool)
     for i in range(hsize):
@@ -27,14 +33,20 @@ def get_basis(hsize: int, N: int):
 
 
 def sxop(b: np.ndarray[bool], i: int):
-    """Sx operator on a boolian array b.
-        (Basically bit flip)
-    Args:
-        b (np.ndarray[bool]): array representing the basis
-        i (int): index in b where to apply operation, i.e., b[i]
+    """
+    Sx operator on a boolian array b (basically bit flip).
 
-    Returns:
-        np.ndarray[bool]: array after applying the Sx operation
+    Parameters
+    ----------
+    b: np.ndarray[bool]
+        The array representing the basis.
+    i: int
+        The index in b where to apply operation, i.e., b[i].
+
+    Returns
+    -------
+    np.ndarray[bool]
+        The array after applying the Sx operation.
     """
     s = b.copy()
     s[i] = ~s[i]
@@ -42,15 +54,21 @@ def sxop(b: np.ndarray[bool], i: int):
 
 
 def syop(b: np.ndarray[bool], i: int):
-    """Sy opertor on a boolian array b
-    (This gives a flipped bit at `i`th index and a sign)
+    """
+    Sy opertor on a boolian array b (this gives a flipped bit
+    at ith index and a sign).
 
-    Args:
-        b (np.ndarray[bool]): array representing the basis
-        i (int): index in b where to apply operation, i.e., b[i]
+    Parameters
+    ----------
+    b: np.ndarray[bool]
+        The array representing the basis.
+    i: int
+        The index in b where to apply operation, i.e., b[i].
 
-    Returns:
-        tuple (s, c): where s is the basis after operation and c is sign
+    Returns
+    -------
+    tuple
+        Of the form (s, c): where s is the basis after operation and c is sign.
     """
     s = b.copy()
     s[i] = ~s[i]
@@ -59,14 +77,21 @@ def syop(b: np.ndarray[bool], i: int):
 
 
 def get_index(arr: np.ndarray, val):
-    """Get index where value matches in the array.
-        Results in either single integer, or an array containing indices.
-    Args:
-        arr (np.ndarray): The array
-        val (Any): the value to match
+    """
+    Get index where value matches in the array.
+    Results in either single integer, or an array containing indices.
 
-    Returns:
-        Any: Integer, or an array of indices.
+    Parameters
+    ----------
+    arr: np.ndarray
+        The array.
+    val: Any 
+        The value to match.
+
+    Returns
+    -------
+    Any
+        Integer, or an array of indices.
     """
     return np.where((arr == val).all(axis=1))[0][0]
 
@@ -74,19 +99,25 @@ def get_index(arr: np.ndarray, val):
 def get_spins(
     statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int
 ) -> np.ndarray[float]:
-    r"""Get the expectation value of the spin operators (Sx, Sy, Sz).
-        With a list of qubits seen as spin 1/2 object, here one
-        calculates the expectation value <Psi| (Sx, Sy, Sz) |Psi>
-        The state is given as follows:
-        :math:`|\psi>  = \sum_i statevector[i] ibasis[i]`
-    Args:
-        statevector (np.ndarray[complex]): :math:`2^N` sized complex array representing the statevector.
-        ibasis (np.ndarray[bool]): Boolean array representing product basis
-        for qubits passed for computing.
-        N (int): Number of Qubits or Spins
+    r"""
+    Get the expectation value of the spin operators (Sx, Sy, Sz).
+    With a list of qubits seen as spin 1/2 object, here one
+    calculates the expectation value :math:`<Psi| (Sx, Sy, Sz) |Psi>`.
+    The state is given as follows: :math:`|\psi>  = \sum_i statevector[i] ibasis[i]`.
 
-    Returns:
-        spins -> np.ndarray[float]: An Nx3 array with expectation values of spin operator.
+    Parameters
+    ----------
+    statevector: np.ndarray[complex]
+        :math:`2^N` sized complex array representing the statevector.
+    ibasis: np.ndarray[bool]
+        Boolean array representing product basis for qubits passed for computing.
+    N: int
+        Number of Qubits or Spins.
+
+    Returns
+    -------
+    np.ndarray[float]
+        An Nx3 array with expectation values of spin operator.
     """
     szi = np.zeros(N, dtype=float)
     for l, b in enumerate(ibasis):
@@ -120,20 +151,24 @@ def get_spins(
 def get_sisj(
     statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int
 ) -> np.ndarray[float]:
-    r"""Compute spin correlation function
-        :math: `S_ij = <\psi| S_i \cdot S_j |\psi>.`
-        With a list of qubits seen as spin 1/2 object, the spins operators are S_i = (Sx, Sy, Sz).
-        The state |Psi> given as follows:
-        :math: `|\psi>  = \sum_i statevector[i] ibasis[i]`
+    r"""
+    Compute spin correlation function :math: `S_ij = <\psi| S_i \cdot S_j |\psi>`.
+    With a list of qubits seen as spin 1/2 object, the spins operators are S_i = (Sx, Sy, Sz).
+    The state :math:`|Psi>` given as follows: :math: `|\psi>  = \sum_i statevector[i] ibasis[i]`.
 
-    Args:
-        statevector (np.ndarray[complex]): :math: `2^N` sized complex array representing the statevector.
-        ibasis (np.ndarray[bool]): Boolean array representing product basis
-        for qubits passed for computing.
-        N (int): Number of Qubits or Spins
+    Parameters
+    ----------
+    statevector: np.ndarray[complex]
+        :math: `2^N` sized complex array representing the statevector.
+    ibasis: np.ndarray[bool]
+        Boolean array representing product basis for qubits passed for computing.
+    N: int
+        Number of Qubits or Spins.
 
-    Returns:
-        s_ij -> np.ndarray[float]: An NxN array with computed expectation value of <S_i.S_j>
+    Returns
+    -------
+    np.ndarray[float]
+        An NxN array with computed expectation value of <S_i.S_j>.
     """
     s_ij = np.zeros((N, N), dtype=float)
 
@@ -167,20 +202,30 @@ def get_sisj(
 def structure_factor_from_sij(
     L1: int, L2: int, L3: int, qbits: qse.Qbits, s_ij: np.ndarray[float]
 ) -> np.ndarray[float]:
-    r"""From spin correlation, compute the `structure factor`.
-        The structure factor is just fourier transform of the s_ij
-        :math: `S[q] = \frac{1}{N^2} \sum_{ij} s_{ij} \exp{i q \cdot (x_i - x_j)}`
-        The (L1, L2, L3) are passed as shape of the lattice, and there is a qubit
-        at each of these lattice sites.
-    Args:
-        L1 (int): Extent of lattice in x direction
-        L2 (int): Extent of lattice in y direction
-        L3 (int): Extent of lattice in z direction
-        qbits (qse.Qbits): The Qbits object representing the lattice.
-        s_ij (np.ndarray[float]): The array with spin correlation.
+    r"""
+    From spin correlation, compute the `structure factor`.
+    The structure factor is just fourier transform of the s_ij
+    :math: `S[q] = \frac{1}{N^2} \sum_{ij} s_{ij} \exp{i q \cdot (x_i - x_j)}`
+    The (L1, L2, L3) are passed as shape of the lattice, and there is a qubit
+    at each of these lattice sites.
+    
+    Parameters
+    ----------
+    L1: int
+        Extent of lattice in x direction.
+    L2 (int):
+        Extent of lattice in y direction.
+    L3 (int):
+        Extent of lattice in z direction.
+    qbits: qse.Qbits
+        The Qbits object representing the lattice.
+    s_ij: np.ndarray[float]
+        The array with spin correlation.
 
-    Returns:
-        np.ndarray[float]: Returns the structure factor.
+    Returns
+    -------
+    np.ndarray[float]
+        Returns the structure factor.
     """
     assert L1 * L2 * L3 == qbits.nqbits
     normalize = qbits.nqbits**2
