@@ -12,17 +12,17 @@ qse.calc
     :members:
 
 qse.lattices
-========
+============
 .. automodule:: qse.lattices
     :members:
 
 qse.magnetic
-========
+============
 .. automodule:: qse.magnetic
     :members:
 
 qse.utils
-========
+=========
 .. automodule:: qse.utils
     :members:
 

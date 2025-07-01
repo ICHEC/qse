@@ -864,7 +864,7 @@ class Qbits:
         self.positions += translation
 
     def get_centroid(self, scaled=False):
-        """
+        r"""
         Get the centroid of the positions.
 
         Parameters
@@ -874,16 +874,19 @@ class Qbits:
 
         Notes
         -----
-        For a set of $k$ positions $\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k$
+        For a set of :math:`k` positions :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`
         the centroid is given by
-        $\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.$
+
+        .. math::
+
+            \frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.
         """
         if scaled:
             return self.cell.scaled_positions(self.positions.mean(0))
         return self.positions.mean(0)
 
     def set_centroid(self, centroid, scaled=False):
-        """
+        r"""
         Set the centroid of the positions.
 
         Parameters
@@ -895,9 +898,12 @@ class Qbits:
 
         Notes
         -----
-        For a set of $k$ positions $\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k$
+        For a set of :math:`k` positions :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`
         the centroid is given by
-        $\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.$
+
+        .. math::
+
+            \frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.
         """
         difference = centroid - self.get_centroid(scaled=scaled)
         if scaled:

@@ -74,7 +74,30 @@ default_params = {
 
 # for rydberg system we need additional parameters: mix,max of amplitude and detuning to set based on device.
 class Myqlm(Calculator):
-    """QSE-Calculator for MyQLM"""
+    """
+    QSE-Calculator for MyQLM
+    
+    Parameters
+    ----------
+    qbits
+        ...
+    amplitude
+        ...
+    detuning
+        ...
+    duration
+        ...
+    qpu
+        ...
+    analog
+        ...
+    system
+        ...
+    label
+        ...
+    wtimes
+        ...
+    """
 
     implemented_properties = ["energy", "state", "fidality"]
     default_parameters = dict(label="q", qbits=None)
@@ -195,6 +218,18 @@ class Myqlm(Calculator):
         return arith_expr
 
     def calculate(self, qbits=None, properties=..., system_changes=...):
+        """
+        _summary_
+
+        Parameters
+        ----------
+        qbits : _type_, optional
+            _description_, by default None
+        properties : _type_, optional
+            _description_, by default ...
+        system_changes : _type_, optional
+            _description_, by default ...
+        """
         # return super().calculate(qbits, properties, system_changes)
         # self.Hamiltonian = self._get_hamiltonian()
         if self.wtimes:
@@ -229,12 +264,18 @@ class Myqlm(Calculator):
     #
 
     def get_spins(self):
-        """Get spin expectation values
+        """
+        Get spin expectation values.
         If the hamiltonian isn't simulated, it triggers simulation first.
 
-        Returns:
-            np.ndarray: Array of Nx3 containing spin expectation values.
-        See :py.func: `qse.magnetic.get_spins` for more details.
+        Returns
+        -------
+        np.ndarray
+            Array of Nx3 containing spin expectation values.
+        
+        See Also
+        --------
+        qse.magnetic.get_spins for more details.
         """
         if self.results is None:
             self.calculate()
@@ -245,12 +286,18 @@ class Myqlm(Calculator):
         return si
 
     def get_sij(self):
-        r"""Get spin correlation s_ij
+        r"""
+        Get spin correlation :math:`s_{ij}`.
         If the hamiltonian isn't simulated, it triggers simulation first.
 
-        Returns:
-            np.ndarray: Array of NxN shape containing spin correlations.
-        See :py.func: `qse.magnetic.get_sij` for more details.
+        Returns
+        -------
+        np.ndarray
+            Array of NxN shape containing spin correlations.
+        
+        See Also
+        --------
+        qse.magnetic.get_sisj for more details.
         """
         if self.results is None:
             self.calculate()
@@ -262,16 +309,26 @@ class Myqlm(Calculator):
         return sij
 
     def structure_factor_from_sij(self, L1: int, L2: int, L3: int):
-        r"""Get the structure factor
+        r"""
+        Get the structure factor.
 
-        Args:
-            L1 (int): Extent of lattice in x direction
-            L2 (int): Extent of lattice in y direction
-            L3 (int): Extent of lattice in z direction
+        Parameters
+        ----------
+        L1: int
+            Extent of lattice in x direction
+        L2: int
+            Extent of lattice in y direction
+        L3: int
+            Extent of lattice in z direction
 
-        Returns:
-            np.ndarray: Array containing the structure factor
-        See :py.func: `qse.magnetic.structure_factor_from_sij` for more details.
+        Returns
+        -------
+        np.ndarray
+            Array containing the structure factor.
+
+        See Also
+        --------
+        qse.magnetic.structure_factor_from_sij for more details.
         """
         struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
         return struc_fac

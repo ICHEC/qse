@@ -437,8 +437,11 @@ class Calculator:
         return False
 
     def calculate(self, qbits=None, properties=["energy"], system_changes=all_changes):
-        """Do the calculation.
+        """
+        Do the calculation.
 
+        Parameters
+        ----------
         properties: list of str
             List of what needs to be calculated.  Can be any combination
             of 'energy', 'forces', 'stress', 'dipole', 'charges', 'magmom'
