@@ -5,9 +5,10 @@ ASE calculator.
 https://myqlm.github.io/
 """
 
+from time import time
+
 import numpy as np
 
-from qse import Signal
 from qse.calc.calculator import Calculator
 
 qat_available = False
@@ -42,25 +43,6 @@ else:
         AQPU = AQPU_remote
     else:
         AQPU = None
-
-if qat_available:
-    print("qat is available")
-else:
-    print("qat is not available")
-if qlmaas_available:
-    print("qlmaas is available")
-else:
-    print("qlmaas is not available")
-print(AQPU)
-
-from time import time
-
-import qse.magnetic as magnetic
-
-# analogQPU imported based on what's available
-
-
-# from qat.core.variables import Variable, heaviside
 
 try:
     import qat
@@ -142,8 +124,9 @@ class Myqlm(Calculator):
         self.detuning = self._waveform(self.det, tmax=self.duration)
         # self.duration = len(self.amplitude) # needs to change for time independent problems
         self.C6 = self.params["C6"]
-        #
         self.qpu = None
+        self.spins = None
+        self.sij = None
 
     def _occ_op(self, nqbits, qi):
         ti = qat.core.Term(1.0, "Z", [qi])
@@ -159,8 +142,6 @@ class Myqlm(Calculator):
         else:
             ham = None
         return ham
-
-    #
 
     def _generate_rydberg_hamiltonian(self):
         rij = self.qbits.get_all_distances()
@@ -182,14 +163,12 @@ class Myqlm(Calculator):
                     * self._occ_op(nqbits, i)
                     * self._occ_op(nqbits, j)
                 )
-        Hamiltonian = [  # qat.core.Observable(
+
+        return [
             (amplitude, H_amplitude),
             (detuning, H_detuning),
             (1, H_interact),
         ]
-        return Hamiltonian
-
-    #
 
     def _waveform(self, vi, tmax):
         ti = np.linspace(0, tmax, vi.shape[0])
@@ -230,64 +209,13 @@ class Myqlm(Calculator):
             )
             N = len(self.qbits)
             hsize = 2**N
-            ibasis = magnetic.get_basis(hsize=hsize, N=N)
             if statevector.shape[0] < hsize:
                 coeff0 = np.zeros(hsize, dtype=complex)
                 coeff0[self.basis] = statevector
                 statevector = coeff0
             self.statevector = statevector
-            del ibasis
         self.spins = self.get_spins()
-        self.sij = self.get_sij()
+        # self.sij = self.get_sij()
         if self.wtimes:
             t2 = time()
             print(f"time in compute and simulation = {t2 - t1} s.")
-
-    #
-
-    def get_spins(self):
-        """Get spin expectation values
-        If the hamiltonian isn't simulated, it triggers simulation first.
-
-        Returns:
-            np.ndarray: Array of Nx3 containing spin expectation values.
-        See :py.func: `qse.magnetic.get_spins` for more details.
-        """
-        if self.results is None:
-            self.calculate()
-        #
-        nqbits = len(self.qbits)
-        ibasis = magnetic.get_basis(2**nqbits, nqbits)
-        si = magnetic.get_spins(self.statevector, ibasis, nqbits)
-        return si
-
-    def get_sij(self):
-        r"""Get spin correlation s_ij
-        If the hamiltonian isn't simulated, it triggers simulation first.
-
-        Returns:
-            np.ndarray: Array of NxN shape containing spin correlations.
-        See :py.func: `qse.magnetic.get_sij` for more details.
-        """
-        if self.results is None:
-            self.calculate()
-        #
-        nqbits = len(self.qbits)
-        ibasis = magnetic.get_basis(2**nqbits, nqbits)
-        sij = magnetic.get_sisj(self.statevector, ibasis, nqbits)
-        return sij
-
-    def structure_factor_from_sij(self, L1: int, L2: int, L3: int):
-        r"""Get the structure factor
-
-        Args:
-            L1 (int): Extent of lattice in x direction
-            L2 (int): Extent of lattice in y direction
-            L3 (int): Extent of lattice in z direction
-
-        Returns:
-            np.ndarray: Array containing the structure factor
-        See :py.func: `qse.magnetic.structure_factor_from_sij` for more details.
-        """
-        struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
-        return struc_fac

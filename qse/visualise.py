@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
 
 
 def draw(qbits, ax=None, radius=None):
@@ -110,19 +109,3 @@ def draw(qbits, ax=None, radius=None):
                 alpha=1 / C**3,
             )
         ax.plot(x, y, "o", ms=9, color="red")
-    #
-
-
-#
-
-"""
-x, y, _ = lin.positions.T
-fig = plt.figure(figsize=(12,1))
-ax = fig.add_subplot()
-ax.set_aspect('auto')
-ax.set_xticks([])
-ax.set_yticks([])
-ax.plot(x, y, 'o', color='r')
-ax.scatter(x, y, s=360, c='g', alpha=0.5)
-plt.show()
-"""

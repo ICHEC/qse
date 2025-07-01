@@ -26,30 +26,19 @@ from qse.visualise import draw as _draw
 
 
 class Qbits:
-    """Qbits object.
-
+    """
     The Qbits object can represent an isolated molecule, or a
     periodically repeated structure.  It has a unit cell and
     there may be periodic boundary conditions along any of the three
-    unit cell axes.
-    Information about the qbits (qubit state and position) is
-    stored in ndarrays.  Optionally, there can be information about
-    tags, and any other info to be added later.
+    unit cell axes. Information about the qbits (qubit state and
+    position) is stored in ndarrays.
 
-    In order to do computation, a calculator object has to attached to the qbits object.
-
-    Rajarshi: What should be the starting point of the qubits object.
-    That is, what are possible scenarios to construct the object from.
-    Qbits object is supposed to look similar to Register object.
-
-
-    Parameters:
-
-    labels: str or list of str
-        Can be a list of symbols or a list of Qbit objects.
-        Examples: 'H2O', 'COPt12', ['H', 'H', 'O'],
-        [Qbit('Ne', (x, y, z)), ...].
-    states: list of 2-length arrays. State of each qubit.
+    Parameters
+    ----------
+    labels: list of str
+        A list of strings corresponding to a label for each qubit.
+    states: list of 2-length arrays.
+        State of each qubit.
     positions: list of xyz-positions
         Qubit positions.  Anything that can be converted to an
         ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),
@@ -57,8 +46,6 @@ class Qbits:
     scaled_positions: list of scaled-positions
         Like positions, but given in units of the unit cell.
         Can not be set at the same time as positions.
-    tags: list of int
-        Special purpose tags.
     cell: 3x3 matrix or length 3 or 6 vector
         Unit cell vectors.  Can also be given as just three
         numbers for orthorhombic cells, or 6 numbers, where
@@ -95,49 +82,41 @@ class Qbits:
         user-defined object, its base class is importable.  One should
         not make any assumptions about the existence of keys.
 
-    Examples:
+    Examples
+    --------
     Empty Qbits object:
-    qs = Qbits()
-    These three are equivalent:
 
-    >>> d = 1.104  # N2 bondlength
-    >>> a = Qbits('N2', [(0, 0, 0), (0, 0, d)])
-    >>> a = Qbits(numbers=[7, 7], positions=[(0, 0, 0), (0, 0, d)])
-    >>> a = Qbits([Qbit('N', (0, 0, 0)), Qbit('N', (0, 0, d))])
+    >>> qs = qse.Qbits()
 
-    FCC:
+    These are equivalent:
 
-    >>> a = 4.05  # Gold lattice constant
-    >>> b = a / 2
-    >>> fcc = Qbits('Au',
-    ...             cell=[(0, b, b), (b, 0, b), (b, b, 0)],
-    ...             pbc=True)
+    >>> a = qse.Qbits(
+    ...     labels=['qb1', 'qb2'],
+    ...     positions=np.array([(0, 0, 0), (0, 0, 2)])
+    ... )
+    >>> a = qse.Qbits.from_qbit_list(
+    ...     [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))]
+    ... )
 
-    Wire:
+    >>> xd = np.array(
+    ...    [[0, 0, 0],
+    ...     [0.5, 0.5, 0.5]])
+    >>> qdim = qse.Qbits(positions=xd)
+    >>> qdim.cell = [1,1,1]
+    >>> qdim.pbc = True
+    >>> qlat = qdim.repeat([3,3,3])
 
-    >>> d = 0.9  # H-H distance
-    >>> h = Qbits('H', positions=[(0, 0, 0)],
-    ...           cell=(d, 0, 0),
-    ...           pbc=(1, 0, 0))
-    """
+    The qdim will have shape = (2,1,1) and qlat will have shape = (6, 3, 3)
 
-    qse_objtype = "qbits"  # For JSONability
-    """
-    Following could be the typical ways to initialise
-    the Qbits object which we should focus on -
-    1. Give labels only: in which case we generate
-    the Qbits with each of those labels, and located
-    randomly. If labels is list of str, coordinates are
-    random. If labels is list of Qbit, coordinates are
-    those of each Qbit. The states are initialised as (1, 0)
-    2. Provide positions only, then labels are assigned X,
-    and state is initialised as (1,0)
+    Notes
+    -----
+    In order to do computation, a calculator object has to attached
+    to the qbits object.
     """
 
     def __init__(
         self,
         labels=None,
-        tags=None,
         states=None,
         positions=None,
         scaled_positions=None,
@@ -148,50 +127,15 @@ class Qbits:
         calculator=None,
         info=None,
     ):
-        self._cellobj = Cell.new()
-        self._pbc = np.zeros(3, bool)
+        if (positions is not None) and (scaled_positions is not None):
+            raise Exception(
+                "Both 'positions' and 'scaled_positions' cannot be passed at the same time."
+            )
 
-        qbits = None
+        if (scaled_positions is not None) and (cell is None):
+            raise Exception("'scaled_positions' requires 'cell' to not be None.")
 
-        if hasattr(labels, "get_positions"):
-            qbits = labels
-            labels = None
-        elif (
-            isinstance(labels, (list, tuple))
-            and len(labels) > 0
-            and isinstance(labels[0], Qbit)
-        ):
-            # Get data from a list or tuple of Qbit objects:
-            data = [
-                [qbit.get_raw(name) for qbit in labels]
-                for name in ["label", "state", "position", "tag"]
-            ]
-            qbits = self.__class__(None, *data)
-            labels = None
-
-        if qbits is not None:
-            # Get data from another Qbits object:
-            if scaled_positions is not None:
-                raise NotImplementedError
-            if positions is None:
-                positions = qbits.get_positions()
-            if tags is None and qbits.has("tags"):
-                tags = qbits.get_tags()
-            if cell is None:
-                cell = qbits.get_cell()
-            if celldisp is None:
-                celldisp = qbits.get_celldisp()
-            if pbc is None:
-                pbc = qbits.get_pbc()
-            if constraint is None:
-                constraint = [c.copy() for c in qbits.constraints]
-            if calculator is None:
-                calculator = qbits.calc
-            if info is None:
-                info = copy.deepcopy(qbits.info)
-
-        self.arrays = {}
-
+        # get number of qubits
         if labels is None:
             if positions is not None:
                 nqbits = len(positions)
@@ -199,61 +143,91 @@ class Qbits:
                 nqbits = len(scaled_positions)
             else:
                 nqbits = 0
-            self.new_array("labels", np.arange(nqbits), int)
+        else:
+            if not isinstance(labels, list):
+                raise Exception("'labels' must be a list.")
+            nqbits = len(labels)
 
+        if (positions is not None) and (len(positions) != nqbits):
+            raise Exception("Both 'positions' and 'labels' must have the same length.")
+
+        if (scaled_positions is not None) and (len(scaled_positions) != nqbits):
+            raise Exception(
+                "Both 'scaled_positions' and 'labels' must have the same length."
+            )
+
+        self.arrays = {}
+
+        # labels
+        if labels is None:
+            labels = [str(i) for i in range(nqbits)]
+        # We allow for labels up to length 12.
+        self.new_array("labels", labels, "<U12")
+
+        # cell
+        self._cellobj = Cell.new()
         if cell is None:
             cell = np.zeros((3, 3))
         self.set_cell(cell)
 
-        if celldisp is None:
-            celldisp = np.zeros(shape=(3, 1))
-        self.set_celldisp(celldisp)
-
+        # positions
         if positions is None:
             if scaled_positions is None:
                 positions = np.zeros((len(self.arrays["labels"]), 3))
             else:
                 assert self.cell.rank == 3
                 positions = np.dot(scaled_positions, self.cell)
-        else:
-            if scaled_positions is not None:
-                # raise TypeError(
-                #    'Use only one of "symbols" and "numbers".')
-                print("Both positions and scaled positions are not None!")
         self.new_array("positions", positions, float, (3,))
 
+        # states
         if states is None:
             states = np.zeros((positions.shape[0], 2), dtype=complex)
-            states[:, 1] += 1
+            states[:, 0] = 1
         self.new_array("states", states, complex, (2,))
-        self.set_constraint(constraint)
-        self.set_tags(default(tags, 0))
+
+        # shape
+        self._shape = (self.nqbits, 1, 1)
+
+        # pbc
+        self._pbc = np.zeros(3, bool)
         if pbc is None:
             pbc = False
         self.set_pbc(pbc)
 
-        if info is None:
-            self.info = {}
-        else:
-            self.info = dict(info)
+        # celldisp
+        if celldisp is None:
+            celldisp = np.zeros(shape=(3, 1))
+        self.set_celldisp(celldisp)
 
+        # constraint
+        self.set_constraint(constraint)
+
+        # calculator
         self.calc = calculator
 
-    # @deprecated(DeprecationWarning('Please use qbits.calc = calc'))
-    # def set_calculator(self, calc=None):
-    #    """Attach calculator object.
-    #
-    #    Please use the equivalent qbits.calc = calc instead of this
-    #    method."""
-    #    self.calc = calc
+        # info
+        self.info = {} if info is None else dict(info)
 
-    # @deprecated(DeprecationWarning('Please use qbits.calc'))
-    # def get_calculator(self):
-    #    """Get currently attached calculator object.
-    #
-    #    Please use the equivalent qbits.calc instead of
-    #    qbits.get_calculator()."""
-    #    return self.calc
+    @classmethod
+    def from_qbit_list(self, qbit_list):
+        # Get data from a list or tuple of Qbit objects:
+        data = {
+            f"{name}s": [qbit.get_raw(name) for qbit in qbit_list]
+            for name in ["label", "state", "position"]
+        }
+        return Qbits(**data)
+
+    @property
+    def shape(self):
+        """The shape of the qbits"""
+        return self._shape
+
+    @shape.setter
+    def shape(self, new_shape):
+        """Update the shape to new shape"""
+        if self.nqbits != np.prod(new_shape):
+            raise AssertionError(f"no. of qubits= {self.nqbits}, yet shape {new_shape}")
+        self._shape = new_shape
 
     @property
     def calc(self):
@@ -265,17 +239,6 @@ class Qbits:
         self._calc = calc
         if hasattr(calc, "set_qbits"):
             calc.set_qbits(self)
-
-    # @calc.deleter  # type: ignore
-    # @deprecated(DeprecationWarning('Please use qbits.calc = None'))
-    # def calc(self):
-    #    self._calc = None
-
-    # @property  # type: ignore
-    # @deprecated('Please use qbits.cell.rank instead')
-    # def number_of_lattice_vectors(self):
-    #    """Number of (non-zero) lattice vectors."""
-    #    return self.cell.rank
 
     def set_constraint(self, constraint=None):
         """Apply one or more constrains.
@@ -490,27 +453,11 @@ class Qbits:
         """
         Check for existence of array.
 
-        name must be one of: 'tags', 'momenta', 'masses', 'initial_magmoms',
+        name must be one of: 'momenta', 'masses', 'initial_magmoms',
         'initial_charges'.
         """
         # XXX extend has to calculator properties
         return name in self.arrays
-
-    def set_tags(self, tags):
-        """
-        Set tags for all qbits. If only one tag is supplied, it is
-        applied to all qbits.
-        """
-        if isinstance(tags, int):
-            tags = [tags] * len(self)
-        self.set_array("tags", tags, int, ())
-
-    def get_tags(self):
-        """Get integer array of tags."""
-        if "tags" in self.arrays:
-            return self.arrays["tags"].copy()
-        else:
-            return np.zeros(len(self), int)
 
     def set_positions(self, newpositions, apply_constraint=True):
         """
@@ -560,6 +507,9 @@ class Qbits:
         for name, a in self.arrays.items():
             qbits.arrays[name] = a.copy()
         qbits.constraints = copy.deepcopy(self.constraints)
+        #
+        qbits.shape = self.shape  # this was necessary, and took long time to realise!
+
         return qbits
 
     def todict(self):
@@ -657,7 +607,7 @@ class Qbits:
     def extend(self, other):
         """Extend qbits object by appending qbits from *other*."""
         if isinstance(other, Qbit):
-            other = self.__class__([other])
+            other = self.from_qbit_list([other])
 
         n1 = len(self)
         n2 = len(other)
@@ -799,6 +749,8 @@ class Qbits:
 
         self.cell = np.array([m[c] * self.cell[c] for c in range(3)])
 
+        new_shape = tuple(self.shape * np.array(m))
+        self.shape = new_shape
         return self
 
     def draw(self, ax=None, radius=None):

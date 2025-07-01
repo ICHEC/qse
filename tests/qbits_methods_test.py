@@ -36,6 +36,14 @@ def test_add(nqbits_1, nqbits_2):
     )
 
 
+def test_add_qbit():
+    qbits = qse.Qbits(positions=np.arange(9).reshape(-1, 3), labels=[1, 2, 3])
+    qbit = qse.Qbit(position=np.array([0.0, 0.0, 0.0]), label="q")
+    qbits += qbit
+    assert qbits.nqbits == 4
+    assert all(qbits.labels == [1, 2, 3, "q"])
+
+
 def test_get_all_distances():
     """Test get_all_distances on a simple set of qbits."""
     positions = np.array(
@@ -230,8 +238,8 @@ def test_rotate_distances(a, v, center):
 
 def test_euler_rotate_and_rotate():
     """Test rotate and euler_rotate agree."""
-    ### Note that they rotate in different directions (clockwise & anti.)
-    ### May want to fix this.
+    # Note that they rotate in different directions (clockwise & anti.)
+    # May want to fix this.
     positions = np.random.rand(4, 3)
 
     qbits_1 = qse.Qbits(positions=positions)

@@ -7,11 +7,8 @@ https://pulser.readthedocs.io/en/stable/
 
 from time import time
 
-import numpy as np
-
-import qse.magnetic as magnetic
 from qse import Signal
-from qse.calc.calculator import Calculator, CalculatorSetupError
+from qse.calc.calculator import Calculator
 from qse.calc.messages import CalculatorSetupError
 
 try:
@@ -114,7 +111,7 @@ class Pulser(Calculator):
         super().__init__(
             CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
         )
-        self.device = pulser.devices.MockDevice if device == None else device
+        self.device = pulser.devices.MockDevice if device is None else device
         self.emulator = QutipEmulator if emulator is None else emulator
         self.label = label
         self.wtimes = wtimes
@@ -131,7 +128,7 @@ class Pulser(Calculator):
                 self.detuning = detuning
             else:
                 self.detuning = Signal(detuning)
-        #
+
         # assert self.amplitude.duration == self.detuning.duration
         self.duration = self.amplitude.duration
         wa = isinstance(self.amplitude, pulser.waveforms.Waveform)
@@ -162,15 +159,14 @@ class Pulser(Calculator):
         # pulser part which defines Hamiltonian parameters done. #
         self._register, self._sequence, self._sim = None, None, None
         self.qbits = qbits if qbits is not None else None
+        self.spins = None
+        self.sij = None
 
-    # end of init #
-
-    # defines properties #
     @property
     def qbits(self):
         return self._qbits
 
-    @Calculator.qbits.setter
+    @qbits.setter
     def qbits(self, qbits, prefix="q"):
         if qbits is None:
             self._qbits, self._coords, self._register, self._sequence = (
@@ -186,8 +182,6 @@ class Pulser(Calculator):
                 self.coords, prefix=prefix
             )
             self.sequence = pulser.Sequence
-
-    #
 
     @property
     def coords(self):
@@ -236,23 +230,25 @@ class Pulser(Calculator):
             self.reset()
 
     def write(self, label):
-        "Write qbits, parameters and calculated results into restart files."
-        # if self._debug:
-        #    print("Writing restart to: ", label)
-        # self.qbits.write(label + '_restart.traj')
-        # self.parameters.write(label + '_params.ase')
-        # from ase.io.jsonio import write_json
-        # with open(label + '_results.json', 'w') as fd:
-        #    write_json(fd, self.results)
+        """ "Write qbits, parameters and calculated results into restart files.
+            Not yet implemented.
+
+        Parameters
+        ----------
+        label : string
+            used in filename
+        """
         pass
 
     def read(self, label):
-        "Read qbits, parameters and calculated results from restart files."
-        # self.qbits = ase.io.read(label + '_restart.traj')
-        # self.parameters = Parameters.read(label + '_params.ase')
-        # from ase.io.jsonio import read_json
-        # with open(label + '_results.json') as fd:
-        #    self.results = read_json(fd)
+        """ "Read qbits, parameters and calculated results from restart files.
+            Not yet implemented.
+
+        Parameters
+        ----------
+        label : string
+            used in filename
+        """
         pass
 
     def calculate(self, progress=True):
@@ -270,57 +266,8 @@ class Pulser(Calculator):
         # if self.parameters.auto_write:
         #    self.write(self.label)
         self.spins = self.get_spins()
-        self.sij = self.get_sij()
+        # self.sij = self.get_sij()
         # self.struc_fac = self.structure_factor_from_sij()
         if self.wtimes:
             t2 = time()
             print(f"time in compute and simulation = {t2 - t1} s.")
-
-    #
-
-    def get_spins(self):
-        """Get spin expectation values
-        If the hamiltonian isn't simulated, it triggers simulation first.
-
-        Returns:
-            np.ndarray: Array of Nx3 containing spin expectation values.
-        See :py.func: `qse.magnetic.get_spins` for more details.
-        """
-        if self.results is None:
-            self.calculate()
-        #
-        nqbits = len(self.qbits)
-        ibasis = magnetic.get_basis(2**nqbits, nqbits)
-        si = magnetic.get_spins(self.statevector, ibasis, nqbits)
-        return si
-
-    def get_sij(self):
-        r"""Get spin correlation s_ij
-        If the hamiltonian isn't simulated, it triggers simulation first.
-
-        Returns:
-            np.ndarray: Array of NxN shape containing spin correlations.
-        See :py.func: `qse.magnetic.get_sij` for more details.
-        """
-        if self.results is None:
-            self.calculate()
-        #
-        nqbits = len(self.qbits)
-        ibasis = magnetic.get_basis(2**nqbits, nqbits)
-        sij = magnetic.get_sisj(self.statevector, ibasis, nqbits)
-        return sij
-
-    def structure_factor_from_sij(self, L1, L2, L3):
-        r"""Get the structure factor
-
-        Args:
-            L1 (int): Extent of lattice in x direction
-            L2 (int): Extent of lattice in y direction
-            L3 (int): Extent of lattice in z direction
-
-        Returns:
-            np.ndarray: Array containing the structure factor
-        See :py.func: `qse.magnetic.structure_factor_from_sij` for more details.
-        """
-        struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
-        return struc_fac
