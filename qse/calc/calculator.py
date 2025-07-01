@@ -557,7 +557,7 @@ class Calculator:
         -------
         np.ndarray
             Array containing the structure factor.
-        
+
         See Also
         --------
         qse.magnetic.structure_factor_from_sij for more details.

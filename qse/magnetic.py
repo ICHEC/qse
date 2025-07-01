@@ -85,7 +85,7 @@ def get_index(arr: np.ndarray, val):
     ----------
     arr: np.ndarray
         The array.
-    val: Any 
+    val: Any
         The value to match.
 
     Returns
@@ -208,7 +208,7 @@ def structure_factor_from_sij(
     :math: `S[q] = \frac{1}{N^2} \sum_{ij} s_{ij} \exp{i q \cdot (x_i - x_j)}`
     The (L1, L2, L3) are passed as shape of the lattice, and there is a qubit
     at each of these lattice sites.
-    
+
     Parameters
     ----------
     L1: int

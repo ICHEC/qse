@@ -75,7 +75,7 @@ default_params = {
 class Myqlm(Calculator):
     """
     QSE-Calculator for MyQLM
-    
+
     Parameters
     ----------
     qbits
