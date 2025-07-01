@@ -1,0 +1,667 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qse.lattices.lattices &#8212; qse 0.1.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=1a9ffd16"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/qse/lattices/lattices';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">qse 0.1.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/generating_lattices.html">Generating Lattices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/creating_and_manipulating_qbits.html">Creating and manipulating Qbits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/pulser-calc-example.html">Pulser Calculation Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/pulser-myqlm-conversion.html">Pulser-MyQLM Conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API reference</a></li>
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ICHEC/qse" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ICHEC/qse/issues/new?title=Issue%20on%20page%20%2F_modules/qse/lattices/lattices.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for qse.lattices.lattices</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">qse</span>
+
+
+<span class="k">def</span> <span class="nf">_check_repeats</span><span class="p">(</span><span class="n">repeats</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate the repeats parameter.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">repeats</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">repeats</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s2"> must be an integer greater than 1.&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">repeats</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_lattice_creator</span><span class="p">(</span>
+    <span class="n">unit_cell_2d</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">repeats</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">qubit_positions</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a Qbits object from a 2d cell,</span>
+<span class="sd">    lattice_spacing, repeats and qubit positions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    unit_cell_2d : list</span>
+<span class="sd">        The unit cell</span>
+<span class="sd">    lattice_spacing : float</span>
+<span class="sd">        Lattice spacing</span>
+<span class="sd">    repeats : tuple[int]</span>
+<span class="sd">        Repetitions along each direction, such as (3, 4, 2)</span>
+<span class="sd">    qubit_positions : list, optional</span>
+<span class="sd">        Positions for qubits as Nx3 array, by default [[0, 0, 0]]</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Qbits</span>
+<span class="sd">        Qbits object repeated along desired directions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">unit</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">qubit_positions</span><span class="p">))</span>
+
+    <span class="c1"># We add [[0, 0, 0]] to convert the unit cell into 3d.</span>
+    <span class="n">unit</span><span class="o">.</span><span class="n">cell</span> <span class="o">=</span> <span class="n">lattice_spacing</span> <span class="o">*</span> <span class="n">qse</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">Cell</span><span class="p">(</span><span class="n">unit_cell_2d</span> <span class="o">+</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">unit</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">repeats</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+
+
+<div class="viewcode-block" id="chain">
+<a class="viewcode-back" href="../../../api.html#qse.lattices.chain">[docs]</a>
+<span class="k">def</span> <span class="nf">chain</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">repeats</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a Qbits object in linear chain geometry.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lattice_spacing : float</span>
+<span class="sd">        The lattice spacing.</span>
+<span class="sd">    repeats : int</span>
+<span class="sd">        The number of repeats. Must be greater than 1.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Qbits</span>
+<span class="sd">        The Qbits lattice.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats</span><span class="p">,</span> <span class="s2">&quot;repeats&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_lattice_creator</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">lattice_spacing</span><span class="p">,</span> <span class="p">(</span><span class="n">repeats</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="square">
+<a class="viewcode-back" href="../../../api.html#qse.lattices.square">[docs]</a>
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span>
+    <span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a Qbits object in square lattice geometry.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lattice_spacing : float</span>
+<span class="sd">        The lattice spacing.</span>
+<span class="sd">    repeats_x : int</span>
+<span class="sd">        The number of repeats in the x direction. Must be greater than 1.</span>
+<span class="sd">    repeats_y : int</span>
+<span class="sd">        The number of repeats in the y direction. Must be greater than 1.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Qbits</span>
+<span class="sd">        The Qbits lattice.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_x</span><span class="p">,</span> <span class="s2">&quot;repeats_x&quot;</span><span class="p">)</span>
+    <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_y</span><span class="p">,</span> <span class="s2">&quot;repeats_y&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_lattice_creator</span><span class="p">(</span>
+        <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">lattice_spacing</span><span class="p">,</span> <span class="p">(</span><span class="n">repeats_x</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="triangular">
+<a class="viewcode-back" href="../../../api.html#qse.lattices.triangular">[docs]</a>
+<span class="k">def</span> <span class="nf">triangular</span><span class="p">(</span>
+    <span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a Qbits object in triangular lattice geometry.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lattice_spacing : float</span>
+<span class="sd">        The lattice spacing.</span>
+<span class="sd">    repeats_x : int</span>
+<span class="sd">        The number of repeats in the x direction. Must be greater than 1.</span>
+<span class="sd">    repeats_y : int</span>
+<span class="sd">        The number of repeats in the y direction. Must be greater than 1.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Qbits</span>
+<span class="sd">        The Qbits lattice.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_x</span><span class="p">,</span> <span class="s2">&quot;repeats_x&quot;</span><span class="p">)</span>
+    <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_y</span><span class="p">,</span> <span class="s2">&quot;repeats_y&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_lattice_creator</span><span class="p">(</span>
+        <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">lattice_spacing</span><span class="p">,</span> <span class="p">(</span><span class="n">repeats_x</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="hexagonal">
+<a class="viewcode-back" href="../../../api.html#qse.lattices.hexagonal">[docs]</a>
+<span class="k">def</span> <span class="nf">hexagonal</span><span class="p">(</span>
+    <span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a Qbits object in hexagonal lattice geometry.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lattice_spacing : float</span>
+<span class="sd">        The lattice spacing.</span>
+<span class="sd">    repeats_x : int</span>
+<span class="sd">        The number of repeats in the x direction. Must be greater than 1.</span>
+<span class="sd">    repeats_y : int</span>
+<span class="sd">        The number of repeats in the y direction. Must be greater than 1.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Qbits</span>
+<span class="sd">        The Qbits lattice.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_x</span><span class="p">,</span> <span class="s2">&quot;repeats_x&quot;</span><span class="p">)</span>
+    <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_y</span><span class="p">,</span> <span class="s2">&quot;repeats_y&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_lattice_creator</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">[</span><span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">],</span>
+        <span class="n">lattice_spacing</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">repeats_x</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">),</span>
+        <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">lattice_spacing</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="kagome">
+<a class="viewcode-back" href="../../../api.html#qse.lattices.kagome">[docs]</a>
+<span class="k">def</span> <span class="nf">kagome</span><span class="p">(</span>
+    <span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a Qbits object in kagome lattice geometry.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lattice_spacing : float</span>
+<span class="sd">        The lattice spacing.</span>
+<span class="sd">    repeats_x : int</span>
+<span class="sd">        The number of repeats in the x direction. Must be greater than 1.</span>
+<span class="sd">    repeats_y : int</span>
+<span class="sd">        The number of repeats in the y direction. Must be greater than 1.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Qbits</span>
+<span class="sd">        The Qbits lattice.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_x</span><span class="p">,</span> <span class="s2">&quot;repeats_x&quot;</span><span class="p">)</span>
+    <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_y</span><span class="p">,</span> <span class="s2">&quot;repeats_y&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_lattice_creator</span><span class="p">(</span>
+        <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">0</span><span class="p">]],</span>
+        <span class="n">lattice_spacing</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">repeats_x</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">),</span>
+        <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="n">lattice_spacing</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="n">lattice_spacing</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">lattice_spacing</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">],</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ring">
+<a class="viewcode-back" href="../../../api.html#qse.lattices.ring">[docs]</a>
+<span class="k">def</span> <span class="nf">ring</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">npoints</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate Qbits object in ring geometry.</span>
+<span class="sd">        The ring is placed in xy plane at center.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    center : array_like, optional</span>
+<span class="sd">        3D coordinate for the centre</span>
+<span class="sd">        of the ring, by default np.zeros(3)</span>
+<span class="sd">    radius : float, optional</span>
+<span class="sd">        Radius of ring, by default 3.0</span>
+<span class="sd">    npoints : int, optional</span>
+<span class="sd">        Number of points on ring, by default 12</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Qbits</span>
+<span class="sd">        The Qbits object with ring geometry.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">npoints</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">theta</span> <span class="o">*=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">npoints</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">npoints</span><span class="p">)])</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">positions</span> <span class="o">*=</span> <span class="n">radius</span>
+    <span class="n">positions</span> <span class="o">+=</span> <span class="n">center</span>
+    <span class="n">qring</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">qring</span></div>
+
+
+
+<div class="viewcode-block" id="torus">
+<a class="viewcode-back" href="../../../api.html#qse.lattices.torus">[docs]</a>
+<span class="k">def</span> <span class="nf">torus</span><span class="p">(</span><span class="n">N1</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">N2</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">Rin</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">Rout</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate Qbits object in a torus geometry.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N1 : int, optional</span>
+<span class="sd">        Number of points in larger (outer) dimension, by default 12</span>
+<span class="sd">    N2 : int, optional</span>
+<span class="sd">        Number of points in smaller (inner) dimension, by default 12</span>
+<span class="sd">    Rin : float, optional</span>
+<span class="sd">        Inner radius, by default 1.0</span>
+<span class="sd">    Rout : float, optional</span>
+<span class="sd">        Outer radius, by default 3.0</span>
+<span class="sd">    center : _type_, optional</span>
+<span class="sd">        Center of the torus, by default np.zeros(3)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Qbits</span>
+<span class="sd">        The Qbits object with torus geometry.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">N1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N1</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">N2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N2</span><span class="p">)</span>
+    <span class="c1">#</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">Rout</span> <span class="o">+</span> <span class="n">Rin</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">Rout</span> <span class="o">+</span> <span class="n">Rin</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">Rin</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">phi</span><span class="o">.</span><span class="n">shape</span><span class="p">)),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">N1</span> <span class="o">*</span> <span class="n">N2</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">T</span>
+    <span class="p">)</span>
+    <span class="n">positions</span> <span class="o">+=</span> <span class="n">center</span>
+    <span class="n">qtorus</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">qtorus</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By ICHEC
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright ....
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
