@@ -94,8 +94,7 @@ def get_spins(
         prob = (c_alpha * c_alpha.conj()).real
         zi = 1 - 2 * b
         szi += prob * zi
-    #
-    # print(szi)
+
     sxi = np.zeros(N, dtype=complex)
     for l, b in enumerate(ibasis):
         c_alpha = statevector[l]
@@ -103,23 +102,21 @@ def get_spins(
         indices = [np.where((ibasis == s).all(axis=1))[0][0] for s in states]
         ci = statevector[indices]
         sxi += c_alpha * ci.conj()
-    # print(sxi.real)
+
     syi = np.zeros(N, dtype=complex)
     for l, b in enumerate(ibasis):
         c_alpha = statevector[l]
         out = [syop(b, i) for i in range(N)]
         states = [i[0] for i in out]
         cc = np.array([i[1] for i in out])
-        # print(cc, states)
         indices = [np.where((ibasis == s).all(axis=1))[0][0] for s in states]
         ci = statevector[indices]
         syi += c_alpha * ci.conj() * cc
-    # print(syi)
+
     spins = np.array([sxi, syi, szi], dtype=complex).T.real
     return spins
 
 
-# checking the correction of the code
 def get_sisj(
     statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int
 ) -> np.ndarray[float]:
@@ -139,6 +136,7 @@ def get_sisj(
         s_ij -> np.ndarray[float]: An NxN array with computed expectation value of <S_i.S_j>
     """
     s_ij = np.zeros((N, N), dtype=float)
+
     # z-z part of the correlation
     for l, b in enumerate(ibasis):
         c_alpha = statevector[l]
@@ -146,6 +144,7 @@ def get_sisj(
         zi = 1 - 2 * b
         zizj = np.outer(zi, zi)
         s_ij += prob * zizj
+
     # x-x and y-y part of the correlation
     for l, b in enumerate(ibasis):
         c_alpha = statevector[l]
@@ -163,9 +162,6 @@ def get_sisj(
         np.fill_diagonal(tmp, 0)
         s_ij += 2 * tmp
     return s_ij
-
-
-#
 
 
 def structure_factor_from_sij(
@@ -200,6 +196,3 @@ def structure_factor_from_sij(
     struc_fac /= normalize
     struc_fac = struc_fac.real.copy()
     return struc_fac
-
-
-#
