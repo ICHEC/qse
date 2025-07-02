@@ -1,4 +1,0 @@
-# QSE
-
-```{tableofcontents}
-```
