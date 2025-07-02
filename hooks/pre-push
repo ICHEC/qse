@@ -86,6 +86,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "All checks passed. Ready to push"
+echo "All checks passed. Ready to push. committing pyproject change before push!"
+
+git commit -m "changed $(grep version pyproject.toml)" pyproject.toml
+
 
 exit 0
