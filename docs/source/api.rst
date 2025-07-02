@@ -21,6 +21,11 @@ qse.magnetic
 .. automodule:: qse.magnetic
     :members:
 
+qse.utils
+=========
+.. automodule:: qse.utils
+    :members:
+
    
 Indices and tables
 ==================
