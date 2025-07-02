@@ -73,7 +73,30 @@ default_params = {
 
 # for rydberg system we need additional parameters: mix,max of amplitude and detuning to set based on device.
 class Myqlm(Calculator):
-    """QSE-Calculator for MyQLM"""
+    """
+    QSE-Calculator for MyQLM
+
+    Parameters
+    ----------
+    qbits
+        ...
+    amplitude
+        ...
+    detuning
+        ...
+    duration
+        ...
+    qpu
+        ...
+    analog
+        ...
+    system
+        ...
+    label
+        ...
+    wtimes
+        ...
+    """
 
     implemented_properties = ["energy", "state", "fidality"]
     default_parameters = dict(label="q", qbits=None)
@@ -189,6 +212,18 @@ class Myqlm(Calculator):
         return arith_expr
 
     def calculate(self, qbits=None, properties=..., system_changes=...):
+        """
+        _summary_
+
+        Parameters
+        ----------
+        qbits : _type_, optional
+            _description_, by default None
+        properties : _type_, optional
+            _description_, by default ...
+        system_changes : _type_, optional
+            _description_, by default ...
+        """
         # return super().calculate(qbits, properties, system_changes)
         # self.Hamiltonian = self._get_hamiltonian()
         if self.wtimes:

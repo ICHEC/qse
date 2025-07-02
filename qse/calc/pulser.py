@@ -23,7 +23,8 @@ except ImportError:
 
 
 class Pulser(Calculator):
-    """QSE-Calculator for pulser.
+    r"""
+    QSE-Calculator for pulser.
 
     Pulser is an open-source Python software package.
     It provides easy-to-use libraries for designing and
@@ -36,9 +37,8 @@ class Pulser(Calculator):
     License: Apache 2.0
     - see [LICENSE](https://github.com/pasqal-io/Pulser/blob/master/LICENSE) for details
 
-    > TODO: if there is any config related to OMP_NUM_THREADS etc, place them here.
-
-    Arguments:
+    Parameters
+    ----------
     auto_write: bool
         Flag to enable the auto-write mode. If enabled the
         ``write()`` routine is called after every
@@ -64,7 +64,6 @@ class Pulser(Calculator):
         The method CP2K uses to evaluate energies and forces.
         The default is ``Quickstep``, which is CP2K's
         module for electronic structure methods like DFT.
-
     max_scf: int
         Maximum number of SCF iteration to be performed for
         one optimization. Default is ``50``.
@@ -230,8 +229,9 @@ class Pulser(Calculator):
             self.reset()
 
     def write(self, label):
-        """ "Write qbits, parameters and calculated results into restart files.
-            Not yet implemented.
+        """
+        Write qbits, parameters and calculated results into restart files.
+        Not yet implemented.
 
         Parameters
         ----------
@@ -241,8 +241,9 @@ class Pulser(Calculator):
         pass
 
     def read(self, label):
-        """ "Read qbits, parameters and calculated results from restart files.
-            Not yet implemented.
+        """
+        Read qbits, parameters and calculated results from restart files.
+        Not yet implemented.
 
         Parameters
         ----------
@@ -252,7 +253,8 @@ class Pulser(Calculator):
         pass
 
     def calculate(self, progress=True):
-        """Do the calculation.
+        """
+        Do the calculation.
         # system_changes=all_changes -> check it's relevance.
         """
         # we need to have/add an attribute to calc for device
