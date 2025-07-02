@@ -16,7 +16,9 @@ __all__ = [
     "Signal",
     "utils",
 ]
-__version__ = "0.1.2"
+import importlib.metadata
+
+__version__ = importlib.metadata.version("qse")
 
 from ase import cell
 
