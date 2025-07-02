@@ -20,6 +20,9 @@ dependencies = [
     "matplotlib"
 ]
 
+[tool.setuptools.package-dir]
+qse = "qse"
+
 [project.urls]
 homepage = "https://github.com/ichec/qse"
 
