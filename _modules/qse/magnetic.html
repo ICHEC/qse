@@ -431,8 +431,7 @@ document.write(`
         <span class="n">prob</span> <span class="o">=</span> <span class="p">(</span><span class="n">c_alpha</span> <span class="o">*</span> <span class="n">c_alpha</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span><span class="o">.</span><span class="n">real</span>
         <span class="n">zi</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">b</span>
         <span class="n">szi</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">zi</span>
-    <span class="c1">#</span>
-    <span class="c1"># print(szi)</span>
+
     <span class="n">sxi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ibasis</span><span class="p">):</span>
         <span class="n">c_alpha</span> <span class="o">=</span> <span class="n">statevector</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
@@ -440,24 +439,22 @@ document.write(`
         <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">ibasis</span> <span class="o">==</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">states</span><span class="p">]</span>
         <span class="n">ci</span> <span class="o">=</span> <span class="n">statevector</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
         <span class="n">sxi</span> <span class="o">+=</span> <span class="n">c_alpha</span> <span class="o">*</span> <span class="n">ci</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span>
-    <span class="c1"># print(sxi.real)</span>
+
     <span class="n">syi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ibasis</span><span class="p">):</span>
         <span class="n">c_alpha</span> <span class="o">=</span> <span class="n">statevector</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
         <span class="n">out</span> <span class="o">=</span> <span class="p">[</span><span class="n">syop</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
         <span class="n">states</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">out</span><span class="p">]</span>
         <span class="n">cc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">out</span><span class="p">])</span>
-        <span class="c1"># print(cc, states)</span>
         <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">ibasis</span> <span class="o">==</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">states</span><span class="p">]</span>
         <span class="n">ci</span> <span class="o">=</span> <span class="n">statevector</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
         <span class="n">syi</span> <span class="o">+=</span> <span class="n">c_alpha</span> <span class="o">*</span> <span class="n">ci</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">cc</span>
-    <span class="c1"># print(syi)</span>
+
     <span class="n">spins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sxi</span><span class="p">,</span> <span class="n">syi</span><span class="p">,</span> <span class="n">szi</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">real</span>
     <span class="k">return</span> <span class="n">spins</span></div>
 
 
 
-<span class="c1"># checking the correction of the code</span>
 <div class="viewcode-block" id="get_sisj">
 <a class="viewcode-back" href="../../api.html#qse.magnetic.get_sisj">[docs]</a>
 <span class="k">def</span> <span class="nf">get_sisj</span><span class="p">(</span>
@@ -479,6 +476,7 @@ document.write(`
 <span class="sd">        s_ij -&gt; np.ndarray[float]: An NxN array with computed expectation value of &lt;S_i.S_j&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">s_ij</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
     <span class="c1"># z-z part of the correlation</span>
     <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ibasis</span><span class="p">):</span>
         <span class="n">c_alpha</span> <span class="o">=</span> <span class="n">statevector</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
@@ -486,6 +484,7 @@ document.write(`
         <span class="n">zi</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">b</span>
         <span class="n">zizj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">zi</span><span class="p">,</span> <span class="n">zi</span><span class="p">)</span>
         <span class="n">s_ij</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">zizj</span>
+
     <span class="c1"># x-x and y-y part of the correlation</span>
     <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ibasis</span><span class="p">):</span>
         <span class="n">c_alpha</span> <span class="o">=</span> <span class="n">statevector</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
@@ -504,9 +503,6 @@ document.write(`
         <span class="n">s_ij</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">tmp</span>
     <span class="k">return</span> <span class="n">s_ij</span></div>
 
-
-
-<span class="c1">#</span>
 
 
 <div class="viewcode-block" id="structure_factor_from_sij">
@@ -544,9 +540,6 @@ document.write(`
     <span class="n">struc_fac</span> <span class="o">=</span> <span class="n">struc_fac</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">struc_fac</span></div>
 
-
-
-<span class="c1">#</span>
 </pre></div>
 
                 </article>

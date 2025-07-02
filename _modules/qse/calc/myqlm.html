@@ -332,7 +332,6 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">import</span> <span class="nn">qse.magnetic</span> <span class="k">as</span> <span class="nn">magnetic</span>
 <span class="kn">from</span> <span class="nn">qse.calc.calculator</span> <span class="kn">import</span> <span class="n">Calculator</span>
 
 <span class="n">qat_available</span> <span class="o">=</span> <span class="kc">False</span>
@@ -450,7 +449,6 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_waveform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">det</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
         <span class="c1"># self.duration = len(self.amplitude) # needs to change for time independent problems</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">C6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;C6&quot;</span><span class="p">]</span>
-        <span class="c1">#</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qpu</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spins</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sij</span> <span class="o">=</span> <span class="kc">None</span>
@@ -469,8 +467,6 @@ document.write(`
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ham</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">ham</span>
-
-    <span class="c1">#</span>
 
     <span class="k">def</span> <span class="nf">_generate_rydberg_hamiltonian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">rij</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">get_all_distances</span><span class="p">()</span>
@@ -492,14 +488,12 @@ document.write(`
                     <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_occ_op</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
                     <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_occ_op</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
                 <span class="p">)</span>
-        <span class="n">Hamiltonian</span> <span class="o">=</span> <span class="p">[</span>  <span class="c1"># qat.core.Observable(</span>
+
+        <span class="k">return</span> <span class="p">[</span>
             <span class="p">(</span><span class="n">amplitude</span><span class="p">,</span> <span class="n">H_amplitude</span><span class="p">),</span>
             <span class="p">(</span><span class="n">detuning</span><span class="p">,</span> <span class="n">H_detuning</span><span class="p">),</span>
             <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">H_interact</span><span class="p">),</span>
         <span class="p">]</span>
-        <span class="k">return</span> <span class="n">Hamiltonian</span>
-
-    <span class="c1">#</span>
 
     <span class="k">def</span> <span class="nf">_waveform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vi</span><span class="p">,</span> <span class="n">tmax</span><span class="p">):</span>
         <span class="n">ti</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tmax</span><span class="p">,</span> <span class="n">vi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -552,65 +546,6 @@ document.write(`
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span><span class="p">:</span>
             <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;time in compute and simulation = </span><span class="si">{</span><span class="n">t2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t1</span><span class="si">}</span><span class="s2"> s.&quot;</span><span class="p">)</span></div>
-
-
-    <span class="c1">#</span>
-
-<div class="viewcode-block" id="Myqlm.get_spins">
-<a class="viewcode-back" href="../../../api.html#qse.calc.Myqlm.get_spins">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_spins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get spin expectation values</span>
-<span class="sd">        If the hamiltonian isn&#39;t simulated, it triggers simulation first.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: Array of Nx3 containing spin expectation values.</span>
-<span class="sd">        See :py.func: `qse.magnetic.get_spins` for more details.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
-        <span class="c1">#</span>
-        <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">)</span>
-        <span class="n">ibasis</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_basis</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
-        <span class="n">si</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_spins</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">statevector</span><span class="p">,</span> <span class="n">ibasis</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">si</span></div>
-
-
-<div class="viewcode-block" id="Myqlm.get_sij">
-<a class="viewcode-back" href="../../../api.html#qse.calc.Myqlm.get_sij">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_sij</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Get spin correlation s_ij</span>
-<span class="sd">        If the hamiltonian isn&#39;t simulated, it triggers simulation first.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: Array of NxN shape containing spin correlations.</span>
-<span class="sd">        See :py.func: `qse.magnetic.get_sij` for more details.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
-        <span class="c1">#</span>
-        <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">)</span>
-        <span class="n">ibasis</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_basis</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
-        <span class="n">sij</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_sisj</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">statevector</span><span class="p">,</span> <span class="n">ibasis</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sij</span> <span class="o">=</span> <span class="n">sij</span>  <span class="c1"># quick fix. TODO: proper property setup done</span>
-        <span class="k">return</span> <span class="n">sij</span></div>
-
-
-<div class="viewcode-block" id="Myqlm.structure_factor_from_sij">
-<a class="viewcode-back" href="../../../api.html#qse.calc.Myqlm.structure_factor_from_sij">[docs]</a>
-    <span class="k">def</span> <span class="nf">structure_factor_from_sij</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L3</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Get the structure factor</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            L1 (int): Extent of lattice in x direction</span>
-<span class="sd">            L2 (int): Extent of lattice in y direction</span>
-<span class="sd">            L3 (int): Extent of lattice in z direction</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: Array containing the structure factor</span>
-<span class="sd">        See :py.func: `qse.magnetic.structure_factor_from_sij` for more details.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">struc_fac</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">structure_factor_from_sij</span><span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">L3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sij</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">struc_fac</span></div>
 </div>
 
 </pre></div>

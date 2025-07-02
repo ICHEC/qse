@@ -331,6 +331,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">ase.outputs</span> <span class="kn">import</span> <span class="n">Properties</span><span class="p">,</span> <span class="n">all_outputs</span>
 
+<span class="kn">import</span> <span class="nn">qse.magnetic</span> <span class="k">as</span> <span class="nn">magnetic</span>
 <span class="kn">from</span> <span class="nn">qse.calc.messages</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">CalculationFailed</span><span class="p">,</span>
     <span class="n">CalculatorSetupError</span><span class="p">,</span>
@@ -555,7 +556,8 @@ document.write(`
         <span class="n">installation_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Basic calculator implementation.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Basic calculator implementation.</span>
 <span class="sd">        label: str</span>
 <span class="sd">            Name used for all files.  Not supported by all calculators.</span>
 <span class="sd">            May contain a directory, but please use the directory parameter</span>
@@ -589,6 +591,8 @@ document.write(`
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sij</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -626,7 +630,8 @@ document.write(`
 <div class="viewcode-block" id="Calculator.read">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.read">[docs]</a>
     <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read qbits, parameters and calculated properties from output file.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read qbits, parameters and calculated properties from output file.</span>
 
 <span class="sd">        Read result from self.label file.  Raise ReadError if the file</span>
 <span class="sd">        is not there.  If the file is corrupted or contains an error</span>
@@ -642,7 +647,8 @@ document.write(`
 
 <span class="sd">        The FileIOCalculator.read() method will typically read qbits</span>
 <span class="sd">        and parameters and get the results dict by calling the</span>
-<span class="sd">        read_results() method.&quot;&quot;&quot;</span>
+<span class="sd">        read_results() method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">label</span><span class="p">)</span></div>
 
@@ -657,9 +663,6 @@ document.write(`
             <span class="n">qbits</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="k">return</span> <span class="n">qbits</span>
 
-    <span class="c1"># def set_qbits(self, qbits):</span>
-    <span class="c1">#    self.qbits = qbits</span>
-    <span class="c1">#    #qbits.calc = self</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span>
@@ -668,8 +671,6 @@ document.write(`
     <span class="k">def</span> <span class="nf">qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span> <span class="o">=</span> <span class="n">qbits</span>
 
-    <span class="c1"># qbits = property(fget=get_qbits, fset=set_qbits, doc=f&#39;qbits property, getter {get_qbits}, setter {set_qbits}&#39;)</span>
-
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">read_qbits</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">restart</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">restart</span><span class="o">=</span><span class="n">restart</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">restart</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">get_qbits</span><span class="p">()</span>
@@ -677,7 +678,8 @@ document.write(`
 <div class="viewcode-block" id="Calculator.set">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.set">[docs]</a>
     <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set parameters like set(key1=value1, key2=value2, ...).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set parameters like set(key1=value1, key2=value2, ...).</span>
 
 <span class="sd">        A dictionary containing the parameters that have been changed</span>
 <span class="sd">        is returned.</span>
@@ -688,7 +690,8 @@ document.write(`
 <span class="sd">        verbosity, then there is no need to call reset().</span>
 
 <span class="sd">        The special keyword &#39;parameters&#39; can be used to read</span>
-<span class="sd">        parameters from a file.&quot;&quot;&quot;</span>
+<span class="sd">        parameters from a file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="s2">&quot;parameters&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;parameters&quot;</span><span class="p">)</span>
@@ -831,7 +834,62 @@ document.write(`
 
 
     <span class="k">def</span> <span class="nf">export_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Properties</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Properties</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Calculator.get_spins">
+<a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.get_spins">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_spins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get spin expectation values</span>
+<span class="sd">        If the hamiltonian isn&#39;t simulated, it triggers simulation first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Array of Nx3 containing spin expectation values.</span>
+<span class="sd">        See :py.func: `qse.magnetic.get_spins` for more details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
+
+        <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">)</span>
+        <span class="n">ibasis</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_basis</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_spins</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">statevector</span><span class="p">,</span> <span class="n">ibasis</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Calculator.get_sij">
+<a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.get_sij">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_sij</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Get spin correlation s_ij</span>
+<span class="sd">        If the hamiltonian isn&#39;t simulated, it triggers simulation first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Array of NxN shape containing spin correlations.</span>
+<span class="sd">        See :py.func: `qse.magnetic.get_sij` for more details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
+
+        <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">)</span>
+        <span class="n">ibasis</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_basis</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
+        <span class="n">sij</span> <span class="o">=</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">get_sisj</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">statevector</span><span class="p">,</span> <span class="n">ibasis</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sij</span> <span class="o">=</span> <span class="n">sij</span>  <span class="c1"># quick fix. TODO: proper property setup done</span>
+        <span class="k">return</span> <span class="n">sij</span></div>
+
+
+<div class="viewcode-block" id="Calculator.structure_factor_from_sij">
+<a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.structure_factor_from_sij">[docs]</a>
+    <span class="k">def</span> <span class="nf">structure_factor_from_sij</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L3</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Get the structure factor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            L1 (int): Extent of lattice in x direction</span>
+<span class="sd">            L2 (int): Extent of lattice in y direction</span>
+<span class="sd">            L3 (int): Extent of lattice in z direction</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Array containing the structure factor</span>
+<span class="sd">        See :py.func: `qse.magnetic.structure_factor_from_sij` for more details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">structure_factor_from_sij</span><span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">L3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sij</span><span class="p">)</span></div>
+</div>
 
 
 
