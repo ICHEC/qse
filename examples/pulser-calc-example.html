@@ -489,19 +489,9 @@ rcut is 9.756753962298905
 <h2>Setting up the calculator<a class="headerlink" href="#setting-up-the-calculator" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">isinstance</span><span class="p">(</span><span class="n">amplitude_afm</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pcalc</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">Pulser</span><span class="p">(</span><span class="n">qbits</span><span class="o">=</span><span class="n">q2d</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">amplitude_afm</span><span class="p">,</span> <span class="n">detuning</span><span class="o">=</span><span class="n">detuning_afm</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">amplitude_afm</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">)</span>
+
+<span class="n">pcalc</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">Pulser</span><span class="p">(</span><span class="n">qbits</span><span class="o">=</span><span class="n">q2d</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">amplitude_afm</span><span class="p">,</span> <span class="n">detuning</span><span class="o">=</span><span class="n">detuning_afm</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -518,7 +508,7 @@ rcut is 9.756753962298905
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10.1%. Run time:   0.00s. Est. time left: 00:00:00:00
 20.0%. Run time:   0.00s. Est. time left: 00:00:00:00
-30.0%. Run time:   0.00s. Est. time left: 00:00:00:00
+30.0%. Run time:   0.01s. Est. time left: 00:00:00:00
 40.0%. Run time:   0.01s. Est. time left: 00:00:00:00
 50.0%. Run time:   0.01s. Est. time left: 00:00:00:00
 60.1%. Run time:   0.01s. Est. time left: 00:00:00:00
@@ -527,7 +517,7 @@ rcut is 9.756753962298905
 90.0%. Run time:   0.01s. Est. time left: 00:00:00:00
 100.0%. Run time:   0.01s. Est. time left: 00:00:00:00
 Total run time:   0.01s
-time in compute and simulation = 0.01907515525817871 s.
+time in compute and simulation = 0.0194089412689209 s.
 </pre></div>
 </div>
 </div>
@@ -606,7 +596,7 @@ time in compute and simulation = 0.01907515525817871 s.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ad9f774cf4d4a4ae0a8f31f5ea4621442fc3a450eda8ca466ae9511be43995c5.png" src="../_images/ad9f774cf4d4a4ae0a8f31f5ea4621442fc3a450eda8ca466ae9511be43995c5.png" />
+<img alt="../_images/25d244d05a05ff5601494466a5a0a0fff8a54bfd38ed54591fea7ef7192f0569.png" src="../_images/25d244d05a05ff5601494466a5a0a0fff8a54bfd38ed54591fea7ef7192f0569.png" />
 </div>
 </div>
 </section>

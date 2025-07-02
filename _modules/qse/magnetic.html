@@ -333,17 +333,23 @@ document.write(`
 <div class="viewcode-block" id="get_basis">
 <a class="viewcode-back" href="../../api.html#qse.magnetic.get_basis">[docs]</a>
 <span class="k">def</span> <span class="nf">get_basis</span><span class="p">(</span><span class="n">hsize</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;returns a boolean array representing basis in qubit product state.</span>
-<span class="sd">        Originally it is intended for the full qubit space, for which</span>
-<span class="sd">        hsize = $2^N$, however if we need a subset of the full, then hsize</span>
-<span class="sd">        can be smaller.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a boolean array representing basis in qubit product state.</span>
+<span class="sd">    Originally it is intended for the full qubit space, for which</span>
+<span class="sd">    hsize = :math:`2^N`, however if we need a subset of the full, then hsize</span>
+<span class="sd">    can be smaller.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        hsize (int): size of the hamiltonian or hilbert space.</span>
-<span class="sd">        N (int): number of qubits</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hsize: int</span>
+<span class="sd">        The size of the hamiltonian or hilbert space.</span>
+<span class="sd">    N: int</span>
+<span class="sd">        The number of qubits.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray: of shape (hsize, N)</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        The basis of shape (hsize, N).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ibasis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">hsize</span><span class="p">,</span> <span class="n">N</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">hsize</span><span class="p">):</span>
@@ -355,14 +361,20 @@ document.write(`
 <div class="viewcode-block" id="sxop">
 <a class="viewcode-back" href="../../api.html#qse.magnetic.sxop">[docs]</a>
 <span class="k">def</span> <span class="nf">sxop</span><span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sx operator on a boolian array b.</span>
-<span class="sd">        (Basically bit flip)</span>
-<span class="sd">    Args:</span>
-<span class="sd">        b (np.ndarray[bool]): array representing the basis</span>
-<span class="sd">        i (int): index in b where to apply operation, i.e., b[i]</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sx operator on a boolian array b (basically bit flip).</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray[bool]: array after applying the Sx operation</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    b: np.ndarray[bool]</span>
+<span class="sd">        The array representing the basis.</span>
+<span class="sd">    i: int</span>
+<span class="sd">        The index in b where to apply operation, i.e., b[i].</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray[bool]</span>
+<span class="sd">        The array after applying the Sx operation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">~</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -373,15 +385,21 @@ document.write(`
 <div class="viewcode-block" id="syop">
 <a class="viewcode-back" href="../../api.html#qse.magnetic.syop">[docs]</a>
 <span class="k">def</span> <span class="nf">syop</span><span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sy opertor on a boolian array b</span>
-<span class="sd">    (This gives a flipped bit at `i`th index and a sign)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sy opertor on a boolian array b (this gives a flipped bit</span>
+<span class="sd">    at ith index and a sign).</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        b (np.ndarray[bool]): array representing the basis</span>
-<span class="sd">        i (int): index in b where to apply operation, i.e., b[i]</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    b: np.ndarray[bool]</span>
+<span class="sd">        The array representing the basis.</span>
+<span class="sd">    i: int</span>
+<span class="sd">        The index in b where to apply operation, i.e., b[i].</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        tuple (s, c): where s is the basis after operation and c is sign</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        Of the form (s, c): where s is the basis after operation and c is sign.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">~</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -393,14 +411,21 @@ document.write(`
 <div class="viewcode-block" id="get_index">
 <a class="viewcode-back" href="../../api.html#qse.magnetic.get_index">[docs]</a>
 <span class="k">def</span> <span class="nf">get_index</span><span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get index where value matches in the array.</span>
-<span class="sd">        Results in either single integer, or an array containing indices.</span>
-<span class="sd">    Args:</span>
-<span class="sd">        arr (np.ndarray): The array</span>
-<span class="sd">        val (Any): the value to match</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get index where value matches in the array.</span>
+<span class="sd">    Results in either single integer, or an array containing indices.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        Any: Integer, or an array of indices.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    arr: np.ndarray</span>
+<span class="sd">        The array.</span>
+<span class="sd">    val: Any</span>
+<span class="sd">        The value to match.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Any</span>
+<span class="sd">        Integer, or an array of indices.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">arr</span> <span class="o">==</span> <span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
 
@@ -411,19 +436,25 @@ document.write(`
 <span class="k">def</span> <span class="nf">get_spins</span><span class="p">(</span>
     <span class="n">statevector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">complex</span><span class="p">],</span> <span class="n">ibasis</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">N</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Get the expectation value of the spin operators (Sx, Sy, Sz).</span>
-<span class="sd">        With a list of qubits seen as spin 1/2 object, here one</span>
-<span class="sd">        calculates the expectation value &lt;Psi| (Sx, Sy, Sz) |Psi&gt;</span>
-<span class="sd">        The state is given as follows:</span>
-<span class="sd">        :math:`|\psi&gt;  = \sum_i statevector[i] ibasis[i]`</span>
-<span class="sd">    Args:</span>
-<span class="sd">        statevector (np.ndarray[complex]): :math:`2^N` sized complex array representing the statevector.</span>
-<span class="sd">        ibasis (np.ndarray[bool]): Boolean array representing product basis</span>
-<span class="sd">        for qubits passed for computing.</span>
-<span class="sd">        N (int): Number of Qubits or Spins</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the expectation value of the spin operators (Sx, Sy, Sz).</span>
+<span class="sd">    With a list of qubits seen as spin 1/2 object, here one</span>
+<span class="sd">    calculates the expectation value :math:`&lt;Psi| (Sx, Sy, Sz) |Psi&gt;`.</span>
+<span class="sd">    The state is given as follows: :math:`|\psi&gt;  = \sum_i statevector[i] ibasis[i]`.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        spins -&gt; np.ndarray[float]: An Nx3 array with expectation values of spin operator.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    statevector: np.ndarray[complex]</span>
+<span class="sd">        :math:`2^N` sized complex array representing the statevector.</span>
+<span class="sd">    ibasis: np.ndarray[bool]</span>
+<span class="sd">        Boolean array representing product basis for qubits passed for computing.</span>
+<span class="sd">    N: int</span>
+<span class="sd">        Number of Qubits or Spins.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray[float]</span>
+<span class="sd">        An Nx3 array with expectation values of spin operator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">szi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ibasis</span><span class="p">):</span>
@@ -460,20 +491,24 @@ document.write(`
 <span class="k">def</span> <span class="nf">get_sisj</span><span class="p">(</span>
     <span class="n">statevector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">complex</span><span class="p">],</span> <span class="n">ibasis</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">N</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute spin correlation function</span>
-<span class="sd">        :math: `S_ij = &lt;\psi| S_i \cdot S_j |\psi&gt;.`</span>
-<span class="sd">        With a list of qubits seen as spin 1/2 object, the spins operators are S_i = (Sx, Sy, Sz).</span>
-<span class="sd">        The state |Psi&gt; given as follows:</span>
-<span class="sd">        :math: `|\psi&gt;  = \sum_i statevector[i] ibasis[i]`</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute spin correlation function :math: `S_ij = &lt;\psi| S_i \cdot S_j |\psi&gt;`.</span>
+<span class="sd">    With a list of qubits seen as spin 1/2 object, the spins operators are S_i = (Sx, Sy, Sz).</span>
+<span class="sd">    The state :math:`|Psi&gt;` given as follows: :math: `|\psi&gt;  = \sum_i statevector[i] ibasis[i]`.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        statevector (np.ndarray[complex]): :math: `2^N` sized complex array representing the statevector.</span>
-<span class="sd">        ibasis (np.ndarray[bool]): Boolean array representing product basis</span>
-<span class="sd">        for qubits passed for computing.</span>
-<span class="sd">        N (int): Number of Qubits or Spins</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    statevector: np.ndarray[complex]</span>
+<span class="sd">        :math: `2^N` sized complex array representing the statevector.</span>
+<span class="sd">    ibasis: np.ndarray[bool]</span>
+<span class="sd">        Boolean array representing product basis for qubits passed for computing.</span>
+<span class="sd">    N: int</span>
+<span class="sd">        Number of Qubits or Spins.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        s_ij -&gt; np.ndarray[float]: An NxN array with computed expectation value of &lt;S_i.S_j&gt;</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray[float]</span>
+<span class="sd">        An NxN array with computed expectation value of &lt;S_i.S_j&gt;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">s_ij</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
@@ -510,20 +545,30 @@ document.write(`
 <span class="k">def</span> <span class="nf">structure_factor_from_sij</span><span class="p">(</span>
     <span class="n">L1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L3</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">qbits</span><span class="p">:</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">,</span> <span class="n">s_ij</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;From spin correlation, compute the `structure factor`.</span>
-<span class="sd">        The structure factor is just fourier transform of the s_ij</span>
-<span class="sd">        :math: `S[q] = \frac{1}{N^2} \sum_{ij} s_{ij} \exp{i q \cdot (x_i - x_j)}`</span>
-<span class="sd">        The (L1, L2, L3) are passed as shape of the lattice, and there is a qubit</span>
-<span class="sd">        at each of these lattice sites.</span>
-<span class="sd">    Args:</span>
-<span class="sd">        L1 (int): Extent of lattice in x direction</span>
-<span class="sd">        L2 (int): Extent of lattice in y direction</span>
-<span class="sd">        L3 (int): Extent of lattice in z direction</span>
-<span class="sd">        qbits (qse.Qbits): The Qbits object representing the lattice.</span>
-<span class="sd">        s_ij (np.ndarray[float]): The array with spin correlation.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    From spin correlation, compute the `structure factor`.</span>
+<span class="sd">    The structure factor is just fourier transform of the s_ij</span>
+<span class="sd">    :math: `S[q] = \frac{1}{N^2} \sum_{ij} s_{ij} \exp{i q \cdot (x_i - x_j)}`</span>
+<span class="sd">    The (L1, L2, L3) are passed as shape of the lattice, and there is a qubit</span>
+<span class="sd">    at each of these lattice sites.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        np.ndarray[float]: Returns the structure factor.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    L1: int</span>
+<span class="sd">        Extent of lattice in x direction.</span>
+<span class="sd">    L2 (int):</span>
+<span class="sd">        Extent of lattice in y direction.</span>
+<span class="sd">    L3 (int):</span>
+<span class="sd">        Extent of lattice in z direction.</span>
+<span class="sd">    qbits: qse.Qbits</span>
+<span class="sd">        The Qbits object representing the lattice.</span>
+<span class="sd">    s_ij: np.ndarray[float]</span>
+<span class="sd">        The array with spin correlation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray[float]</span>
+<span class="sd">        Returns the structure factor.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">L1</span> <span class="o">*</span> <span class="n">L2</span> <span class="o">*</span> <span class="n">L3</span> <span class="o">==</span> <span class="n">qbits</span><span class="o">.</span><span class="n">nqbits</span>
     <span class="n">normalize</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">nqbits</span><span class="o">**</span><span class="mi">2</span>

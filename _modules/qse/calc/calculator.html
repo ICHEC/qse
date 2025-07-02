@@ -779,8 +779,11 @@ document.write(`
 <div class="viewcode-block" id="Calculator.calculate">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.calculate">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">],</span> <span class="n">system_changes</span><span class="o">=</span><span class="n">all_changes</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the calculation.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Do the calculation.</span>
 
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
 <span class="sd">        properties: list of str</span>
 <span class="sd">            List of what needs to be calculated.  Can be any combination</span>
 <span class="sd">            of &#39;energy&#39;, &#39;forces&#39;, &#39;stress&#39;, &#39;dipole&#39;, &#39;charges&#39;, &#39;magmom&#39;</span>
@@ -839,12 +842,18 @@ document.write(`
 <div class="viewcode-block" id="Calculator.get_spins">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.get_spins">[docs]</a>
     <span class="k">def</span> <span class="nf">get_spins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get spin expectation values</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get spin expectation values.</span>
 <span class="sd">        If the hamiltonian isn&#39;t simulated, it triggers simulation first.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: Array of Nx3 containing spin expectation values.</span>
-<span class="sd">        See :py.func: `qse.magnetic.get_spins` for more details.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Array of Nx3 containing spin expectation values.</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        qse.magnetic.get_spins for more details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
@@ -857,12 +866,18 @@ document.write(`
 <div class="viewcode-block" id="Calculator.get_sij">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.get_sij">[docs]</a>
     <span class="k">def</span> <span class="nf">get_sij</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Get spin correlation s_ij</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get spin correlation s_ij.</span>
 <span class="sd">        If the hamiltonian isn&#39;t simulated, it triggers simulation first.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: Array of NxN shape containing spin correlations.</span>
-<span class="sd">        See :py.func: `qse.magnetic.get_sij` for more details.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Array of NxN shape containing spin correlations.</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        qse.magnetic.get_sij for more details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
@@ -877,16 +892,26 @@ document.write(`
 <div class="viewcode-block" id="Calculator.structure_factor_from_sij">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.structure_factor_from_sij">[docs]</a>
     <span class="k">def</span> <span class="nf">structure_factor_from_sij</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L3</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Get the structure factor</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the structure factor.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            L1 (int): Extent of lattice in x direction</span>
-<span class="sd">            L2 (int): Extent of lattice in y direction</span>
-<span class="sd">            L3 (int): Extent of lattice in z direction</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        L1: int</span>
+<span class="sd">            Extent of lattice in x direction.</span>
+<span class="sd">        L2: int</span>
+<span class="sd">            Extent of lattice in y direction.</span>
+<span class="sd">        L3: int</span>
+<span class="sd">            Extent of lattice in z direction.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            np.ndarray: Array containing the structure factor</span>
-<span class="sd">        See :py.func: `qse.magnetic.structure_factor_from_sij` for more details.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            Array containing the structure factor.</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        qse.magnetic.structure_factor_from_sij for more details.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">structure_factor_from_sij</span><span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">L3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sij</span><span class="p">)</span></div>
 </div>

@@ -854,17 +854,17 @@ are angles between them:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbits.get_centroid">
 <span class="sig-name descname"><span class="pre">get_centroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scaled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.get_centroid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.get_centroid" title="Link to this definition">#</a></dt>
-<dd><blockquote>
-<div><p>Get the centroid of the positions.</p>
-<dl class="simple">
-<dt>scaled<span class="classifier">bool</span></dt><dd><p>If scaled=True the centroid in scaled coordinates is returned.</p>
+<dd><p>Get the centroid of the positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scaled</strong> (<em>bool</em>) – If scaled=True the centroid in scaled coordinates is returned.</p>
 </dd>
 </dl>
-<p>For a set of $k$ positions $    extbf{x}_1,     extbf{x}_2, …,        extbf{x}_k$
-the centroid is given by
-$</p>
-</div></blockquote>
-<p>rac{  extbf{x}_1 +    extbf{x}_2 + … +      extbf{x}_k}{k}.$</p>
+<p class="rubric">Notes</p>
+<p>For a set of <span class="math notranslate nohighlight">\(k\)</span> positions <span class="math notranslate nohighlight">\(\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k\)</span>
+the centroid is given by</p>
+<div class="math notranslate nohighlight">
+\[\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.\]</div>
 </dd></dl>
 
 <dl class="py method">
@@ -1128,19 +1128,20 @@ Default behavior is to <em>not</em> move the qbits (scale_qbits=False).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbits.set_centroid">
 <span class="sig-name descname"><span class="pre">set_centroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centroid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_centroid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_centroid" title="Link to this definition">#</a></dt>
-<dd><blockquote>
-<div><p>Set the centroid of the positions.</p>
-<dl class="simple">
-<dt>centroid<span class="classifier">float | np.ndarray</span></dt><dd><p>The new centroid. Can be a float or a xyz vector</p>
-</dd>
-<dt>scaled<span class="classifier">bool</span></dt><dd><p>If scaled=True the centroid is expected in scaled coordinates.</p>
+<dd><p>Set the centroid of the positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>centroid</strong> (<em>float | np.ndarray</em>) – The new centroid. Can be a float or a xyz vector</p></li>
+<li><p><strong>scaled</strong> (<em>bool</em>) – If scaled=True the centroid is expected in scaled coordinates.</p></li>
+</ul>
 </dd>
 </dl>
-<p>For a set of $k$ positions $    extbf{x}_1,     extbf{x}_2, …,        extbf{x}_k$
-the centroid is given by
-$</p>
-</div></blockquote>
-<p>rac{  extbf{x}_1 +    extbf{x}_2 + … +      extbf{x}_k}{k}.$</p>
+<p class="rubric">Notes</p>
+<p>For a set of <span class="math notranslate nohighlight">\(k\)</span> positions <span class="math notranslate nohighlight">\(\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k\)</span>
+the centroid is given by</p>
+<div class="math notranslate nohighlight">
+\[\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.\]</div>
 </dd></dl>
 
 <dl class="py method">
@@ -1266,33 +1267,30 @@ kwargs are passed to ase.io.write.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">Signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/signal.html#Signal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Signal" title="Link to this definition">#</a></dt>
 <dd><p>Signal class represents a 1D signal with values and duration.</p>
 <p>The class supports arithmetic operations with other signals and
-scalars. Specifically:</p>
+scalars.
+Specifically:</p>
 <ul class="simple">
-<li><p>Adding a scalar to a Signal returns a new Signal with modified</p></li>
-</ul>
-<p>values and the same duration. Say W is a signal, then W + 3.0 returns
-a signal with same duration, and values W.values + 3.0.</p>
-<ul class="simple">
-<li><p>Adding two Signal instances concatenates their values and sums</p></li>
-</ul>
-<p>their durations. So if w1, w2 are instantiation of Signal, then
+<li><p>Adding a scalar to a Signal returns a new Signal with modified
+values and the same duration. Say W is a signal, then W + 3.0 returns
+a signal with same duration, and values W.values + 3.0.</p></li>
+<li><p>Adding two Signal instances concatenates their values and sums
+their durations. So if w1, w2 are instantiation of Signal, then
 w = w1 + w2 gives signal with concatenated values, i.e.,
-w.values = [w1.values, w2.values], and added duration.
-w.duration = w1.duration + w2.duration</p>
+w.values = [w1.values, w2.values], and added duration
+w.duration = w1.duration + w2.duration.</p></li>
+</ul>
 <dl class="field-list simple">
-<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>values</strong> (<em>ndarray</em>) – The values of the signal.</p></li>
 <li><p><strong>duration</strong> (<em>int</em>) – Duration of the signal.</p></li>
 </ul>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<p class="rubric">Notes</p>
 <p>Currently, the object gets created for multi-dim arrays as well.
 However, it should be used for 1D only, we haven’t made it useful
 or consistent for multi-dim usage.</p>
-</div>
 <dl class="py property">
 <dt class="sig sig-object py" id="qse.Signal.duration">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">duration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#qse.Signal.duration" title="Link to this definition">#</a></dt>
@@ -1363,32 +1361,35 @@ properties: ‘energy’, ‘forces’, ‘stress’, ‘dipole’, ‘charges�
 <dt class="sig sig-object py" id="qse.calc.Calculator.calculate">
 <span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['energy']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_changes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['labels',</span> <span class="pre">'positions',</span> <span class="pre">'states',</span> <span class="pre">'cell',</span> <span class="pre">'pbc']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator.calculate" title="Link to this definition">#</a></dt>
 <dd><p>Do the calculation.</p>
-<dl class="simple">
-<dt>properties: list of str</dt><dd><p>List of what needs to be calculated.  Can be any combination
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul>
+<li><p><strong>properties</strong> (<em>list of str</em>) – List of what needs to be calculated.  Can be any combination
 of ‘energy’, ‘forces’, ‘stress’, ‘dipole’, ‘charges’, ‘magmom’
-and ‘magmoms’.</p>
-</dd>
-<dt>system_changes: list of str</dt><dd><p>List of what has changed since last calculation.  Can be
+and ‘magmoms’.</p></li>
+<li><p><strong>system_changes</strong> (<em>list of str</em>) – List of what has changed since last calculation.  Can be
 any combination of these six: ‘positions’, ‘numbers’, ‘cell’,
-‘pbc’, ‘initial_charges’ and ‘initial_magmoms’.</p>
+‘pbc’, ‘initial_charges’ and ‘initial_magmoms’.</p></li>
+<li><p><strong>Subclasses need to implement this, but can ignore properties</strong></p></li>
+<li><p><strong>and system_changes if they want.  Calculated properties should</strong></p></li>
+<li><p><strong>be inserted into results dictionary like shown in this dummy</strong></p></li>
+<li><p><strong>example::</strong> –</p>
+<dl class="simple">
+<dt>self.results = {‘energy’: 0.0,</dt><dd><p>‘forces’: np.zeros((len(qbits), 3)),
+‘stress’: np.zeros(6),
+‘dipole’: np.zeros(3),
+‘charges’: np.zeros(len(qbits)),
+‘magmom’: 0.0,
+‘magmoms’: np.zeros(len(qbits))}</p>
 </dd>
 </dl>
-<p>Subclasses need to implement this, but can ignore properties
-and system_changes if they want.  Calculated properties should
-be inserted into results dictionary like shown in this dummy
-example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-                <span class="s1">&#39;forces&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">qbits</span><span class="p">),</span> <span class="mi">3</span><span class="p">)),</span>
-                <span class="s1">&#39;stress&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span>
-                <span class="s1">&#39;dipole&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
-                <span class="s1">&#39;charges&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">qbits</span><span class="p">)),</span>
-                <span class="s1">&#39;magmom&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-                <span class="s1">&#39;magmoms&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">qbits</span><span class="p">))}</span>
-</pre></div>
-</div>
-<p>The subclass implementation should first call this
-implementation to set the qbits attribute and create any missing
-directories.</p>
+</li>
+<li><p><strong>The subclass implementation should first call this</strong></p></li>
+<li><p><strong>implementation to set the qbits attribute and create any missing</strong></p></li>
+<li><p><strong>directories.</strong></p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1418,25 +1419,39 @@ directories.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.calc.Calculator.get_sij">
 <span class="sig-name descname"><span class="pre">get_sij</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator.get_sij"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator.get_sij" title="Link to this definition">#</a></dt>
-<dd><p>Get spin correlation s_ij
+<dd><p>Get spin correlation s_ij.
 If the hamiltonian isn’t simulated, it triggers simulation first.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>np.ndarray: Array of NxN shape containing spin correlations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Array of NxN shape containing spin correlations.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
-<p>See :py.func: <cite>qse.magnetic.get_sij</cite> for more details.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">qse.magnetic.get_sij</span></code></p>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.calc.Calculator.get_spins">
 <span class="sig-name descname"><span class="pre">get_spins</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator.get_spins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator.get_spins" title="Link to this definition">#</a></dt>
-<dd><p>Get spin expectation values
+<dd><p>Get spin expectation values.
 If the hamiltonian isn’t simulated, it triggers simulation first.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>np.ndarray: Array of Nx3 containing spin expectation values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Array of Nx3 containing spin expectation values.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
 </dd>
 </dl>
-<p>See :py.func: <cite>qse.magnetic.get_spins</cite> for more details.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#qse.magnetic.get_spins" title="qse.magnetic.get_spins"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qse.magnetic.get_spins</span></code></a></p>
+</div>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1495,16 +1510,26 @@ parameters from a file.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.calc.Calculator.structure_factor_from_sij">
 <span class="sig-name descname"><span class="pre">structure_factor_from_sij</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator.structure_factor_from_sij"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator.structure_factor_from_sij" title="Link to this definition">#</a></dt>
-<dd><p>Get the structure factor</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>L1 (int): Extent of lattice in x direction
-L2 (int): Extent of lattice in y direction
-L3 (int): Extent of lattice in z direction</p>
+<dd><p>Get the structure factor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L1</strong> (<em>int</em>) – Extent of lattice in x direction.</p></li>
+<li><p><strong>L2</strong> (<em>int</em>) – Extent of lattice in y direction.</p></li>
+<li><p><strong>L3</strong> (<em>int</em>) – Extent of lattice in z direction.</p></li>
+</ul>
 </dd>
-<dt>Returns:</dt><dd><p>np.ndarray: Array containing the structure factor</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array containing the structure factor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
-<p>See :py.func: <cite>qse.magnetic.structure_factor_from_sij</cite> for more details.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#qse.magnetic.structure_factor_from_sij" title="qse.magnetic.structure_factor_from_sij"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qse.magnetic.structure_factor_from_sij</span></code></a></p>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -1529,36 +1554,34 @@ L3 (int): Extent of lattice in z direction</p>
 <dt class="sig sig-object py" id="qse.calc.Myqlm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">Myqlm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detuning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rydberg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'myqlm-run'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wtimes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/myqlm.html#Myqlm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Myqlm" title="Link to this definition">#</a></dt>
 <dd><p>QSE-Calculator for MyQLM</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>qbits</strong> – …</p></li>
+<li><p><strong>amplitude</strong> – …</p></li>
+<li><p><strong>detuning</strong> – …</p></li>
+<li><p><strong>duration</strong> – …</p></li>
+<li><p><strong>qpu</strong> – …</p></li>
+<li><p><strong>analog</strong> – …</p></li>
+<li><p><strong>system</strong> – …</p></li>
+<li><p><strong>label</strong> – …</p></li>
+<li><p><strong>wtimes</strong> – …</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.calc.Myqlm.calculate">
 <span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Ellipsis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_changes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Ellipsis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/myqlm.html#Myqlm.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Myqlm.calculate" title="Link to this definition">#</a></dt>
-<dd><p>Do the calculation.</p>
-<dl class="simple">
-<dt>properties: list of str</dt><dd><p>List of what needs to be calculated.  Can be any combination
-of ‘energy’, ‘forces’, ‘stress’, ‘dipole’, ‘charges’, ‘magmom’
-and ‘magmoms’.</p>
-</dd>
-<dt>system_changes: list of str</dt><dd><p>List of what has changed since last calculation.  Can be
-any combination of these six: ‘positions’, ‘numbers’, ‘cell’,
-‘pbc’, ‘initial_charges’ and ‘initial_magmoms’.</p>
+<dd><p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>qbits</strong> (<em>_type_, optional</em>) – _description_, by default None</p></li>
+<li><p><strong>properties</strong> (<em>_type_, optional</em>) – _description_, by default …</p></li>
+<li><p><strong>system_changes</strong> (<em>_type_, optional</em>) – _description_, by default …</p></li>
+</ul>
 </dd>
 </dl>
-<p>Subclasses need to implement this, but can ignore properties
-and system_changes if they want.  Calculated properties should
-be inserted into results dictionary like shown in this dummy
-example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-                <span class="s1">&#39;forces&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">qbits</span><span class="p">),</span> <span class="mi">3</span><span class="p">)),</span>
-                <span class="s1">&#39;stress&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span>
-                <span class="s1">&#39;dipole&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
-                <span class="s1">&#39;charges&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">qbits</span><span class="p">)),</span>
-                <span class="s1">&#39;magmom&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-                <span class="s1">&#39;magmoms&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">qbits</span><span class="p">))}</span>
-</pre></div>
-</div>
-<p>The subclass implementation should first call this
-implementation to set the qbits attribute and create any missing
-directories.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1603,47 +1626,38 @@ White paper: Quantum 6, 629 (2022)
 Source code: <a class="github reference external" href="https://github.com/pasqal-io/Pulser">pasqal-io/Pulser</a>
 License: Apache 2.0
 - see [LICENSE](<a class="github reference external" href="https://github.com/pasqal-io/Pulser/blob/master/LICENSE">pasqal-io/Pulser</a>) for details</p>
-<p>&gt; TODO: if there is any config related to OMP_NUM_THREADS etc, place them here.</p>
-<p>Arguments:
-auto_write: bool</p>
-<blockquote>
-<div><p>Flag to enable the auto-write mode. If enabled the
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>auto_write</strong> (<em>bool</em>) – Flag to enable the auto-write mode. If enabled the
 <code class="docutils literal notranslate"><span class="pre">write()</span></code> routine is called after every
 calculation, which mimics the behavior of the
-<code class="docutils literal notranslate"><span class="pre">FileIOCalculator</span></code>. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
-</div></blockquote>
-<dl class="simple">
-<dt>basis_set: str</dt><dd><p>Name of the basis set to be use.
-The default is <code class="docutils literal notranslate"><span class="pre">DZVP-MOLOPT-SR-GTH</span></code>.</p>
-</dd>
-<dt>basis_set_file: str</dt><dd><p>Filename of the basis set file.
+<code class="docutils literal notranslate"><span class="pre">FileIOCalculator</span></code>. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>basis_set</strong> (<em>str</em>) – Name of the basis set to be use.
+The default is <code class="docutils literal notranslate"><span class="pre">DZVP-MOLOPT-SR-GTH</span></code>.</p></li>
+<li><p><strong>basis_set_file</strong> (<em>str</em>) – Filename of the basis set file.
 Default is <code class="docutils literal notranslate"><span class="pre">BASIS_MOLOPT</span></code>.
 Set the environment variable $CP2K_DATA_DIR
-to enabled automatic file discovered.</p>
-</dd>
-<dt>charge: float</dt><dd><p>The total charge of the system.  Default is <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
-</dd>
-<dt>cutoff: float</dt><dd><p>The cutoff of the finest grid level.  Default is <code class="docutils literal notranslate"><span class="pre">400</span> <span class="pre">*</span> <span class="pre">Rydberg</span></code>.</p>
-</dd>
-<dt>debug: bool</dt><dd><p>Flag to enable debug mode. This will print all
+to enabled automatic file discovered.</p></li>
+<li><p><strong>charge</strong> (<em>float</em>) – The total charge of the system.  Default is <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+<li><p><strong>cutoff</strong> (<em>float</em>) – The cutoff of the finest grid level.  Default is <code class="docutils literal notranslate"><span class="pre">400</span> <span class="pre">*</span> <span class="pre">Rydberg</span></code>.</p></li>
+<li><p><strong>debug</strong> (<em>bool</em>) – Flag to enable debug mode. This will print all
 communication between the CP2K-shell and the
-CP2K-calculator. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
-</dd>
-<dt>force_eval_method: str</dt><dd><p>The method CP2K uses to evaluate energies and forces.
+CP2K-calculator. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>force_eval_method</strong> (<em>str</em>) – The method CP2K uses to evaluate energies and forces.
 The default is <code class="docutils literal notranslate"><span class="pre">Quickstep</span></code>, which is CP2K’s
-module for electronic structure methods like DFT.</p>
-</dd>
-<dt>max_scf: int</dt><dd><p>Maximum number of SCF iteration to be performed for
-one optimization. Default is <code class="docutils literal notranslate"><span class="pre">50</span></code>.</p>
-</dd>
-<dt>print_level: str</dt><dd><p>PRINT_LEVEL of global output.
+module for electronic structure methods like DFT.</p></li>
+<li><p><strong>max_scf</strong> (<em>int</em>) – Maximum number of SCF iteration to be performed for
+one optimization. Default is <code class="docutils literal notranslate"><span class="pre">50</span></code>.</p></li>
+<li><p><strong>print_level</strong> (<em>str</em>) – PRINT_LEVEL of global output.
 Possible options are:
 DEBUG Everything is written out, useful for debugging purposes only
 HIGH Lots of output
 LOW Little output
 MEDIUM Quite some output
 SILENT Almost no output
-Default is ‘LOW’</p>
+Default is ‘LOW’</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py method">
@@ -1668,10 +1682,8 @@ Default is ‘LOW’</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.calc.Pulser.read">
 <span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/pulser.html#Pulser.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Pulser.read" title="Link to this definition">#</a></dt>
-<dd><dl class="simple">
-<dt>“Read qbits, parameters and calculated results from restart files.</dt><dd><p>Not yet implemented.</p>
-</dd>
-</dl>
+<dd><p>Read qbits, parameters and calculated results from restart files.
+Not yet implemented.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>label</strong> (<em>string</em>) – used in filename</p>
@@ -1688,10 +1700,8 @@ Default is ‘LOW’</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.calc.Pulser.write">
 <span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/pulser.html#Pulser.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Pulser.write" title="Link to this definition">#</a></dt>
-<dd><dl class="simple">
-<dt>“Write qbits, parameters and calculated results into restart files.</dt><dd><p>Not yet implemented.</p>
-</dd>
-</dl>
+<dd><p>Write qbits, parameters and calculated results into restart files.
+Not yet implemented.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>label</strong> (<em>string</em>) – used in filename</p>
@@ -1864,15 +1874,22 @@ of the ring, by default np.zeros(3)</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.magnetic.get_basis">
 <span class="sig-prename descclassname"><span class="pre">qse.magnetic.</span></span><span class="sig-name descname"><span class="pre">get_basis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/magnetic.html#get_basis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.magnetic.get_basis" title="Link to this definition">#</a></dt>
-<dd><dl class="simple">
-<dt>returns a boolean array representing basis in qubit product state.</dt><dd><p>Originally it is intended for the full qubit space, for which
-hsize = $2^N$, however if we need a subset of the full, then hsize
+<dd><p>Returns a boolean array representing basis in qubit product state.
+Originally it is intended for the full qubit space, for which
+hsize = <span class="math notranslate nohighlight">\(2^N\)</span>, however if we need a subset of the full, then hsize
 can be smaller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hsize</strong> (<em>int</em>) – The size of the hamiltonian or hilbert space.</p></li>
+<li><p><strong>N</strong> (<em>int</em>) – The number of qubits.</p></li>
+</ul>
 </dd>
-<dt>Args:</dt><dd><p>hsize (int): size of the hamiltonian or hilbert space.
-N (int): number of qubits</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The basis of shape (hsize, N).</p>
 </dd>
-<dt>Returns:</dt><dd><p>np.ndarray: of shape (hsize, N)</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1880,13 +1897,20 @@ N (int): number of qubits</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.magnetic.get_index">
 <span class="sig-prename descclassname"><span class="pre">qse.magnetic.</span></span><span class="sig-name descname"><span class="pre">get_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/magnetic.html#get_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.magnetic.get_index" title="Link to this definition">#</a></dt>
-<dd><dl class="simple">
-<dt>Get index where value matches in the array.</dt><dd><p>Results in either single integer, or an array containing indices.</p>
+<dd><p>Get index where value matches in the array.
+Results in either single integer, or an array containing indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>np.ndarray</em>) – The array.</p></li>
+<li><p><strong>val</strong> (<em>Any</em>) – The value to match.</p></li>
+</ul>
 </dd>
-<dt>Args:</dt><dd><p>arr (np.ndarray): The array
-val (Any): the value to match</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integer, or an array of indices.</p>
 </dd>
-<dt>Returns:</dt><dd><p>Any: Integer, or an array of indices.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1894,22 +1918,22 @@ val (Any): the value to match</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.magnetic.get_sisj">
 <span class="sig-prename descclassname"><span class="pre">qse.magnetic.</span></span><span class="sig-name descname"><span class="pre">get_sisj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">statevector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibasis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qse/magnetic.html#get_sisj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.magnetic.get_sisj" title="Link to this definition">#</a></dt>
-<dd><dl>
-<dt>Compute spin correlation function</dt><dd><dl class="field-list simple">
-<dt class="field-odd">math<span class="colon">:</span></dt>
-<dd class="field-odd"><p><cite>S_ij = &lt;psi| S_i cdot S_j |psi&gt;.</cite></p>
+<dd><p>Compute spin correlation function :math: <cite>S_ij = &lt;psi| S_i cdot S_j |psi&gt;</cite>.
+With a list of qubits seen as spin 1/2 object, the spins operators are S_i = (Sx, Sy, Sz).
+The state <span class="math notranslate nohighlight">\(|Psi&gt;\)</span> given as follows: :math: <cite>|psi&gt;  = sum_i statevector[i] ibasis[i]</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>statevector</strong> (<em>np.ndarray[complex]</em>) – :math: <cite>2^N</cite> sized complex array representing the statevector.</p></li>
+<li><p><strong>ibasis</strong> (<em>np.ndarray[bool]</em>) – Boolean array representing product basis for qubits passed for computing.</p></li>
+<li><p><strong>N</strong> (<em>int</em>) – Number of Qubits or Spins.</p></li>
+</ul>
 </dd>
-</dl>
-<p>With a list of qubits seen as spin 1/2 object, the spins operators are S_i = (Sx, Sy, Sz).
-The state <a href="#id3"><span class="problematic" id="id4">|Psi&gt; given as follows:
-:math: `|</span></a>psi&gt;  = sum_i statevector[i] ibasis[i]`</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An NxN array with computed expectation value of &lt;S_i.S_j&gt;.</p>
 </dd>
-<dt>Args:</dt><dd><p>statevector (np.ndarray[complex]): :math: <cite>2^N</cite> sized complex array representing the statevector.
-ibasis (np.ndarray[bool]): Boolean array representing product basis
-for qubits passed for computing.
-N (int): Number of Qubits or Spins</p>
-</dd>
-<dt>Returns:</dt><dd><p>s_ij -&gt; np.ndarray[float]: An NxN array with computed expectation value of &lt;S_i.S_j&gt;</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray[float]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1917,18 +1941,23 @@ N (int): Number of Qubits or Spins</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.magnetic.get_spins">
 <span class="sig-prename descclassname"><span class="pre">qse.magnetic.</span></span><span class="sig-name descname"><span class="pre">get_spins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">statevector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibasis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qse/magnetic.html#get_spins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.magnetic.get_spins" title="Link to this definition">#</a></dt>
-<dd><dl class="simple">
-<dt>Get the expectation value of the spin operators (Sx, Sy, Sz).</dt><dd><p>With a list of qubits seen as spin 1/2 object, here one
-calculates the expectation value &lt;Psi| (Sx, Sy, Sz) <a href="#id5"><span class="problematic" id="id6">|Psi&gt;
-The state is given as follows:
-:math:`|</span></a>psi&gt;  = sum_i statevector[i] ibasis[i]`</p>
+<dd><p>Get the expectation value of the spin operators (Sx, Sy, Sz).
+With a list of qubits seen as spin 1/2 object, here one
+calculates the expectation value <span class="math notranslate nohighlight">\(&lt;Psi| (Sx, Sy, Sz) |Psi&gt;\)</span>.
+The state is given as follows: <span class="math notranslate nohighlight">\(|\psi&gt;  = \sum_i statevector[i] ibasis[i]\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>statevector</strong> (<em>np.ndarray[complex]</em>) – <span class="math notranslate nohighlight">\(2^N\)</span> sized complex array representing the statevector.</p></li>
+<li><p><strong>ibasis</strong> (<em>np.ndarray[bool]</em>) – Boolean array representing product basis for qubits passed for computing.</p></li>
+<li><p><strong>N</strong> (<em>int</em>) – Number of Qubits or Spins.</p></li>
+</ul>
 </dd>
-<dt>Args:</dt><dd><p>statevector (np.ndarray[complex]): <span class="math notranslate nohighlight">\(2^N\)</span> sized complex array representing the statevector.
-ibasis (np.ndarray[bool]): Boolean array representing product basis
-for qubits passed for computing.
-N (int): Number of Qubits or Spins</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An Nx3 array with expectation values of spin operator.</p>
 </dd>
-<dt>Returns:</dt><dd><p>spins -&gt; np.ndarray[float]: An Nx3 array with expectation values of spin operator.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray[float]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1936,19 +1965,26 @@ N (int): Number of Qubits or Spins</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.magnetic.structure_factor_from_sij">
 <span class="sig-prename descclassname"><span class="pre">qse.magnetic.</span></span><span class="sig-name descname"><span class="pre">structure_factor_from_sij</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_ij</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qse/magnetic.html#structure_factor_from_sij"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.magnetic.structure_factor_from_sij" title="Link to this definition">#</a></dt>
-<dd><dl class="simple">
-<dt>From spin correlation, compute the <cite>structure factor</cite>.</dt><dd><p>The structure factor is just fourier transform of the s_ij
+<dd><p>From spin correlation, compute the <cite>structure factor</cite>.
+The structure factor is just fourier transform of the s_ij
 :math: <cite>S[q] = frac{1}{N^2} sum_{ij} s_{ij} exp{i q cdot (x_i - x_j)}</cite>
 The (L1, L2, L3) are passed as shape of the lattice, and there is a qubit
 at each of these lattice sites.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L1</strong> (<em>int</em>) – Extent of lattice in x direction.</p></li>
+<li><p><strong>L2 (int)</strong> – Extent of lattice in y direction.</p></li>
+<li><p><strong>L3 (int)</strong> – Extent of lattice in z direction.</p></li>
+<li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The Qbits object representing the lattice.</p></li>
+<li><p><strong>s_ij</strong> (<em>np.ndarray[float]</em>) – The array with spin correlation.</p></li>
+</ul>
 </dd>
-<dt>Args:</dt><dd><p>L1 (int): Extent of lattice in x direction
-L2 (int): Extent of lattice in y direction
-L3 (int): Extent of lattice in z direction
-qbits (qse.Qbits): The Qbits object representing the lattice.
-s_ij (np.ndarray[float]): The array with spin correlation.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns the structure factor.</p>
 </dd>
-<dt>Returns:</dt><dd><p>np.ndarray[float]: Returns the structure factor.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray[float]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1956,13 +1992,19 @@ s_ij (np.ndarray[float]): The array with spin correlation.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.magnetic.sxop">
 <span class="sig-prename descclassname"><span class="pre">qse.magnetic.</span></span><span class="sig-name descname"><span class="pre">sxop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/magnetic.html#sxop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.magnetic.sxop" title="Link to this definition">#</a></dt>
-<dd><dl class="simple">
-<dt>Sx operator on a boolian array b.</dt><dd><p>(Basically bit flip)</p>
+<dd><p>Sx operator on a boolian array b (basically bit flip).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>b</strong> (<em>np.ndarray[bool]</em>) – The array representing the basis.</p></li>
+<li><p><strong>i</strong> (<em>int</em>) – The index in b where to apply operation, i.e., b[i].</p></li>
+</ul>
 </dd>
-<dt>Args:</dt><dd><p>b (np.ndarray[bool]): array representing the basis
-i (int): index in b where to apply operation, i.e., b[i]</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The array after applying the Sx operation.</p>
 </dd>
-<dt>Returns:</dt><dd><p>np.ndarray[bool]: array after applying the Sx operation</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray[bool]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1970,13 +2012,20 @@ i (int): index in b where to apply operation, i.e., b[i]</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.magnetic.syop">
 <span class="sig-prename descclassname"><span class="pre">qse.magnetic.</span></span><span class="sig-name descname"><span class="pre">syop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/magnetic.html#syop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.magnetic.syop" title="Link to this definition">#</a></dt>
-<dd><p>Sy opertor on a boolian array b
-(This gives a flipped bit at <a href="#id1"><span class="problematic" id="id2">`</span></a>i`th index and a sign)</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>b (np.ndarray[bool]): array representing the basis
-i (int): index in b where to apply operation, i.e., b[i]</p>
+<dd><p>Sy opertor on a boolian array b (this gives a flipped bit
+at ith index and a sign).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>b</strong> (<em>np.ndarray[bool]</em>) – The array representing the basis.</p></li>
+<li><p><strong>i</strong> (<em>int</em>) – The index in b where to apply operation, i.e., b[i].</p></li>
+</ul>
 </dd>
-<dt>Returns:</dt><dd><p>tuple (s, c): where s is the basis after operation and c is sign</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Of the form (s, c): where s is the basis after operation and c is sign.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>

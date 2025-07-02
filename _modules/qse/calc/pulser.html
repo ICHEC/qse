@@ -348,7 +348,8 @@ document.write(`
 <div class="viewcode-block" id="Pulser">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Pulser">[docs]</a>
 <span class="k">class</span> <span class="nc">Pulser</span><span class="p">(</span><span class="n">Calculator</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;QSE-Calculator for pulser.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    QSE-Calculator for pulser.</span>
 
 <span class="sd">    Pulser is an open-source Python software package.</span>
 <span class="sd">    It provides easy-to-use libraries for designing and</span>
@@ -361,9 +362,8 @@ document.write(`
 <span class="sd">    License: Apache 2.0</span>
 <span class="sd">    - see [LICENSE](https://github.com/pasqal-io/Pulser/blob/master/LICENSE) for details</span>
 
-<span class="sd">    &gt; TODO: if there is any config related to OMP_NUM_THREADS etc, place them here.</span>
-
-<span class="sd">    Arguments:</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    auto_write: bool</span>
 <span class="sd">        Flag to enable the auto-write mode. If enabled the</span>
 <span class="sd">        ``write()`` routine is called after every</span>
@@ -389,7 +389,6 @@ document.write(`
 <span class="sd">        The method CP2K uses to evaluate energies and forces.</span>
 <span class="sd">        The default is ``Quickstep``, which is CP2K&#39;s</span>
 <span class="sd">        module for electronic structure methods like DFT.</span>
-
 <span class="sd">    max_scf: int</span>
 <span class="sd">        Maximum number of SCF iteration to be performed for</span>
 <span class="sd">        one optimization. Default is ``50``.</span>
@@ -560,8 +559,9 @@ document.write(`
 <div class="viewcode-block" id="Pulser.write">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Pulser.write">[docs]</a>
     <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; &quot;Write qbits, parameters and calculated results into restart files.</span>
-<span class="sd">            Not yet implemented.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write qbits, parameters and calculated results into restart files.</span>
+<span class="sd">        Not yet implemented.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -574,8 +574,9 @@ document.write(`
 <div class="viewcode-block" id="Pulser.read">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Pulser.read">[docs]</a>
     <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; &quot;Read qbits, parameters and calculated results from restart files.</span>
-<span class="sd">            Not yet implemented.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read qbits, parameters and calculated results from restart files.</span>
+<span class="sd">        Not yet implemented.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -588,7 +589,8 @@ document.write(`
 <div class="viewcode-block" id="Pulser.calculate">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Pulser.calculate">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do the calculation.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Do the calculation.</span>
 <span class="sd">        # system_changes=all_changes -&gt; check it&#39;s relevance.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># we need to have/add an attribute to calc for device</span>

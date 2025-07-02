@@ -333,27 +333,28 @@ document.write(`
 <span class="sd">    Signal class represents a 1D signal with values and duration.</span>
 
 <span class="sd">    The class supports arithmetic operations with other signals and</span>
-<span class="sd">    scalars. Specifically:</span>
+<span class="sd">    scalars.</span>
+<span class="sd">    Specifically:</span>
 
-<span class="sd">    - Adding a scalar to a Signal returns a new Signal with modified</span>
-<span class="sd">    values and the same duration. Say W is a signal, then W + 3.0 returns</span>
-<span class="sd">    a signal with same duration, and values W.values + 3.0.</span>
+<span class="sd">    * Adding a scalar to a Signal returns a new Signal with modified</span>
+<span class="sd">      values and the same duration. Say W is a signal, then W + 3.0 returns</span>
+<span class="sd">      a signal with same duration, and values W.values + 3.0.</span>
 
-<span class="sd">    - Adding two Signal instances concatenates their values and sums</span>
-<span class="sd">    their durations. So if w1, w2 are instantiation of Signal, then</span>
-<span class="sd">    w = w1 + w2 gives signal with concatenated values, i.e.,</span>
-<span class="sd">    w.values = [w1.values, w2.values], and added duration.</span>
-<span class="sd">    w.duration = w1.duration + w2.duration</span>
+<span class="sd">    * Adding two Signal instances concatenates their values and sums</span>
+<span class="sd">      their durations. So if w1, w2 are instantiation of Signal, then</span>
+<span class="sd">      w = w1 + w2 gives signal with concatenated values, i.e.,</span>
+<span class="sd">      w.values = [w1.values, w2.values], and added duration</span>
+<span class="sd">      w.duration = w1.duration + w2.duration.</span>
 
-<span class="sd">    Attributes</span>
+<span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    values : ndarray</span>
 <span class="sd">        The values of the signal.</span>
 <span class="sd">    duration : int</span>
 <span class="sd">        Duration of the signal.</span>
 
-<span class="sd">    Note</span>
-<span class="sd">    ----</span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
 <span class="sd">    Currently, the object gets created for multi-dim arrays as well.</span>
 <span class="sd">    However, it should be used for 1D only, we haven&#39;t made it useful</span>
 <span class="sd">    or consistent for multi-dim usage.</span>

@@ -398,7 +398,30 @@ document.write(`
 <div class="viewcode-block" id="Myqlm">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Myqlm">[docs]</a>
 <span class="k">class</span> <span class="nc">Myqlm</span><span class="p">(</span><span class="n">Calculator</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;QSE-Calculator for MyQLM&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    QSE-Calculator for MyQLM</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    qbits</span>
+<span class="sd">        ...</span>
+<span class="sd">    amplitude</span>
+<span class="sd">        ...</span>
+<span class="sd">    detuning</span>
+<span class="sd">        ...</span>
+<span class="sd">    duration</span>
+<span class="sd">        ...</span>
+<span class="sd">    qpu</span>
+<span class="sd">        ...</span>
+<span class="sd">    analog</span>
+<span class="sd">        ...</span>
+<span class="sd">    system</span>
+<span class="sd">        ...</span>
+<span class="sd">    label</span>
+<span class="sd">        ...</span>
+<span class="sd">    wtimes</span>
+<span class="sd">        ...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">implemented_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;fidality&quot;</span><span class="p">]</span>
     <span class="n">default_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
@@ -516,6 +539,18 @@ document.write(`
 <div class="viewcode-block" id="Myqlm.calculate">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Myqlm.calculate">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">properties</span><span class="o">=...</span><span class="p">,</span> <span class="n">system_changes</span><span class="o">=...</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        _summary_</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        qbits : _type_, optional</span>
+<span class="sd">            _description_, by default None</span>
+<span class="sd">        properties : _type_, optional</span>
+<span class="sd">            _description_, by default ...</span>
+<span class="sd">        system_changes : _type_, optional</span>
+<span class="sd">            _description_, by default ...</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># return super().calculate(qbits, properties, system_changes)</span>
         <span class="c1"># self.Hamiltonian = self._get_hamiltonian()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span><span class="p">:</span>
