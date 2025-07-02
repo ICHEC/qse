@@ -1,5 +1,8 @@
 #!/bin/bash
 
-echo "Creating soft links for the hooks"
+echo "Copying the hooks to .git/hooks/"
 
-ln -fs -v hooks/* .git/hooks
+for x in `ls -1 hooks/*`
+do
+    cp -f -v -p ./$x ./.git/$x
+done
