@@ -332,9 +332,26 @@ document.write(`
 <a class="viewcode-back" href="../../api.html#qse.utils.int2bin">[docs]</a>
 <span class="k">def</span> <span class="nf">int2bin</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">32</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    converts an integer array to array of equivalent binary strings.</span>
-<span class="sd">    Equivalent to:</span>
-<span class="sd">        int2bin = np.vectorize(lambda x, width=16: np.binary_repr(x,width=width))</span>
+<span class="sd">    Converts an integer array to array of equivalent binary strings.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : np.ndarray</span>
+<span class="sd">        An array of integers.</span>
+<span class="sd">    width : int</span>
+<span class="sd">        The length of the binary strings.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray</span>
+<span class="sd">        The array of binary strings.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This function is equivalent to:</span>
+
+<span class="sd">    &gt;&gt;&gt; int2bin = np.vectorize(lambda x, width=16: np.binary_repr(x,width=width))</span>
+
 <span class="sd">    However vectorize version is a bit slower compared to the one below.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span>
