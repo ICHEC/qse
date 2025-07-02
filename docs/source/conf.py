@@ -44,6 +44,7 @@ napoleon_numpy_docstring = True
 napoleon_google_docstring = False
 napoleon_use_param = False
 napoleon_use_ivar = True
+napoleon_use_rtype = False
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
