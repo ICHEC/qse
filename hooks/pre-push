@@ -79,7 +79,7 @@ new_version="version = \"$major.$minor.$[patch+1]\""
 echo "Incrementing patch number: old -> $version new -> $new_version"
 echo "updating pyproject.toml"
 
-sed -i "s/$version/$new_version/g" pyproject.toml
+sed -i '' -e "s/$version/$new_version/g" pyproject.toml
 
 if [ $? -ne 0 ]; then
     echo "error updating patch number!"
