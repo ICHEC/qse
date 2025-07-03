@@ -356,7 +356,7 @@ document.write(`
         <span class="n">qlmaas_available</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">AQPU_remote</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+<span class="k">except</span> <span class="ne">ModuleNotFoundError</span> <span class="ow">or</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">qlmaas_available</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="k">if</span> <span class="n">qat_available</span><span class="p">:</span>
