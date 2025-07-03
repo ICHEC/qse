@@ -33,7 +33,7 @@ try:
         qlmaas_available = True
     else:
         AQPU_remote = None
-except ModuleNotFoundError or ImportError:
+except (ModuleNotFoundError,ImportError):
     qlmaas_available = False
 
 if qat_available:
