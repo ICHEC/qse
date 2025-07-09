@@ -1049,7 +1049,7 @@ class Qbits:
 
         .. math::
 
-            R = 
+            R =
             \begin{pmatrix}
             \cos(\psi ) & \sin(\psi ) & 0 \\
             -\sin(\psi ) & \cos(\psi ) & 0\\
@@ -1074,11 +1074,14 @@ class Qbits:
 
             \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
+
         def rotation_mat(angle):
-            return np.array([
-                [np.cos(angle), np.sin(angle)], 
-                [-np.sin(angle), np.cos(angle)],
-                ])
+            return np.array(
+                [
+                    [np.cos(angle), np.sin(angle)],
+                    [-np.sin(angle), np.cos(angle)],
+                ]
+            )
 
         # First Euler rotation about z in matrix form
         D = np.eye(3)
