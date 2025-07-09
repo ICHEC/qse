@@ -912,7 +912,7 @@ class Qbits:
             self.set_positions(self.get_positions() + difference)
 
     def rotate(self, a, v, center=(0, 0, 0), rotate_cell=False):
-        """
+        r"""
         Rotate qbits based on a vector and an angle, or two vectors.
 
         Parameters
@@ -920,7 +920,7 @@ class Qbits:
         a :
             Angle that the qbits is rotated around the vector 'v'. 'a'
             can also be a vector and then 'a' is rotated
-            into 'v'.
+            into 'v'. If 'a' is an angle it must be in degrees.
         v :
             Vector to rotate the qbits around. Vectors can be given as
             strings: 'x', '-x', 'y', ... .
@@ -942,6 +942,24 @@ class Qbits:
         >>> qbits.rotate(-90, '-z')
         >>> qbits.rotate('x', 'y')
         >>> qbits.rotate((1, 0, 0), (0, 1, 0))
+
+        Notes
+        -----
+        If 'a' is an angle, :math:`\theta`, and if :math:`\textbf{v}` is the vector
+        then we define
+
+        .. math::
+            R = \cos(\theta)I + \sin(\theta)[\textbf{v}]_\times + (1-\cos(\theta))\textbf{v}\textbf{v}^T
+
+        where :math:`[\textbf{v}]_\times \textbf{x} = \textbf{v} \times \textbf{x}`.
+        If
+        :math:`\textbf{r}` is a coordinate vector
+        and :math:`\textbf{c}` is the center, this transforms
+        the coordinate vector to
+
+        .. math::
+
+            \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
 
         if not isinstance(a, numbers.Real):
@@ -1009,10 +1027,8 @@ class Qbits:
         return center
 
     def euler_rotate(self, phi=0.0, theta=0.0, psi=0.0, center=(0, 0, 0)):
-        """
+        r"""
         Rotate qbits via Euler angles (in degrees).
-
-        See e.g http://mathworld.wolfram.com/EulerAngles.html for explanation.
 
         Parameters
         ----------
@@ -1026,33 +1042,65 @@ class Qbits:
             The point to rotate about. A sequence of length 3 with the
             coordinates, or 'COM' to select the center of mass, 'COP' to
             select center of positions or 'COU' to select center of cell.
+
+        Notes
+        -----
+        Let
+
+        .. math::
+
+            R =
+            \begin{pmatrix}
+            \cos(\psi ) & \sin(\psi ) & 0 \\
+            -\sin(\psi ) & \cos(\psi ) & 0\\
+            0 & 0 & 1\\
+            \end{pmatrix}
+            \begin{pmatrix}
+            1 & 0 & 0\\
+            0 & \cos(\theta ) & \sin(\theta ) \\
+            0 & -\sin(\theta ) & \cos(\theta ) \\
+            \end{pmatrix}
+            \begin{pmatrix}
+            \cos(\phi ) & \sin(\phi ) & 0 \\
+            -\sin(\phi ) & \cos(\phi ) & 0\\
+            0 & 0 & 1\\
+            \end{pmatrix}
+
+        then if :math:`\textbf{r}` is a coordinate vector
+        and :math:`\textbf{c}` is the center, this transforms
+        the coordinate vector to
+
+        .. math::
+
+            \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
-        center = self._centering_as_array(center)
 
-        phi *= pi / 180
-        theta *= pi / 180
-        psi *= pi / 180
-
-        # First move the molecule to the origin.
-        rcoords = self.positions - center
-        # First Euler rotation about z in matrix form
-        D = np.array(
-            ((cos(phi), sin(phi), 0.0), (-sin(phi), cos(phi), 0.0), (0.0, 0.0, 1.0))
-        )
-        # Second Euler rotation about x:
-        C = np.array(
-            (
-                (1.0, 0.0, 0.0),
-                (0.0, cos(theta), sin(theta)),
-                (0.0, -sin(theta), cos(theta)),
+        def rotation_mat(angle):
+            return np.array(
+                [
+                    [np.cos(angle), np.sin(angle)],
+                    [-np.sin(angle), np.cos(angle)],
+                ]
             )
-        )
+
+        # First Euler rotation about z in matrix form
+        D = np.eye(3)
+        D[:-1, :-1] = rotation_mat(phi * pi / 180)
+
+        # Second Euler rotation about x:
+        C = np.eye(3)
+        C[1:, 1:] = rotation_mat(theta * pi / 180)
+
         # Third Euler rotation, 2nd rotation about z:
-        B = np.array(
-            ((cos(psi), sin(psi), 0.0), (-sin(psi), cos(psi), 0.0), (0.0, 0.0, 1.0))
-        )
+        B = np.eye(3)
+        B[:-1, :-1] = rotation_mat(psi * pi / 180)
+
         # Total Euler rotation
         A = np.dot(B, np.dot(C, D))
+
+        # Move the molecule to the origin.
+        rcoords = self.positions - self._centering_as_array(center)
+
         # Do the rotation
         rcoords = np.dot(A, np.transpose(rcoords))
         # Move back to the rotation point
