@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.qbits &#8212; qse 0.2.4 documentation</title>
+    <title>qse.qbits &#8212; qse 0.2.5 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=fd1d25c9"></script>
+    <script src="../../_static/documentation_options.js?v=46e1a7d4"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -142,7 +142,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.4 documentation</p>
+    <p class="title logo__title">qse 0.2.5 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -1314,7 +1314,7 @@ document.write(`
 <div class="viewcode-block" id="Qbits.rotate">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.rotate">[docs]</a>
     <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">rotate_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotate qbits based on a vector and an angle, or two vectors.</span>
 
 <span class="sd">        Parameters</span>
@@ -1322,7 +1322,7 @@ document.write(`
 <span class="sd">        a :</span>
 <span class="sd">            Angle that the qbits is rotated around the vector &#39;v&#39;. &#39;a&#39;</span>
 <span class="sd">            can also be a vector and then &#39;a&#39; is rotated</span>
-<span class="sd">            into &#39;v&#39;.</span>
+<span class="sd">            into &#39;v&#39;. If &#39;a&#39; is an angle it must be in degrees.</span>
 <span class="sd">        v :</span>
 <span class="sd">            Vector to rotate the qbits around. Vectors can be given as</span>
 <span class="sd">            strings: &#39;x&#39;, &#39;-x&#39;, &#39;y&#39;, ... .</span>
@@ -1344,6 +1344,24 @@ document.write(`
 <span class="sd">        &gt;&gt;&gt; qbits.rotate(-90, &#39;-z&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; qbits.rotate(&#39;x&#39;, &#39;y&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; qbits.rotate((1, 0, 0), (0, 1, 0))</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        If &#39;a&#39; is an angle, :math:`\theta`, and if :math:`\textbf{v}` is the vector</span>
+<span class="sd">        then we define</span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            R = \cos(\theta)I + \sin(\theta)[\textbf{v}]_\times + (1-\cos(\theta))\textbf{v}\textbf{v}^T</span>
+
+<span class="sd">        where :math:`[\textbf{v}]_\times \textbf{x} = \textbf{v} \times \textbf{x}`.</span>
+<span class="sd">        If</span>
+<span class="sd">        :math:`\textbf{r}` is a coordinate vector</span>
+<span class="sd">        and :math:`\textbf{c}` is the center, this transforms</span>
+<span class="sd">        the coordinate vector to</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Real</span><span class="p">):</span>
@@ -1414,10 +1432,8 @@ document.write(`
 <div class="viewcode-block" id="Qbits.euler_rotate">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.euler_rotate">[docs]</a>
     <span class="k">def</span> <span class="nf">euler_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">psi</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotate qbits via Euler angles (in degrees).</span>
-
-<span class="sd">        See e.g http://mathworld.wolfram.com/EulerAngles.html for explanation.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1431,33 +1447,65 @@ document.write(`
 <span class="sd">            The point to rotate about. A sequence of length 3 with the</span>
 <span class="sd">            coordinates, or &#39;COM&#39; to select the center of mass, &#39;COP&#39; to</span>
 <span class="sd">            select center of positions or &#39;COU&#39; to select center of cell.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        Let</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            R =</span>
+<span class="sd">            \begin{pmatrix}</span>
+<span class="sd">            \cos(\psi ) &amp; \sin(\psi ) &amp; 0 \\</span>
+<span class="sd">            -\sin(\psi ) &amp; \cos(\psi ) &amp; 0\\</span>
+<span class="sd">            0 &amp; 0 &amp; 1\\</span>
+<span class="sd">            \end{pmatrix}</span>
+<span class="sd">            \begin{pmatrix}</span>
+<span class="sd">            1 &amp; 0 &amp; 0\\</span>
+<span class="sd">            0 &amp; \cos(\theta ) &amp; \sin(\theta ) \\</span>
+<span class="sd">            0 &amp; -\sin(\theta ) &amp; \cos(\theta ) \\</span>
+<span class="sd">            \end{pmatrix}</span>
+<span class="sd">            \begin{pmatrix}</span>
+<span class="sd">            \cos(\phi ) &amp; \sin(\phi ) &amp; 0 \\</span>
+<span class="sd">            -\sin(\phi ) &amp; \cos(\phi ) &amp; 0\\</span>
+<span class="sd">            0 &amp; 0 &amp; 1\\</span>
+<span class="sd">            \end{pmatrix}</span>
+
+<span class="sd">        then if :math:`\textbf{r}` is a coordinate vector</span>
+<span class="sd">        and :math:`\textbf{c}` is the center, this transforms</span>
+<span class="sd">        the coordinate vector to</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_centering_as_array</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
 
-        <span class="n">phi</span> <span class="o">*=</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
-        <span class="n">theta</span> <span class="o">*=</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
-        <span class="n">psi</span> <span class="o">*=</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
-
-        <span class="c1"># First move the molecule to the origin.</span>
-        <span class="n">rcoords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">-</span> <span class="n">center</span>
-        <span class="c1"># First Euler rotation about z in matrix form</span>
-        <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">((</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
-        <span class="p">)</span>
-        <span class="c1"># Second Euler rotation about x:</span>
-        <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">(</span>
-                <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
-                <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)),</span>
-                <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)),</span>
+        <span class="k">def</span> <span class="nf">rotation_mat</span><span class="p">(</span><span class="n">angle</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)],</span>
+                    <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)],</span>
+                <span class="p">]</span>
             <span class="p">)</span>
-        <span class="p">)</span>
+
+        <span class="c1"># First Euler rotation about z in matrix form</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">D</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">rotation_mat</span><span class="p">(</span><span class="n">phi</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span><span class="p">)</span>
+
+        <span class="c1"># Second Euler rotation about x:</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">rotation_mat</span><span class="p">(</span><span class="n">theta</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span><span class="p">)</span>
+
         <span class="c1"># Third Euler rotation, 2nd rotation about z:</span>
-        <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">((</span><span class="n">cos</span><span class="p">(</span><span class="n">psi</span><span class="p">),</span> <span class="n">sin</span><span class="p">(</span><span class="n">psi</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">psi</span><span class="p">),</span> <span class="n">cos</span><span class="p">(</span><span class="n">psi</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
-        <span class="p">)</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">B</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">rotation_mat</span><span class="p">(</span><span class="n">psi</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span><span class="p">)</span>
+
         <span class="c1"># Total Euler rotation</span>
         <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">))</span>
+
+        <span class="c1"># Move the molecule to the origin.</span>
+        <span class="n">rcoords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_centering_as_array</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
+
         <span class="c1"># Do the rotation</span>
         <span class="n">rcoords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">rcoords</span><span class="p">))</span>
         <span class="c1"># Move back to the rotation point</span>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API reference &#8212; qse 0.2.4 documentation</title>
+    <title>API reference &#8212; qse 0.2.5 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=fd1d25c9"></script>
+    <script src="_static/documentation_options.js?v=46e1a7d4"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -143,7 +143,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.4 documentation</p>
+    <p class="title logo__title">qse 0.2.5 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -745,7 +745,6 @@ identically), to center about the origin.</p>
 <dt class="sig sig-object py" id="qse.Qbits.euler_rotate">
 <span class="sig-name descname"><span class="pre">euler_rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">psi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.euler_rotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.euler_rotate" title="Link to this definition">#</a></dt>
 <dd><p>Rotate qbits via Euler angles (in degrees).</p>
-<p>See e.g <a class="reference external" href="http://mathworld.wolfram.com/EulerAngles.html">http://mathworld.wolfram.com/EulerAngles.html</a> for explanation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -758,6 +757,30 @@ select center of positions or ‘COU’ to select center of cell.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>Let</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}R =
+\begin{pmatrix}
+\cos(\psi ) &amp; \sin(\psi ) &amp; 0 \\
+-\sin(\psi ) &amp; \cos(\psi ) &amp; 0\\
+0 &amp; 0 &amp; 1\\
+\end{pmatrix}
+\begin{pmatrix}
+1 &amp; 0 &amp; 0\\
+0 &amp; \cos(\theta ) &amp; \sin(\theta ) \\
+0 &amp; -\sin(\theta ) &amp; \cos(\theta ) \\
+\end{pmatrix}
+\begin{pmatrix}
+\cos(\phi ) &amp; \sin(\phi ) &amp; 0 \\
+-\sin(\phi ) &amp; \cos(\phi ) &amp; 0\\
+0 &amp; 0 &amp; 1\\
+\end{pmatrix}\end{split}\]</div>
+<p>then if <span class="math notranslate nohighlight">\(\textbf{r}\)</span> is a coordinate vector
+and <span class="math notranslate nohighlight">\(\textbf{c}\)</span> is the center, this transforms
+the coordinate vector to</p>
+<div class="math notranslate nohighlight">
+\[\textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.\]</div>
 </dd></dl>
 
 <dl class="py method">
@@ -1016,7 +1039,7 @@ to <em>(r,r,r)</em>.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>a</strong> – Angle that the qbits is rotated around the vector ‘v’. ‘a’
 can also be a vector and then ‘a’ is rotated
-into ‘v’.</p></li>
+into ‘v’. If ‘a’ is an angle it must be in degrees.</p></li>
 <li><p><strong>v</strong> – Vector to rotate the qbits around. Vectors can be given as
 strings: ‘x’, ‘-x’, ‘y’, … .</p></li>
 <li><p><strong>center</strong> – The center is kept fixed under the rotation. Use ‘COP’ to
@@ -1037,6 +1060,18 @@ rotated into the y-axis:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span><span class="o">.</span><span class="n">rotate</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 </pre></div>
 </div>
+<p class="rubric">Notes</p>
+<p>If ‘a’ is an angle, <span class="math notranslate nohighlight">\(\theta\)</span>, and if <span class="math notranslate nohighlight">\(\textbf{v}\)</span> is the vector
+then we define</p>
+<div class="math notranslate nohighlight">
+\[R = \cos(\theta)I + \sin(\theta)[\textbf{v}]_\times + (1-\cos(\theta))\textbf{v}\textbf{v}^T\]</div>
+<p>where <span class="math notranslate nohighlight">\([\textbf{v}]_\times \textbf{x} = \textbf{v} \times \textbf{x}\)</span>.
+If
+<span class="math notranslate nohighlight">\(\textbf{r}\)</span> is a coordinate vector
+and <span class="math notranslate nohighlight">\(\textbf{c}\)</span> is the center, this transforms
+the coordinate vector to</p>
+<div class="math notranslate nohighlight">
+\[\textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.\]</div>
 </dd></dl>
 
 <dl class="py method">
