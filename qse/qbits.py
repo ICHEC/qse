@@ -950,7 +950,7 @@ class Qbits:
 
         .. math::
             R = \cos(\theta)I + \sin(\theta)[\textbf{v}]_\times + (1-\cos(\theta))\textbf{v}\textbf{v}^T
-        
+
         where :math:`[\textbf{v}]_\times \textbf{x} = \textbf{v} \times \textbf{x}`.
         If
         :math:`\textbf{r}` is a coordinate vector
@@ -958,7 +958,7 @@ class Qbits:
         the coordinate vector to
 
         .. math::
-        
+
             \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
 
@@ -1069,7 +1069,7 @@ class Qbits:
         then if :math:`\textbf{r}` is a coordinate vector
         and :math:`\textbf{c}` is the center, this transforms
         the coordinate vector to
-        
+
         .. math::
 
             \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
