@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API reference &#8212; qse 0.2.3 documentation</title>
+    <title>API reference &#8212; qse 0.2.4 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=6808a718"></script>
+    <script src="_static/documentation_options.js?v=fd1d25c9"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -143,7 +143,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.3 documentation</p>
+    <p class="title logo__title">qse 0.2.4 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -159,19 +159,13 @@
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/generating_lattices.html">Generating Lattices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/creating_and_manipulating_qbits.html">Creating and manipulating Qbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/pulser-calc-example.html">Pulser Calculation Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/pulser-myqlm-conversion.html">Pulser-MyQLM Conversion</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">API reference</a></li>
-
-
-
-
-
-
 </ul>
 
     </div>
@@ -367,151 +361,149 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">API reference</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse">qse</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit"><code class="docutils literal notranslate"><span class="pre">Qbit</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.cut_reference_to_qbits"><code class="docutils literal notranslate"><span class="pre">Qbit.cut_reference_to_qbits()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.delete"><code class="docutils literal notranslate"><span class="pre">Qbit.delete()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.get"><code class="docutils literal notranslate"><span class="pre">Qbit.get()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.get_raw"><code class="docutils literal notranslate"><span class="pre">Qbit.get_raw()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.label"><code class="docutils literal notranslate"><span class="pre">Qbit.label</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.position"><code class="docutils literal notranslate"><span class="pre">Qbit.position</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.set"><code class="docutils literal notranslate"><span class="pre">Qbit.set()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.state"><code class="docutils literal notranslate"><span class="pre">Qbit.state</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.x"><code class="docutils literal notranslate"><span class="pre">Qbit.x</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.y"><code class="docutils literal notranslate"><span class="pre">Qbit.y</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.z"><code class="docutils literal notranslate"><span class="pre">Qbit.z</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse">qse</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit"><code class="docutils literal notranslate"><span class="pre">Qbit</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.cut_reference_to_qbits"><code class="docutils literal notranslate"><span class="pre">Qbit.cut_reference_to_qbits()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.delete"><code class="docutils literal notranslate"><span class="pre">Qbit.delete()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.get"><code class="docutils literal notranslate"><span class="pre">Qbit.get()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.get_raw"><code class="docutils literal notranslate"><span class="pre">Qbit.get_raw()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.label"><code class="docutils literal notranslate"><span class="pre">Qbit.label</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.position"><code class="docutils literal notranslate"><span class="pre">Qbit.position</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.set"><code class="docutils literal notranslate"><span class="pre">Qbit.set()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.state"><code class="docutils literal notranslate"><span class="pre">Qbit.state</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.x"><code class="docutils literal notranslate"><span class="pre">Qbit.x</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.y"><code class="docutils literal notranslate"><span class="pre">Qbit.y</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.z"><code class="docutils literal notranslate"><span class="pre">Qbit.z</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits"><code class="docutils literal notranslate"><span class="pre">Qbits</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.append"><code class="docutils literal notranslate"><span class="pre">Qbits.append()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.calc"><code class="docutils literal notranslate"><span class="pre">Qbits.calc</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.cell"><code class="docutils literal notranslate"><span class="pre">Qbits.cell</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.center_in_unit_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.center_in_unit_cell()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.constraints"><code class="docutils literal notranslate"><span class="pre">Qbits.constraints</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.copy"><code class="docutils literal notranslate"><span class="pre">Qbits.copy()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.euler_rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.euler_rotate()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.extend"><code class="docutils literal notranslate"><span class="pre">Qbits.extend()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.fromdict"><code class="docutils literal notranslate"><span class="pre">Qbits.fromdict()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_all_distances"><code class="docutils literal notranslate"><span class="pre">Qbits.get_all_distances()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_angle"><code class="docutils literal notranslate"><span class="pre">Qbits.get_angle()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_angles"><code class="docutils literal notranslate"><span class="pre">Qbits.get_angles()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_array"><code class="docutils literal notranslate"><span class="pre">Qbits.get_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.get_cell()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_cell_lengths_and_angles"><code class="docutils literal notranslate"><span class="pre">Qbits.get_cell_lengths_and_angles()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.get_celldisp()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_centroid"><code class="docutils literal notranslate"><span class="pre">Qbits.get_centroid()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.get_dihedral()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_dihedrals"><code class="docutils literal notranslate"><span class="pre">Qbits.get_dihedrals()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_distance"><code class="docutils literal notranslate"><span class="pre">Qbits.get_distance()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_distances"><code class="docutils literal notranslate"><span class="pre">Qbits.get_distances()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.get_pbc()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.get_positions()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_properties"><code class="docutils literal notranslate"><span class="pre">Qbits.get_properties()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_reciprocal_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.get_reciprocal_cell()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_scaled_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.get_scaled_positions()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_volume"><code class="docutils literal notranslate"><span class="pre">Qbits.get_volume()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.has"><code class="docutils literal notranslate"><span class="pre">Qbits.has()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.labels"><code class="docutils literal notranslate"><span class="pre">Qbits.labels</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.new_array"><code class="docutils literal notranslate"><span class="pre">Qbits.new_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.pbc</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.pop"><code class="docutils literal notranslate"><span class="pre">Qbits.pop()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.positions"><code class="docutils literal notranslate"><span class="pre">Qbits.positions</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rattle"><code class="docutils literal notranslate"><span class="pre">Qbits.rattle()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.repeat"><code class="docutils literal notranslate"><span class="pre">Qbits.repeat()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.rotate()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rotate_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.rotate_dihedral()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_angle"><code class="docutils literal notranslate"><span class="pre">Qbits.set_angle()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_array"><code class="docutils literal notranslate"><span class="pre">Qbits.set_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.set_cell()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.set_celldisp()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_centroid"><code class="docutils literal notranslate"><span class="pre">Qbits.set_centroid()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_constraint"><code class="docutils literal notranslate"><span class="pre">Qbits.set_constraint()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.set_dihedral()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_distance"><code class="docutils literal notranslate"><span class="pre">Qbits.set_distance()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.set_pbc()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.set_positions()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_scaled_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.set_scaled_positions()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.shape"><code class="docutils literal notranslate"><span class="pre">Qbits.shape</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.states"><code class="docutils literal notranslate"><span class="pre">Qbits.states</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.todict"><code class="docutils literal notranslate"><span class="pre">Qbits.todict()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.translate"><code class="docutils literal notranslate"><span class="pre">Qbits.translate()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.wrap"><code class="docutils literal notranslate"><span class="pre">Qbits.wrap()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.write"><code class="docutils literal notranslate"><span class="pre">Qbits.write()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits"><code class="docutils literal notranslate"><span class="pre">Qbits</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.append"><code class="docutils literal notranslate"><span class="pre">Qbits.append()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.calc"><code class="docutils literal notranslate"><span class="pre">Qbits.calc</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.cell"><code class="docutils literal notranslate"><span class="pre">Qbits.cell</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.center_in_unit_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.center_in_unit_cell()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.constraints"><code class="docutils literal notranslate"><span class="pre">Qbits.constraints</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.copy"><code class="docutils literal notranslate"><span class="pre">Qbits.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.euler_rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.euler_rotate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.extend"><code class="docutils literal notranslate"><span class="pre">Qbits.extend()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.fromdict"><code class="docutils literal notranslate"><span class="pre">Qbits.fromdict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_all_distances"><code class="docutils literal notranslate"><span class="pre">Qbits.get_all_distances()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_angle"><code class="docutils literal notranslate"><span class="pre">Qbits.get_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_angles"><code class="docutils literal notranslate"><span class="pre">Qbits.get_angles()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_array"><code class="docutils literal notranslate"><span class="pre">Qbits.get_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.get_cell()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_cell_lengths_and_angles"><code class="docutils literal notranslate"><span class="pre">Qbits.get_cell_lengths_and_angles()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.get_celldisp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_centroid"><code class="docutils literal notranslate"><span class="pre">Qbits.get_centroid()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.get_dihedral()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_dihedrals"><code class="docutils literal notranslate"><span class="pre">Qbits.get_dihedrals()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_distance"><code class="docutils literal notranslate"><span class="pre">Qbits.get_distance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_distances"><code class="docutils literal notranslate"><span class="pre">Qbits.get_distances()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.get_pbc()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.get_positions()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_properties"><code class="docutils literal notranslate"><span class="pre">Qbits.get_properties()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_reciprocal_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.get_reciprocal_cell()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_scaled_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.get_scaled_positions()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_volume"><code class="docutils literal notranslate"><span class="pre">Qbits.get_volume()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.has"><code class="docutils literal notranslate"><span class="pre">Qbits.has()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.labels"><code class="docutils literal notranslate"><span class="pre">Qbits.labels</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.new_array"><code class="docutils literal notranslate"><span class="pre">Qbits.new_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.pbc</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.pop"><code class="docutils literal notranslate"><span class="pre">Qbits.pop()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.positions"><code class="docutils literal notranslate"><span class="pre">Qbits.positions</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rattle"><code class="docutils literal notranslate"><span class="pre">Qbits.rattle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.repeat"><code class="docutils literal notranslate"><span class="pre">Qbits.repeat()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.rotate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rotate_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.rotate_dihedral()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_angle"><code class="docutils literal notranslate"><span class="pre">Qbits.set_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_array"><code class="docutils literal notranslate"><span class="pre">Qbits.set_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.set_cell()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.set_celldisp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_centroid"><code class="docutils literal notranslate"><span class="pre">Qbits.set_centroid()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_constraint"><code class="docutils literal notranslate"><span class="pre">Qbits.set_constraint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.set_dihedral()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_distance"><code class="docutils literal notranslate"><span class="pre">Qbits.set_distance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.set_pbc()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.set_positions()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_scaled_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.set_scaled_positions()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.shape"><code class="docutils literal notranslate"><span class="pre">Qbits.shape</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.states"><code class="docutils literal notranslate"><span class="pre">Qbits.states</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.todict"><code class="docutils literal notranslate"><span class="pre">Qbits.todict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.translate"><code class="docutils literal notranslate"><span class="pre">Qbits.translate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.wrap"><code class="docutils literal notranslate"><span class="pre">Qbits.wrap()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.write"><code class="docutils literal notranslate"><span class="pre">Qbits.write()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal.duration"><code class="docutils literal notranslate"><span class="pre">Signal.duration</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal.duration"><code class="docutils literal notranslate"><span class="pre">Signal.duration</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.calc">qse.calc</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.CalculationFailed"><code class="docutils literal notranslate"><span class="pre">CalculationFailed</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator"><code class="docutils literal notranslate"><span class="pre">Calculator</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.calculate"><code class="docutils literal notranslate"><span class="pre">Calculator.calculate()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.calculate_properties"><code class="docutils literal notranslate"><span class="pre">Calculator.calculate_properties()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.check_state"><code class="docutils literal notranslate"><span class="pre">Calculator.check_state()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.default_parameters"><code class="docutils literal notranslate"><span class="pre">Calculator.default_parameters</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.discard_results_on_any_change"><code class="docutils literal notranslate"><span class="pre">Calculator.discard_results_on_any_change</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.get_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.get_sij()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.get_spins"><code class="docutils literal notranslate"><span class="pre">Calculator.get_spins()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.ignored_changes"><code class="docutils literal notranslate"><span class="pre">Calculator.ignored_changes</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Calculator.implemented_properties</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.read"><code class="docutils literal notranslate"><span class="pre">Calculator.read()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.reset"><code class="docutils literal notranslate"><span class="pre">Calculator.reset()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.set"><code class="docutils literal notranslate"><span class="pre">Calculator.set()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.structure_factor_from_sij()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.calc">qse.calc</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.CalculationFailed"><code class="docutils literal notranslate"><span class="pre">CalculationFailed</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator"><code class="docutils literal notranslate"><span class="pre">Calculator</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.calculate"><code class="docutils literal notranslate"><span class="pre">Calculator.calculate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.calculate_properties"><code class="docutils literal notranslate"><span class="pre">Calculator.calculate_properties()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.check_state"><code class="docutils literal notranslate"><span class="pre">Calculator.check_state()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.default_parameters"><code class="docutils literal notranslate"><span class="pre">Calculator.default_parameters</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.discard_results_on_any_change"><code class="docutils literal notranslate"><span class="pre">Calculator.discard_results_on_any_change</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.get_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.get_sij()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.get_spins"><code class="docutils literal notranslate"><span class="pre">Calculator.get_spins()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.ignored_changes"><code class="docutils literal notranslate"><span class="pre">Calculator.ignored_changes</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Calculator.implemented_properties</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.read"><code class="docutils literal notranslate"><span class="pre">Calculator.read()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.reset"><code class="docutils literal notranslate"><span class="pre">Calculator.reset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.set"><code class="docutils literal notranslate"><span class="pre">Calculator.set()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.structure_factor_from_sij()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.CalculatorSetupError"><code class="docutils literal notranslate"><span class="pre">CalculatorSetupError</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm"><code class="docutils literal notranslate"><span class="pre">Myqlm</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.calculate"><code class="docutils literal notranslate"><span class="pre">Myqlm.calculate()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.default_parameters"><code class="docutils literal notranslate"><span class="pre">Myqlm.default_parameters</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Myqlm.implemented_properties</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.CalculatorSetupError"><code class="docutils literal notranslate"><span class="pre">CalculatorSetupError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm"><code class="docutils literal notranslate"><span class="pre">Myqlm</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.calculate"><code class="docutils literal notranslate"><span class="pre">Myqlm.calculate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.default_parameters"><code class="docutils literal notranslate"><span class="pre">Myqlm.default_parameters</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Myqlm.implemented_properties</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotImplementedError"><code class="docutils literal notranslate"><span class="pre">PropertyNotImplementedError</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotPresent"><code class="docutils literal notranslate"><span class="pre">PropertyNotPresent</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser"><code class="docutils literal notranslate"><span class="pre">Pulser</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.calculate"><code class="docutils literal notranslate"><span class="pre">Pulser.calculate()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.default_parameters"><code class="docutils literal notranslate"><span class="pre">Pulser.default_parameters</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Pulser.implemented_properties</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.read"><code class="docutils literal notranslate"><span class="pre">Pulser.read()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.set"><code class="docutils literal notranslate"><span class="pre">Pulser.set()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.write"><code class="docutils literal notranslate"><span class="pre">Pulser.write()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotImplementedError"><code class="docutils literal notranslate"><span class="pre">PropertyNotImplementedError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotPresent"><code class="docutils literal notranslate"><span class="pre">PropertyNotPresent</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser"><code class="docutils literal notranslate"><span class="pre">Pulser</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.calculate"><code class="docutils literal notranslate"><span class="pre">Pulser.calculate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.default_parameters"><code class="docutils literal notranslate"><span class="pre">Pulser.default_parameters</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Pulser.implemented_properties</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.read"><code class="docutils literal notranslate"><span class="pre">Pulser.read()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.set"><code class="docutils literal notranslate"><span class="pre">Pulser.set()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.write"><code class="docutils literal notranslate"><span class="pre">Pulser.write()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.lattices">qse.lattices</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.chain"><code class="docutils literal notranslate"><span class="pre">chain()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.hexagonal"><code class="docutils literal notranslate"><span class="pre">hexagonal()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.kagome"><code class="docutils literal notranslate"><span class="pre">kagome()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.ring"><code class="docutils literal notranslate"><span class="pre">ring()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.square"><code class="docutils literal notranslate"><span class="pre">square()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.torus"><code class="docutils literal notranslate"><span class="pre">torus()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.triangular"><code class="docutils literal notranslate"><span class="pre">triangular()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.lattices">qse.lattices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.chain"><code class="docutils literal notranslate"><span class="pre">chain()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.hexagonal"><code class="docutils literal notranslate"><span class="pre">hexagonal()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.kagome"><code class="docutils literal notranslate"><span class="pre">kagome()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.ring"><code class="docutils literal notranslate"><span class="pre">ring()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.square"><code class="docutils literal notranslate"><span class="pre">square()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.torus"><code class="docutils literal notranslate"><span class="pre">torus()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.triangular"><code class="docutils literal notranslate"><span class="pre">triangular()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.magnetic">qse.magnetic</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_basis"><code class="docutils literal notranslate"><span class="pre">get_basis()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_index"><code class="docutils literal notranslate"><span class="pre">get_index()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_sisj"><code class="docutils literal notranslate"><span class="pre">get_sisj()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_spins"><code class="docutils literal notranslate"><span class="pre">get_spins()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">structure_factor_from_sij()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.sxop"><code class="docutils literal notranslate"><span class="pre">sxop()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.syop"><code class="docutils literal notranslate"><span class="pre">syop()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.magnetic">qse.magnetic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_basis"><code class="docutils literal notranslate"><span class="pre">get_basis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_index"><code class="docutils literal notranslate"><span class="pre">get_index()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_sisj"><code class="docutils literal notranslate"><span class="pre">get_sisj()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_spins"><code class="docutils literal notranslate"><span class="pre">get_spins()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">structure_factor_from_sij()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.sxop"><code class="docutils literal notranslate"><span class="pre">sxop()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.syop"><code class="docutils literal notranslate"><span class="pre">syop()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.utils">qse.utils</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.utils.int2bin"><code class="docutils literal notranslate"><span class="pre">int2bin()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.utils">qse.utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.utils.int2bin"><code class="docutils literal notranslate"><span class="pre">int2bin()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -524,9 +516,8 @@ document.write(`
                   
   <section id="api-reference">
 <h1>API reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h1>
-</section>
 <section id="module-qse">
-<span id="qse"></span><h1>qse<a class="headerlink" href="#module-qse" title="Link to this heading">#</a></h1>
+<span id="qse"></span><h2>qse<a class="headerlink" href="#module-qse" title="Link to this heading">#</a></h2>
 <p>Quantum Simulation Environment.</p>
 <p>This package is adapted from Atomic Simulation Environment (ASE).</p>
 <dl class="py class">
@@ -1324,7 +1315,7 @@ or consistent for multi-dim usage.</p>
 
 </section>
 <section id="module-qse.calc">
-<span id="qse-calc"></span><h1>qse.calc<a class="headerlink" href="#module-qse.calc" title="Link to this heading">#</a></h1>
+<span id="qse-calc"></span><h2>qse.calc<a class="headerlink" href="#module-qse.calc" title="Link to this heading">#</a></h2>
 <p>Interface to different QSE calculators.</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="qse.calc.CalculationFailed">
@@ -1701,7 +1692,7 @@ Not yet implemented.</p>
 
 </section>
 <section id="module-qse.lattices">
-<span id="qse-lattices"></span><h1>qse.lattices<a class="headerlink" href="#module-qse.lattices" title="Link to this heading">#</a></h1>
+<span id="qse-lattices"></span><h2>qse.lattices<a class="headerlink" href="#module-qse.lattices" title="Link to this heading">#</a></h2>
 <p>A collection of convenience functions for creating common lattices.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.lattices.chain">
@@ -1836,7 +1827,7 @@ of the ring, by default np.zeros(3)</p></li>
 
 </section>
 <section id="module-qse.magnetic">
-<span id="qse-magnetic"></span><h1>qse.magnetic<a class="headerlink" href="#module-qse.magnetic" title="Link to this heading">#</a></h1>
+<span id="qse-magnetic"></span><h2>qse.magnetic<a class="headerlink" href="#module-qse.magnetic" title="Link to this heading">#</a></h2>
 <p>Functions for computing magnetic correlation</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.magnetic.get_basis">
@@ -1984,7 +1975,7 @@ at ith index and a sign).</p>
 
 </section>
 <section id="module-qse.utils">
-<span id="qse-utils"></span><h1>qse.utils<a class="headerlink" href="#module-qse.utils" title="Link to this heading">#</a></h1>
+<span id="qse-utils"></span><h2>qse.utils<a class="headerlink" href="#module-qse.utils" title="Link to this heading">#</a></h2>
 <p>Utility functions for a variety of usage within and outside of QSE.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.utils.int2bin">
@@ -2011,11 +2002,12 @@ at ith index and a sign).</p>
 
 </section>
 <section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">#</a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
+</section>
 </section>
 
 
@@ -2054,151 +2046,149 @@ at ith index and a sign).</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">API reference</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse">qse</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit"><code class="docutils literal notranslate"><span class="pre">Qbit</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.cut_reference_to_qbits"><code class="docutils literal notranslate"><span class="pre">Qbit.cut_reference_to_qbits()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.delete"><code class="docutils literal notranslate"><span class="pre">Qbit.delete()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.get"><code class="docutils literal notranslate"><span class="pre">Qbit.get()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.get_raw"><code class="docutils literal notranslate"><span class="pre">Qbit.get_raw()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.label"><code class="docutils literal notranslate"><span class="pre">Qbit.label</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.position"><code class="docutils literal notranslate"><span class="pre">Qbit.position</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.set"><code class="docutils literal notranslate"><span class="pre">Qbit.set()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.state"><code class="docutils literal notranslate"><span class="pre">Qbit.state</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.x"><code class="docutils literal notranslate"><span class="pre">Qbit.x</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.y"><code class="docutils literal notranslate"><span class="pre">Qbit.y</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.z"><code class="docutils literal notranslate"><span class="pre">Qbit.z</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse">qse</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit"><code class="docutils literal notranslate"><span class="pre">Qbit</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.cut_reference_to_qbits"><code class="docutils literal notranslate"><span class="pre">Qbit.cut_reference_to_qbits()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.delete"><code class="docutils literal notranslate"><span class="pre">Qbit.delete()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.get"><code class="docutils literal notranslate"><span class="pre">Qbit.get()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.get_raw"><code class="docutils literal notranslate"><span class="pre">Qbit.get_raw()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.label"><code class="docutils literal notranslate"><span class="pre">Qbit.label</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.position"><code class="docutils literal notranslate"><span class="pre">Qbit.position</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.set"><code class="docutils literal notranslate"><span class="pre">Qbit.set()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.state"><code class="docutils literal notranslate"><span class="pre">Qbit.state</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.x"><code class="docutils literal notranslate"><span class="pre">Qbit.x</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.y"><code class="docutils literal notranslate"><span class="pre">Qbit.y</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.z"><code class="docutils literal notranslate"><span class="pre">Qbit.z</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits"><code class="docutils literal notranslate"><span class="pre">Qbits</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.append"><code class="docutils literal notranslate"><span class="pre">Qbits.append()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.calc"><code class="docutils literal notranslate"><span class="pre">Qbits.calc</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.cell"><code class="docutils literal notranslate"><span class="pre">Qbits.cell</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.center_in_unit_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.center_in_unit_cell()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.constraints"><code class="docutils literal notranslate"><span class="pre">Qbits.constraints</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.copy"><code class="docutils literal notranslate"><span class="pre">Qbits.copy()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.euler_rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.euler_rotate()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.extend"><code class="docutils literal notranslate"><span class="pre">Qbits.extend()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.fromdict"><code class="docutils literal notranslate"><span class="pre">Qbits.fromdict()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_all_distances"><code class="docutils literal notranslate"><span class="pre">Qbits.get_all_distances()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_angle"><code class="docutils literal notranslate"><span class="pre">Qbits.get_angle()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_angles"><code class="docutils literal notranslate"><span class="pre">Qbits.get_angles()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_array"><code class="docutils literal notranslate"><span class="pre">Qbits.get_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.get_cell()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_cell_lengths_and_angles"><code class="docutils literal notranslate"><span class="pre">Qbits.get_cell_lengths_and_angles()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.get_celldisp()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_centroid"><code class="docutils literal notranslate"><span class="pre">Qbits.get_centroid()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.get_dihedral()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_dihedrals"><code class="docutils literal notranslate"><span class="pre">Qbits.get_dihedrals()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_distance"><code class="docutils literal notranslate"><span class="pre">Qbits.get_distance()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_distances"><code class="docutils literal notranslate"><span class="pre">Qbits.get_distances()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.get_pbc()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.get_positions()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_properties"><code class="docutils literal notranslate"><span class="pre">Qbits.get_properties()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_reciprocal_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.get_reciprocal_cell()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_scaled_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.get_scaled_positions()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_volume"><code class="docutils literal notranslate"><span class="pre">Qbits.get_volume()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.has"><code class="docutils literal notranslate"><span class="pre">Qbits.has()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.labels"><code class="docutils literal notranslate"><span class="pre">Qbits.labels</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.new_array"><code class="docutils literal notranslate"><span class="pre">Qbits.new_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.pbc</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.pop"><code class="docutils literal notranslate"><span class="pre">Qbits.pop()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.positions"><code class="docutils literal notranslate"><span class="pre">Qbits.positions</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rattle"><code class="docutils literal notranslate"><span class="pre">Qbits.rattle()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.repeat"><code class="docutils literal notranslate"><span class="pre">Qbits.repeat()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.rotate()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rotate_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.rotate_dihedral()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_angle"><code class="docutils literal notranslate"><span class="pre">Qbits.set_angle()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_array"><code class="docutils literal notranslate"><span class="pre">Qbits.set_array()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.set_cell()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.set_celldisp()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_centroid"><code class="docutils literal notranslate"><span class="pre">Qbits.set_centroid()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_constraint"><code class="docutils literal notranslate"><span class="pre">Qbits.set_constraint()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.set_dihedral()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_distance"><code class="docutils literal notranslate"><span class="pre">Qbits.set_distance()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.set_pbc()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.set_positions()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_scaled_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.set_scaled_positions()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.shape"><code class="docutils literal notranslate"><span class="pre">Qbits.shape</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.states"><code class="docutils literal notranslate"><span class="pre">Qbits.states</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.todict"><code class="docutils literal notranslate"><span class="pre">Qbits.todict()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.translate"><code class="docutils literal notranslate"><span class="pre">Qbits.translate()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.wrap"><code class="docutils literal notranslate"><span class="pre">Qbits.wrap()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.write"><code class="docutils literal notranslate"><span class="pre">Qbits.write()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits"><code class="docutils literal notranslate"><span class="pre">Qbits</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.append"><code class="docutils literal notranslate"><span class="pre">Qbits.append()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.calc"><code class="docutils literal notranslate"><span class="pre">Qbits.calc</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.cell"><code class="docutils literal notranslate"><span class="pre">Qbits.cell</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.center_in_unit_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.center_in_unit_cell()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.constraints"><code class="docutils literal notranslate"><span class="pre">Qbits.constraints</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.copy"><code class="docutils literal notranslate"><span class="pre">Qbits.copy()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.euler_rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.euler_rotate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.extend"><code class="docutils literal notranslate"><span class="pre">Qbits.extend()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.fromdict"><code class="docutils literal notranslate"><span class="pre">Qbits.fromdict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_all_distances"><code class="docutils literal notranslate"><span class="pre">Qbits.get_all_distances()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_angle"><code class="docutils literal notranslate"><span class="pre">Qbits.get_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_angles"><code class="docutils literal notranslate"><span class="pre">Qbits.get_angles()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_array"><code class="docutils literal notranslate"><span class="pre">Qbits.get_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.get_cell()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_cell_lengths_and_angles"><code class="docutils literal notranslate"><span class="pre">Qbits.get_cell_lengths_and_angles()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.get_celldisp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_centroid"><code class="docutils literal notranslate"><span class="pre">Qbits.get_centroid()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.get_dihedral()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_dihedrals"><code class="docutils literal notranslate"><span class="pre">Qbits.get_dihedrals()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_distance"><code class="docutils literal notranslate"><span class="pre">Qbits.get_distance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_distances"><code class="docutils literal notranslate"><span class="pre">Qbits.get_distances()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.get_pbc()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.get_positions()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_properties"><code class="docutils literal notranslate"><span class="pre">Qbits.get_properties()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_reciprocal_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.get_reciprocal_cell()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_scaled_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.get_scaled_positions()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_volume"><code class="docutils literal notranslate"><span class="pre">Qbits.get_volume()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.has"><code class="docutils literal notranslate"><span class="pre">Qbits.has()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.labels"><code class="docutils literal notranslate"><span class="pre">Qbits.labels</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.new_array"><code class="docutils literal notranslate"><span class="pre">Qbits.new_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.pbc</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.pop"><code class="docutils literal notranslate"><span class="pre">Qbits.pop()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.positions"><code class="docutils literal notranslate"><span class="pre">Qbits.positions</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rattle"><code class="docutils literal notranslate"><span class="pre">Qbits.rattle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.repeat"><code class="docutils literal notranslate"><span class="pre">Qbits.repeat()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.rotate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rotate_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.rotate_dihedral()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_angle"><code class="docutils literal notranslate"><span class="pre">Qbits.set_angle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_array"><code class="docutils literal notranslate"><span class="pre">Qbits.set_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.set_cell()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.set_celldisp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_centroid"><code class="docutils literal notranslate"><span class="pre">Qbits.set_centroid()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_constraint"><code class="docutils literal notranslate"><span class="pre">Qbits.set_constraint()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.set_dihedral()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_distance"><code class="docutils literal notranslate"><span class="pre">Qbits.set_distance()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.set_pbc()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.set_positions()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_scaled_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.set_scaled_positions()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.shape"><code class="docutils literal notranslate"><span class="pre">Qbits.shape</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.states"><code class="docutils literal notranslate"><span class="pre">Qbits.states</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.todict"><code class="docutils literal notranslate"><span class="pre">Qbits.todict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.translate"><code class="docutils literal notranslate"><span class="pre">Qbits.translate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.wrap"><code class="docutils literal notranslate"><span class="pre">Qbits.wrap()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.write"><code class="docutils literal notranslate"><span class="pre">Qbits.write()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal.duration"><code class="docutils literal notranslate"><span class="pre">Signal.duration</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal.duration"><code class="docutils literal notranslate"><span class="pre">Signal.duration</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.calc">qse.calc</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.CalculationFailed"><code class="docutils literal notranslate"><span class="pre">CalculationFailed</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator"><code class="docutils literal notranslate"><span class="pre">Calculator</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.calculate"><code class="docutils literal notranslate"><span class="pre">Calculator.calculate()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.calculate_properties"><code class="docutils literal notranslate"><span class="pre">Calculator.calculate_properties()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.check_state"><code class="docutils literal notranslate"><span class="pre">Calculator.check_state()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.default_parameters"><code class="docutils literal notranslate"><span class="pre">Calculator.default_parameters</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.discard_results_on_any_change"><code class="docutils literal notranslate"><span class="pre">Calculator.discard_results_on_any_change</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.get_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.get_sij()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.get_spins"><code class="docutils literal notranslate"><span class="pre">Calculator.get_spins()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.ignored_changes"><code class="docutils literal notranslate"><span class="pre">Calculator.ignored_changes</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Calculator.implemented_properties</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.read"><code class="docutils literal notranslate"><span class="pre">Calculator.read()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.reset"><code class="docutils literal notranslate"><span class="pre">Calculator.reset()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.set"><code class="docutils literal notranslate"><span class="pre">Calculator.set()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.structure_factor_from_sij()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.calc">qse.calc</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.CalculationFailed"><code class="docutils literal notranslate"><span class="pre">CalculationFailed</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator"><code class="docutils literal notranslate"><span class="pre">Calculator</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.calculate"><code class="docutils literal notranslate"><span class="pre">Calculator.calculate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.calculate_properties"><code class="docutils literal notranslate"><span class="pre">Calculator.calculate_properties()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.check_state"><code class="docutils literal notranslate"><span class="pre">Calculator.check_state()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.default_parameters"><code class="docutils literal notranslate"><span class="pre">Calculator.default_parameters</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.discard_results_on_any_change"><code class="docutils literal notranslate"><span class="pre">Calculator.discard_results_on_any_change</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.get_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.get_sij()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.get_spins"><code class="docutils literal notranslate"><span class="pre">Calculator.get_spins()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.ignored_changes"><code class="docutils literal notranslate"><span class="pre">Calculator.ignored_changes</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Calculator.implemented_properties</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.read"><code class="docutils literal notranslate"><span class="pre">Calculator.read()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.reset"><code class="docutils literal notranslate"><span class="pre">Calculator.reset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.set"><code class="docutils literal notranslate"><span class="pre">Calculator.set()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.structure_factor_from_sij()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.CalculatorSetupError"><code class="docutils literal notranslate"><span class="pre">CalculatorSetupError</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm"><code class="docutils literal notranslate"><span class="pre">Myqlm</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.calculate"><code class="docutils literal notranslate"><span class="pre">Myqlm.calculate()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.default_parameters"><code class="docutils literal notranslate"><span class="pre">Myqlm.default_parameters</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Myqlm.implemented_properties</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.CalculatorSetupError"><code class="docutils literal notranslate"><span class="pre">CalculatorSetupError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm"><code class="docutils literal notranslate"><span class="pre">Myqlm</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.calculate"><code class="docutils literal notranslate"><span class="pre">Myqlm.calculate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.default_parameters"><code class="docutils literal notranslate"><span class="pre">Myqlm.default_parameters</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Myqlm.implemented_properties</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotImplementedError"><code class="docutils literal notranslate"><span class="pre">PropertyNotImplementedError</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotPresent"><code class="docutils literal notranslate"><span class="pre">PropertyNotPresent</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser"><code class="docutils literal notranslate"><span class="pre">Pulser</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.calculate"><code class="docutils literal notranslate"><span class="pre">Pulser.calculate()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.default_parameters"><code class="docutils literal notranslate"><span class="pre">Pulser.default_parameters</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Pulser.implemented_properties</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.read"><code class="docutils literal notranslate"><span class="pre">Pulser.read()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.set"><code class="docutils literal notranslate"><span class="pre">Pulser.set()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.write"><code class="docutils literal notranslate"><span class="pre">Pulser.write()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotImplementedError"><code class="docutils literal notranslate"><span class="pre">PropertyNotImplementedError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotPresent"><code class="docutils literal notranslate"><span class="pre">PropertyNotPresent</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser"><code class="docutils literal notranslate"><span class="pre">Pulser</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.calculate"><code class="docutils literal notranslate"><span class="pre">Pulser.calculate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.default_parameters"><code class="docutils literal notranslate"><span class="pre">Pulser.default_parameters</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Pulser.implemented_properties</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.read"><code class="docutils literal notranslate"><span class="pre">Pulser.read()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.set"><code class="docutils literal notranslate"><span class="pre">Pulser.set()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.write"><code class="docutils literal notranslate"><span class="pre">Pulser.write()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.lattices">qse.lattices</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.chain"><code class="docutils literal notranslate"><span class="pre">chain()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.hexagonal"><code class="docutils literal notranslate"><span class="pre">hexagonal()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.kagome"><code class="docutils literal notranslate"><span class="pre">kagome()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.ring"><code class="docutils literal notranslate"><span class="pre">ring()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.square"><code class="docutils literal notranslate"><span class="pre">square()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.torus"><code class="docutils literal notranslate"><span class="pre">torus()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.triangular"><code class="docutils literal notranslate"><span class="pre">triangular()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.lattices">qse.lattices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.chain"><code class="docutils literal notranslate"><span class="pre">chain()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.hexagonal"><code class="docutils literal notranslate"><span class="pre">hexagonal()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.kagome"><code class="docutils literal notranslate"><span class="pre">kagome()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.ring"><code class="docutils literal notranslate"><span class="pre">ring()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.square"><code class="docutils literal notranslate"><span class="pre">square()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.torus"><code class="docutils literal notranslate"><span class="pre">torus()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.lattices.triangular"><code class="docutils literal notranslate"><span class="pre">triangular()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.magnetic">qse.magnetic</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_basis"><code class="docutils literal notranslate"><span class="pre">get_basis()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_index"><code class="docutils literal notranslate"><span class="pre">get_index()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_sisj"><code class="docutils literal notranslate"><span class="pre">get_sisj()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_spins"><code class="docutils literal notranslate"><span class="pre">get_spins()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">structure_factor_from_sij()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.sxop"><code class="docutils literal notranslate"><span class="pre">sxop()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.syop"><code class="docutils literal notranslate"><span class="pre">syop()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.magnetic">qse.magnetic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_basis"><code class="docutils literal notranslate"><span class="pre">get_basis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_index"><code class="docutils literal notranslate"><span class="pre">get_index()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_sisj"><code class="docutils literal notranslate"><span class="pre">get_sisj()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_spins"><code class="docutils literal notranslate"><span class="pre">get_spins()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">structure_factor_from_sij()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.sxop"><code class="docutils literal notranslate"><span class="pre">sxop()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.syop"><code class="docutils literal notranslate"><span class="pre">syop()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.utils">qse.utils</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.utils.int2bin"><code class="docutils literal notranslate"><span class="pre">int2bin()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.utils">qse.utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.utils.int2bin"><code class="docutils literal notranslate"><span class="pre">int2bin()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
