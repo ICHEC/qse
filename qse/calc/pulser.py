@@ -121,16 +121,15 @@ class Pulser(Calculator):
         self.results = None
         self.channel = "rydberg_global"
 
-        if amplitude is not None:
-            if isinstance(amplitude, (Signal, pulser.waveforms.Waveform)):
-                self.amplitude = amplitude
-            else:
-                self.amplitude = Signal(amplitude)
-        if detuning is not None:
-            if isinstance(detuning, (Signal, pulser.waveforms.Waveform)):
-                self.detuning = detuning
-            else:
-                self.detuning = Signal(detuning)
+        if isinstance(amplitude, (Signal, pulser.waveforms.Waveform)):
+            self.amplitude = amplitude
+        else:
+            self.amplitude = Signal(amplitude)
+
+        if isinstance(detuning, (Signal, pulser.waveforms.Waveform)):
+            self.detuning = detuning
+        else:
+            self.detuning = Signal(detuning)
 
         self.duration = self.amplitude.duration
 
@@ -149,50 +148,34 @@ class Pulser(Calculator):
 
         self.pulse = pulser.Pulse(amplitude=amp, detuning=det, phase=0)
 
-        self._register = None
         self._sequence = None
         self._sim = None
 
-        self.qbits = qbits if qbits is not None else None
         self.spins = None
         self.sij = None
+
+        self.build_sequence()
 
     @property
     def qbits(self):
         return self._qbits
 
-    @qbits.setter
-    def qbits(self, qbits, prefix="q"):
-        if qbits is None:
-            self._qbits, self._coords, self._register, self._sequence = (
-                None,
-                None,
-                None,
-                None,
-            )
-        else:
-            self._qbits = qbits
-            self._coords = qbits.positions[:, :2]
-            self._register = pulser.Register.from_coordinates(
-                self.coords, prefix=prefix
-            )
-            self.sequence = pulser.Sequence
-
     @property
     def coords(self):
-        return self._coords
+        if self._qbits is None:
+            return None
+        return self._qbits.positions[:, :2]
 
     @property
     def register(self):
-        return self._register
+        return pulser.Register.from_coordinates(self.coords)
 
     @property
     def sequence(self):
         return self._sequence
 
-    @sequence.setter
-    def sequence(self, sequence):
-        self._sequence = sequence(self.register, self.device)
+    def build_sequence(self):
+        self._sequence = pulser.Sequence(self.register, self.device)
         self._sequence.declare_channel("ch0", self.channel)
         self._sequence.add(self.pulse, "ch0")
         self._sequence.measure("ground-rydberg")
@@ -201,9 +184,6 @@ class Pulser(Calculator):
     @property
     def sim(self):
         return self._sim
-
-    def build_sequence(self):
-        pass
 
     def __del__(self):
         """deleting process. Empty"""
