@@ -1,13 +1,14 @@
 import numpy as np
+
 import qse
 
 
 def test_pulser_calc():
-    """ Test the pulser calculator on a chain of qbits."""
+    """Test the pulser calculator on a chain of qbits."""
     # Define lattice, square lattice
     L = 4
     qbits = qse.lattices.chain(4.0, L)
-    
+
     duration = 400
     omega0 = 10.01
     delta0 = 0.12
@@ -17,7 +18,7 @@ def test_pulser_calc():
         amplitude=qse.Signal(np.ones(6) * omega0, duration),
         detuning=qse.Signal(np.ones(6) * delta0, duration),
         qbits=qbits,
-        label="test_run"
+        label="test_run",
     )
     assert pulser_calc.amplitude.duration == duration
     assert np.allclose(pulser_calc.amplitude.values[0], np.ones(6) * omega0)
