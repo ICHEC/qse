@@ -5,7 +5,7 @@ import qse
 
 def test_pulser_calc():
     """Test the pulser calculator on a chain of qbits."""
-    # Define lattice, square lattice
+    # Define the lattice
     L = 4
     qbits = qse.lattices.chain(4.0, L)
 
@@ -21,13 +21,14 @@ def test_pulser_calc():
         label="test_run",
     )
     assert pulser_calc.amplitude.duration == duration
-    assert np.allclose(pulser_calc.amplitude.values[0], np.ones(6) * omega0)
+    assert np.allclose(pulser_calc.amplitude.samples[0], omega0)
 
     assert pulser_calc.detuning.duration == duration
-    assert np.allclose(pulser_calc.detuning.values[0], np.ones(6) * delta0)
+    assert np.allclose(pulser_calc.detuning.samples[0], delta0)
 
     assert pulser_calc.label == "test_run"
 
+    # Compute
     pulser_calc.calculate()
     pulser_calc.get_spins()
     pulser_calc.get_sij()
