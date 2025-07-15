@@ -129,7 +129,8 @@ class Qbits:
     ):
         if (positions is not None) and (scaled_positions is not None):
             raise Exception(
-                "Both 'positions' and 'scaled_positions' cannot be passed at the same time."
+                "Both 'positions' and 'scaled_positions'"
+                " cannot be passed at the same time."
             )
 
         if (scaled_positions is not None) and (cell is None):
@@ -874,7 +875,8 @@ class Qbits:
 
         Notes
         -----
-        For a set of :math:`k` positions :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`
+        For a set of :math:`k` positions
+        :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`
         the centroid is given by
 
         .. math::
@@ -898,7 +900,8 @@ class Qbits:
 
         Notes
         -----
-        For a set of :math:`k` positions :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`
+        For a set of :math:`k` positions
+        :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`
         the centroid is given by
 
         .. math::
@@ -949,7 +952,8 @@ class Qbits:
         then we define
 
         .. math::
-            R = \cos(\theta)I + \sin(\theta)[\textbf{v}]_\times + (1-\cos(\theta))\textbf{v}\textbf{v}^T
+            R = \cos(\theta)I + \sin(\theta)[\textbf{v}]_\times
+            + (1-\cos(\theta))\textbf{v}\textbf{v}^T
 
         where :math:`[\textbf{v}]_\times \textbf{x} = \textbf{v} \times \textbf{x}`.
         If
