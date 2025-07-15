@@ -26,17 +26,6 @@ class Pulser(Calculator):
     r"""
     QSE-Calculator for pulser.
 
-    Pulser is an open-source Python software package.
-    It provides easy-to-use libraries for designing and
-    simulating pulse sequences that act on programmable
-    arrays of neutral qbits, a promising platform for
-    quantum computation and simulation.
-    Online documentation: https://pulser.readthedocs.io
-    White paper: Quantum 6, 629 (2022)
-    Source code: https://github.com/pasqal-io/Pulser
-    License: Apache 2.0
-    - see [LICENSE](https://github.com/pasqal-io/Pulser/blob/master/LICENSE) for details
-
     Parameters
     ----------
     auto_write: bool
@@ -76,6 +65,20 @@ class Pulser(Calculator):
         MEDIUM Quite some output
         SILENT Almost no output
         Default is 'LOW'
+
+    Notes
+    -----
+    Pulser is an open-source Python software package.
+    It provides easy-to-use libraries for designing and
+    simulating pulse sequences that act on programmable
+    arrays of neutral qbits, a promising platform for
+    quantum computation and simulation.
+    Online documentation: https://pulser.readthedocs.io
+    White paper: Quantum 6, 629 (2022)
+    Source code: https://github.com/pasqal-io/Pulser
+    License: Apache 2.0
+    - see [LICENSE](https://github.com/pasqal-io/Pulser/blob/master/LICENSE)
+    for details.
     """
 
     implemented_properties = ["energy", "state", "fidality"]
@@ -117,6 +120,7 @@ class Pulser(Calculator):
         self.parameters = None
         self.results = None
         self.channel = "rydberg_global"
+
         if amplitude is not None:
             if isinstance(amplitude, (Signal, pulser.waveforms.Waveform)):
                 self.amplitude = amplitude
@@ -128,17 +132,15 @@ class Pulser(Calculator):
             else:
                 self.detuning = Signal(detuning)
 
-        # assert self.amplitude.duration == self.detuning.duration
         self.duration = self.amplitude.duration
-        wa = isinstance(self.amplitude, pulser.waveforms.Waveform)
-        wd = isinstance(self.detuning, pulser.waveforms.Waveform)
-        if wa:
+
+        if isinstance(self.amplitude, pulser.waveforms.Waveform):
             amp = self.amplitude
         else:
             amp = pulser.waveforms.InterpolatedWaveform(
                 duration=self.duration, values=self.amplitude.values
             )
-        if wd:
+        if isinstance(self.detuning, pulser.waveforms.Waveform):
             det = self.detuning
         else:
             det = pulser.waveforms.InterpolatedWaveform(
@@ -147,15 +149,6 @@ class Pulser(Calculator):
 
         self.pulse = pulser.Pulse(amplitude=amp, detuning=det, phase=0)
 
-        # self.pulse = pulser.Pulse(
-        #    amplitude=pulser.waveforms.InterpolatedWaveform(
-        #        duration=self.duration,
-        #        values=self.amplitude.values),
-        #        duration=self.duration,
-        #    detuning=pulser.waveforms.InterpolatedWaveform(
-        #        values=self.detuning.values), phase=0
-        # )
-        # pulser part which defines Hamiltonian parameters done. #
         self._register, self._sequence, self._sim = None, None, None
         self.qbits = qbits if qbits is not None else None
         self.spins = None
