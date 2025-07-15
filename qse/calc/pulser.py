@@ -149,7 +149,10 @@ class Pulser(Calculator):
 
         self.pulse = pulser.Pulse(amplitude=amp, detuning=det, phase=0)
 
-        self._register, self._sequence, self._sim = None, None, None
+        self._register = None
+        self._sequence = None
+        self._sim = None
+
         self.qbits = qbits if qbits is not None else None
         self.spins = None
         self.sij = None
