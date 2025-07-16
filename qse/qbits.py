@@ -1621,8 +1621,10 @@ def _norm_vector(v):
         raise ZeroDivisionError("Vector has 0 norm.", v)
     return v / normv
 
+
 def _to_rads(a):
     return a * np.pi / 180
+
 
 def _string2vector(v):
     """Used in rotate method to rotate qbit location"""
