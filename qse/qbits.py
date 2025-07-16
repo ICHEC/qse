@@ -8,7 +8,6 @@ This module defines the central object in the QSE package: the Qbits object.
 """
 import copy
 import numbers
-from math import cos, pi, sin
 
 import numpy as np
 from ase.cell import Cell
@@ -911,19 +910,20 @@ class Qbits:
         else:
             self.set_positions(self.get_positions() + difference)
 
-    def rotate(self, a, v, center=(0, 0, 0), rotate_cell=False):
+    def rotate(self, a, v="z", center=(0, 0, 0), rotate_cell=False):
         r"""
         Rotate qbits based on a vector and an angle, or two vectors.
 
         Parameters
         ----------
         a :
-            Angle that the qbits is rotated around the vector 'v'. 'a'
-            can also be a vector and then 'a' is rotated
+            Angle that the qbits is rotated (anticlockwise) around the vector 'v'.
+            'a' can also be a vector and then 'a' is rotated
             into 'v'. If 'a' is an angle it must be in degrees.
         v :
             Vector to rotate the qbits around. Vectors can be given as
             strings: 'x', '-x', 'y', ... .
+            Defaults to 'z'.
         center :
             The center is kept fixed under the rotation. Use 'COP' to
             fix the center of positions or 'COU' to fix the center of
@@ -933,10 +933,10 @@ class Qbits:
 
         Examples
         --------
-        Rotate 90 degrees around the z-axis, so that the x-axis is
+        The following all rotate 90 degrees around the z-axis, so that the x-axis is
         rotated into the y-axis:
 
-        >>> qbits = Qbits()
+        >>> qbits.rotate(90)
         >>> qbits.rotate(90, 'z')
         >>> qbits.rotate(90, (0, 0, 1))
         >>> qbits.rotate(-90, '-z')
@@ -965,25 +965,14 @@ class Qbits:
         if not isinstance(a, numbers.Real):
             a, v = v, a
 
-        v = string2vector(v)
-
-        normv = np.linalg.norm(v)
-
-        if normv == 0.0:
-            raise ZeroDivisionError("Cannot rotate: norm(v) == 0")
+        v = _norm_vector(_string2vector(v))
 
         if isinstance(a, numbers.Real):
-            a *= pi / 180
-            v /= normv
-            c = cos(a)
-            s = sin(a)
+            a = _to_rads(a)
+            c = np.cos(a)
+            s = np.sin(a)
         else:
-            v2 = string2vector(a)
-            v /= normv
-            normv2 = np.linalg.norm(v2)
-            if normv2 == 0:
-                raise ZeroDivisionError("Cannot rotate: norm(a) == 0")
-            v2 /= np.linalg.norm(v2)
+            v2 = _norm_vector(_string2vector(a))
             c = np.dot(v, v2)
             v = np.cross(v, v2)
             s = np.linalg.norm(v)
@@ -1085,15 +1074,15 @@ class Qbits:
 
         # First Euler rotation about z in matrix form
         D = np.eye(3)
-        D[:-1, :-1] = rotation_mat(phi * pi / 180)
+        D[:-1, :-1] = rotation_mat(_to_rads(phi))
 
         # Second Euler rotation about x:
         C = np.eye(3)
-        C[1:, 1:] = rotation_mat(theta * pi / 180)
+        C[1:, 1:] = rotation_mat(_to_rads(theta))
 
         # Third Euler rotation, 2nd rotation about z:
         B = np.eye(3)
-        B[:-1, :-1] = rotation_mat(psi * pi / 180)
+        B[:-1, :-1] = rotation_mat(_to_rads(psi))
 
         # Total Euler rotation
         A = np.dot(B, np.dot(C, D))
@@ -1159,7 +1148,7 @@ class Qbits:
             if mask[i]:
                 group += self[i]
         group.translate(-center)
-        group.rotate(diff * 180 / pi, axis)
+        group.rotate(diff * 180 / np.pi, axis)
         group.translate(center)
         # set positions in original qbits object
         j = 0
@@ -1189,7 +1178,7 @@ class Qbits:
         >>> qbits.set_dihedral(1, 2, 3, 4, 210, mask=[0, 0, 0, 1, 1, 1])
         """
 
-        angle *= pi / 180
+        angle = _to_rads(angle)
 
         # if not provided, set mask to the last qbit in the
         # dihedral description
@@ -1200,7 +1189,7 @@ class Qbits:
             mask = [index in indices for index in range(len(self))]
 
         # compute necessary in dihedral change, from current value
-        current = self.get_dihedral(a1, a2, a3, a4) * pi / 180
+        current = _to_rads(self.get_dihedral(a1, a2, a3, a4))
         diff = angle - current
         axis = self.positions[a3] - self.positions[a2]
         center = self.positions[a3]
@@ -1295,7 +1284,7 @@ class Qbits:
             # Compute necessary in angle change, from current value
             diff = angle - self.get_angle(a1, a2, a3)
 
-        diff *= pi / 180
+        diff = _to_rads(diff)
         # Do rotation of subgroup by copying it to temporary qbits object and
         # then rotating that
         v10 = self.positions[a1] - self.positions[a2]
@@ -1625,11 +1614,21 @@ class Qbits:
     # def edit(self): Modify qbits interactively through ASE's GUI viewer.
 
 
-def string2vector(v):
+def _norm_vector(v):
+    normv = np.linalg.norm(v)
+
+    if normv == 0.0:
+        raise ZeroDivisionError("Vector has 0 norm.", v)
+    return v / normv
+
+def _to_rads(a):
+    return a * np.pi / 180
+
+def _string2vector(v):
     """Used in rotate method to rotate qbit location"""
     if isinstance(v, str):
         if v[0] == "-":
-            return -string2vector(v[1:])
+            return -_string2vector(v[1:])
         w = np.zeros(3)
         w["xyz".index(v)] = 1.0
         return w

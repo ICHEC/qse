@@ -201,13 +201,18 @@ def test_rotate():
 
 
 @pytest.mark.parametrize("angle", [10, 20, 30])
-def test_rotate_square_z(angle):
+@pytest.mark.parametrize("axis", [None, "z", (0,0,1)])
+def test_rotate_square_z(angle, axis):
     """Test rotating a square system about the z axis."""
     positions = np.array(
         [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0], [1.0, 0.0, 1.0]]
     )
     qbits = qse.Qbits(positions=positions)
-    qbits.rotate(angle, "z")
+
+    if axis is None:
+        qbits.rotate(angle)
+    else:
+        qbits.rotate(angle, axis)
 
     angle_rads = np.pi * angle / 180
     new_positions = np.array(
