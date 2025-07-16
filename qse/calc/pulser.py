@@ -142,34 +142,6 @@ class Pulser(Calculator):
     def sim(self):
         return self._sim
 
-    def __del__(self):
-        """deleting process. Empty"""
-        pass
-
-    def write(self, label):
-        """
-        Write qbits, parameters and calculated results into restart files.
-        Not yet implemented.
-
-        Parameters
-        ----------
-        label : string
-            used in filename
-        """
-        pass
-
-    def read(self, label):
-        """
-        Read qbits, parameters and calculated results from restart files.
-        Not yet implemented.
-
-        Parameters
-        ----------
-        label : string
-            used in filename
-        """
-        pass
-
     def calculate(self, progress=True):
         """
         Do the calculation.
@@ -193,15 +165,12 @@ class Pulser(Calculator):
 
 
 def _format_pulse(pulse):
-    if pulse is None:
-        return None
-    if isinstance(pulse, pulser.waveforms.Waveform):
+    if pulse is None or isinstance(pulse, pulser.waveforms.Waveform):
         return pulse
-    elif isinstance(pulse, Signal):
+    if isinstance(pulse, Signal):
         return pulser.waveforms.InterpolatedWaveform(
             duration=pulse.duration, values=pulse.values
         )
-    else:
-        raise Exception(
-            "Pulses must be either `qse.Signal` or" " `pulser.waveforms.Waveform`."
-        )
+    raise Exception(
+        "Pulses must be either `qse.Signal` or `pulser.waveforms.Waveform`."
+    )

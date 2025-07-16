@@ -1,13 +1,32 @@
 import numpy as np
+import pytest
 
 import qse
+
+
+@pytest.mark.parametrize("duration", [2, 17])
+@pytest.mark.parametrize("signal_type", ["amplitude", "detuning"])
+def test_pulser_signals(duration, signal_type):
+    """Check initializing and updating the amplitude and detuning signals."""
+    signal = qse.Signal(np.arange(duration))
+
+    # check initializing
+    pulser_calc = qse.calc.Pulser(**{signal_type: signal})
+    assert getattr(pulser_calc, signal_type).duration == duration
+    assert np.allclose(getattr(pulser_calc, signal_type).samples, signal.values)
+
+    # check we can update the sigals
+    signal_new = qse.Signal(0.7 * np.arange(duration + 2))
+    setattr(pulser_calc, signal_type, signal_new)
+    assert getattr(pulser_calc, signal_type).duration == signal_new.duration
+    assert np.allclose(getattr(pulser_calc, signal_type).samples, signal_new.values)
 
 
 def test_pulser_calc():
     """Test the pulser calculator on a chain of qbits."""
     # Define the lattice
-    L = 4
-    qbits = qse.lattices.chain(4.0, L)
+    repeats = 4
+    qbits = qse.lattices.chain(4.0, repeats)
 
     duration = 400
     omega0 = 10.01
@@ -34,5 +53,5 @@ def test_pulser_calc():
     pulser_calc.get_spins()
     pulser_calc.get_sij()
 
-    assert pulser_calc.spins.shape == (L, 3)
-    assert pulser_calc.sij.shape == (L, L)
+    assert pulser_calc.spins.shape == (repeats, 3)
+    assert pulser_calc.sij.shape == (repeats, repeats)

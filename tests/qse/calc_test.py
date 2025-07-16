@@ -5,10 +5,7 @@ import qse
 
 
 def test_pulser():
-    """
-    Test initializing the Pulser calculator.
-    """
-    signal = qse.Signal(np.ones(6))
+    """Test initializing the Pulser calculator."""
     if not qse.calc.pulser.CALCULATOR_AVAILABLE:
         with pytest.raises(Exception, match="Pulser is not installed."):
             qse.calc.Pulser()
@@ -18,9 +15,7 @@ def test_pulser():
 
 
 def test_myqlm():
-    """
-    Test initializing the Myqlm calculator.
-    """
+    """Test initializing the Myqlm calculator."""
     if not qse.calc.myqlm.CALCULATOR_AVAILABLE:
         with pytest.raises(Exception, match="myQLM is not installed."):
             qse.calc.Myqlm()
