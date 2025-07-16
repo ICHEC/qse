@@ -35,4 +35,10 @@ jobs:
         black . --check --diff
     - name: Test with pytest
       run: |
-        python -m pytest
+        python -m pytest tests/qse
+    - name: Install pulser
+      run: |
+        python -m pip install ".[pulser]"
+    - name: Test with pytest
+      run: |
+        python -m pytest tests/qse_pulser        

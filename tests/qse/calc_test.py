@@ -1,3 +1,4 @@
+import numpy as np
 import pytest
 
 import qse
@@ -12,7 +13,9 @@ def test_pulser():
             qse.calc.Pulser()
 
     else:
-        qse.calc.Pulser()
+        qse.calc.Pulser(
+            amplitude=qse.Signal(np.ones(6)), detuning=qse.Signal(np.ones(6))
+        )
 
 
 def test_myqlm():
