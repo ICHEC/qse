@@ -933,8 +933,8 @@ class Qbits:
 
         Examples
         --------
-        The following all rotate 90 degrees around the z-axis, so that the x-axis is
-        rotated into the y-axis:
+        The following all rotate 90 degrees anticlockwise around the z-axis,
+        so that the x-axis is rotated into the y-axis:
 
         >>> qbits.rotate(90)
         >>> qbits.rotate(90, 'z')
