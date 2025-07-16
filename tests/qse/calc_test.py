@@ -11,10 +11,10 @@ def test_pulser():
     signal = qse.Signal(np.ones(6))
     if not qse.calc.pulser.CALCULATOR_AVAILABLE:
         with pytest.raises(Exception, match="Pulser is not installed."):
-            qse.calc.Pulser(amplitude=signal, detuning=signal, qbits=qse.Qbits())
+            qse.calc.Pulser()
 
     else:
-        qse.calc.Pulser(amplitude=signal, detuning=signal, qbits=qse.Qbits())
+        qse.calc.Pulser()
 
 
 def test_myqlm():

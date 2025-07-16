@@ -67,9 +67,9 @@ class Pulser(Calculator):
 
     def __init__(
         self,
-        amplitude,
-        detuning,
-        qbits,
+        qbits=None,
+        amplitude=None,
+        detuning=None,
         device=None,
         emulator=None,
         label="pulser-run",
@@ -193,6 +193,8 @@ class Pulser(Calculator):
 
 
 def _format_pulse(pulse):
+    if pulse is None:
+        return None
     if isinstance(pulse, pulser.waveforms.Waveform):
         return pulse
     elif isinstance(pulse, Signal):
