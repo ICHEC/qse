@@ -8,6 +8,7 @@ This module defines the central object in the QSE package: the Qbits object.
 """
 import copy
 import numbers
+from math import cos, sin
 
 import numpy as np
 from ase.cell import Cell
@@ -973,8 +974,8 @@ class Qbits:
 
         if isinstance(a, numbers.Real):
             a = _to_rads(a)
-            c = np.cos(a)
-            s = np.sin(a)
+            c = cos(a)
+            s = sin(a)
         else:
             v2 = _norm_vector(_string2vector(a))
             c = np.dot(v, v2)
