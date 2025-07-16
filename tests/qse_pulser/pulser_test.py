@@ -29,6 +29,7 @@ def test_pulser_calc():
     assert pulser_calc.label == "test_run"
 
     # Compute
+    pulser_calc.build_sequence()
     pulser_calc.calculate()
     pulser_calc.get_spins()
     pulser_calc.get_sij()

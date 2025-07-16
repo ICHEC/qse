@@ -33,17 +33,23 @@ class Pulser(Calculator):
         The detuning pulse.
     qbits: qse.Qbits
         The qbits object.
-    device
+    device: pulser.devices.Device
+        The device.
         Defaults to pulser.devices.MockDevice.
     emulator
+        The emulator.
         Defaults to QutipEmulator.
     label: str
+        The label.
         Defaults to "pulser-run".
     wtimes: bool
+        Whether to print the times.
         Defaults to True.
 
     Notes
     -----
+    Pulser will only use the x-y coordinates of the Qbits object.
+
     Pulser is an open-source Python software package.
     It provides easy-to-use libraries for designing and
     simulating pulse sequences that act on programmable
@@ -83,8 +89,8 @@ class Pulser(Calculator):
         self.results = None
         self.channel = "rydberg_global"
 
-        self.amplitude = _format_pulse(amplitude)
-        self.detuning = _format_pulse(detuning)
+        self.amplitude = amplitude
+        self.detuning = detuning
 
         self._sequence = None
         self._sim = None
@@ -92,7 +98,21 @@ class Pulser(Calculator):
         self.spins = None
         self.sij = None
 
-        self.build_sequence()
+    @property
+    def amplitude(self):
+        return self._amplitude
+
+    @amplitude.setter
+    def amplitude(self, amplitude):
+        self._amplitude = _format_pulse(amplitude)
+
+    @property
+    def detuning(self):
+        return self._detuning
+
+    @detuning.setter
+    def detuning(self, detuning):
+        self._detuning = _format_pulse(detuning)
 
     @property
     def coords(self):
@@ -102,7 +122,7 @@ class Pulser(Calculator):
 
     @property
     def register(self):
-        return pulser.Register.from_coordinates(self.coords)
+        return pulser.Register.from_coordinates(self.coords, prefix="q")
 
     @property
     def sequence(self):
@@ -159,6 +179,7 @@ class Pulser(Calculator):
         # check whether all the emulator `classes` have .from_sequence method.
         if self.wtimes:
             t1 = time()
+
         self.results = self.sim.run(progress_bar=progress)
 
         final_state = self.results.get_final_state()
