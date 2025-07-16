@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.calc.myqlm &#8212; qse 0.2.6 documentation</title>
+    <title>qse.calc.myqlm &#8212; qse 0.2.7 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../_static/documentation_options.js?v=519527b2"></script>
+    <script src="../../../_static/documentation_options.js?v=ea69a5af"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -142,7 +142,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.6 documentation</p>
+    <p class="title logo__title">qse 0.2.7 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -388,7 +388,8 @@ document.write(`
 <span class="p">}</span>
 
 
-<span class="c1"># for rydberg system we need additional parameters: mix,max of amplitude and detuning to set based on device.</span>
+<span class="c1"># for rydberg system we need additional parameters: mix,max of</span>
+<span class="c1"># amplitude and detuning to set based on device.</span>
 <div class="viewcode-block" id="Myqlm">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Myqlm">[docs]</a>
 <span class="k">class</span> <span class="nc">Myqlm</span><span class="p">(</span><span class="n">Calculator</span><span class="p">):</span>
@@ -464,7 +465,8 @@ document.write(`
             <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;default_points&quot;</span><span class="p">])</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_waveform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">det</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
-        <span class="c1"># self.duration = len(self.amplitude) # needs to change for time independent problems</span>
+        <span class="c1"># self.duration = len(self.amplitude) # needs to change</span>
+        <span class="c1"># for time independent problems</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">C6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;C6&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qpu</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spins</span> <span class="o">=</span> <span class="kc">None</span>

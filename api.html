@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API reference &#8212; qse 0.2.6 documentation</title>
+    <title>API reference &#8212; qse 0.2.7 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=519527b2"></script>
+    <script src="_static/documentation_options.js?v=ea69a5af"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -143,7 +143,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.6 documentation</p>
+    <p class="title logo__title">qse 0.2.7 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -875,7 +875,8 @@ are angles between them:</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>For a set of <span class="math notranslate nohighlight">\(k\)</span> positions <span class="math notranslate nohighlight">\(\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k\)</span>
+<p>For a set of <span class="math notranslate nohighlight">\(k\)</span> positions
+<span class="math notranslate nohighlight">\(\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k\)</span>
 the centroid is given by</p>
 <div class="math notranslate nohighlight">
 \[\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.\]</div>
@@ -1064,7 +1065,8 @@ rotated into the y-axis:</p>
 <p>If ‘a’ is an angle, <span class="math notranslate nohighlight">\(\theta\)</span>, and if <span class="math notranslate nohighlight">\(\textbf{v}\)</span> is the vector
 then we define</p>
 <div class="math notranslate nohighlight">
-\[R = \cos(\theta)I + \sin(\theta)[\textbf{v}]_\times + (1-\cos(\theta))\textbf{v}\textbf{v}^T\]</div>
+\[R = \cos(\theta)I + \sin(\theta)[\textbf{v}]_\times
++ (1-\cos(\theta))\textbf{v}\textbf{v}^T\]</div>
 <p>where <span class="math notranslate nohighlight">\([\textbf{v}]_\times \textbf{x} = \textbf{v} \times \textbf{x}\)</span>.
 If
 <span class="math notranslate nohighlight">\(\textbf{r}\)</span> is a coordinate vector
@@ -1164,7 +1166,8 @@ Default behavior is to <em>not</em> move the qbits (scale_qbits=False).</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>For a set of <span class="math notranslate nohighlight">\(k\)</span> positions <span class="math notranslate nohighlight">\(\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k\)</span>
+<p>For a set of <span class="math notranslate nohighlight">\(k\)</span> positions
+<span class="math notranslate nohighlight">\(\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k\)</span>
 the centroid is given by</p>
 <div class="math notranslate nohighlight">
 \[\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.\]</div>
@@ -1905,7 +1908,8 @@ Results in either single integer, or an array containing indices.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.magnetic.get_sisj">
 <span class="sig-prename descclassname"><span class="pre">qse.magnetic.</span></span><span class="sig-name descname"><span class="pre">get_sisj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">statevector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibasis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qse/magnetic.html#get_sisj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.magnetic.get_sisj" title="Link to this definition">#</a></dt>
-<dd><p>Compute the spin correlation function <span class="math notranslate nohighlight">\(S_{ij} = \langle\psi| S_i \cdot S_j |\psi\rangle\)</span>.</p>
+<dd><p>Compute the spin correlation function
+<span class="math notranslate nohighlight">\(S_{ij} = \langle\psi| S_i \cdot S_j |\psi\rangle\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1915,7 +1919,8 @@ Results in either single integer, or an array containing indices.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>np.ndarray[float]</em> – An NxN array with computed expectation value of <span class="math notranslate nohighlight">\(\langle S_i \cdot S_j\rangle\)</span>.</p>
+<dd class="field-even"><p><em>np.ndarray[float]</em> – An NxN array with computed expectation value of
+<span class="math notranslate nohighlight">\(\langle S_i \cdot S_j\rangle\)</span>.</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>

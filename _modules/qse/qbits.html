@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.qbits &#8212; qse 0.2.6 documentation</title>
+    <title>qse.qbits &#8212; qse 0.2.7 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=519527b2"></script>
+    <script src="../../_static/documentation_options.js?v=ea69a5af"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -142,7 +142,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.6 documentation</p>
+    <p class="title logo__title">qse 0.2.7 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -448,7 +448,8 @@ document.write(`
     <span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">scaled_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="s2">&quot;Both &#39;positions&#39; and &#39;scaled_positions&#39; cannot be passed at the same time.&quot;</span>
+                <span class="s2">&quot;Both &#39;positions&#39; and &#39;scaled_positions&#39;&quot;</span>
+                <span class="s2">&quot; cannot be passed at the same time.&quot;</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">scaled_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">cell</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
@@ -1270,7 +1271,8 @@ document.write(`
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
-<span class="sd">        For a set of :math:`k` positions :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`</span>
+<span class="sd">        For a set of :math:`k` positions</span>
+<span class="sd">        :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`</span>
 <span class="sd">        the centroid is given by</span>
 
 <span class="sd">        .. math::</span>
@@ -1297,7 +1299,8 @@ document.write(`
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
-<span class="sd">        For a set of :math:`k` positions :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`</span>
+<span class="sd">        For a set of :math:`k` positions</span>
+<span class="sd">        :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`</span>
 <span class="sd">        the centroid is given by</span>
 
 <span class="sd">        .. math::</span>
@@ -1351,7 +1354,8 @@ document.write(`
 <span class="sd">        then we define</span>
 
 <span class="sd">        .. math::</span>
-<span class="sd">            R = \cos(\theta)I + \sin(\theta)[\textbf{v}]_\times + (1-\cos(\theta))\textbf{v}\textbf{v}^T</span>
+<span class="sd">            R = \cos(\theta)I + \sin(\theta)[\textbf{v}]_\times</span>
+<span class="sd">            + (1-\cos(\theta))\textbf{v}\textbf{v}^T</span>
 
 <span class="sd">        where :math:`[\textbf{v}]_\times \textbf{x} = \textbf{v} \times \textbf{x}`.</span>
 <span class="sd">        If</span>

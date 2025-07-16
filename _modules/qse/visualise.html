@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.visualise &#8212; qse 0.2.6 documentation</title>
+    <title>qse.visualise &#8212; qse 0.2.7 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=519527b2"></script>
+    <script src="../../_static/documentation_options.js?v=ea69a5af"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -142,7 +142,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.6 documentation</p>
+    <p class="title logo__title">qse 0.2.7 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -340,11 +340,13 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">crank</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">rank</span>
     <span class="n">prank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
-    <span class="c1"># if crank is more than prank, it means that a higher dimensional cell is present, and actual</span>
-    <span class="c1"># structure requires repettition of cells to clearly visualize. if prank is more than crank,</span>
-    <span class="c1"># it means the repettion happens in lower dimension of a local geometry which visualized in</span>
+    <span class="c1"># if crank is more than prank, it means that a higher dimensional cell</span>
+    <span class="c1"># is present, and actual structure requires repettition of cells to</span>
+    <span class="c1"># clearly visualize. if prank is more than crank, it means the repettion</span>
+    <span class="c1"># happens in lower dimension of a local geometry which visualized in</span>
     <span class="c1"># higher dimension. Either way, we need to see things in higher dimension.</span>
-    <span class="c1"># TODO: Current version has a bug, in which some of the bonds aren&#39;t drawn in rectangular geometry.</span>
+    <span class="c1"># TODO: Current version has a bug, in which some of the bonds aren&#39;t drawn</span>
+    <span class="c1"># in rectangular geometry.</span>
     <span class="c1"># Need to be looked at.</span>
 
     <span class="n">rank</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">crank</span><span class="p">,</span> <span class="n">prank</span><span class="p">)</span>
@@ -376,8 +378,7 @@ document.write(`
         <span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="p">(</span><span class="n">positions</span><span class="p">[</span><span class="n">jj</span><span class="p">]</span> <span class="o">-</span> <span class="n">positions</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
         <span class="n">C</span> <span class="o">=</span> <span class="n">rij</span><span class="p">[</span><span class="n">nns</span><span class="p">]</span>
         <span class="n">C</span> <span class="o">=</span> <span class="n">C</span> <span class="o">/</span> <span class="n">C</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-    <span class="c1">#</span>
-    <span class="c1"># print(x.shape, y.shape, z.shape, X.shape, Y.shape, Z.shape, U.shape, V.shape, W.shape)</span>
+
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span> <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 
     <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">()</span>
