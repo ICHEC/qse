@@ -71,7 +71,8 @@ default_params = {
 }
 
 
-# for rydberg system we need additional parameters: mix,max of amplitude and detuning to set based on device.
+# for rydberg system we need additional parameters: mix,max of
+# amplitude and detuning to set based on device.
 class Myqlm(Calculator):
     """
     QSE-Calculator for MyQLM
@@ -145,7 +146,8 @@ class Myqlm(Calculator):
             else np.zeros(self.params["default_points"])
         )
         self.detuning = self._waveform(self.det, tmax=self.duration)
-        # self.duration = len(self.amplitude) # needs to change for time independent problems
+        # self.duration = len(self.amplitude) # needs to change
+        # for time independent problems
         self.C6 = self.params["C6"]
         self.qpu = None
         self.spins = None

@@ -156,7 +156,8 @@ def get_sisj(
     statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int
 ) -> np.ndarray[float]:
     r"""
-    Compute the spin correlation function :math:`S_{ij} = \langle\psi| S_i \cdot S_j |\psi\rangle`.
+    Compute the spin correlation function
+    :math:`S_{ij} = \langle\psi| S_i \cdot S_j |\psi\rangle`.
 
     Parameters
     ----------
@@ -170,7 +171,8 @@ def get_sisj(
     Returns
     -------
     np.ndarray[float]
-        An NxN array with computed expectation value of :math:`\langle S_i \cdot S_j\rangle`.
+        An NxN array with computed expectation value of
+        :math:`\langle S_i \cdot S_j\rangle`.
 
     Notes
     -----

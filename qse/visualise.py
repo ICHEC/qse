@@ -21,11 +21,13 @@ def draw(qbits, ax=None, radius=None):
     """
     crank = qbits.cell.rank
     prank = np.linalg.matrix_rank(qbits.positions)
-    # if crank is more than prank, it means that a higher dimensional cell is present, and actual
-    # structure requires repettition of cells to clearly visualize. if prank is more than crank,
-    # it means the repettion happens in lower dimension of a local geometry which visualized in
+    # if crank is more than prank, it means that a higher dimensional cell
+    # is present, and actual structure requires repettition of cells to
+    # clearly visualize. if prank is more than crank, it means the repettion
+    # happens in lower dimension of a local geometry which visualized in
     # higher dimension. Either way, we need to see things in higher dimension.
-    # TODO: Current version has a bug, in which some of the bonds aren't drawn in rectangular geometry.
+    # TODO: Current version has a bug, in which some of the bonds aren't drawn
+    # in rectangular geometry.
     # Need to be looked at.
 
     rank = max(crank, prank)
@@ -57,8 +59,7 @@ def draw(qbits, ax=None, radius=None):
         U, V, W = (positions[jj] - positions[ii]).T
         C = rij[nns]
         C = C / C.min()
-    #
-    # print(x.shape, y.shape, z.shape, X.shape, Y.shape, Z.shape, U.shape, V.shape, W.shape)
+
     fig = plt.figure() if rank == 3 or rank == 2 else plt.figure(figsize=(12, 3))
 
     ax = fig.add_subplot(projection="3d") if rank == 3 else fig.add_subplot()
