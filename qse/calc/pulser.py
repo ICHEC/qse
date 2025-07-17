@@ -94,7 +94,7 @@ class Pulser(Calculator):
 
         self._sequence = None
         self._sim = None
-
+        self.statevector = None
         self.spins = None
         self.sij = None
 
@@ -129,6 +129,10 @@ class Pulser(Calculator):
         return self._sequence
 
     def build_sequence(self):
+        """
+        Build the sequence of operations involving the qubit coordinates,
+        amplitude pulse and detuning pulse.
+        """
         self._sequence = pulser.Sequence(self.register, self.device)
         self._sequence.declare_channel("ch0", self.channel)
         self._sequence.add(
