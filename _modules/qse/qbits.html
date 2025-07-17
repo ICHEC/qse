@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.qbits &#8212; qse 0.2.7 documentation</title>
+    <title>qse.qbits &#8212; qse 0.2.8 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=ea69a5af"></script>
+    <script src="../../_static/documentation_options.js?v=a0cf2451"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -142,7 +142,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.7 documentation</p>
+    <p class="title logo__title">qse 0.2.8 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -325,7 +325,7 @@ document.write(`
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">numbers</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">sin</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">ase.cell</span> <span class="kn">import</span> <span class="n">Cell</span>
@@ -1316,19 +1316,20 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.rotate">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.rotate">[docs]</a>
-    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">rotate_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">rotate_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotate qbits based on a vector and an angle, or two vectors.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        a :</span>
-<span class="sd">            Angle that the qbits is rotated around the vector &#39;v&#39;. &#39;a&#39;</span>
-<span class="sd">            can also be a vector and then &#39;a&#39; is rotated</span>
+<span class="sd">            Angle that the qbits is rotated (anticlockwise) around the vector &#39;v&#39;.</span>
+<span class="sd">            &#39;a&#39; can also be a vector and then &#39;a&#39; is rotated</span>
 <span class="sd">            into &#39;v&#39;. If &#39;a&#39; is an angle it must be in degrees.</span>
 <span class="sd">        v :</span>
 <span class="sd">            Vector to rotate the qbits around. Vectors can be given as</span>
 <span class="sd">            strings: &#39;x&#39;, &#39;-x&#39;, &#39;y&#39;, ... .</span>
+<span class="sd">            Defaults to &#39;z&#39;.</span>
 <span class="sd">        center :</span>
 <span class="sd">            The center is kept fixed under the rotation. Use &#39;COP&#39; to</span>
 <span class="sd">            fix the center of positions or &#39;COU&#39; to fix the center of</span>
@@ -1338,10 +1339,10 @@ document.write(`
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
-<span class="sd">        Rotate 90 degrees around the z-axis, so that the x-axis is</span>
-<span class="sd">        rotated into the y-axis:</span>
+<span class="sd">        The following all rotate 90 degrees anticlockwise around the z-axis,</span>
+<span class="sd">        so that the x-axis is rotated into the y-axis:</span>
 
-<span class="sd">        &gt;&gt;&gt; qbits = Qbits()</span>
+<span class="sd">        &gt;&gt;&gt; qbits.rotate(90)</span>
 <span class="sd">        &gt;&gt;&gt; qbits.rotate(90, &#39;z&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; qbits.rotate(90, (0, 0, 1))</span>
 <span class="sd">        &gt;&gt;&gt; qbits.rotate(-90, &#39;-z&#39;)</span>
@@ -1371,25 +1372,14 @@ document.write(`
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Real</span><span class="p">):</span>
             <span class="n">a</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">,</span> <span class="n">a</span>
 
-        <span class="n">v</span> <span class="o">=</span> <span class="n">string2vector</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-
-        <span class="n">normv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">normv</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span><span class="s2">&quot;Cannot rotate: norm(v) == 0&quot;</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">_norm_vector</span><span class="p">(</span><span class="n">_string2vector</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Real</span><span class="p">):</span>
-            <span class="n">a</span> <span class="o">*=</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
-            <span class="n">v</span> <span class="o">/=</span> <span class="n">normv</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">_to_rads</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
             <span class="n">c</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">v2</span> <span class="o">=</span> <span class="n">string2vector</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-            <span class="n">v</span> <span class="o">/=</span> <span class="n">normv</span>
-            <span class="n">normv2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">normv2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span><span class="s2">&quot;Cannot rotate: norm(a) == 0&quot;</span><span class="p">)</span>
-            <span class="n">v2</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span>
+            <span class="n">v2</span> <span class="o">=</span> <span class="n">_norm_vector</span><span class="p">(</span><span class="n">_string2vector</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
             <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
@@ -1494,15 +1484,15 @@ document.write(`
 
         <span class="c1"># First Euler rotation about z in matrix form</span>
         <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="n">D</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">rotation_mat</span><span class="p">(</span><span class="n">phi</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span><span class="p">)</span>
+        <span class="n">D</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">rotation_mat</span><span class="p">(</span><span class="n">_to_rads</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
 
         <span class="c1"># Second Euler rotation about x:</span>
         <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">rotation_mat</span><span class="p">(</span><span class="n">theta</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span><span class="p">)</span>
+        <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">rotation_mat</span><span class="p">(</span><span class="n">_to_rads</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
 
         <span class="c1"># Third Euler rotation, 2nd rotation about z:</span>
         <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="n">B</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">rotation_mat</span><span class="p">(</span><span class="n">psi</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span><span class="p">)</span>
+        <span class="n">B</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">rotation_mat</span><span class="p">(</span><span class="n">_to_rads</span><span class="p">(</span><span class="n">psi</span><span class="p">))</span>
 
         <span class="c1"># Total Euler rotation</span>
         <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">))</span>
@@ -1575,7 +1565,7 @@ document.write(`
             <span class="k">if</span> <span class="n">mask</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
                 <span class="n">group</span> <span class="o">+=</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">group</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="o">-</span><span class="n">center</span><span class="p">)</span>
-        <span class="n">group</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">diff</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">pi</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">diff</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
         <span class="n">group</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
         <span class="c1"># set positions in original qbits object</span>
         <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1607,7 +1597,7 @@ document.write(`
 <span class="sd">        &gt;&gt;&gt; qbits.set_dihedral(1, 2, 3, 4, 210, mask=[0, 0, 0, 1, 1, 1])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">angle</span> <span class="o">*=</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+        <span class="n">angle</span> <span class="o">=</span> <span class="n">_to_rads</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
 
         <span class="c1"># if not provided, set mask to the last qbit in the</span>
         <span class="c1"># dihedral description</span>
@@ -1618,7 +1608,7 @@ document.write(`
             <span class="n">mask</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span> <span class="ow">in</span> <span class="n">indices</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))]</span>
 
         <span class="c1"># compute necessary in dihedral change, from current value</span>
-        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dihedral</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">)</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">_to_rads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dihedral</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">))</span>
         <span class="n">diff</span> <span class="o">=</span> <span class="n">angle</span> <span class="o">-</span> <span class="n">current</span>
         <span class="n">axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">a3</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">a2</span><span class="p">]</span>
         <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">a3</span><span class="p">]</span>
@@ -1725,7 +1715,7 @@ document.write(`
             <span class="c1"># Compute necessary in angle change, from current value</span>
             <span class="n">diff</span> <span class="o">=</span> <span class="n">angle</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_angle</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">)</span>
 
-        <span class="n">diff</span> <span class="o">*=</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">_to_rads</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
         <span class="c1"># Do rotation of subgroup by copying it to temporary qbits object and</span>
         <span class="c1"># then rotating that</span>
         <span class="n">v10</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">a1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">a2</span><span class="p">]</span>
@@ -2087,11 +2077,23 @@ document.write(`
     <span class="c1"># def edit(self): Modify qbits interactively through ASE&#39;s GUI viewer.</span>
 
 
-<span class="k">def</span> <span class="nf">string2vector</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_norm_vector</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+    <span class="n">normv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">normv</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span><span class="s2">&quot;Vector has 0 norm.&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">v</span> <span class="o">/</span> <span class="n">normv</span>
+
+
+<span class="k">def</span> <span class="nf">_to_rads</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+
+
+<span class="k">def</span> <span class="nf">_string2vector</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Used in rotate method to rotate qbit location&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="o">-</span><span class="n">string2vector</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="k">return</span> <span class="o">-</span><span class="n">_string2vector</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
         <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
         <span class="n">w</span><span class="p">[</span><span class="s2">&quot;xyz&quot;</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">1.0</span>
         <span class="k">return</span> <span class="n">w</span>
