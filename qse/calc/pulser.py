@@ -46,6 +46,21 @@ class Pulser(Calculator):
         Whether to print the times.
         Defaults to True.
 
+    Examples
+    --------
+    A simple example of using the Pulser calculator:
+
+    >>> qbits = qse.lattices.chain(4.0, 4)
+    >>> duration = 400
+    >>> pulser_calc = qse.calc.Pulser(
+    ...     amplitude=qse.Signal(np.ones(6) * 1.01, duration),
+    ...     detuning=qse.Signal(np.ones(6) * 0.12, duration),
+    ...     qbits=qbits,
+    ... )
+    >>> pulser_calc.build_sequence()
+    >>> pulser_calc.calculate()
+    >>> pulser_calc.get_spins()
+
     Notes
     -----
     Pulser will only use the x-y coordinates of the Qbits object.
