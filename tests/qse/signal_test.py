@@ -43,7 +43,7 @@ def test_initialization(values, duration):
     (0.7, 2, -13.67),
 )
 def test_scalar_operations(values, duration, scalar):
-    """Check that signals are initialized correctly."""
+    """Check scalar operations work with signals."""
     # test addition
     signal = qse.Signal(values, duration)
     signal = signal + scalar
@@ -86,7 +86,7 @@ def test_scalar_operations(values, duration, scalar):
     (1, 3),
 )
 def test_signal_addition(values_1, duration_1, values_2, duration_2):
-    """Check that signals are initialized correctly."""
+    """Check that signals can be added together."""
     signal_1 = qse.Signal(values_1, duration_1)
     signal_2 = qse.Signal(values_2, duration_2)
     signal = signal_1 + signal_2
