@@ -5,21 +5,7 @@ import numpy as np
 
 class Signal:
     """
-    Signal class represents a 1D signal with values and duration.
-
-    The class supports arithmetic operations with other signals and
-    scalars.
-    Specifically:
-
-    * Adding a scalar to a Signal returns a new Signal with modified
-      values and the same duration. Say W is a signal, then W + 3.0 returns
-      a signal with same duration, and values W.values + 3.0.
-
-    * Adding two Signal instances concatenates their values and sums
-      their durations. So if w1, w2 are instantiation of Signal, then
-      w = w1 + w2 gives signal with concatenated values, i.e.,
-      w.values = [w1.values, w2.values], and added duration
-      w.duration = w1.duration + w2.duration.
+    The Signal class represents a 1D signal with values and duration.
 
     Parameters
     ----------
@@ -28,6 +14,35 @@ class Signal:
     duration : int
         Duration of the signal.
         Defaults to the length of the passed values.
+
+    Examples
+    --------
+    One can create a signal by passing an array of values:
+
+    >>> qse.Signal([1, 2, 3], 100)
+    ... Signal(duration=100, values=[1. 2. 3.])
+
+    Arithmetic operations with scalars is supported.
+    Adding or multiplying a scalar to a Signal returns
+    a new Signal with modified values and the same duration.
+    For example:
+
+    >>> signal = qse.Signal([1, 1])
+    >>> signal * 3 + 0.5
+    ... Signal(duration=2, values=[3.5 3.5])
+
+    Two Signals can be added together which
+    concatenates their values and sums their durations.
+    So if w1, w2 are instantiation of Signal, then
+    w = w1 + w2 gives signal with concatenated values, i.e.,
+    w.values = [w1.values, w2.values], and added duration
+    w.duration = w1.duration + w2.duration.
+    For example:
+
+    >>> signal_1 = qse.Signal([1, 1], 5)
+    >>> signal_2 = qse.Signal([2, 2], 2)
+    >>> signal_1 + signal_2
+    ... Signal(duration=7, values=[1. 1. 2. 2.])
 
     Notes
     -----
