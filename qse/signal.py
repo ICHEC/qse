@@ -23,10 +23,11 @@ class Signal:
 
     Parameters
     ----------
-    values : ndarray
+    values : list | np.ndarray
         The values of the signal.
     duration : int
         Duration of the signal.
+        Defaults to the length of the passed values.
 
     Notes
     -----
@@ -36,33 +37,8 @@ class Signal:
     """
 
     def __init__(self, values, duration=None) -> None:
-        """Instantiates the Signal class.
-
-        Parameters
-        ----------
-        values : array_like
-            The signal values.
-        duration : int, optional
-            Duration of the signal, by default None
-        """
-        self.values = np.asarray(values)
-        self._duration = len(self.values) if duration is None else int(duration)
-
-    @property
-    def duration(self) -> int:
-        """
-        Duration of the signal.
-
-        Returns
-        -------
-        int
-            The duration.
-        """
-        return self._duration
-
-    @duration.setter
-    def duration(self, value):
-        self._duration = value
+        self.values = np.asarray(values, dtype=float)
+        self.duration = len(self.values) if duration is None else int(duration)
 
     def __iter__(self):
         """
@@ -168,9 +144,9 @@ class Signal:
         """
         if isinstance(other, Signal):
             self.values = np.append(self.values, other.values)
-            self.duration += other.duration
+            self.duration = self.duration + other.duration
         elif isinstance(other, (float, int)):
-            self.values += other
+            self.values = self.values + other
         else:
             raise TypeError(f"Unsupported operand type for +=: {type(other)}")
         return self
@@ -230,7 +206,7 @@ class Signal:
             If the operand type is unsupported.
         """
         if isinstance(other, (float, int)):
-            self.values *= other
+            self.values = self.values * other
         else:
             raise TypeError(f"Unsupported operand type for *=: {type(other)}")
         return self
