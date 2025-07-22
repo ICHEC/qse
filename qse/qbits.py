@@ -68,19 +68,6 @@ class Qbits:
         optimization.
     calculator: calculator object
         Used to attach a calculator for doing computation.
-    info: dict of key-value pairs
-        Dictionary of key-value pairs with additional information
-        about the system.  The following keys may be used by ase:
-
-          - spacegroup: Spacegroup instance
-          - unit_cell: 'conventional' | 'primitive' | int | 3 ints
-          - adsorbate_info: Information about special adsorption sites
-
-        Items in the info attribute survives copy and slicing and can
-        be stored in and retrieved from trajectory files given that the
-        key is a string, the value is JSON-compatible and, if the value is a
-        user-defined object, its base class is importable.  One should
-        not make any assumptions about the existence of keys.
 
     Examples
     --------
@@ -125,7 +112,6 @@ class Qbits:
         celldisp=None,
         constraint=None,
         calculator=None,
-        info=None,
     ):
         if (positions is not None) and (scaled_positions is not None):
             raise Exception(
@@ -205,9 +191,6 @@ class Qbits:
 
         # calculator
         self.calc = calculator
-
-        # info
-        self.info = {} if info is None else dict(info)
 
     @classmethod
     def from_qbit_list(self, qbit_list):
@@ -501,7 +484,7 @@ class Qbits:
     def copy(self):
         """Return a copy."""
         qbits = self.__class__(
-            cell=self.cell, pbc=self.pbc, info=self.info, celldisp=self._celldisp.copy()
+            cell=self.cell, pbc=self.pbc, celldisp=self._celldisp.copy()
         )
 
         qbits.arrays = {}
@@ -526,8 +509,6 @@ class Qbits:
             d["celldisp"] = self._celldisp
         if self.constraints:
             d["constraints"] = self.constraints
-        if self.info:
-            d["info"] = self.info
         # Calculator...  trouble.
         return d
 
@@ -547,11 +528,7 @@ class Qbits:
 
         # labels = dct.pop('labels', None)
 
-        info = dct.pop("info", None)
-
-        qbits = cls(
-            constraint=constraints, celldisp=dct.pop("celldisp", None), info=info, **kw
-        )
+        qbits = cls(constraint=constraints, celldisp=dct.pop("celldisp", None), **kw)
         nqbits = len(qbits)
 
         # Some arrays are named differently from the qbits __init__ keywords.
@@ -662,7 +639,7 @@ class Qbits:
         Qbit | Qbits.
             If indices is a scalar a Qbit object is returned. If indices
             is a list or a slice, a Qbits object with the same cell, pbc, and
-            other associated info as the original Qbits object is returned.
+            other associated information as the original Qbits object is returned.
         """
 
         if isinstance(indices, numbers.Integral):
@@ -685,7 +662,6 @@ class Qbits:
         qbits = self.__class__(
             cell=self.cell,
             pbc=self.pbc,
-            info=self.info,
             celldisp=self._celldisp,
         )
 
