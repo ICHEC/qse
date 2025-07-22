@@ -17,6 +17,34 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Check patch version bump on main
+      run: |
+        # Exit early if not on main
+        [[ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]] && {
+          echo "Not on main branch; skipping version bump test."
+          exit 0
+        }
+
+        # Get version change from diff
+        diff=$(git diff HEAD^ HEAD)
+        old=$(echo "$diff" | grep -Po '(?<=-).*version.*?\K\d+\.\d+\.\d+')
+        new=$(echo "$diff" | grep -Po '(?<=\+).*version.*?\K\d+\.\d+\.\d+')
+
+        [[ -z "$old" || -z "$new" ]] && {
+          echo "Error: Version change not found."
+          exit 1
+        }
+
+        IFS=. read o_major o_minor o_patch <<< "$old"
+        IFS=. read n_major n_minor n_patch <<< "$new"
+
+        [[ "$n_major" -ne "$o_major" ]] && echo "Major version changed." && exit 1
+        [[ "$n_minor" -ne "$o_minor" ]] && echo "Minor version changed." && exit 1
+        [[ "$n_patch" -ne $((o_patch + 1)) ]] && echo "Patch must increment by 1." && exit 1
+
+        echo "Patch version bump verified."
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
