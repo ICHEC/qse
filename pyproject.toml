@@ -44,6 +44,7 @@ docs = [
     "sphinx-autoapi",
     "jupyter_book",
     "tomli",
+    "pulser == 1.4.0",  # required for creating the docs
 ]
 
 [tool.black]
