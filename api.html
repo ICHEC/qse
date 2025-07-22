@@ -468,12 +468,9 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotImplementedError"><code class="docutils literal notranslate"><span class="pre">PropertyNotImplementedError</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotPresent"><code class="docutils literal notranslate"><span class="pre">PropertyNotPresent</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser"><code class="docutils literal notranslate"><span class="pre">Pulser</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.build_sequence"><code class="docutils literal notranslate"><span class="pre">Pulser.build_sequence()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.calculate"><code class="docutils literal notranslate"><span class="pre">Pulser.calculate()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.default_parameters"><code class="docutils literal notranslate"><span class="pre">Pulser.default_parameters</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Pulser.implemented_properties</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.read"><code class="docutils literal notranslate"><span class="pre">Pulser.read()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.set"><code class="docutils literal notranslate"><span class="pre">Pulser.set()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.write"><code class="docutils literal notranslate"><span class="pre">Pulser.write()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1634,6 +1631,39 @@ with the rest of the results, without being a fatal ReadError.</p>
 <dt class="sig sig-object py" id="qse.calc.Pulser">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">Pulser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detuning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emulator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pulser-run'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wtimes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/pulser.html#Pulser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Pulser" title="Link to this definition">#</a></dt>
 <dd><p>QSE-Calculator for pulser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>amplitude</strong> (<em>qse.Signal, pulser.waveforms.Waveform</em>) – The amplitude pulse.</p></li>
+<li><p><strong>detuning</strong> (<em>qse.Signal, pulser.waveforms.Waveform</em>) – The detuning pulse.</p></li>
+<li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The qbits object.</p></li>
+<li><p><strong>device</strong> (<em>pulser.devices.Device</em>) – The device.
+Defaults to pulser.devices.MockDevice.</p></li>
+<li><p><strong>emulator</strong> – The emulator.
+Defaults to QutipEmulator.</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – The label.
+Defaults to “pulser-run”.</p></li>
+<li><p><strong>wtimes</strong> (<em>bool</em>) – Whether to print the times.
+Defaults to True.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>A simple example of using the Pulser calculator:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="mf">4.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">duration</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">Pulser</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">amplitude</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.01</span><span class="p">,</span> <span class="n">duration</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">detuning</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.12</span><span class="p">,</span> <span class="n">duration</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">qbits</span><span class="o">=</span><span class="n">qbits</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span><span class="o">.</span><span class="n">build_sequence</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span><span class="o">.</span><span class="n">get_spins</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>Pulser will only use the x-y coordinates of the Qbits object.</p>
 <p>Pulser is an open-source Python software package.
 It provides easy-to-use libraries for designing and
 simulating pulse sequences that act on programmable
@@ -1643,41 +1673,15 @@ Online documentation: <a class="reference external" href="https://pulser.readthe
 White paper: Quantum 6, 629 (2022)
 Source code: <a class="github reference external" href="https://github.com/pasqal-io/Pulser">pasqal-io/Pulser</a>
 License: Apache 2.0
-- see [LICENSE](<a class="github reference external" href="https://github.com/pasqal-io/Pulser/blob/master/LICENSE">pasqal-io/Pulser</a>) for details</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>auto_write</strong> (<em>bool</em>) – Flag to enable the auto-write mode. If enabled the
-<code class="docutils literal notranslate"><span class="pre">write()</span></code> routine is called after every
-calculation, which mimics the behavior of the
-<code class="docutils literal notranslate"><span class="pre">FileIOCalculator</span></code>. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-<li><p><strong>basis_set</strong> (<em>str</em>) – Name of the basis set to be use.
-The default is <code class="docutils literal notranslate"><span class="pre">DZVP-MOLOPT-SR-GTH</span></code>.</p></li>
-<li><p><strong>basis_set_file</strong> (<em>str</em>) – Filename of the basis set file.
-Default is <code class="docutils literal notranslate"><span class="pre">BASIS_MOLOPT</span></code>.
-Set the environment variable $CP2K_DATA_DIR
-to enabled automatic file discovered.</p></li>
-<li><p><strong>charge</strong> (<em>float</em>) – The total charge of the system.  Default is <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
-<li><p><strong>cutoff</strong> (<em>float</em>) – The cutoff of the finest grid level.  Default is <code class="docutils literal notranslate"><span class="pre">400</span> <span class="pre">*</span> <span class="pre">Rydberg</span></code>.</p></li>
-<li><p><strong>debug</strong> (<em>bool</em>) – Flag to enable debug mode. This will print all
-communication between the CP2K-shell and the
-CP2K-calculator. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-<li><p><strong>force_eval_method</strong> (<em>str</em>) – The method CP2K uses to evaluate energies and forces.
-The default is <code class="docutils literal notranslate"><span class="pre">Quickstep</span></code>, which is CP2K’s
-module for electronic structure methods like DFT.</p></li>
-<li><p><strong>max_scf</strong> (<em>int</em>) – Maximum number of SCF iteration to be performed for
-one optimization. Default is <code class="docutils literal notranslate"><span class="pre">50</span></code>.</p></li>
-<li><p><strong>print_level</strong> (<em>str</em>) – PRINT_LEVEL of global output.
-Possible options are:
-DEBUG Everything is written out, useful for debugging purposes only
-HIGH Lots of output
-LOW Little output
-MEDIUM Quite some output
-SILENT Almost no output
-Default is ‘LOW’</p></li>
-</ul>
-</dd>
-</dl>
+- see [LICENSE](<a class="github reference external" href="https://github.com/pasqal-io/Pulser/blob/master/LICENSE">pasqal-io/Pulser</a>)
+for details.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qse.calc.Pulser.build_sequence">
+<span class="sig-name descname"><span class="pre">build_sequence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/pulser.html#Pulser.build_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Pulser.build_sequence" title="Link to this definition">#</a></dt>
+<dd><p>Build the sequence of operations involving the qubit coordinates,
+amplitude pulse and detuning pulse.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.calc.Pulser.calculate">
 <span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/pulser.html#Pulser.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Pulser.calculate" title="Link to this definition">#</a></dt>
@@ -1686,45 +1690,9 @@ Default is ‘LOW’</p></li>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="qse.calc.Pulser.default_parameters">
-<span class="sig-name descname"><span class="pre">default_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'auto_write':</span> <span class="pre">False,</span> <span class="pre">'folder':</span> <span class="pre">'./',</span> <span class="pre">'label':</span> <span class="pre">'q',</span> <span class="pre">'max_scf':</span> <span class="pre">50,</span> <span class="pre">'print_level':</span> <span class="pre">'LOW',</span> <span class="pre">'qbits':</span> <span class="pre">None}</span></em><a class="headerlink" href="#qse.calc.Pulser.default_parameters" title="Link to this definition">#</a></dt>
-<dd><p>Default parameters</p>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="qse.calc.Pulser.implemented_properties">
 <span class="sig-name descname"><span class="pre">implemented_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['energy',</span> <span class="pre">'state',</span> <span class="pre">'fidality']</span></em><a class="headerlink" href="#qse.calc.Pulser.implemented_properties" title="Link to this definition">#</a></dt>
 <dd><p>Properties calculator can handle (energy, forces, …)</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.calc.Pulser.read">
-<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/pulser.html#Pulser.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Pulser.read" title="Link to this definition">#</a></dt>
-<dd><p>Read qbits, parameters and calculated results from restart files.
-Not yet implemented.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>label</strong> (<em>string</em>) – used in filename</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.calc.Pulser.set">
-<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/pulser.html#Pulser.set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Pulser.set" title="Link to this definition">#</a></dt>
-<dd><p>Set parameters like set(key1=value1, key2=value2, …).</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.calc.Pulser.write">
-<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/pulser.html#Pulser.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Pulser.write" title="Link to this definition">#</a></dt>
-<dd><p>Write qbits, parameters and calculated results into restart files.
-Not yet implemented.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>label</strong> (<em>string</em>) – used in filename</p>
-</dd>
-</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2194,12 +2162,9 @@ at ith index and a sign).</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotImplementedError"><code class="docutils literal notranslate"><span class="pre">PropertyNotImplementedError</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotPresent"><code class="docutils literal notranslate"><span class="pre">PropertyNotPresent</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser"><code class="docutils literal notranslate"><span class="pre">Pulser</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.build_sequence"><code class="docutils literal notranslate"><span class="pre">Pulser.build_sequence()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.calculate"><code class="docutils literal notranslate"><span class="pre">Pulser.calculate()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.default_parameters"><code class="docutils literal notranslate"><span class="pre">Pulser.default_parameters</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Pulser.implemented_properties</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.read"><code class="docutils literal notranslate"><span class="pre">Pulser.read()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.set"><code class="docutils literal notranslate"><span class="pre">Pulser.set()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.write"><code class="docutils literal notranslate"><span class="pre">Pulser.write()</span></code></a></li>
 </ul>
 </li>
 </ul>

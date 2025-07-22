@@ -326,7 +326,6 @@ document.write(`
 
 <span class="kn">from</span> <span class="nn">qse</span> <span class="kn">import</span> <span class="n">Signal</span>
 <span class="kn">from</span> <span class="nn">qse.calc.calculator</span> <span class="kn">import</span> <span class="n">Calculator</span>
-<span class="kn">from</span> <span class="nn">qse.calc.messages</span> <span class="kn">import</span> <span class="n">CalculatorSetupError</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">pulser</span>
@@ -345,6 +344,46 @@ document.write(`
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    QSE-Calculator for pulser.</span>
 
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    amplitude: qse.Signal, pulser.waveforms.Waveform</span>
+<span class="sd">        The amplitude pulse.</span>
+<span class="sd">    detuning: qse.Signal, pulser.waveforms.Waveform</span>
+<span class="sd">        The detuning pulse.</span>
+<span class="sd">    qbits: qse.Qbits</span>
+<span class="sd">        The qbits object.</span>
+<span class="sd">    device: pulser.devices.Device</span>
+<span class="sd">        The device.</span>
+<span class="sd">        Defaults to pulser.devices.MockDevice.</span>
+<span class="sd">    emulator</span>
+<span class="sd">        The emulator.</span>
+<span class="sd">        Defaults to QutipEmulator.</span>
+<span class="sd">    label: str</span>
+<span class="sd">        The label.</span>
+<span class="sd">        Defaults to &quot;pulser-run&quot;.</span>
+<span class="sd">    wtimes: bool</span>
+<span class="sd">        Whether to print the times.</span>
+<span class="sd">        Defaults to True.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A simple example of using the Pulser calculator:</span>
+
+<span class="sd">    &gt;&gt;&gt; qbits = qse.lattices.chain(4.0, 4)</span>
+<span class="sd">    &gt;&gt;&gt; duration = 400</span>
+<span class="sd">    &gt;&gt;&gt; pulser_calc = qse.calc.Pulser(</span>
+<span class="sd">    ...     amplitude=qse.Signal(np.ones(6) * 1.01, duration),</span>
+<span class="sd">    ...     detuning=qse.Signal(np.ones(6) * 0.12, duration),</span>
+<span class="sd">    ...     qbits=qbits,</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; pulser_calc.build_sequence()</span>
+<span class="sd">    &gt;&gt;&gt; pulser_calc.calculate()</span>
+<span class="sd">    &gt;&gt;&gt; pulser_calc.get_spins()</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Pulser will only use the x-y coordinates of the Qbits object.</span>
+
 <span class="sd">    Pulser is an open-source Python software package.</span>
 <span class="sd">    It provides easy-to-use libraries for designing and</span>
 <span class="sd">    simulating pulse sequences that act on programmable</span>
@@ -354,58 +393,11 @@ document.write(`
 <span class="sd">    White paper: Quantum 6, 629 (2022)</span>
 <span class="sd">    Source code: https://github.com/pasqal-io/Pulser</span>
 <span class="sd">    License: Apache 2.0</span>
-<span class="sd">    - see [LICENSE](https://github.com/pasqal-io/Pulser/blob/master/LICENSE) for details</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    auto_write: bool</span>
-<span class="sd">        Flag to enable the auto-write mode. If enabled the</span>
-<span class="sd">        ``write()`` routine is called after every</span>
-<span class="sd">        calculation, which mimics the behavior of the</span>
-<span class="sd">        ``FileIOCalculator``. Default is ``False``.</span>
-<span class="sd">    basis_set: str</span>
-<span class="sd">        Name of the basis set to be use.</span>
-<span class="sd">        The default is ``DZVP-MOLOPT-SR-GTH``.</span>
-<span class="sd">    basis_set_file: str</span>
-<span class="sd">        Filename of the basis set file.</span>
-<span class="sd">        Default is ``BASIS_MOLOPT``.</span>
-<span class="sd">        Set the environment variable $CP2K_DATA_DIR</span>
-<span class="sd">        to enabled automatic file discovered.</span>
-<span class="sd">    charge: float</span>
-<span class="sd">        The total charge of the system.  Default is ``0``.</span>
-<span class="sd">    cutoff: float</span>
-<span class="sd">        The cutoff of the finest grid level.  Default is ``400 * Rydberg``.</span>
-<span class="sd">    debug: bool</span>
-<span class="sd">        Flag to enable debug mode. This will print all</span>
-<span class="sd">        communication between the CP2K-shell and the</span>
-<span class="sd">        CP2K-calculator. Default is ``False``.</span>
-<span class="sd">    force_eval_method: str</span>
-<span class="sd">        The method CP2K uses to evaluate energies and forces.</span>
-<span class="sd">        The default is ``Quickstep``, which is CP2K&#39;s</span>
-<span class="sd">        module for electronic structure methods like DFT.</span>
-<span class="sd">    max_scf: int</span>
-<span class="sd">        Maximum number of SCF iteration to be performed for</span>
-<span class="sd">        one optimization. Default is ``50``.</span>
-<span class="sd">    print_level: str</span>
-<span class="sd">        PRINT_LEVEL of global output.</span>
-<span class="sd">        Possible options are:</span>
-<span class="sd">        DEBUG Everything is written out, useful for debugging purposes only</span>
-<span class="sd">        HIGH Lots of output</span>
-<span class="sd">        LOW Little output</span>
-<span class="sd">        MEDIUM Quite some output</span>
-<span class="sd">        SILENT Almost no output</span>
-<span class="sd">        Default is &#39;LOW&#39;</span>
+<span class="sd">    - see [LICENSE](https://github.com/pasqal-io/Pulser/blob/master/LICENSE)</span>
+<span class="sd">    for details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">implemented_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;fidality&quot;</span><span class="p">]</span>
-    <span class="n">default_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
-        <span class="n">auto_write</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">folder</span><span class="o">=</span><span class="s2">&quot;./&quot;</span><span class="p">,</span>
-        <span class="n">max_scf</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-        <span class="n">print_level</span><span class="o">=</span><span class="s2">&quot;LOW&quot;</span><span class="p">,</span>
-        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">,</span>
-        <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -417,10 +409,6 @@ document.write(`
         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;pulser-run&quot;</span><span class="p">,</span>
         <span class="n">wtimes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Construct pulser-calculator object.</span>
-<span class="sd">        we need qubits, amplitude, detuning, device and emulator.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">installation_message</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;Pulser is not installed. To install, &quot;</span>
             <span class="s2">&quot;see https://pulser.readthedocs.io/en/stable/installation.html.&quot;</span>
@@ -431,154 +419,69 @@ document.write(`
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">MockDevice</span> <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">device</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span> <span class="o">=</span> <span class="n">QutipEmulator</span> <span class="k">if</span> <span class="n">emulator</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">emulator</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span> <span class="o">=</span> <span class="n">wtimes</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="s2">&quot;rydberg_global&quot;</span>
-        <span class="k">if</span> <span class="n">amplitude</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">amplitude</span><span class="p">,</span> <span class="p">(</span><span class="n">Signal</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">)):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="n">amplitude</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">detuning</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">detuning</span><span class="p">,</span> <span class="p">(</span><span class="n">Signal</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">)):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span> <span class="o">=</span> <span class="n">detuning</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">(</span><span class="n">detuning</span><span class="p">)</span>
 
-        <span class="c1"># assert self.amplitude.duration == self.detuning.duration</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="o">.</span><span class="n">duration</span>
-        <span class="n">wa</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">)</span>
-        <span class="n">wd</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detuning</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">wa</span><span class="p">:</span>
-            <span class="n">amp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">amp</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">InterpolatedWaveform</span><span class="p">(</span>
-                <span class="n">duration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="o">.</span><span class="n">values</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="n">wd</span><span class="p">:</span>
-            <span class="n">det</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">det</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">InterpolatedWaveform</span><span class="p">(</span>
-                <span class="n">duration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">detuning</span><span class="o">.</span><span class="n">values</span>
-            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span> <span class="o">=</span> <span class="n">detuning</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">pulse</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">Pulse</span><span class="p">(</span><span class="n">amplitude</span><span class="o">=</span><span class="n">amp</span><span class="p">,</span> <span class="n">detuning</span><span class="o">=</span><span class="n">det</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-        <span class="c1"># self.pulse = pulser.Pulse(</span>
-        <span class="c1">#    amplitude=pulser.waveforms.InterpolatedWaveform(</span>
-        <span class="c1">#        duration=self.duration,</span>
-        <span class="c1">#        values=self.amplitude.values),</span>
-        <span class="c1">#        duration=self.duration,</span>
-        <span class="c1">#    detuning=pulser.waveforms.InterpolatedWaveform(</span>
-        <span class="c1">#        values=self.detuning.values), phase=0</span>
-        <span class="c1"># )</span>
-        <span class="c1"># pulser part which defines Hamiltonian parameters done. #</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_register</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sim</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qbits</span> <span class="k">if</span> <span class="n">qbits</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sim</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statevector</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spins</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sij</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span>
+    <span class="k">def</span> <span class="nf">amplitude</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_amplitude</span>
 
-    <span class="nd">@qbits</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">qbits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_register</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="kc">None</span><span class="p">,</span>
-                <span class="kc">None</span><span class="p">,</span>
-                <span class="kc">None</span><span class="p">,</span>
-                <span class="kc">None</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span> <span class="o">=</span> <span class="n">qbits</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_register</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">from_coordinates</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span>
-            <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sequence</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">Sequence</span>
+    <span class="nd">@amplitude</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">amplitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_amplitude</span> <span class="o">=</span> <span class="n">_format_pulse</span><span class="p">(</span><span class="n">amplitude</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">detuning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detuning</span>
+
+    <span class="nd">@detuning</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">detuning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">detuning</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_detuning</span> <span class="o">=</span> <span class="n">_format_pulse</span><span class="p">(</span><span class="n">detuning</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_register</span>
+        <span class="k">return</span> <span class="n">pulser</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">from_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span>
 
-    <span class="nd">@sequence</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequence</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+<div class="viewcode-block" id="Pulser.build_sequence">
+<a class="viewcode-back" href="../../../api.html#qse.calc.Pulser.build_sequence">[docs]</a>
+    <span class="k">def</span> <span class="nf">build_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build the sequence of operations involving the qubit coordinates,</span>
+<span class="sd">        amplitude pulse and detuning pulse.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="o">.</span><span class="n">declare_channel</span><span class="p">(</span><span class="s2">&quot;ch0&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pulse</span><span class="p">,</span> <span class="s2">&quot;ch0&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">pulser</span><span class="o">.</span><span class="n">Pulse</span><span class="p">(</span><span class="n">amplitude</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">,</span> <span class="n">detuning</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">detuning</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+            <span class="s2">&quot;ch0&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="s2">&quot;ground-rydberg&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">sim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sim</span>
-
-    <span class="k">def</span> <span class="nf">build_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;deleting process. Empty&quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-
-<div class="viewcode-block" id="Pulser.set">
-<a class="viewcode-back" href="../../../api.html#qse.calc.Pulser.set">[docs]</a>
-    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set parameters like set(key1=value1, key2=value2, ...).&quot;&quot;&quot;</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot; is not a known keyword for the Pulser calculator. &#39;</span>
-            <span class="s2">&quot;To access all features of Pulser by means of an input &quot;</span>
-            <span class="s1">&#39;template, consider using the &quot;inp&quot; keyword instead.&#39;</span>
-        <span class="p">)</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_parameters</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">CalculatorSetupError</span><span class="p">(</span><span class="n">msg</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
-
-        <span class="n">changed_parameters</span> <span class="o">=</span> <span class="n">Calculator</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">changed_parameters</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="Pulser.write">
-<a class="viewcode-back" href="../../../api.html#qse.calc.Pulser.write">[docs]</a>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Write qbits, parameters and calculated results into restart files.</span>
-<span class="sd">        Not yet implemented.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        label : string</span>
-<span class="sd">            used in filename</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
-
-
-<div class="viewcode-block" id="Pulser.read">
-<a class="viewcode-back" href="../../../api.html#qse.calc.Pulser.read">[docs]</a>
-    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Read qbits, parameters and calculated results from restart files.</span>
-<span class="sd">        Not yet implemented.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        label : string</span>
-<span class="sd">            used in filename</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
-
 
 <div class="viewcode-block" id="Pulser.calculate">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Pulser.calculate">[docs]</a>
@@ -591,20 +494,31 @@ document.write(`
         <span class="c1"># check whether all the emulator `classes` have .from_sequence method.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span><span class="p">:</span>
             <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">progress_bar</span><span class="o">=</span><span class="n">progress</span><span class="p">)</span>
-        <span class="c1"># self.qbits.states = self.results.get_final_state()</span>
+
         <span class="n">final_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">get_final_state</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">statevector</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">to_tensor_rep</span><span class="p">(</span><span class="n">final_state</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-        <span class="c1"># if self.parameters.auto_write:</span>
-        <span class="c1">#    self.write(self.label)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">spins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_spins</span><span class="p">()</span>
-        <span class="c1"># self.sij = self.get_sij()</span>
-        <span class="c1"># self.struc_fac = self.structure_factor_from_sij()</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span><span class="p">:</span>
             <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;time in compute and simulation = </span><span class="si">{</span><span class="n">t2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t1</span><span class="si">}</span><span class="s2"> s.&quot;</span><span class="p">)</span></div>
 </div>
 
+
+
+<span class="k">def</span> <span class="nf">_format_pulse</span><span class="p">(</span><span class="n">pulse</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">pulse</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pulse</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">pulse</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pulse</span><span class="p">,</span> <span class="n">Signal</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">InterpolatedWaveform</span><span class="p">(</span>
+            <span class="n">duration</span><span class="o">=</span><span class="n">pulse</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">pulse</span><span class="o">.</span><span class="n">values</span>
+        <span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+        <span class="s2">&quot;Pulses must be either `qse.Signal` or `pulser.waveforms.Waveform`.&quot;</span>
+    <span class="p">)</span>
 </pre></div>
 
                 </article>
