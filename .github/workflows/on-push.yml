@@ -64,5 +64,3 @@ jobs:
     - name: Test with pytest
       run: |
         python -m pytest
-
-# small change to check if version bump test works
