@@ -769,7 +769,7 @@ class Qbits:
         show_labels: bool
             Whether to show the labels of the qubits.
             Defaults to False.
-        
+
         See Also
         --------
         qse.draw
