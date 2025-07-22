@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.signal &#8212; qse 0.2.8 documentation</title>
+    <title>qse.signal &#8212; qse 0.2.9 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=a0cf2451"></script>
+    <script src="../../_static/documentation_options.js?v=1b33a64c"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -142,7 +142,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.8 documentation</p>
+    <p class="title logo__title">qse 0.2.9 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -324,28 +324,44 @@ document.write(`
 <a class="viewcode-back" href="../../api.html#qse.Signal">[docs]</a>
 <span class="k">class</span> <span class="nc">Signal</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Signal class represents a 1D signal with values and duration.</span>
-
-<span class="sd">    The class supports arithmetic operations with other signals and</span>
-<span class="sd">    scalars.</span>
-<span class="sd">    Specifically:</span>
-
-<span class="sd">    * Adding a scalar to a Signal returns a new Signal with modified</span>
-<span class="sd">      values and the same duration. Say W is a signal, then W + 3.0 returns</span>
-<span class="sd">      a signal with same duration, and values W.values + 3.0.</span>
-
-<span class="sd">    * Adding two Signal instances concatenates their values and sums</span>
-<span class="sd">      their durations. So if w1, w2 are instantiation of Signal, then</span>
-<span class="sd">      w = w1 + w2 gives signal with concatenated values, i.e.,</span>
-<span class="sd">      w.values = [w1.values, w2.values], and added duration</span>
-<span class="sd">      w.duration = w1.duration + w2.duration.</span>
+<span class="sd">    The Signal class represents a 1D signal with values and duration.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    values : ndarray</span>
+<span class="sd">    values : list | np.ndarray</span>
 <span class="sd">        The values of the signal.</span>
 <span class="sd">    duration : int</span>
 <span class="sd">        Duration of the signal.</span>
+<span class="sd">        Defaults to the length of the passed values.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    One can create a signal by passing an array of values:</span>
+
+<span class="sd">    &gt;&gt;&gt; qse.Signal([1, 2, 3], 100)</span>
+<span class="sd">    ... Signal(duration=100, values=[1. 2. 3.])</span>
+
+<span class="sd">    Arithmetic operations with scalars is supported.</span>
+<span class="sd">    Adding or multiplying a scalar to a Signal returns</span>
+<span class="sd">    a new Signal with modified values and the same duration.</span>
+<span class="sd">    For example:</span>
+
+<span class="sd">    &gt;&gt;&gt; signal = qse.Signal([1, 1])</span>
+<span class="sd">    &gt;&gt;&gt; signal * 3 + 0.5</span>
+<span class="sd">    ... Signal(duration=2, values=[3.5 3.5])</span>
+
+<span class="sd">    Two Signals can be added together which</span>
+<span class="sd">    concatenates their values and sums their durations.</span>
+<span class="sd">    So if w1, w2 are instantiation of Signal, then</span>
+<span class="sd">    w = w1 + w2 gives signal with concatenated values, i.e.,</span>
+<span class="sd">    w.values = [w1.values, w2.values], and added duration</span>
+<span class="sd">    w.duration = w1.duration + w2.duration.</span>
+<span class="sd">    For example:</span>
+
+<span class="sd">    &gt;&gt;&gt; signal_1 = qse.Signal([1, 1], 5)</span>
+<span class="sd">    &gt;&gt;&gt; signal_2 = qse.Signal([2, 2], 2)</span>
+<span class="sd">    &gt;&gt;&gt; signal_1 + signal_2</span>
+<span class="sd">    ... Signal(duration=7, values=[1. 1. 2. 2.])</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -355,33 +371,8 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiates the Signal class.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        values : array_like</span>
-<span class="sd">            The signal values.</span>
-<span class="sd">        duration : int, optional</span>
-<span class="sd">            Duration of the signal, by default None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_duration</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">if</span> <span class="n">duration</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Duration of the signal.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        int</span>
-<span class="sd">            The duration.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_duration</span>
-
-    <span class="nd">@duration</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_duration</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">if</span> <span class="n">duration</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -487,9 +478,9 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Signal</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">+=</span> <span class="n">other</span><span class="o">.</span><span class="n">duration</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">duration</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">+=</span> <span class="n">other</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">+</span> <span class="n">other</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported operand type for +=: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
@@ -549,7 +540,7 @@ document.write(`
 <span class="sd">            If the operand type is unsupported.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">*=</span> <span class="n">other</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="n">other</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported operand type for *=: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">other</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>

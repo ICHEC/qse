@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API reference &#8212; qse 0.2.8 documentation</title>
+    <title>API reference &#8212; qse 0.2.9 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=a0cf2451"></script>
+    <script src="_static/documentation_options.js?v=1b33a64c"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -143,7 +143,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.8 documentation</p>
+    <p class="title logo__title">qse 0.2.9 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -433,10 +433,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.write"><code class="docutils literal notranslate"><span class="pre">Qbits.write()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal.duration"><code class="docutils literal notranslate"><span class="pre">Signal.duration</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
 </ul>
 </li>
@@ -1292,43 +1289,48 @@ kwargs are passed to ase.io.write.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="qse.Signal">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">Signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/signal.html#Signal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Signal" title="Link to this definition">#</a></dt>
-<dd><p>Signal class represents a 1D signal with values and duration.</p>
-<p>The class supports arithmetic operations with other signals and
-scalars.
-Specifically:</p>
-<ul class="simple">
-<li><p>Adding a scalar to a Signal returns a new Signal with modified
-values and the same duration. Say W is a signal, then W + 3.0 returns
-a signal with same duration, and values W.values + 3.0.</p></li>
-<li><p>Adding two Signal instances concatenates their values and sums
-their durations. So if w1, w2 are instantiation of Signal, then
-w = w1 + w2 gives signal with concatenated values, i.e.,
-w.values = [w1.values, w2.values], and added duration
-w.duration = w1.duration + w2.duration.</p></li>
-</ul>
+<dd><p>The Signal class represents a 1D signal with values and duration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>values</strong> (<em>ndarray</em>) – The values of the signal.</p></li>
-<li><p><strong>duration</strong> (<em>int</em>) – Duration of the signal.</p></li>
+<li><p><strong>values</strong> (<em>list | np.ndarray</em>) – The values of the signal.</p></li>
+<li><p><strong>duration</strong> (<em>int</em>) – Duration of the signal.
+Defaults to the length of the passed values.</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>One can create a signal by passing an array of values:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">100</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">Signal</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mf">1.</span> <span class="mf">2.</span> <span class="mf">3.</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Arithmetic operations with scalars is supported.
+Adding or multiplying a scalar to a Signal returns
+a new Signal with modified values and the same duration.
+For example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">signal</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">signal</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mf">0.5</span>
+<span class="gp">... </span><span class="n">Signal</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mf">3.5</span> <span class="mf">3.5</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Two Signals can be added together which
+concatenates their values and sums their durations.
+So if w1, w2 are instantiation of Signal, then
+w = w1 + w2 gives signal with concatenated values, i.e.,
+w.values = [w1.values, w2.values], and added duration
+w.duration = w1.duration + w2.duration.
+For example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">signal_1</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">signal_2</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">signal_1</span> <span class="o">+</span> <span class="n">signal_2</span>
+<span class="gp">... </span><span class="n">Signal</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mf">1.</span> <span class="mf">1.</span> <span class="mf">2.</span> <span class="mf">2.</span><span class="p">])</span>
+</pre></div>
+</div>
 <p class="rubric">Notes</p>
 <p>Currently, the object gets created for multi-dim arrays as well.
 However, it should be used for 1D only, we haven’t made it useful
 or consistent for multi-dim usage.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="qse.Signal.duration">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">duration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#qse.Signal.duration" title="Link to this definition">#</a></dt>
-<dd><p>Duration of the signal.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>int</em> – The duration.</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py function">
@@ -2127,10 +2129,7 @@ at ith index and a sign).</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.write"><code class="docutils literal notranslate"><span class="pre">Qbits.write()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal.duration"><code class="docutils literal notranslate"><span class="pre">Signal.duration</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signal"><code class="docutils literal notranslate"><span class="pre">Signal</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
 </ul>
 </li>
