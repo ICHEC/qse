@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.visualise &#8212; qse 0.2.9 documentation</title>
+    <title>qse.visualise &#8212; qse 0.2.10 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=1b33a64c"></script>
+    <script src="../../_static/documentation_options.js?v=1db4c2ab"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -142,7 +142,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.9 documentation</p>
+    <p class="title logo__title">qse 0.2.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -321,82 +321,70 @@ document.write(`
 
 <div class="viewcode-block" id="draw">
 <a class="viewcode-back" href="../../api.html#qse.draw">[docs]</a>
-<span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">qbits</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="n">qbits</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">draw_bonds</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    ...</span>
+<span class="sd">    Visualize the positions of a set of qubits.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    qbits: Qbits</span>
-<span class="sd">        ...</span>
-<span class="sd">    ax: ...</span>
-<span class="sd">        ...</span>
+<span class="sd">    qbits: qse.Qbits</span>
+<span class="sd">        The Qbits object.</span>
 <span class="sd">    radius: float</span>
-<span class="sd">        The radius</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    plt</span>
+<span class="sd">        A cutoff radius for visualizing bonds.</span>
+<span class="sd">        Defaults to the smallest distance between the passed qubits.</span>
+<span class="sd">    draw_bonds: bool</span>
+<span class="sd">        Whether to show bonds between qubits.</span>
+<span class="sd">        Defaults to True.</span>
+<span class="sd">    show_labels: bool</span>
+<span class="sd">        Whether to show the labels of the qubits.</span>
+<span class="sd">        Defaults to False.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">crank</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">rank</span>
-    <span class="n">prank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
-    <span class="c1"># if crank is more than prank, it means that a higher dimensional cell</span>
+    <span class="n">cell_rank</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">rank</span>
+    <span class="n">position_rank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
+    <span class="c1"># if cell_rank is more than position_rank, it means that a higher dimensional cell</span>
     <span class="c1"># is present, and actual structure requires repettition of cells to</span>
-    <span class="c1"># clearly visualize. if prank is more than crank, it means the repettion</span>
+    <span class="c1"># clearly visualize. if position_rank is more than cell_rank, it means the repettion</span>
     <span class="c1"># happens in lower dimension of a local geometry which visualized in</span>
     <span class="c1"># higher dimension. Either way, we need to see things in higher dimension.</span>
-    <span class="c1"># TODO: Current version has a bug, in which some of the bonds aren&#39;t drawn</span>
-    <span class="c1"># in rectangular geometry.</span>
-    <span class="c1"># Need to be looked at.</span>
 
-    <span class="n">rank</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">crank</span><span class="p">,</span> <span class="n">prank</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;crank = </span><span class="si">{</span><span class="n">crank</span><span class="si">}</span><span class="s2">, prank = </span><span class="si">{</span><span class="n">prank</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">rank</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cell_rank</span><span class="p">,</span> <span class="n">position_rank</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cell_rank = </span><span class="si">{</span><span class="n">cell_rank</span><span class="si">}</span><span class="s2">, position_rank = </span><span class="si">{</span><span class="n">position_rank</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">positions</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">T</span>
 
-    <span class="n">rij</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">get_all_distances</span><span class="p">()</span>
-    <span class="n">ib</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">qbits</span><span class="o">.</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
-    <span class="n">rcut0</span> <span class="o">=</span> <span class="n">rij</span><span class="p">[</span><span class="n">ib</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">draw_bonds</span><span class="p">:</span>
+        <span class="n">rij</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">get_all_distances</span><span class="p">()</span>
+        <span class="n">ib</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">qbits</span><span class="o">.</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">))</span>
+        <span class="n">rcut0</span> <span class="o">=</span> <span class="n">rij</span><span class="p">[</span><span class="n">ib</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">draw_bond</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">rcut</span> <span class="o">=</span> <span class="n">rcut0</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">rcut0</span> <span class="o">&gt;</span> <span class="n">radius</span><span class="p">:</span>
-            <span class="n">rcut</span> <span class="o">=</span> <span class="n">radius</span>
-            <span class="n">draw_bond</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">radius</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rcut</span> <span class="o">=</span> <span class="n">rcut0</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">rcut</span> <span class="o">=</span> <span class="n">radius</span>
-            <span class="n">draw_bond</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">rcut0</span> <span class="o">&gt;</span> <span class="n">radius</span><span class="p">:</span>
+                <span class="n">rcut</span> <span class="o">=</span> <span class="n">radius</span>
+                <span class="n">draw_bonds</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rcut</span> <span class="o">=</span> <span class="n">radius</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;rcut is </span><span class="si">{</span><span class="n">rcut</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">nns</span> <span class="o">=</span> <span class="n">rij</span> <span class="o">&lt;=</span> <span class="n">rcut</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">nns</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-    <span class="n">ii</span><span class="p">,</span> <span class="n">jj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">nns</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">draw_bond</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">draw_bonds</span><span class="p">:</span>
+        <span class="n">nearest_neighbours</span> <span class="o">=</span> <span class="n">rij</span> <span class="o">&lt;=</span> <span class="n">rcut</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">nearest_neighbours</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">ii</span><span class="p">,</span> <span class="n">jj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">nearest_neighbours</span><span class="p">)</span>
         <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
         <span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="p">(</span><span class="n">positions</span><span class="p">[</span><span class="n">jj</span><span class="p">]</span> <span class="o">-</span> <span class="n">positions</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
-        <span class="n">C</span> <span class="o">=</span> <span class="n">rij</span><span class="p">[</span><span class="n">nns</span><span class="p">]</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">rij</span><span class="p">[</span><span class="n">nearest_neighbours</span><span class="p">]</span>
         <span class="n">C</span> <span class="o">=</span> <span class="n">C</span> <span class="o">/</span> <span class="n">C</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span> <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">()</span>
-    <span class="c1"># set the aspect ratio to 1, so that the ratio is actually</span>
-    <span class="c1"># proportional to data size in x, y, z direction.</span>
-    <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">qbits</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
-    <span class="c1"># ax.set_xlabel(&#39;x&#39;, labelpad=-12)</span>
-    <span class="c1"># ax.set_ylabel(&#39;y&#39;, labelpad=-12)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
-    <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># ax.set_zlabel(&#39;z&#39;, labelpad=-12)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_zticks</span><span class="p">([])</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">draw_bond</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_zticks</span><span class="p">([])</span>
+
+        <span class="k">if</span> <span class="n">draw_bonds</span><span class="p">:</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span>
                 <span class="n">X</span><span class="p">,</span>
                 <span class="n">Y</span><span class="p">,</span>
@@ -410,8 +398,14 @@ document.write(`
                 <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="n">C</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">draw_bond</span><span class="p">:</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+        <span class="k">if</span> <span class="n">draw_bonds</span><span class="p">:</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span>
                 <span class="n">X</span><span class="p">,</span>
                 <span class="n">Y</span><span class="p">,</span>
@@ -427,24 +421,10 @@ document.write(`
                 <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="n">C</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="c1"># y = np.zeros(x.shape)</span>
-        <span class="k">if</span> <span class="n">draw_bond</span><span class="p">:</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span>
-                <span class="n">X</span><span class="p">,</span>
-                <span class="n">Y</span><span class="p">,</span>
-                <span class="n">U</span><span class="p">,</span>
-                <span class="n">V</span><span class="p">,</span>
-                <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                <span class="n">angles</span><span class="o">=</span><span class="s2">&quot;xy&quot;</span><span class="p">,</span>
-                <span class="n">scale_units</span><span class="o">=</span><span class="s2">&quot;xy&quot;</span><span class="p">,</span>
-                <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                <span class="n">headaxislength</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                <span class="n">headlength</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="n">C</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">show_labels</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">qbits</span><span class="o">.</span><span class="n">nqbits</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="n">qbits</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span></div>
 
 </pre></div>
 

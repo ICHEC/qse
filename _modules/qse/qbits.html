@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.qbits &#8212; qse 0.2.9 documentation</title>
+    <title>qse.qbits &#8212; qse 0.2.10 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=1b33a64c"></script>
+    <script src="../../_static/documentation_options.js?v=1db4c2ab"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -142,7 +142,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.9 documentation</p>
+    <p class="title logo__title">qse 0.2.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -1139,8 +1139,30 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">new_shape</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">)</span>
+<div class="viewcode-block" id="Qbits.draw">
+<a class="viewcode-back" href="../../api.html#qse.Qbits.draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">draw_bonds</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Visualize the positions of a set of qubits.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        radius: float</span>
+<span class="sd">            A cutoff radius for visualizing bonds.</span>
+<span class="sd">            Defaults to the smallest distance between the passed qubits.</span>
+<span class="sd">        draw_bonds: bool</span>
+<span class="sd">            Whether to show bonds between qubits.</span>
+<span class="sd">            Defaults to True.</span>
+<span class="sd">        show_labels: bool</span>
+<span class="sd">            Whether to show the labels of the qubits.</span>
+<span class="sd">            Defaults to False.</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        qse.draw</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span> <span class="n">draw_bonds</span><span class="o">=</span><span class="n">draw_bonds</span><span class="p">,</span> <span class="n">show_labels</span><span class="o">=</span><span class="n">show_labels</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="Qbits.repeat">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.repeat">[docs]</a>

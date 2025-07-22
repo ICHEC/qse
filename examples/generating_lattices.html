@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Generating Lattices &#8212; qse 0.2.9 documentation</title>
+    <title>Generating Lattices &#8212; qse 0.2.10 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=1b33a64c"></script>
+    <script src="../_static/documentation_options.js?v=1db4c2ab"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -143,7 +143,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.9 documentation</p>
+    <p class="title logo__title">qse 0.2.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -410,8 +410,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>crank = 2, prank = 2
-rcut is 10
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cell_rank = 2, position_rank = 2
 </pre></div>
 </div>
 <img alt="../_images/f238dc3f6b600483fb866d29535d3fef70836bb6262c21ea5163171463bada39.png" src="../_images/f238dc3f6b600483fb866d29535d3fef70836bb6262c21ea5163171463bada39.png" />
@@ -428,8 +427,7 @@ rcut is 10
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>crank = 2, prank = 2
-rcut is 1.1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cell_rank = 2, position_rank = 2
 </pre></div>
 </div>
 <img alt="../_images/fbb52a1c1400e223bc4d99fb254d33a6136b2debfa5b1d3d454483324a17555c.png" src="../_images/fbb52a1c1400e223bc4d99fb254d33a6136b2debfa5b1d3d454483324a17555c.png" />
@@ -464,8 +462,7 @@ rcut is 1.1
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>crank = 2, prank = 2
-rcut is 1.1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cell_rank = 2, position_rank = 2
 </pre></div>
 </div>
 <img alt="../_images/0282644cb5f9424168401914683a6ede4a2a5c58bdd5610a9f6fdc864bff627e.png" src="../_images/0282644cb5f9424168401914683a6ede4a2a5c58bdd5610a9f6fdc864bff627e.png" />
@@ -483,8 +480,7 @@ rcut is 1.1
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>crank = 2, prank = 2
-rcut is 3
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cell_rank = 2, position_rank = 2
 </pre></div>
 </div>
 <img alt="../_images/27d575648b6f6c4c22fe2f0845f57e967b9c69c76b9242b5b917318027918c73.png" src="../_images/27d575648b6f6c4c22fe2f0845f57e967b9c69c76b9242b5b917318027918c73.png" />
@@ -533,8 +529,7 @@ rcut is 3
  pbc=False,
  cell=[6.0, 6.0, 6.0],
 ...)
-crank = 3, prank = 3
-rcut is 1.0
+cell_rank = 3, position_rank = 3
 </pre></div>
 </div>
 <img alt="../_images/d2de4c9e5cb1ea46eb3b5d01481977d3e7ee953cf2f938f8f96efb6d65be9ac9.png" src="../_images/d2de4c9e5cb1ea46eb3b5d01481977d3e7ee953cf2f938f8f96efb6d65be9ac9.png" />
@@ -570,8 +565,7 @@ rcut is 1.0
  Qbit(label=&#39;11&#39;, position=[1.7320508075688767, -1.0000000000000009, 0.0], state=[(1+0j), 0j], index=11),
  pbc=False,
 ...)
-crank = 0, prank = 2
-rcut is 2.0
+cell_rank = 0, position_rank = 2
 </pre></div>
 </div>
 <img alt="../_images/76b492246b65e1f0bc522d1c42e0a86cbca94ac697708be94bdd83239ed4035a.png" src="../_images/76b492246b65e1f0bc522d1c42e0a86cbca94ac697708be94bdd83239ed4035a.png" />
@@ -599,8 +593,7 @@ rcut is 2.0
  Qbit(label=&#39;323&#39;, position=[7.404200167834425, -2.694908469640557, -0.6840402866513389], state=[(1+0j), 0j], index=2),
  pbc=False,
 ...)
-crank = 0, prank = 3
-rcut is 2.0
+cell_rank = 0, position_rank = 3
 </pre></div>
 </div>
 <img alt="../_images/3065bd7aed126ecfa67a0eac4e76961efa63c48ce43ad2313fa33bd618d96065.png" src="../_images/3065bd7aed126ecfa67a0eac4e76961efa63c48ce43ad2313fa33bd618d96065.png" />
@@ -656,7 +649,7 @@ rcut is 2.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>qse 0.2.9
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>qse 0.2.10
 </pre></div>
 </div>
 </div>
