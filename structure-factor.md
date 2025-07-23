@@ -147,7 +147,8 @@ $$
 \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y = 2(\sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+),
 $$
 
-so:
+so the operator simplifies to:
+
 $$
 \mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( 2\sigma_i^+ \sigma_j^- + 2\sigma_i^- \sigma_j^+ + \sigma_i^z \sigma_j^z \right) = \frac{1}{2} \sigma_i^+ \sigma_j^- + \frac{1}{2} \sigma_i^- \sigma_j^+ + \frac{1}{4} \sigma_i^z \sigma_j^z.
 $$
@@ -214,11 +215,13 @@ $$
 ### 4. **Final Expression for $i \neq j$**
 Combining all terms, we have the following:
 
-$$
+```math
+\begin{align}
 \boxed{
 \langle \mathbf{S}_i \cdot \mathbf{S}_j \rangle = \frac{1}{2} \left( \sum_{\substack{a \\ a_i=1, a_j=0}} c_a^* c_b \right) + \frac{1}{2} \left( \sum_{\substack{a \\ a_i=0, a_j=1}} c_a^* c_d \right) + \frac{1}{4} \left( \sum_{a} |c_a|^2 (1 - 2a_i)(1 - 2a_j) \right)
-}
-$$
+}    
+\end{align}
+```
 
 where:
 - $b = a \oplus (2^i + 2^j)$ (flip bits at $i$ and $j$),
