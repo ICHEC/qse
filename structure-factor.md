@@ -51,63 +51,77 @@ $$
 \langle\Psi| {\bf S_i}\cdot {\bf S_j}|\Psi\rangle
 $$
 
-To compute the expectation value \(\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle\)
-for a system of \(N\) spin-1/2 particles, where \(\mathbf{S}_i = (S_i^x, S_i^y, S_i^z)\) are the spin operators at site \(i\), we derive the expression by expanding the dot product and simplifying using the properties of Pauli matrices. The spin operators are defined as \(S_i^\alpha = \frac{\hbar}{2} \sigma_i^\alpha\) for \(\alpha = x, y, z\), where \(\sigma_i^\alpha\) are the Pauli matrices. Setting \(\hbar = 1\) for simplicity, we have \(S_i^\alpha = \frac{1}{2} \sigma_i^\alpha\).
+To compute the expectation value $\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle$ for a system of $N$ spin-$\frac 12$ particles, where $\mathbf{S}_i = (S_i^x, S_i^y, S_i^z)$ are the spin operators at site $i$, we derive the expression by expanding the dot product and simplifying using the  properties of Pauli matrices. The spin operators are defined as $S_i^\alpha = \frac{\hbar}{2} \sigma_i^\alpha$ for $\alpha = x, y, z$, where $\sigma_i^\alpha$ are the Pauli matrices. Setting $\hbar = 1$ for simplicity, we have $S_i^\alpha = \frac{1}{2} \sigma_i^\alpha$.
 
-The operator \(\mathbf{S}_i \cdot \mathbf{S}_j\) is:
-\[
+The operator $\mathbf{S}_i \cdot \mathbf{S}_j$ is:
+
+$$
 \mathbf{S}_i \cdot \mathbf{S}_j = S_i^x S_j^x + S_i^y S_j^y + S_i^z S_j^z.
-\]
+$$
+
 Substituting the expressions in terms of Pauli matrices:
-\[
+
+$$
 \mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y + \sigma_i^z \sigma_j^z \right).
-\]
+$$
+
 We now use the identity for the sum of the \(x\) and \(y\) components:
-\[
+
+$$
 \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y = \sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+,
-\]
-where \(\sigma_i^+ = \sigma_i^x + i\sigma_i^y\) and \(\sigma_i^- = \sigma_i^x - i\sigma_i^y\) are the raising and lowering operators. This identity holds for all \(i\) and \(j\), but we must handle the case \(i = j\) separately due to the properties of the operators.
+$$
 
-### Case 1: \(i = j\)
-When \(i = j\), the expectation value simplifies to:
-\[
+where $\sigma_i^+ = \sigma_i^x + i\sigma_i^y$ and $\sigma_i^- = \sigma_i^x - i\sigma_i^y$ are the raising and lowering operators. This identity holds for all $i$ and $j$, but we must handle the case $i = j$ separately due to the properties of the operators.
+
+### Case 1: $i = j$
+When $i = j$, the expectation value simplifies to:
+
+$$
 \mathbf{S}_i \cdot \mathbf{S}_i = (S_i^x)^2 + (S_i^y)^2 + (S_i^z)^2.
-\]
-For a spin-1/2 particle, the eigenvalues of \((\mathbf{S}_i)^2\) are \(s(s+1) = \frac{3}{4}\) (since \(s = \frac{1}{2}\)), and the operator is proportional to the identity:
-\[
-\mathbf{S}_i \cdot \mathbf{S}_i = \frac{3}{4} \mathbb{I}.
-\]
-Thus, the expectation value is:
-\[
-\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_i | \Psi \rangle = \frac{3}{4} \langle \Psi | \mathbb{I} | \Psi \rangle = \frac{3}{4}.
-\]
+$$
 
-### Case 2: \(i \neq j\)
-For \(i \neq j\), we use the expanded form:
-\[
-\mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y + \sigma_i^z \sigma_j^z \right) = \frac{1}{4} \left( \sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+ + \sigma_i^z \sigma_j^z \right).
-\]
+For a spin-$\frac 12$ particle, the eigenvalues of $\mathbf{S}_i^2$ are $s(s+1) = \frac{3}{4}$ (since $s = \frac{1}{2}$), and the operator is proportional to the identity:
+
+$$
+\mathbf{S}_i \cdot \mathbf{S}_i = \frac{3}{4} \mathbb{I}.
+$$
+
 Thus, the expectation value is:
-\[
+
+$$
+\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_i | \Psi \rangle = \frac{3}{4} \langle \Psi | \mathbb{I} | \Psi \rangle = \frac{3}{4}.
+$$
+
+### Case 2: $i \neq j$
+For $i \neq j$, we use the expanded form:
+
+$$
+\mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y + \sigma_i^z \sigma_j^z \right) = \frac{1}{4} \left( \sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+ + \sigma_i^z \sigma_j^z \right).
+$$
+
+Thus, the expectation value is:
+$$
 \langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle = \frac{1}{4} \left[ \langle \Psi | \sigma_i^+ \sigma_j^- | \Psi \rangle + \langle \Psi | \sigma_i^- \sigma_j^+ | \Psi \rangle + \langle \Psi | \sigma_i^z \sigma_j^z | \Psi \rangle \right].
-\]
+$$
 
 ### Final Expression
 Combining both cases, the expectation value is:
-\[
+
+$$
 \langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle = 
 \begin{cases} 
 \frac{3}{4} & \text{if } i = j, \\
 \frac{1}{4} \left( \langle \sigma_i^+ \sigma_j^- \rangle + \langle \sigma_i^- \sigma_j^+ \rangle + \langle \sigma_i^z \sigma_j^z \rangle \right) & \text{if } i \neq j,
 \end{cases}
-\]
-where \(\langle \cdot \rangle\) denotes the expectation value in the state \(|\Psi\rangle\).
+$$
+
+where $\langle \cdot \rangle$ denotes the expectation value in the state $|\Psi\rangle$.
 
 ### Summary
-- For \(i = j\), the result is \(\frac{3}{4}\).
-- For \(i \neq j\), the expectation value requires computing three terms: the expectation values of the operators \(\sigma_i^+ \sigma_j^-\), \(\sigma_i^- \sigma_j^+\), and \(\sigma_i^z \sigma_j^z\) in the state \(|\Psi\rangle\).
+- For $i = j$, the result is $\frac{3}{4}$.
+- For $i \neq j$, the expectation value requires computing three terms: the expectation values of the operators $\sigma_i^+ \sigma_j^-$, $\sigma_i^- \sigma_j^+$, and $\sigma_i^z \sigma_j^z$ in the state $|\Psi\rangle$.
 
-This expression accounts for the quantum mechanical nature of the spin operators and is valid for any state \(|\Psi\rangle\) in the Hilbert space. The operators \(\sigma_i^\pm\) and \(\sigma_i^z\) are defined in the basis of the \(2^N\)-dimensional Hilbert space, and their matrix elements can be evaluated once the state \(|\Psi\rangle\) is specified.
+This expression accounts for the quantum mechanical nature of the spin operators and is valid for any state $|\Psi\rangle$ in the Hilbert space. The operators $\sigma_i^\pm$ and $\sigma_i^z$ are defined in the basis of the $2^N$-dimensional Hilbert space, and their matrix elements can be evaluated once the state $|\Psi\rangle$ is specified.
 
 
 ## Derivation of the final expression
@@ -115,90 +129,108 @@ This expression accounts for the quantum mechanical nature of the spin operators
 Now let's get a bit more in detail, and express the state $\Psi$ as linear combination of the product  state basis of the $N$-qubit or $N$-spin Hilbert space. Then $|\Psi\rangle = \sum_{\alpha}|\alpha\rangle$ where, $\alpha$ symbolically is $\alpha \equiv a_0a_1a_2 \dots a_{N-1}$, and $a_i$ are binary numbers.
 
 
-To compute the expectation value \(\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle\) for a state \(|\Psi\rangle = \sum_a c_a |a\rangle\), where \(|a\rangle\) are computational basis states (e.g., \(|a\rangle = |00101\rangle\)), we express the operator \(\mathbf{S}_i \cdot \mathbf{S}_j\) in terms of Pauli matrices and evaluate its expectation using the coefficients \(c_a\). The derivation below assumes the basis convention where:
+To compute the expectation value $\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle$ for a state $|\Psi\rangle = \sum_a c_a |a\rangle$, where $|a\rangle$ are computational basis states (e.g., $|a\rangle = |00101\rangle$), we express the operator $\mathbf{S}_i \cdot \mathbf{S}_j$ in terms of Pauli matrices and evaluate its expectation using the coefficients $c_a$. The derivation below assumes the basis convention where:
 
-- \(|0\rangle\) corresponds to \(\sigma^z = +1\) (spin up in \(z\)-direction).
-- \(|1\rangle\) corresponds to \(\sigma^z = -1\) (spin down in \(z\)-direction).
+- $|0\rangle$ corresponds to $\sigma^z = +1$ (spin up in $z$-direction).
+- $|1\rangle$ corresponds to $\sigma^z = -1$ (spin down in $z$-direction).
 
 ### 1. **Operator Decomposition**
-The spin operator \(\mathbf{S}_i \cdot \mathbf{S}_j\) decomposes as:
-\[
+The spin operator $\mathbf{S}_i \cdot \mathbf{S}_j$ decomposes as:
+
+$$
 \mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y + \sigma_i^z \sigma_j^z \right).
-\]
-Using raising/lowering operators (\(\sigma^\pm = \frac{1}{2}(\sigma^x \pm i\sigma^y)\)):
-\[
+$$
+
+Using raising/lowering operators $(\sigma^\pm = \frac{1}{2}(\sigma^x \pm i\sigma^y)$):
+
+$$
 \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y = 2(\sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+),
-\]
+$$
+
 so:
-\[
+$$
 \mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( 2\sigma_i^+ \sigma_j^- + 2\sigma_i^- \sigma_j^+ + \sigma_i^z \sigma_j^z \right) = \frac{1}{2} \sigma_i^+ \sigma_j^- + \frac{1}{2} \sigma_i^- \sigma_j^+ + \frac{1}{4} \sigma_i^z \sigma_j^z.
-\]
+$$
 
-### 2. **Expectation Value for \(i = j\)**
-When \(i = j\):
-\[
+### 2. **Expectation Value for $i = j$**
+When $i = j$:
+
+$$
 \langle \mathbf{S}_i \cdot \mathbf{S}_i \rangle = \langle (\mathbf{S}_i)^2 \rangle = s(s+1) = \frac{3}{4}.
-\]
+$$
 
-### 3. **Expectation Value for \(i \neq j\)**
-For \(i \neq j\), the expectation value is:
-\[
+### 3. **Expectation Value for $i \neq j$**
+For $i \neq j$, the expectation value is:
+
+$$
 \langle \mathbf{S}_i \cdot \mathbf{S}_j \rangle = \frac{1}{2} \langle \sigma_i^+ \sigma_j^- \rangle + \frac{1}{2} \langle \sigma_i^- \sigma_j^+ \rangle + \frac{1}{4} \langle \sigma_i^z \sigma_j^z \rangle.
-\]
-We evaluate each term using the coefficients \(c_a\):
+$$
 
-#### (a) **Diagonal Term (\(\langle \sigma_i^z \sigma_j^z \rangle\))**
-This term is **diagonal** in the basis:
-\[
+We evaluate each term using the coefficients $c_a$:
+
+#### (a) **Diagonal Term $(\langle \sigma_i^z \sigma_j^z \rangle$)**
+This term is **diagonal** in the basis, so:
+
+$$
 \sigma_i^z \sigma_j^z |a\rangle = (1 - 2a_i)(1 - 2a_j) |a\rangle,
-\]
-where \(a_i, a_j \in \{0, 1\}\) are the bits of \(|a\rangle\) at positions \(i\) and \(j\). Thus:
-\[
+$$
+
+where $a_i, a_j \in \{0, 1\}$ are the bits of $|a\rangle$ at positions $i$ and $j$. Thus:
+
+$$
 \langle \sigma_i^z \sigma_j^z \rangle = \sum_{a} |c_a|^2 (1 - 2a_i)(1 - 2a_j).
-\]
+$$
 
-#### (b) **Off-Diagonal Term 1 (\(\langle \sigma_i^+ \sigma_j^- \rangle\))**
-- \(\sigma_j^-\) flips \(a_j\) from \(0\) to \(1\) (if \(a_j = 0\)).
-- \(\sigma_i^+\) flips \(a_i\) from \(1\) to \(0\) (if \(a_i = 1\)).
-- Non-zero only when \(a_j = 0\) and \(a_i = 1\):
-\[
+#### (b) **Off-Diagonal Term 1 ($\langle \sigma_i^+ \sigma_j^- \rangle$)**
+- $\sigma_j^-$ flips $a_j$ from 0 to 1 (if $a_j = 0$).
+- $\sigma_i^+$ flips $a_i$ from 1 to 0 (if $a_i = 1$).
+- Non-zero only when $a_j = 0$ and $a_i = 1$:
+
+$$
 \sigma_i^+ \sigma_j^- |a\rangle = |b\rangle, \quad \text{where } b = a \text{ with } a_j = 1 \text{ and } a_i = 0.
-\]
+$$
+
 The expectation is:
-\[
+
+$$
 \langle \sigma_i^+ \sigma_j^- \rangle = \sum_{\substack{a \\ a_i=1, a_j=0}} c_a^* c_b, \quad b = a \oplus (2^i + 2^j).
-\]
+$$
 
-#### (c) **Off-Diagonal Term 2 (\(\langle \sigma_i^- \sigma_j^+ \rangle\))**
-- \(\sigma_j^+\) flips \(a_j\) from \(1\) to \(0\) (if \(a_j = 1\)).
-- \(\sigma_i^-\) flips \(a_i\) from \(0\) to \(1\) (if \(a_i = 0\)).
-- Non-zero only when \(a_j = 1\) and \(a_i = 0\):
-\[
+#### (c) **Off-Diagonal Term 2 ($\langle \sigma_i^- \sigma_j^+ \rangle$)**
+- $\sigma_j^+$ flips $a_j$ from 1 to 0 (if $a_j = 1$).
+- $\sigma_i^-$ flips $a_i$ from 0 to 1 (if $a_i = 0$).
+- Non-zero only when $a_j = 1$ and $a_i = 0$:
+
+$$
 \sigma_i^- \sigma_j^+ |a\rangle = |d\rangle, \quad \text{where } d = a \text{ with } a_j = 0 \text{ and } a_i = 1.
-\]
-The expectation is:
-\[
-\langle \sigma_i^- \sigma_j^+ \rangle = \sum_{\substack{a \\ a_i=0, a_j=1}} c_a^* c_d, \quad d = a \oplus (2^i + 2^j).
-\]
+$$
 
-### 4. **Final Expression for \(i \neq j\)**
-Combining all terms:
-\[
+The expectation is:
+
+$$
+\langle \sigma_i^- \sigma_j^+ \rangle = \sum_{\substack{a \\ a_i=0, a_j=1}} c_a^* c_d, \quad d = a \oplus (2^i + 2^j).
+$$
+
+### 4. **Final Expression for $i \neq j$**
+Combining all terms, we have the following:
+
+$$
 \boxed{
 \langle \mathbf{S}_i \cdot \mathbf{S}_j \rangle = \frac{1}{2} \left( \sum_{\substack{a \\ a_i=1, a_j=0}} c_a^* c_b \right) + \frac{1}{2} \left( \sum_{\substack{a \\ a_i=0, a_j=1}} c_a^* c_d \right) + \frac{1}{4} \left( \sum_{a} |c_a|^2 (1 - 2a_i)(1 - 2a_j) \right)
 }
-\]
+$$
+
 where:
-- \(b = a \oplus (2^i + 2^j)\) (flip bits at \(i\) and \(j\)),
-- \(d = a \oplus (2^i + 2^j)\) (same as \(b\)).
+- $b = a \oplus (2^i + 2^j)$ (flip bits at $i$ and $j$),
+- $d = a \oplus (2^i + 2^j)$ (same as $b$).
 
 ### Summary
-- **For \(i = j\)**: \(\langle \mathbf{S}_i \cdot \mathbf{S}_j \rangle = \frac{3}{4}\).
-- **For \(i \neq j\)**: Use the boxed expression above, which depends on:
-  1. Diagonal terms: Weighted by \(|c_a|^2\) and spin eigenvalues.
-  2. Off-diagonal terms: Correlations between basis states differing by spin flips at \(i\) and \(j\).
+- **For $i = j$**: $\langle \mathbf{S}_i \cdot \mathbf{S}_j \rangle = \frac{3}{4}$.
+- **For $i \neq j$**: Use the boxed expression above, which depends on:
+  1. Diagonal terms: Weighted by $|c_a|^2$ and spin eigenvalues.
+  2. Off-diagonal terms: Correlations between basis states differing by spin flips at $i$ and $j$.
 
-This expression is efficiently computable by iterating over all basis states \(a\) and summing contributions.
+This expression is efficiently computable by iterating over all basis states $a$ and summing contributions.
 
 
 
