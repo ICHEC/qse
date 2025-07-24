@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Pulser Calculation Example &#8212; qse 0.2.10 documentation</title>
+    <title>Pulser Calculation Example &#8212; qse 0.2.11 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=1db4c2ab"></script>
+    <script src="../_static/documentation_options.js?v=a64840b6"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -54,8 +54,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/pulser-calc-example';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Pulser-MyQLM Conversion" href="pulser-myqlm-conversion.html" />
-    <link rel="prev" title="Creating and manipulating Qbits" href="creating_and_manipulating_qbits.html" />
+    <link rel="next" title="API reference" href="../api.html" />
+    <link rel="prev" title="Generating Lattices" href="generating_lattices.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -143,7 +143,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.10 documentation</p>
+    <p class="title logo__title">qse 0.2.11 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -161,10 +161,9 @@
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="generating_lattices.html">Generating Lattices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="creating_and_manipulating_qbits.html">Creating and manipulating Qbits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generating_lattices.html">Generating Lattices</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Pulser Calculation Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pulser-myqlm-conversion.html">Pulser-MyQLM Conversion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
 </ul>
 
@@ -390,18 +389,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>  <span class="c1"># numpy</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">qse</span>  <span class="c1"># import the qse</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">pulser</span>  <span class="c1"># we just need this for R_interatomic</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;pulser&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <section id="d-square-lattice">
 <h2>2D square lattice<a class="headerlink" href="#d-square-lattice" title="Link to this heading">#</a></h2>
@@ -437,11 +424,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>crank = 2, prank = 2
-rcut is 9.756753962298905
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cell_rank = 2, position_rank = 2
 </pre></div>
 </div>
-<img alt="../_images/ff9b756e2ccf2cec02d84da92d1e3d75862cc41a8f54c45caeca32c39257466e.png" src="../_images/ff9b756e2ccf2cec02d84da92d1e3d75862cc41a8f54c45caeca32c39257466e.png" />
+<img alt="../_images/bf4bb74b4755418c412cb9f908a6da860b240a50a6874a513e2d9ec74817c03e.png" src="../_images/bf4bb74b4755418c412cb9f908a6da860b240a50a6874a513e2d9ec74817c03e.png" />
 </div>
 </div>
 </section>
@@ -474,8 +460,8 @@ rcut is 9.756753962298905
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/684faafb22a09664a85e3fbe8369ae43df2a31dbe219d7a7df754c1f4a546950.png" src="../_images/684faafb22a09664a85e3fbe8369ae43df2a31dbe219d7a7df754c1f4a546950.png" />
-<img alt="../_images/bdcb590e90ffea12a48a0e1c35d87dbefa8f8ef4a0834c75aed7658b648d5d87.png" src="../_images/bdcb590e90ffea12a48a0e1c35d87dbefa8f8ef4a0834c75aed7658b648d5d87.png" />
+<img alt="../_images/8c7f8353948f6cdf73b05b37bd287dcb432ff68a4db3dc02c64f1310b0730cd7.png" src="../_images/8c7f8353948f6cdf73b05b37bd287dcb432ff68a4db3dc02c64f1310b0730cd7.png" />
+<img alt="../_images/538a2218e387eb1e7b88d29c0eaa1227d5d2d985e4db782d82da95c8c2fca9b6.png" src="../_images/538a2218e387eb1e7b88d29c0eaa1227d5d2d985e4db782d82da95c8c2fca9b6.png" />
 </div>
 </div>
 </section>
@@ -500,18 +486,19 @@ rcut is 9.756753962298905
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10.1%. Run time:   0.00s. Est. time left: 00:00:00:00
-20.0%. Run time:   0.00s. Est. time left: 00:00:00:00
-30.0%. Run time:   0.01s. Est. time left: 00:00:00:00
-40.0%. Run time:   0.01s. Est. time left: 00:00:00:00
-50.0%. Run time:   0.01s. Est. time left: 00:00:00:00
-60.1%. Run time:   0.01s. Est. time left: 00:00:00:00
-70.0%. Run time:   0.01s. Est. time left: 00:00:00:00
-80.0%. Run time:   0.01s. Est. time left: 00:00:00:00
-90.0%. Run time:   0.01s. Est. time left: 00:00:00:00
-100.0%. Run time:   0.01s. Est. time left: 00:00:00:00
-Total run time:   0.01s
-time in compute and simulation = 0.0194089412689209 s.
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">pcalc</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
+
+<span class="nn">File ~/.local/lib/python3.12/site-packages/qse/calc/pulser.py:174,</span> in <span class="ni">Pulser.calculate</span><span class="nt">(self, progress)</span>
+<span class="g g-Whitespace">    </span><span class="mi">171</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">172</span>     <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">174</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">progress_bar</span><span class="o">=</span><span class="n">progress</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">176</span> <span class="n">final_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">get_final_state</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">177</span> <span class="bp">self</span><span class="o">.</span><span class="n">statevector</span> <span class="o">=</span> <span class="n">qutip</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">to_tensor_rep</span><span class="p">(</span><span class="n">final_state</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="ne">AttributeError</span>: &#39;NoneType&#39; object has no attribute &#39;run&#39;
 </pre></div>
 </div>
 </div>
@@ -635,20 +622,20 @@ time in compute and simulation = 0.0194089412689209 s.
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="creating_and_manipulating_qbits.html"
+       href="generating_lattices.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Creating and manipulating Qbits</p>
+        <p class="prev-next-title">Generating Lattices</p>
       </div>
     </a>
     <a class="right-next"
-       href="pulser-myqlm-conversion.html"
+       href="../api.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Pulser-MyQLM Conversion</p>
+        <p class="prev-next-title">API reference</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
