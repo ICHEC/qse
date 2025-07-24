@@ -31,4 +31,5 @@ Contents
    examples/creating_and_manipulating_qbits
    examples/pulser-calc-example
    examples/pulser-myqlm-conversion
+   theory/spatial-correlation
    api 
