@@ -39,6 +39,9 @@ def int2bin(x, width=32):
 
 
 def print_environment():
+    """
+    Print the Python and qse version of the environment.
+    """
     python_info = sys.version_info
     print(
         f"Python version: {python_info.major}.{python_info.minor}.{python_info.micro}"
