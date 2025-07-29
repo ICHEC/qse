@@ -318,7 +318,11 @@ document.write(`
 <span class="sd">Utility functions for a variety of usage within and outside of QSE.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">sys</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">qse</span>
 
 
 <div class="viewcode-block" id="int2bin">
@@ -347,10 +351,23 @@ document.write(`
 
 <span class="sd">    However vectorize version is a bit slower compared to the one below.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span>
         <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">binary_repr</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;U</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="print_environment">
+<a class="viewcode-back" href="../../api.html#qse.utils.print_environment">[docs]</a>
+<span class="k">def</span> <span class="nf">print_environment</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print the Python and qse version of the environment.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">python_info</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Python version: </span><span class="si">{</span><span class="n">python_info</span><span class="o">.</span><span class="n">major</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">python_info</span><span class="o">.</span><span class="n">minor</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">python_info</span><span class="o">.</span><span class="n">micro</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span></div>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;qse version: </span><span class="si">{</span><span class="n">qse</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 </pre></div>
 
