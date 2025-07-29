@@ -8,7 +8,7 @@ This module defines the central object in the QSE package: the Qbits object.
 """
 import copy
 import numbers
-from math import cos, pi, sin
+from math import cos, sin
 
 import numpy as np
 from ase.cell import Cell
@@ -129,7 +129,8 @@ class Qbits:
     ):
         if (positions is not None) and (scaled_positions is not None):
             raise Exception(
-                "Both 'positions' and 'scaled_positions' cannot be passed at the same time."
+                "Both 'positions' and 'scaled_positions'"
+                " cannot be passed at the same time."
             )
 
         if (scaled_positions is not None) and (cell is None):
@@ -753,8 +754,27 @@ class Qbits:
         self.shape = new_shape
         return self
 
-    def draw(self, ax=None, radius=None):
-        _draw(self, ax=ax, radius=radius)
+    def draw(self, radius=None, draw_bonds=True, show_labels=False):
+        """
+        Visualize the positions of a set of qubits.
+
+        Parameters
+        ----------
+        radius: float
+            A cutoff radius for visualizing bonds.
+            Defaults to the smallest distance between the passed qubits.
+        draw_bonds: bool
+            Whether to show bonds between qubits.
+            Defaults to True.
+        show_labels: bool
+            Whether to show the labels of the qubits.
+            Defaults to False.
+
+        See Also
+        --------
+        qse.draw
+        """
+        _draw(self, radius=radius, draw_bonds=draw_bonds, show_labels=show_labels)
 
     def repeat(self, rep):
         """Create new repeated qbits object.
@@ -874,7 +894,8 @@ class Qbits:
 
         Notes
         -----
-        For a set of :math:`k` positions :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`
+        For a set of :math:`k` positions
+        :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`
         the centroid is given by
 
         .. math::
@@ -898,7 +919,8 @@ class Qbits:
 
         Notes
         -----
-        For a set of :math:`k` positions :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`
+        For a set of :math:`k` positions
+        :math:`\textbf{x}_1, \textbf{x}_2, ..., \textbf{x}_k`
         the centroid is given by
 
         .. math::
@@ -911,19 +933,20 @@ class Qbits:
         else:
             self.set_positions(self.get_positions() + difference)
 
-    def rotate(self, a, v, center=(0, 0, 0), rotate_cell=False):
-        """
+    def rotate(self, a, v="z", center=(0, 0, 0), rotate_cell=False):
+        r"""
         Rotate qbits based on a vector and an angle, or two vectors.
 
         Parameters
         ----------
         a :
-            Angle that the qbits is rotated around the vector 'v'. 'a'
-            can also be a vector and then 'a' is rotated
-            into 'v'.
+            Angle that the qbits is rotated (anticlockwise) around the vector 'v'.
+            'a' can also be a vector and then 'a' is rotated
+            into 'v'. If 'a' is an angle it must be in degrees.
         v :
             Vector to rotate the qbits around. Vectors can be given as
             strings: 'x', '-x', 'y', ... .
+            Defaults to 'z'.
         center :
             The center is kept fixed under the rotation. Use 'COP' to
             fix the center of positions or 'COU' to fix the center of
@@ -933,39 +956,47 @@ class Qbits:
 
         Examples
         --------
-        Rotate 90 degrees around the z-axis, so that the x-axis is
-        rotated into the y-axis:
+        The following all rotate 90 degrees anticlockwise around the z-axis,
+        so that the x-axis is rotated into the y-axis:
 
-        >>> qbits = Qbits()
+        >>> qbits.rotate(90)
         >>> qbits.rotate(90, 'z')
         >>> qbits.rotate(90, (0, 0, 1))
         >>> qbits.rotate(-90, '-z')
         >>> qbits.rotate('x', 'y')
         >>> qbits.rotate((1, 0, 0), (0, 1, 0))
+
+        Notes
+        -----
+        If 'a' is an angle, :math:`\theta`, and if :math:`\textbf{v}` is the vector
+        then we define
+
+        .. math::
+            R = \cos(\theta)I + \sin(\theta)[\textbf{v}]_\times
+            + (1-\cos(\theta))\textbf{v}\textbf{v}^T
+
+        where :math:`[\textbf{v}]_\times \textbf{x} = \textbf{v} \times \textbf{x}`.
+        If
+        :math:`\textbf{r}` is a coordinate vector
+        and :math:`\textbf{c}` is the center, this transforms
+        the coordinate vector to
+
+        .. math::
+
+            \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
 
         if not isinstance(a, numbers.Real):
             a, v = v, a
 
-        v = string2vector(v)
-
-        normv = np.linalg.norm(v)
-
-        if normv == 0.0:
-            raise ZeroDivisionError("Cannot rotate: norm(v) == 0")
+        v = _norm_vector(_string2vector(v))
 
         if isinstance(a, numbers.Real):
-            a *= pi / 180
-            v /= normv
+            a = _to_rads(a)
             c = cos(a)
             s = sin(a)
         else:
-            v2 = string2vector(a)
-            v /= normv
-            normv2 = np.linalg.norm(v2)
-            if normv2 == 0:
-                raise ZeroDivisionError("Cannot rotate: norm(a) == 0")
-            v2 /= np.linalg.norm(v2)
+            v2 = _norm_vector(_string2vector(a))
             c = np.dot(v, v2)
             v = np.cross(v, v2)
             s = np.linalg.norm(v)
@@ -1009,10 +1040,8 @@ class Qbits:
         return center
 
     def euler_rotate(self, phi=0.0, theta=0.0, psi=0.0, center=(0, 0, 0)):
-        """
+        r"""
         Rotate qbits via Euler angles (in degrees).
-
-        See e.g http://mathworld.wolfram.com/EulerAngles.html for explanation.
 
         Parameters
         ----------
@@ -1026,33 +1055,65 @@ class Qbits:
             The point to rotate about. A sequence of length 3 with the
             coordinates, or 'COM' to select the center of mass, 'COP' to
             select center of positions or 'COU' to select center of cell.
+
+        Notes
+        -----
+        Let
+
+        .. math::
+
+            R =
+            \begin{pmatrix}
+            \cos(\psi ) & \sin(\psi ) & 0 \\
+            -\sin(\psi ) & \cos(\psi ) & 0\\
+            0 & 0 & 1\\
+            \end{pmatrix}
+            \begin{pmatrix}
+            1 & 0 & 0\\
+            0 & \cos(\theta ) & \sin(\theta ) \\
+            0 & -\sin(\theta ) & \cos(\theta ) \\
+            \end{pmatrix}
+            \begin{pmatrix}
+            \cos(\phi ) & \sin(\phi ) & 0 \\
+            -\sin(\phi ) & \cos(\phi ) & 0\\
+            0 & 0 & 1\\
+            \end{pmatrix}
+
+        then if :math:`\textbf{r}` is a coordinate vector
+        and :math:`\textbf{c}` is the center, this transforms
+        the coordinate vector to
+
+        .. math::
+
+            \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
-        center = self._centering_as_array(center)
 
-        phi *= pi / 180
-        theta *= pi / 180
-        psi *= pi / 180
-
-        # First move the molecule to the origin.
-        rcoords = self.positions - center
-        # First Euler rotation about z in matrix form
-        D = np.array(
-            ((cos(phi), sin(phi), 0.0), (-sin(phi), cos(phi), 0.0), (0.0, 0.0, 1.0))
-        )
-        # Second Euler rotation about x:
-        C = np.array(
-            (
-                (1.0, 0.0, 0.0),
-                (0.0, cos(theta), sin(theta)),
-                (0.0, -sin(theta), cos(theta)),
+        def rotation_mat(angle):
+            return np.array(
+                [
+                    [np.cos(angle), np.sin(angle)],
+                    [-np.sin(angle), np.cos(angle)],
+                ]
             )
-        )
+
+        # First Euler rotation about z in matrix form
+        D = np.eye(3)
+        D[:-1, :-1] = rotation_mat(_to_rads(phi))
+
+        # Second Euler rotation about x:
+        C = np.eye(3)
+        C[1:, 1:] = rotation_mat(_to_rads(theta))
+
         # Third Euler rotation, 2nd rotation about z:
-        B = np.array(
-            ((cos(psi), sin(psi), 0.0), (-sin(psi), cos(psi), 0.0), (0.0, 0.0, 1.0))
-        )
+        B = np.eye(3)
+        B[:-1, :-1] = rotation_mat(_to_rads(psi))
+
         # Total Euler rotation
         A = np.dot(B, np.dot(C, D))
+
+        # Move the molecule to the origin.
+        rcoords = self.positions - self._centering_as_array(center)
+
         # Do the rotation
         rcoords = np.dot(A, np.transpose(rcoords))
         # Move back to the rotation point
@@ -1111,7 +1172,7 @@ class Qbits:
             if mask[i]:
                 group += self[i]
         group.translate(-center)
-        group.rotate(diff * 180 / pi, axis)
+        group.rotate(diff * 180 / np.pi, axis)
         group.translate(center)
         # set positions in original qbits object
         j = 0
@@ -1141,7 +1202,7 @@ class Qbits:
         >>> qbits.set_dihedral(1, 2, 3, 4, 210, mask=[0, 0, 0, 1, 1, 1])
         """
 
-        angle *= pi / 180
+        angle = _to_rads(angle)
 
         # if not provided, set mask to the last qbit in the
         # dihedral description
@@ -1152,7 +1213,7 @@ class Qbits:
             mask = [index in indices for index in range(len(self))]
 
         # compute necessary in dihedral change, from current value
-        current = self.get_dihedral(a1, a2, a3, a4) * pi / 180
+        current = _to_rads(self.get_dihedral(a1, a2, a3, a4))
         diff = angle - current
         axis = self.positions[a3] - self.positions[a2]
         center = self.positions[a3]
@@ -1247,7 +1308,7 @@ class Qbits:
             # Compute necessary in angle change, from current value
             diff = angle - self.get_angle(a1, a2, a3)
 
-        diff *= pi / 180
+        diff = _to_rads(diff)
         # Do rotation of subgroup by copying it to temporary qbits object and
         # then rotating that
         v10 = self.positions[a1] - self.positions[a2]
@@ -1577,11 +1638,23 @@ class Qbits:
     # def edit(self): Modify qbits interactively through ASE's GUI viewer.
 
 
-def string2vector(v):
+def _norm_vector(v):
+    normv = np.linalg.norm(v)
+
+    if normv == 0.0:
+        raise ZeroDivisionError("Vector has 0 norm.", v)
+    return v / normv
+
+
+def _to_rads(a):
+    return a * np.pi / 180
+
+
+def _string2vector(v):
     """Used in rotate method to rotate qbit location"""
     if isinstance(v, str):
         if v[0] == "-":
-            return -string2vector(v[1:])
+            return -_string2vector(v[1:])
         w = np.zeros(3)
         w["xyz".index(v)] = 1.0
         return w
