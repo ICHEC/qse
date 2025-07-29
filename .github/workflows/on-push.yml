@@ -22,12 +22,11 @@ jobs:
 
     - name: Check patch version bump on main
       run: |
-        # Exit early if not on main
-        # [[ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]] && {
-        #   echo "Not on main branch; skipping version bump test."
-        #   exit 0
-        # }
-        
+        if [[ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]]; then
+          echo "Not on main branch; skipping version bump test."
+          exit 0
+        fi
+
         if ! git rev-parse HEAD^ >/dev/null 2>&1; then
           echo "No previous commit (HEAD^) found — skipping version bump check."
           exit 0
