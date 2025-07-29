@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def draw(qbits, radius=None, draw_bonds=True, show_labels=False):
+def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None):
     """
     Visualize the positions of a set of qubits.
 
@@ -19,6 +19,10 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False):
     show_labels: bool
         Whether to show the labels of the qubits.
         Defaults to False.
+    colouring: str | list
+        A set of integers used to assign different colors to each Qubit.
+        This can be used to view different magnetic orderings.
+        Must have the same length as the number of Qubits.
     """
     cell_rank = qbits.cell.rank
     position_rank = np.linalg.matrix_rank(qbits.positions)
@@ -81,6 +85,15 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False):
         ax.scatter(x, y, z, "o", color="blue")
 
     else:
+        if colouring is not None:
+            colouring = ["C" + str(i) for i in colouring]
+            if len(colouring) != qbits.nqbits:
+                raise Exception(
+                    "The length of colouring must equal the number of Qubits."
+                )
+        else:
+            colouring = "g"
+
         ax = fig.add_subplot()
         ax.set_aspect("equal")
         ax.set_xticks([])
@@ -101,8 +114,7 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False):
                 color="gray",
                 alpha=1 / C**3,
             )
-        ax.plot(x, y, "o", color="green")
+        ax.scatter(x, y, c=colouring)
         if show_labels:
             for ind in range(qbits.nqbits):
-                print(ind)
                 ax.text(x[ind], y[ind], s=qbits.labels[ind])
