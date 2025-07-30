@@ -2,7 +2,81 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def draw(qbits, radius=None, draw_bonds=True, show_labels=False):
+def draw(qbits, radius=None, draw_bonds=True, show_labels=False, axes="xy", units=None):
+    """
+    Visualize the positions of a set of qubits.
+
+    Parameters
+    ----------
+    qbits: qse.Qbits
+        The Qbits object.
+    radius: float
+        A cutoff radius for visualizing bonds.
+        Defaults to the smallest distance between the passed qubits.
+    draw_bonds: bool
+        Whether to show bonds between qubits.
+        Defaults to True.
+    show_labels: bool
+        Whether to show the labels of the qubits.
+        Defaults to False.
+    """
+    if axes not in ['xy', 'xz', 'yx', 'yz', 'zx', 'zy']:
+        raise Exception("axes must be one of 'xy', 'xz', 'yx', 'yz', 'zx', 'zy'.")
+
+    x = qbits.positions[:, "xyz".index(axes[0])].copy()
+    y = qbits.positions[:, "xyz".index(axes[1])].copy()
+    
+    if draw_bonds:
+        rij = qbits.get_all_distances()
+        ib = np.logical_not(np.eye(qbits.nqbits, dtype=bool))
+        rcut0 = rij[ib].min()
+
+        if radius is None:
+            rcut = rcut0
+        else:
+            if rcut0 > radius:
+                rcut = radius
+                draw_bonds = False
+            else:
+                rcut = radius
+
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.set_aspect("equal")
+
+    if draw_bonds:
+        tol = 1e-7
+        nearest_neighbours = rij <= rcut + tol
+        np.fill_diagonal(nearest_neighbours, False)
+        ii, jj = np.where(nearest_neighbours)
+        C = rij[nearest_neighbours]
+        C /= C.min()
+
+        ax.quiver(
+            x[ii],
+            y[ii],
+            x[jj] - x[ii],
+            y[jj] - y[ii],
+            linewidth=1,
+            angles="xy",
+            scale_units="xy",
+            scale=2,
+            headaxislength=0,
+            headlength=0,
+            color="gray",
+            alpha=1 / C**3,
+        )
+    ax.plot(x, y, "o", color="green")
+
+    ax.set_xlabel(axes[0] + f" ({units})" if units is not None else axes[0])
+    ax.set_ylabel(axes[1] + f" ({units})" if units is not None else axes[1])
+
+    if show_labels:
+        for ind in range(qbits.nqbits):
+            ax.text(x[ind], y[ind], s=qbits.labels[ind])
+
+
+def draw_3d(qbits, radius=None, draw_bonds=True, show_labels=False):
     """
     Visualize the positions of a set of qubits.
 
