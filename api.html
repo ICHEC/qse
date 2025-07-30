@@ -1729,13 +1729,14 @@ amplitude pulse and detuning pulse.</p>
 <p>A collection of convenience functions for creating common lattices.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.lattices.chain">
-<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#chain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.chain" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#chain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.chain" title="Link to this definition">#</a></dt>
 <dd><p>Generate a Qbits object in linear chain geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>lattice_spacing</strong> (<em>float</em>) – The lattice spacing.</p></li>
-<li><p><strong>repeats</strong> (<em>int</em>) – The number of repeats. Must be greater than 1.</p></li>
+<li><p><strong>repeats</strong> (<em>int</em>) – The number of repeats.
+Must be greater than 1.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1746,14 +1747,16 @@ amplitude pulse and detuning pulse.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.lattices.hexagonal">
-<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">hexagonal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#hexagonal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.hexagonal" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">hexagonal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#hexagonal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.hexagonal" title="Link to this definition">#</a></dt>
 <dd><p>Generate a Qbits object in hexagonal lattice geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>lattice_spacing</strong> (<em>float</em>) – The lattice spacing.</p></li>
-<li><p><strong>repeats_x</strong> (<em>int</em>) – The number of repeats in the x direction. Must be greater than 1.</p></li>
-<li><p><strong>repeats_y</strong> (<em>int</em>) – The number of repeats in the y direction. Must be greater than 1.</p></li>
+<li><p><strong>repeats_x</strong> (<em>int</em>) – The number of repeats in the x direction.
+Must be greater than 1.</p></li>
+<li><p><strong>repeats_y</strong> (<em>int</em>) – The number of repeats in the y direction.
+Must be greater than 1.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1764,14 +1767,16 @@ amplitude pulse and detuning pulse.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.lattices.kagome">
-<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">kagome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#kagome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.kagome" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">kagome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#kagome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.kagome" title="Link to this definition">#</a></dt>
 <dd><p>Generate a Qbits object in kagome lattice geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>lattice_spacing</strong> (<em>float</em>) – The lattice spacing.</p></li>
-<li><p><strong>repeats_x</strong> (<em>int</em>) – The number of repeats in the x direction. Must be greater than 1.</p></li>
-<li><p><strong>repeats_y</strong> (<em>int</em>) – The number of repeats in the y direction. Must be greater than 1.</p></li>
+<li><p><strong>repeats_x</strong> (<em>int</em>) – The number of repeats in the x direction.
+Must be greater than 1.</p></li>
+<li><p><strong>repeats_y</strong> (<em>int</em>) – The number of repeats in the y direction.
+Must be greater than 1.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1782,36 +1787,33 @@ amplitude pulse and detuning pulse.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.lattices.ring">
-<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">ring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.,</span> <span class="pre">0.,</span> <span class="pre">0.])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">npoints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#ring"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.ring" title="Link to this definition">#</a></dt>
-<dd><dl class="simple">
-<dt>Generate Qbits object in ring geometry.</dt><dd><p>The ring is placed in xy plane at center.</p>
-</dd>
-</dl>
+<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">ring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nqbits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#ring"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.ring" title="Link to this definition">#</a></dt>
+<dd><p>Generate a Qbits object in a ring geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>center</strong> (<em>array_like, optional</em>) – 3D coordinate for the centre
-of the ring, by default np.zeros(3)</p></li>
-<li><p><strong>radius</strong> (<em>float, optional</em>) – Radius of ring, by default 3.0</p></li>
-<li><p><strong>npoints</strong> (<em>int, optional</em>) – Number of points on ring, by default 12</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – The spacing between the qubits.</p></li>
+<li><p><strong>nqbits</strong> (<em>int</em>) – Number of qubits on the ring.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Qbits</em> – The Qbits object with ring geometry.</p>
+<dd class="field-even"><p><em>Qbits</em> – The Qbits object.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.lattices.square">
-<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">square</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#square"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.square" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">square</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#square"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.square" title="Link to this definition">#</a></dt>
 <dd><p>Generate a Qbits object in square lattice geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>lattice_spacing</strong> (<em>float</em>) – The lattice spacing.</p></li>
-<li><p><strong>repeats_x</strong> (<em>int</em>) – The number of repeats in the x direction. Must be greater than 1.</p></li>
-<li><p><strong>repeats_y</strong> (<em>int</em>) – The number of repeats in the y direction. Must be greater than 1.</p></li>
+<li><p><strong>repeats_x</strong> (<em>int</em>) – The number of repeats in the x direction.
+Must be greater than 1.</p></li>
+<li><p><strong>repeats_y</strong> (<em>int</em>) – The number of repeats in the y direction.
+Must be greater than 1.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1822,34 +1824,35 @@ of the ring, by default np.zeros(3)</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.lattices.torus">
-<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">torus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Rin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Rout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.,</span> <span class="pre">0.,</span> <span class="pre">0.])</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#torus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.torus" title="Link to this definition">#</a></dt>
-<dd><p>Generate Qbits object in a torus geometry.</p>
+<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">torus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_outer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_inner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inner_radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outer_radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#torus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.torus" title="Link to this definition">#</a></dt>
+<dd><p>Generate a Qbits object in a torus geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>N1</strong> (<em>int, optional</em>) – Number of points in larger (outer) dimension, by default 12</p></li>
-<li><p><strong>N2</strong> (<em>int, optional</em>) – Number of points in smaller (inner) dimension, by default 12</p></li>
-<li><p><strong>Rin</strong> (<em>float, optional</em>) – Inner radius, by default 1.0</p></li>
-<li><p><strong>Rout</strong> (<em>float, optional</em>) – Outer radius, by default 3.0</p></li>
-<li><p><strong>center</strong> (<em>_type_, optional</em>) – Center of the torus, by default np.zeros(3)</p></li>
+<li><p><strong>n_outer</strong> (<em>int</em>) – Number of points in larger (outer) dimension.</p></li>
+<li><p><strong>n_inner</strong> (<em>int</em>) – Number of points in smaller (inner) dimension.</p></li>
+<li><p><strong>inner_radius</strong> (<em>float</em>) – The inner radius.</p></li>
+<li><p><strong>outer_radius</strong> (<em>float</em>) – The outer radius.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Qbits</em> – The Qbits object with torus geometry.</p>
+<dd class="field-even"><p><em>Qbits</em> – The Qbits object.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.lattices.triangular">
-<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">triangular</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#triangular"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.triangular" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">qse.lattices.</span></span><span class="sig-name descname"><span class="pre">triangular</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lattice_spacing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeats_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#qse.Qbits" title="qse.qbits.Qbits"><span class="pre">Qbits</span></a></span></span><a class="reference internal" href="_modules/qse/lattices/lattices.html#triangular"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.lattices.triangular" title="Link to this definition">#</a></dt>
 <dd><p>Generate a Qbits object in triangular lattice geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>lattice_spacing</strong> (<em>float</em>) – The lattice spacing.</p></li>
-<li><p><strong>repeats_x</strong> (<em>int</em>) – The number of repeats in the x direction. Must be greater than 1.</p></li>
-<li><p><strong>repeats_y</strong> (<em>int</em>) – The number of repeats in the y direction. Must be greater than 1.</p></li>
+<li><p><strong>repeats_x</strong> (<em>int</em>) – The number of repeats in the x direction.
+Must be greater than 1.</p></li>
+<li><p><strong>repeats_y</strong> (<em>int</em>) – The number of repeats in the y direction.
+Must be greater than 1.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
