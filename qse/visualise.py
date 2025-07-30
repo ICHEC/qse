@@ -4,7 +4,7 @@ import numpy as np
 
 def draw(qbits, radius=None, show_labels=False, axes="xy", units=None):
     """
-    Visualize the positions of a set of qubits.
+    Visualize the positions of a set of qubits in two dimensions.
 
     Parameters
     ----------
@@ -25,12 +25,12 @@ def draw(qbits, radius=None, show_labels=False, axes="xy", units=None):
     units : str
         The units of distance.
     """
-    if axes not in ['xy', 'xz', 'yx', 'yz', 'zx', 'zy']:
+    if axes not in ["xy", "xz", "yx", "yz", "zx", "zy"]:
         raise Exception("axes must be one of 'xy', 'xz', 'yx', 'yz', 'zx', 'zy'.")
 
     x = qbits.positions[:, "xyz".index(axes[0])].copy()
     y = qbits.positions[:, "xyz".index(axes[1])].copy()
-    
+
     draw_bonds = True
     if radius is None:
         draw_bonds = False
@@ -48,7 +48,7 @@ def draw(qbits, radius=None, show_labels=False, axes="xy", units=None):
 
     if draw_bonds:
         f_tol = 1.01  # fractional tolerance
-        nearest_neighbours = (rij <= radius * f_tol)
+        nearest_neighbours = rij <= radius * f_tol
         np.fill_diagonal(nearest_neighbours, False)
         ii, jj = np.where(nearest_neighbours)
         C = rij[nearest_neighbours]
@@ -80,7 +80,7 @@ def draw(qbits, radius=None, show_labels=False, axes="xy", units=None):
 
 def draw_3d(qbits, radius=None, draw_bonds=True):
     """
-    Visualize the positions of a set of qubits.
+    Visualize the positions of a set of qubits in three dimensions.
 
     Parameters
     ----------

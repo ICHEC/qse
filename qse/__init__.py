@@ -27,4 +27,4 @@ from qse.qbits import Qbits
 from qse.signal import Signal
 from qse.visualise import draw
 
-from qse import calc, lattices, magnetic, utils  # isort: skip
+from qse import calc, lattices, magnetic, utils, visualise  # isort: skip

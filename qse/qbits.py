@@ -754,27 +754,32 @@ class Qbits:
         self.shape = new_shape
         return self
 
-    def draw(self, radius=None, draw_bonds=True, show_labels=False):
+    def draw(self, radius=None, show_labels=False, axes="xy", units=None):
         """
         Visualize the positions of a set of qubits.
 
         Parameters
         ----------
-        radius: float
+        radius: float | str
             A cutoff radius for visualizing bonds.
-            Defaults to the smallest distance between the passed qubits.
-        draw_bonds: bool
-            Whether to show bonds between qubits.
-            Defaults to True.
+            Pass 'nearest' to set the radius to the smallest
+            distance between the passed qubits.
+            If no value is passed the bonds will not be visualized.
         show_labels: bool
             Whether to show the labels of the qubits.
             Defaults to False.
+        axes : str
+            The 2d axes to visualize the qubits in.
+            Must be one of 'xy', 'xz', 'yx', 'yz', 'zx', 'zy'.
+            Defaults to 'xy'.
+        units : str
+            The units of distance.
 
         See Also
         --------
         qse.draw
         """
-        _draw(self, radius=radius, draw_bonds=draw_bonds, show_labels=show_labels)
+        _draw(self, radius=radius, show_labels=show_labels, axes=axes, units=units)
 
     def repeat(self, rep):
         """Create new repeated qbits object.
