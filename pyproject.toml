@@ -71,5 +71,3 @@ ignore = [
 ]
 statistics = true
 show-source = true
-
-# temporary change no.3 to check if version bump test works
