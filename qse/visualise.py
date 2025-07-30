@@ -108,9 +108,9 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None)
                 alpha=1 / C**3,
             )
         if colouring is not None:
-            for c, i in enumerate(set(colouring)):
-                inds = [j == i for j in colouring]
-                ax.scatter(x[inds], y[inds], c=f"C{c}", label=i)
+            for c, label in enumerate(set(colouring)):
+                inds = [j == label for j in colouring]
+                ax.scatter(x[inds], y[inds], c=f"C{c}", label=label)
             ax.legend()
 
         else:
