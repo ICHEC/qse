@@ -23,7 +23,7 @@ jobs:
     - name: Check patch version bump on main
       run: |
 
-        if ! git rev-parse HEAD^ >/dev/null 2>&1; then
+        if ! git rev-parse HEAD^ >/dev/null 2>&1 || true; then
           echo "No previous commit (HEAD^) found — skipping version bump check."
           exit 0
         fi
