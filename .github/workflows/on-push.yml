@@ -31,8 +31,8 @@ jobs:
 
         # Get version change from diff
         diff=$(git diff HEAD^ HEAD)
-        #echo "Git diff output:"
-        #echo "$diff"
+        echo "Git diff output:"
+        echo "$diff"
 
         old=$(echo "$diff" | grep -Po '(?<=-).*version.*?\K\d+\.\d+\.\d+')
         new=$(echo "$diff" | grep -Po '(?<=\+).*version.*?\K\d+\.\d+\.\d+')
