@@ -36,7 +36,6 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None)
     # higher dimension. Either way, we need to see things in higher dimension.
 
     rank = max(cell_rank, position_rank)
-    print(f"cell_rank = {cell_rank}, position_rank = {position_rank}")
     positions = qbits.positions.copy()
     x, y, z = positions.T
 
