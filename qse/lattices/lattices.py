@@ -38,11 +38,13 @@ def _lattice_creator(
         Qbits object repeated along desired directions.
     """
 
-    unit = qse.Qbits(positions=np.array(qubit_positions))
+    qbits = qse.Qbits(positions=np.array(qubit_positions))
 
     # We add [[0, 0, 0]] to convert the unit cell into 3d.
-    unit.cell = lattice_spacing * qse.cell.Cell(unit_cell_2d + [[0, 0, 0]])
-    return unit.repeat(repeats + (1,))
+    qbits.cell = lattice_spacing * qse.cell.Cell(unit_cell_2d + [[0, 0, 0]])
+    qbits = qbits.repeat(repeats + (1,))
+    qbits.labels = [str(i) for i in range(qbits.nqbits)]
+    return qbits
 
 
 def chain(lattice_spacing: float, repeats: int) -> qse.Qbits:
