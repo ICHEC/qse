@@ -24,6 +24,9 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None)
         This can be used to view different magnetic orderings.
         Must have the same length as the number of Qubits.
     """
+    if (colouring is not None) and (len(colouring) != qbits.nqbits):
+        raise Exception("The length of colouring must equal the number of Qubits.")
+
     cell_rank = qbits.cell.rank
     position_rank = np.linalg.matrix_rank(qbits.positions)
     # if cell_rank is more than position_rank, it means that a higher dimensional cell
@@ -85,15 +88,6 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None)
         ax.scatter(x, y, z, "o", color="blue")
 
     else:
-        if colouring is not None:
-            colouring = ["C" + str(i) for i in colouring]
-            if len(colouring) != qbits.nqbits:
-                raise Exception(
-                    "The length of colouring must equal the number of Qubits."
-                )
-        else:
-            colouring = "g"
-
         ax = fig.add_subplot()
         ax.set_aspect("equal")
         ax.set_xticks([])
@@ -114,7 +108,14 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None)
                 color="gray",
                 alpha=1 / C**3,
             )
-        ax.scatter(x, y, c=colouring)
+        if colouring is not None:
+            for c, i in enumerate(set(colouring)):
+                inds = [j == i for j in colouring]
+                ax.scatter(x[inds], y[inds], c=f"C{c}", label=i)
+            ax.legend()
+
+        else:
+            ax.scatter(x, y, c="g")
         if show_labels:
             for ind in range(qbits.nqbits):
                 ax.text(x[ind], y[ind], s=qbits.labels[ind])
