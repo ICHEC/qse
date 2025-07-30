@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        fetch-depth: 2 # ensure at least one parent commit exists
+        fetch-depth: 0  # Fetch full history so HEAD^ exists
 
     - name: Check patch version bump on main
       run: |
