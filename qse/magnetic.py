@@ -1,6 +1,7 @@
 """
 Functions for computing magnetic correlation
 """
+
 import numpy as np
 
 import qse
