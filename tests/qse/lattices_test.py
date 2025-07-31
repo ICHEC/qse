@@ -26,6 +26,9 @@ def _lattice_checker(qbits, expected_qbits, lattice_spacing, expected_cellpar):
     # Check the cellpar corresponds to what we expect.
     assert np.allclose(qbits.cell.cellpar(), expected_cellpar)
 
+    # Check the labels
+    assert all(qbits.labels[i] == str(i) for i in range(qbits.nqbits))
+
 
 @pytest.mark.parametrize("lattice_spacing", _lattice_spacings)
 @pytest.mark.parametrize("N", _repeats)
