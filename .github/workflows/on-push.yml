@@ -33,9 +33,6 @@ jobs:
         old=$(echo "$diff" | grep -Po '(?<=-).*version.*?\K\d+\.\d+\.\d+')
         new=$(echo "$diff" | grep -Po '(?<=\+).*version.*?\K\d+\.\d+\.\d+')
 
-        echo "$old"
-        echo "$new"
-
         if [[ -z "$old" || -z "$new" ]]; then
           echo "Error: Version change not found."
           exit 1
