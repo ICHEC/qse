@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-r"""
+"""
 Functions for computing magnetic correlation
 """
 import numpy as np
@@ -173,7 +172,7 @@ def get_sisj(
     statevector: np.ndarray[complex]
         :math:`2^N` sized complex array representing the statevector.
     nqbits: int
-        Number of Qubits or Spins.
+        Number of Qubits or Spins, :math:`N`.
     ibasis: np.ndarray[bool], optional
         Boolean array representing product basis for qubits passed for computing.
         Defaults to the full Hilbert space.
