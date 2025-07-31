@@ -15,6 +15,7 @@ __all__ = [
     "Qbits",
     "Signal",
     "utils",
+    "visualise",
 ]
 import importlib.metadata
 
