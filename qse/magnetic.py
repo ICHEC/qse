@@ -271,3 +271,37 @@ def structure_factor_from_sij(
     struc_fac /= normalize
     struc_fac = struc_fac.real.copy()
     return struc_fac
+
+
+def get_number_operator(
+    statevector: np.ndarray[complex], nqbits: int, ibasis: np.ndarray[bool] = None
+) -> np.ndarray[float]:
+    r"""
+    Get the expectation value of the number operators.
+
+    Parameters
+    ----------
+    statevector: np.ndarray[complex]
+        :math:`2^N` sized complex array representing the statevector.
+    nqbits: int
+        Number of Qubits or Spins, :math:`N`.
+    ibasis: np.ndarray[bool], optional
+        Boolean array representing product basis for qubits passed for computing.
+        Defaults to the full Hilbert space.
+
+    Returns
+    -------
+    np.ndarray[float]
+        An N array with expectation values of the number operators.
+
+    Notes
+    -----
+    The number operator for qubit :math:`i` is given by
+    :math:`n_i|b_1,...,b_i,...,b_N\rangle=b_i|b_1,...,b_i,...,b_N\rangle`.
+    This function returns the vector :math:`\langle\psi|n_i|\psi\rangle`.
+    """
+    if ibasis is None:
+        ibasis = get_basis(nqbits)
+
+    probs = (np.conj(statevector) * statevector).real
+    return (ibasis * probs[:, None]).sum(0)
