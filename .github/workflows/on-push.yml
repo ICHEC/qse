@@ -25,8 +25,16 @@ jobs:
         # Get version change from diff
         diff=$(git diff origin/main... pyproject.toml)
 
+        if [ ! -z "$diff" ]; then
+          echo "Error: Version change not found."
+          exit 1
+        fi
+
         old=$(echo "$diff" | grep -Po '(?<=-).*version.*?\K\d+\.\d+\.\d+')
         new=$(echo "$diff" | grep -Po '(?<=\+).*version.*?\K\d+\.\d+\.\d+')
+
+        echo "$old"
+        echo "$new"
 
         if [[ -z "$old" || -z "$new" ]]; then
           echo "Error: Version change not found."
