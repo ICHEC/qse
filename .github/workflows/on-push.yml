@@ -23,7 +23,7 @@ jobs:
       run: |
 
         # Get version change from diff
-        diff=$(git diff main... pyproject.toml)
+        diff=$(git diff origin/main... pyproject.toml)
 
         old=$(echo "$diff" | grep -Po '(?<=-).*version.*?\K\d+\.\d+\.\d+')
         new=$(echo "$diff" | grep -Po '(?<=\+).*version.*?\K\d+\.\d+\.\d+')
