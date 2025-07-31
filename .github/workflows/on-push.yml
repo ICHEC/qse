@@ -90,4 +90,4 @@ jobs:
         black . --check --diff
     - name: Test with pytest
       run: |
-        python -m pytest
+        python -m pytest tests/qse tests/qse_pulser

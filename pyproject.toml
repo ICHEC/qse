@@ -36,6 +36,7 @@ dev = [
     "black[jupyter]",
     "isort",
     "Flake8-pyproject",
+    "pulser == 1.4.0",  # required for tests
 ]
 pulser = ["pulser == 1.4.0"]
 myqlm = ["numpy == 1.26.4", "myqlm == 1.11.3"]
@@ -44,7 +45,11 @@ docs = [
     "sphinx-autoapi",
     "jupyter_book",
     "tomli",
+    "pulser == 1.4.0",  # required for creating the docs
 ]
+
+[tool.black]
+line-length = 88
 
 [tool.mypy]
 ignore_missing_imports = true
@@ -65,7 +70,6 @@ count = true
 max-line-length = 88
 ignore = [
     "E203", # Whitespace before ':' , see https://github.com/PyCQA/pycodestyle/issues/373
-    "E501", # Line too long, should be removed in future
     "E741", # Do not use variables named 'I', 'O', or 'l', may remove in future
     "W503", # Line break occurred before a binary operator
 ]
