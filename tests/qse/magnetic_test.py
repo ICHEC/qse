@@ -20,7 +20,7 @@ def test_number_operator_basis(basis_state):
     psi = np.zeros(2**n)
     psi[int(basis_state, 2)] = 1.0
     n_op = qse.magnetic.get_number_operator(psi, n)
-    assert all(n_op[i] == float(basis_state[i]) for i in range(n))
+    assert np.allclose(n_op, [float(basis_state[i]) for i in range(n)])
 
 
 @pytest.mark.parametrize("n", [1, 2, 3])
@@ -36,4 +36,4 @@ def test_number_operator_random(n):
         np_n_op[i] = (np.conj(psi) @ (kron_list(op_list) @ psi[:, None])).item()
 
     n_op = qse.magnetic.get_number_operator(psi, n)
-    assert all(n_op[i] == np_n_op[i] for i in range(n))
+    assert np.allclose(n_op, np_n_op)
