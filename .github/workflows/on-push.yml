@@ -23,22 +23,8 @@ jobs:
     - name: Check patch version bump on main
       run: |
 
-        # Skip check if not on main branch
-        if [[ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]]; then
-          echo "Not on main branch; skipping version bump check."
-          exit 0
-        fi
-
-        # Exit early if there's no previous commit (e.g. first commit)
-        if ! git rev-parse HEAD^ >/dev/null 2>&1; then
-          echo "No previous commit (HEAD^) found — skipping version bump check."
-          exit 0
-        fi
-
         # Get version change from diff
-        diff=$(git diff HEAD^ HEAD)
-        echo "Git diff output:"
-        echo "$diff"
+        git diff main... pyproject.toml
 
         old=$(echo "$diff" | grep -Po '(?<=-).*version.*?\K\d+\.\d+\.\d+')
         new=$(echo "$diff" | grep -Po '(?<=\+).*version.*?\K\d+\.\d+\.\d+')
