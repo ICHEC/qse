@@ -5,7 +5,6 @@ name: Python package
 
 on:
   push:
-    paths: ['examples/**', 'qse/**', 'pyproject.toml', 'tests/**']
 
 jobs:
   build:
@@ -17,6 +16,52 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch full history so HEAD^ exists
+
+    - name: Check patch version bump on main
+      run: |
+
+        # Get version change from diff
+        diff=$(git diff origin/main... pyproject.toml)
+
+        if [ -z "$diff" ]; then
+          echo "Error: Version change not found."
+          exit 1
+        fi
+
+        old=$(echo "$diff" | grep -Po '(?<=-).*version.*?\K\d+\.\d+\.\d+')
+        new=$(echo "$diff" | grep -Po '(?<=\+).*version.*?\K\d+\.\d+\.\d+')
+
+        if [[ -z "$old" || -z "$new" ]]; then
+          echo "Error: Version change not found."
+          exit 1
+        fi
+
+        echo "Old version: $old"
+        echo "New version: $new"
+
+        IFS=. read o_major o_minor o_patch <<< "$old"
+        IFS=. read n_major n_minor n_patch <<< "$new"
+
+        if [[ "$n_major" -ne "$o_major" ]]; then
+          echo "Major version changed. Failing."
+          exit 1
+        fi
+
+        if [[ "$n_minor" -ne "$o_minor" ]]; then
+          echo "Minor version changed. Failing."
+          exit 1
+        fi
+
+        if [[ "$n_patch" -ne $((o_patch + 1)) ]]; then
+          echo "Patch must increment by 1. Failing."
+          exit 1
+        fi
+
+        echo "Patch version bump verified."
+
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
