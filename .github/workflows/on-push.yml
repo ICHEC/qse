@@ -21,6 +21,11 @@ jobs:
 
     - name: Check patch version bump on main
       run: |
+        # Skip version bump check if already on main
+        if [[ "$(git branch --show-current)" == "main" ]]; then
+          echo "On main branch; skipping version bump check."
+          exit 0
+        fi
 
         # Get version change from diff
         diff=$(git diff origin/main... pyproject.toml)

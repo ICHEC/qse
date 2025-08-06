@@ -12,7 +12,7 @@ authors = [
     {name = "James Nelson", email = "james.nelson@ichec.ie"},
     {name = "Sherry Blair", email = "sherry.blair@ichec.ie"}
     ]
-version = "0.2.12"
+version = "0.2.13"
 requires-python = ">=3.10"
 dependencies = [
     "ase",
@@ -75,3 +75,4 @@ ignore = [
 ]
 statistics = true
 show-source = true
+#
