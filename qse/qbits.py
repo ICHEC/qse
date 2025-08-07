@@ -1219,9 +1219,9 @@ class Qbits:
 
         Parameters
         ----------
-        i : list | np.ndarray
+        indices : list | np.ndarray
             The indices of the groupings of qubits.
-            Must be 
+            Must be of shape (n, 3), where n is the number of groupings.
 
         Returns
         -------
@@ -1235,7 +1235,8 @@ class Qbits:
         different groupings.
         """
         indices = np.array(indices)
-        assert indices.shape[1] == 3
+        if indices.shape[1] != 3:
+            raise Exception("The indicies must be of shape (-1, 3).")
 
         a1s = self.positions[indices[:, 0]]
         a2s = self.positions[indices[:, 1]]
