@@ -25,7 +25,7 @@ def get_basis(nqbits: int, hsize: int = None):
     Returns
     -------
     np.ndarray
-        The basis of shape (hsize, nqbits).
+        The basis of shape (hsize, N).
     """
     if hsize is None:
         hsize = 2**nqbits

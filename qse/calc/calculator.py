@@ -532,7 +532,7 @@ class Calculator:
         if self.results is None:
             self.calculate()
 
-        sij = magnetic.get_sisj(self.statevector, len(self.qbits))
+        sij = magnetic.get_sisj(self.statevector, self.nqbits)
         self.sij = sij  # quick fix. TODO: proper property setup done
         return sij
 
