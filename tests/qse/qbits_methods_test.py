@@ -44,6 +44,31 @@ def test_add_qbit():
     assert all(qbits.labels == [1, 2, 3, "q"])
 
 
+@pytest.mark.parametrize("nqbits", [2, 3, 4])
+def test_get_distance(nqbits):
+    """Test get_distance on a set of qbits."""
+    positions = np.random.rand(nqbits, 3)
+    qbits = qse.Qbits(positions=positions)
+
+    assert qbits.nqbits == positions.shape[0]
+
+    d = np.sqrt(((positions[0] - positions[1]) ** 2).sum())
+    assert np.isclose(qbits.get_distance(0, 1), d)
+
+
+@pytest.mark.parametrize("nqbits", [2, 3, 4])
+def test_get_distances(nqbits):
+    """Test get_distances on a set of qbits."""
+    positions = np.random.rand(nqbits, 3)
+    qbits = qse.Qbits(positions=positions)
+
+    assert qbits.nqbits == positions.shape[0]
+    inds = list(range(nqbits))
+    d = np.sqrt(((positions[0] - positions) ** 2).sum(1))
+    assert np.isclose(d[0], 0.0)
+    assert np.allclose(qbits.get_distances(0, inds), d)
+
+
 def test_get_all_distances():
     """Test get_all_distances on a simple set of qbits."""
     positions = np.array(
@@ -67,6 +92,16 @@ def test_get_all_distances():
     )
 
     assert np.allclose(qbits.get_all_distances(), distances)
+
+
+@pytest.mark.parametrize("nqbits", [2, 3, 4])
+def test_get_all_distances_properties(nqbits):
+    """Test the properties of get_all_distances."""
+    qbits = qse.Qbits(positions=np.random.rand(nqbits, 3))
+    distances = qbits.get_all_distances()
+    assert distances.shape == (nqbits, nqbits)
+    assert all(0.0 == i for i in np.diag(distances))
+    assert np.allclose(distances, distances.T)
 
 
 @pytest.mark.parametrize(

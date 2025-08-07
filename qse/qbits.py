@@ -1342,18 +1342,16 @@ class Qbits:
         np.ndarray
             An array containing the distances.
         """
-        return np.array(
-            [np.linalg.norm(self.positions[i] - self.positions[j]) for j in indices]
-        )
+        return np.array([self.get_distance(i, j) for j in indices])
 
     def get_all_distances(self):
         """
-        Return the distances of all of the qbits with all of the qubits.
+        Return the distances of all of the qubits with all of the other qubits.
 
         Returns
         -------
         np.ndarray
-            An array containing the distances.
+            An array of shape (nqbits, nqbits) containing the distances.
         """
         distances = np.zeros((self.nqbits, self.nqbits))
         for i in range(self.nqbits - 1):
