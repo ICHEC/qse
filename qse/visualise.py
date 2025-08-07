@@ -109,6 +109,16 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False):
 
 
 def correlation(corr_matrix, labels=None):
+    """
+    Visualise a correlation matrix.
+
+    Parameters
+    ----------
+    corr_matrix: np.ndarray
+        The correlation matrix to be visualised.
+    labels: list[str], optional
+        Labels to be displayed.
+    """
     n = corr_matrix.shape[0]
 
     fig = plt.figure()
