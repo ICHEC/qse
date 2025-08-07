@@ -110,11 +110,11 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None)
         if colouring is not None:
             for c, label in enumerate(set(colouring)):
                 inds = [j == label for j in colouring]
-                ax.scatter(x[inds], y[inds], c=f"C{c}", label=label)
+                ax.scatter(x[inds], y[inds], c=f"C{c}", label=label, s=80)
             ax.legend()
 
         else:
-            ax.scatter(x, y, c="g")
+            ax.scatter(x, y, c="g", s=80)
         if show_labels:
             for ind in range(qbits.nqbits):
                 ax.text(x[ind], y[ind], s=qbits.labels[ind])
