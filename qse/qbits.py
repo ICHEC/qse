@@ -16,8 +16,6 @@ from ase.geometry import (
     find_mic,
     get_angles,
     get_dihedrals,
-    get_distances,
-    wrap_positions,
 )
 from ase.utils import deprecated
 
@@ -769,7 +767,7 @@ class Qbits:
             The displacement argument can be a float an xyz vector or an
             nx3 array (where n is the number of qbits).
         """
-        self.arrays["positions"] += np.array(displacement)
+        self.positions += np.array(displacement)
 
     def center_in_unit_cell(self, vacuum=None, axis=(0, 1, 2), about=None):
         """
@@ -852,14 +850,14 @@ class Qbits:
 
         self.positions += translation
 
-    def get_centroid(self, scaled=False):
+    def get_centroid(self):
         r"""
         Get the centroid of the positions.
 
-        Parameters
-        ----------
-        scaled : bool
-            If scaled=True the centroid in scaled coordinates is returned.
+        Returns
+        -------
+        np.ndarray
+            The centroid of the positions.
 
         Notes
         -----
@@ -871,11 +869,9 @@ class Qbits:
 
             \frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.
         """
-        if scaled:
-            return self.cell.scaled_positions(self.positions.mean(0))
         return self.positions.mean(0)
 
-    def set_centroid(self, centroid, scaled=False):
+    def set_centroid(self, centroid):
         r"""
         Set the centroid of the positions.
 
@@ -883,8 +879,6 @@ class Qbits:
         ----------
         centroid : float | np.ndarray
             The new centroid. Can be a float or a xyz vector
-        scaled : bool
-            If scaled=True the centroid is expected in scaled coordinates.
 
         Notes
         -----
@@ -896,11 +890,7 @@ class Qbits:
 
             \frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.
         """
-        difference = centroid - self.get_centroid(scaled=scaled)
-        if scaled:
-            self.set_scaled_positions(self.get_scaled_positions() + difference)
-        else:
-            self.set_positions(self.get_positions() + difference)
+        self.positions += centroid - self.get_centroid()
 
     def rotate(self, a, v="z", center=(0, 0, 0), rotate_cell=False):
         r"""
@@ -1085,6 +1075,7 @@ class Qbits:
 
         # Do the rotation
         rcoords = np.dot(A, np.transpose(rcoords))
+
         # Move back to the rotation point
         self.positions = np.transpose(rcoords) + center
 
@@ -1315,8 +1306,7 @@ class Qbits:
             if seed is None:
                 seed = 42
             rng = np.random.RandomState(seed)
-        positions = self.arrays["positions"]
-        self.set_positions(positions + rng.normal(scale=stdev, size=positions.shape))
+        self.positions += rng.normal(scale=stdev, size=self.positions.shape)
 
     def get_distance(self, i, j):
         """
@@ -1334,7 +1324,7 @@ class Qbits:
         float
             The distance between the qubits.
         """
-        return np.linalg.norm(self.arrays["positions"][i] - self.arrays["positions"][j])
+        return np.linalg.norm(self.positions[i] - self.positions[j])
 
     def get_distances(self, i, indices):
         """
@@ -1352,18 +1342,25 @@ class Qbits:
         np.ndarray
             An array containing the distances.
         """
-        R = self.arrays["positions"]
-        return np.array([np.linalg.norm(R[i] - R[j]) for j in indices])
+        return np.array(
+            [np.linalg.norm(self.positions[i] - self.positions[j]) for j in indices]
+        )
 
     def get_all_distances(self):
         """
         Return the distances of all of the qbits with all of the qubits.
+
+        Returns
+        -------
+        np.ndarray
+            An array containing the distances.
         """
-        R = self.arrays["positions"]
+        distances = np.zeros((self.nqbits, self.nqbits))
+        for i in range(self.nqbits - 1):
+            for j in range(i + 1, self.nqbits):
+                distances[i, j] = distances[j, i] = self.get_distance(i, j)
 
-        D, D_len = get_distances(R, cell=None, pbc=None)
-
-        return D_len
+        return distances
 
     def set_distance(
         self,
