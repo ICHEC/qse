@@ -1219,20 +1219,20 @@ class Qbits:
 
         Parameters
         ----------
-        i : int
-            The index of the first qubit.
+        i : list | np.ndarray
+            The indices of the groupings of qubits.
+            Must be 
 
         Returns
         -------
         np.ndarray
+            The angles between the qubits.
 
         Notes
         -----
         Let x1, x2, x3 be the vectors describing the positions of the three
-        qubits. Then we calcule the angle between x1-x2 and x3-x2.
-
-        Calculate angle in degrees between vectors between qbits a2->a1
-        and a2->a3, where a1, a2, and a3 are in each row of indices.
+        qubits. Then we calcule the angle between x1-x2 and x3-x2 for all the
+        different groupings.
         """
         indices = np.array(indices)
         assert indices.shape[1] == 3
