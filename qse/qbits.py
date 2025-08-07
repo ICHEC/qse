@@ -460,37 +460,6 @@ class Qbits:
         # XXX extend has to calculator properties
         return name in self.arrays
 
-    def set_positions(self, newpositions, apply_constraint=True):
-        """
-        Set positions, honoring any constraints. To ignore constraints,
-        use *apply_constraint=False*.
-        """
-        if self.constraints and apply_constraint:
-            newpositions = np.array(newpositions, float)
-            for constraint in self.constraints:
-                constraint.adjust_positions(self, newpositions)
-
-        self.set_array("positions", newpositions, shape=(3,))
-
-    def get_positions(self, wrap=False, **wrap_kw):
-        """
-        Get array of positions.
-
-        Parameters:
-
-        wrap: bool
-            wrap qbits back to the cell before returning positions
-        wrap_kw: (keyword=value) pairs
-            optional keywords `pbc`, `center`, `pretty_translation`, `eps`,
-            see :func:`ase.geometry.wrap_positions`
-        """
-        if wrap:
-            if "pbc" not in wrap_kw:
-                wrap_kw["pbc"] = self.pbc
-            return wrap_positions(self.positions, self.cell, **wrap_kw)
-        else:
-            return self.arrays["positions"].copy()
-
     def get_properties(self, properties):
         """This method is experimental; currently for internal use."""
         # XXX Something about constraints.
@@ -1228,38 +1197,51 @@ class Qbits:
         start = self.get_dihedral(a1, a2, a3, a4)
         self.set_dihedral(a1, a2, a3, a4, angle + start, mask, indices)
 
-    def get_angle(self, index_1: int, index_2: int, index_3: int, mic: bool = False):
+    def get_angle(self, i: int, j: int, k: int):
         """
-        Get the angle in degress formed by three qbits.
+        Get the angle in degress formed by three qubits.
 
         Parameters
         ----------
-        index_1 : int
+        i : int
             The index of the first qubit.
-        index_2 : int
+        j : int
             The index of the second qubit.
-        index_3 : int
+        k : int
             The index of the third qubit.
-        mic : bool
-            Use mic=True to use the Minimum Image Convention and calculate the
-            angle across periodic boundaries.
+
+        Returns
+        -------
+        float
+            The angle between the qubits.
 
         Notes
         -----
         Let x1, x2, x3 be the vectors describing the positions of the three
         qubits. Then we calcule the angle between x1-x2 and x3-x2.
         """
-        return self.get_angles([[index_1, index_2, index_3]], mic=mic)[0]
+        return self.get_angles([[i, j, k]])[0]
 
-    def get_angles(self, indices, mic=False):
+    def get_angles(self, indices):
         """
-        Get angle formed by three qbits for multiple groupings.
+        Get the angle in degress formed by three qubits for multiple groupings.
+
+        Parameters
+        ----------
+        i : int
+            The index of the first qubit.
+
+        Returns
+        -------
+        np.ndarray
+
+        Notes
+        -----
+        Let x1, x2, x3 be the vectors describing the positions of the three
+        qubits. Then we calcule the angle between x1-x2 and x3-x2.
 
         Calculate angle in degrees between vectors between qbits a2->a1
         and a2->a3, where a1, a2, and a3 are in each row of indices.
-
-        Use mic=True to use the Minimum Image Convention and calculate
-        the angle across periodic boundaries.
         """
         indices = np.array(indices)
         assert indices.shape[1] == 3
@@ -1270,9 +1252,6 @@ class Qbits:
 
         v12 = a1s - a2s
         v32 = a3s - a2s
-
-        if mic:
-            return get_angles(v12, v32, cell=self.cell, pbc=self.pbc)
 
         return get_angles(v12, v32, cell=None, pbc=None)
 
@@ -1339,60 +1318,52 @@ class Qbits:
         positions = self.arrays["positions"]
         self.set_positions(positions + rng.normal(scale=stdev, size=positions.shape))
 
-    def get_distance(self, a0, a1, mic=False, vector=False):
-        """Return distance between two qbits.
-
-        Use mic=True to use the Minimum Image Convention.
-        vector=True gives the distance vector (from a0 to a1).
+    def get_distance(self, i, j):
         """
-        return self.get_distances(a0, [a1], mic=mic, vector=vector)[0]
+        Return the distance between two qbits.
 
-    def get_distances(self, a, indices, mic=False, vector=False):
-        """Return distances of qbit No.i with a list of qbits.
+        Parameters
+        ----------
+        i : int
+            The index of the first qubit.
+        j : int
+            The index of the second qubit.
 
-        Use mic=True to use the Minimum Image Convention.
-        vector=True gives the distance vector (from a to self[indices]).
+        Returns
+        -------
+        float
+            The distance between the qubits.
         """
-        R = self.arrays["positions"]
-        p1 = [R[a]]
-        p2 = R[indices]
+        return np.linalg.norm(self.arrays["positions"][i] - self.arrays["positions"][j])
 
-        cell = None
-        pbc = None
+    def get_distances(self, i, indices):
+        """
+        Return distances of the ith qubit with a list of qubits.
 
-        if mic:
-            cell = self.cell
-            pbc = self.pbc
+        Parameters
+        ----------
+        i : int
+            The index of the ith qubit.
+        indices : list[int]
+            The indices of other qubits.
 
-        D, D_len = get_distances(p1, p2, cell=cell, pbc=pbc)
-
-        if vector:
-            D.shape = (-1, 3)
-            return D
-        else:
-            D_len.shape = (-1,)
-            return D_len
-
-    def get_all_distances(self, mic=False, vector=False):
-        """Return distances of all of the qbits with all of the qbits.
-
-        Use mic=True to use the Minimum Image Convention.
+        Returns
+        -------
+        np.ndarray
+            An array containing the distances.
         """
         R = self.arrays["positions"]
+        return np.array([np.linalg.norm(R[i] - R[j]) for j in indices])
 
-        cell = None
-        pbc = None
+    def get_all_distances(self):
+        """
+        Return the distances of all of the qbits with all of the qubits.
+        """
+        R = self.arrays["positions"]
 
-        if mic:
-            cell = self.cell
-            pbc = self.pbc
+        D, D_len = get_distances(R, cell=None, pbc=None)
 
-        D, D_len = get_distances(R, cell=cell, pbc=pbc)
-
-        if vector:
-            return D
-        else:
-            return D_len
+        return D_len
 
     def set_distance(
         self,
@@ -1510,16 +1481,12 @@ class Qbits:
 
         self.positions[:] = self.get_positions(wrap=True, **wrap_kw)
 
-    # Rajarshi: Removed this for the moment as there is no usage.
-    # def get_temperature(self): """Get the temperature in Kelvin."""
-
     def __eq__(self, other):
         """Check for identity of two qbits objects.
 
         Identity means: same positions, states, unit cell and
         periodic boundary conditions."""
         if not isinstance(other, Qbits):
-            # print("class check")
             return False
         a = self.arrays
         b = other.arrays
@@ -1543,9 +1510,6 @@ class Qbits:
         else:
             return not eq
 
-    # @deprecated('Please use qbits.cell.volume')
-    # We kind of want to deprecate this, but the ValueError behaviour
-    # might be desirable.  Should we do this?
     def get_volume(self):
         """Get volume of unit cell."""
         if self.cell.rank != 3:
