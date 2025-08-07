@@ -513,7 +513,7 @@ class Calculator:
         if self.results is None:
             self.calculate()
 
-        return magnetic.get_spins(self.statevector, len(self.qbits))
+        return magnetic.get_spins(self.statevector, self.nqbits)
 
     def get_sij(self):
         r"""
