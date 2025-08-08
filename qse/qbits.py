@@ -721,18 +721,17 @@ class Qbits:
         self.shape = new_shape
         return self
 
-    def draw(self, radius=None, draw_bonds=True, show_labels=False, colouring=None):
+    def draw(self, radius=None, show_labels=False, colouring=None, units=None):
         """
         Visualize the positions of a set of qubits.
 
         Parameters
         ----------
-        radius: float
+        radius: float | str
             A cutoff radius for visualizing bonds.
-            Defaults to the smallest distance between the passed qubits.
-        draw_bonds: bool
-            Whether to show bonds between qubits.
-            Defaults to True.
+            Pass 'nearest' to set the radius to the smallest
+            distance between the passed qubits.
+            If no value is passed the bonds will not be visualized.
         show_labels: bool
             Whether to show the labels of the qubits.
             Defaults to False.
@@ -740,6 +739,8 @@ class Qbits:
             A set of integers used to assign different colors to each Qubit.
             This can be used to view different magnetic orderings.
             Must have the same length as the number of Qubits.
+        units : str, optional
+            The units of distance.
 
         See Also
         --------
@@ -748,9 +749,9 @@ class Qbits:
         _draw(
             self,
             radius=radius,
-            draw_bonds=draw_bonds,
             show_labels=show_labels,
             colouring=colouring,
+            units=units,
         )
 
     def repeat(self, rep):
