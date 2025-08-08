@@ -721,7 +721,7 @@ class Qbits:
         self.shape = new_shape
         return self
 
-    def draw(self, radius=None, draw_bonds=True, show_labels=False):
+    def draw(self, radius=None, draw_bonds=True, show_labels=False, colouring=None):
         """
         Visualize the positions of a set of qubits.
 
@@ -736,12 +736,22 @@ class Qbits:
         show_labels: bool
             Whether to show the labels of the qubits.
             Defaults to False.
+        colouring: str | list
+            A set of integers used to assign different colors to each Qubit.
+            This can be used to view different magnetic orderings.
+            Must have the same length as the number of Qubits.
 
         See Also
         --------
         qse.draw
         """
-        _draw(self, radius=radius, draw_bonds=draw_bonds, show_labels=show_labels)
+        _draw(
+            self,
+            radius=radius,
+            draw_bonds=draw_bonds,
+            show_labels=show_labels,
+            colouring=colouring,
+        )
 
     def repeat(self, rep):
         """Create new repeated qbits object.
