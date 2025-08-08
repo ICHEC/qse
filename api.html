@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API reference &#8212; qse 0.2.14 documentation</title>
+    <title>API reference &#8212; qse 0.2.15 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=9fd5c01c"></script>
+    <script src="_static/documentation_options.js?v=24294201"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -55,7 +55,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'api';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Pulser Calculation Example" href="examples/pulser-calc-example.html" />
+    <link rel="prev" title="Calculation Example" href="examples/pulser-calc-example.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -143,7 +143,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.14 documentation</p>
+    <p class="title logo__title">qse 0.2.15 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -163,7 +163,7 @@
 <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/creating_and_manipulating_qbits.html">Creating and manipulating Qbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/generating_lattices.html">Generating Lattices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples/pulser-calc-example.html">Pulser Calculation Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/pulser-calc-example.html">Calculation Example</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">API reference</a></li>
 </ul>
 
@@ -736,7 +736,7 @@ identically), to center about the origin.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbits.draw">
-<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_bonds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.draw" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_bonds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.draw" title="Link to this definition">#</a></dt>
 <dd><p>Visualize the positions of a set of qubits.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -747,6 +747,9 @@ Defaults to the smallest distance between the passed qubits.</p></li>
 Defaults to True.</p></li>
 <li><p><strong>show_labels</strong> (<em>bool</em>) – Whether to show the labels of the qubits.
 Defaults to False.</p></li>
+<li><p><strong>colouring</strong> (<em>str | list</em>) – A set of integers used to assign different colors to each Qubit.
+This can be used to view different magnetic orderings.
+Must have the same length as the number of Qubits.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1364,7 +1367,7 @@ or consistent for multi-dim usage.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.draw">
-<span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_bonds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/visualise.html#draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.draw" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_bonds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/visualise.html#draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.draw" title="Link to this definition">#</a></dt>
 <dd><p>Visualize the positions of a set of qubits.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1376,6 +1379,9 @@ Defaults to the smallest distance between the passed qubits.</p></li>
 Defaults to True.</p></li>
 <li><p><strong>show_labels</strong> (<em>bool</em>) – Whether to show the labels of the qubits.
 Defaults to False.</p></li>
+<li><p><strong>colouring</strong> (<em>str | list</em>) – A set of integers used to assign different colors to each Qubit.
+This can be used to view different magnetic orderings.
+Must have the same length as the number of Qubits.</p></li>
 </ul>
 </dd>
 </dl>
@@ -2077,7 +2083,7 @@ at ith index and a sign).</p>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Pulser Calculation Example</p>
+        <p class="prev-next-title">Calculation Example</p>
       </div>
     </a>
 </div>

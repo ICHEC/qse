@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Pulser Calculation Example &#8212; qse 0.2.14 documentation</title>
+    <title>Calculation Example &#8212; qse 0.2.15 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=9fd5c01c"></script>
+    <script src="../_static/documentation_options.js?v=24294201"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -143,7 +143,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.14 documentation</p>
+    <p class="title logo__title">qse 0.2.15 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -163,7 +163,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="creating_and_manipulating_qbits.html">Creating and manipulating Qbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generating_lattices.html">Generating Lattices</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Pulser Calculation Example</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Calculation Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
 </ul>
 
@@ -350,7 +350,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Pulser Calculation Example</h1>
+    <h1>Calculation Example</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -360,10 +360,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-square-lattice">2D square lattice</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hamiltonian-creation-for-2d-lattice">Hamiltonian creation for 2D lattice</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-calculator">Setting up the calculator</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-job">Running the job</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-2d-square-lattice">Create a 2D square lattice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-hamiltonian">Create the hamiltonian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-calculator-and-run-the-job">Set up the calculator and run the job</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-the-result">Sampling the result</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version">Version</a></li>
 </ul>
@@ -377,9 +376,10 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="pulser-calculation-example">
-<h1>Pulser Calculation Example<a class="headerlink" href="#pulser-calculation-example" title="Link to this heading">#</a></h1>
-<p>Following are the imports required to run this example:</p>
+  <section id="calculation-example">
+<h1>Calculation Example<a class="headerlink" href="#calculation-example" title="Link to this heading">#</a></h1>
+<p>The following tutorial shows how to use <code class="docutils literal notranslate"><span class="pre">qse</span></code> to run a calculation.
+We use <code class="docutils literal notranslate"><span class="pre">pulser</span></code> here for the backend.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -390,47 +390,45 @@ document.write(`
 </div>
 </div>
 </div>
-<section id="d-square-lattice">
-<h2>2D square lattice<a class="headerlink" href="#d-square-lattice" title="Link to this heading">#</a></h2>
+<section id="create-a-2d-square-lattice">
+<h2>Create a 2D square lattice<a class="headerlink" href="#create-a-2d-square-lattice" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parameters in rad/µs and ns</span>
-<span class="n">Omega_max</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
-<span class="n">U</span> <span class="o">=</span> <span class="n">Omega_max</span> <span class="o">/</span> <span class="mf">2.0</span>
-<span class="n">delta_0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">6</span> <span class="o">*</span> <span class="n">U</span>
-<span class="n">delta_f</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">U</span>
-<span class="n">t_rise</span> <span class="o">=</span> <span class="mi">252</span>
-<span class="n">t_fall</span> <span class="o">=</span> <span class="mi">500</span>
-<span class="n">t_sweep</span> <span class="o">=</span> <span class="p">(</span><span class="n">delta_f</span> <span class="o">-</span> <span class="n">delta_0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omega_max</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>  <span class="c1"># rad/µs</span>
+<span class="n">rabi_frequency</span> <span class="o">=</span> <span class="n">omega_max</span> <span class="o">/</span> <span class="mf">2.0</span>  <span class="c1"># rad/µs</span>
 
-<span class="c1"># We extract the reference blockade radius from pulser here</span>
-<span class="n">R_interatomic</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">MockDevice</span><span class="o">.</span><span class="n">rydberg_blockade_radius</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+<span class="c1"># Now we generate the qbits object that represents a 2D lattice.</span>
+<span class="c1"># Keeping the lattice spacing a bit below the blockade radius keeps</span>
+<span class="c1"># the nearest neighbours antiferromagnetic.</span>
+<span class="n">blockade_radius</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">MockDevice</span><span class="o">.</span><span class="n">rydberg_blockade_radius</span><span class="p">(</span><span class="n">rabi_frequency</span><span class="p">)</span>
+<span class="n">q2d</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">square</span><span class="p">(</span>
+    <span class="n">lattice_spacing</span><span class="o">=</span><span class="mf">0.8</span> <span class="o">*</span> <span class="n">blockade_radius</span><span class="p">,</span> <span class="n">repeats_x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">repeats_y</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
 
-<span class="n">L1</span><span class="p">,</span> <span class="n">L2</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span>  <span class="c1"># lattice size</span>
-
-<span class="c1"># Now we generate the qbits object that represents 1D lattice with r0 as lattice spacing</span>
-<span class="c1"># Keeping r0 a bit below blockade radius keeps the nearest neighbours antiferromagnetic</span>
-<span class="n">r0</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">*</span> <span class="n">R_interatomic</span>
-<span class="n">q2d</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">r0</span><span class="p">,</span> <span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">)</span>
-
-<span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">R_interatomic</span><span class="p">)</span>
+<span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">blockade_radius</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3e077baf47da83e95327927373cda0c9f926113325f3863a0c71410692b24198.png" src="../_images/3e077baf47da83e95327927373cda0c9f926113325f3863a0c71410692b24198.png" />
+<img alt="../_images/b5a32203cce52640ca09d2a53a0440367776b9b18d4c32cc830bafdd438d0664.png" src="../_images/b5a32203cce52640ca09d2a53a0440367776b9b18d4c32cc830bafdd438d0664.png" />
 </div>
 </div>
 </section>
-<section id="hamiltonian-creation-for-2d-lattice">
-<h2>Hamiltonian creation for 2D lattice<a class="headerlink" href="#hamiltonian-creation-for-2d-lattice" title="Link to this heading">#</a></h2>
+<section id="create-the-hamiltonian">
+<h2>Create the hamiltonian<a class="headerlink" href="#create-the-hamiltonian" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># up ramp, constant, downramp waveform</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">delta_0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">6</span> <span class="o">*</span> <span class="n">rabi_frequency</span>  <span class="c1"># ns</span>
+<span class="n">delta_f</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">rabi_frequency</span>  <span class="c1"># ns</span>
+<span class="n">t_rise</span> <span class="o">=</span> <span class="mi">252</span>  <span class="c1"># ns</span>
+<span class="n">t_fall</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># ns</span>
+<span class="n">t_sweep</span> <span class="o">=</span> <span class="p">(</span><span class="n">delta_f</span> <span class="o">-</span> <span class="n">delta_0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>  <span class="c1"># ns</span>
+
+<span class="c1"># up ramp, constant, downramp waveform</span>
 <span class="n">amplitude_afm</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">CompositeWaveform</span><span class="p">(</span>
-    <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">RampWaveform</span><span class="p">(</span><span class="n">t_rise</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">Omega_max</span><span class="p">),</span>
-    <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">ConstantWaveform</span><span class="p">(</span><span class="n">t_sweep</span><span class="p">,</span> <span class="n">Omega_max</span><span class="p">),</span>
-    <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">RampWaveform</span><span class="p">(</span><span class="n">t_fall</span><span class="p">,</span> <span class="n">Omega_max</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+    <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">RampWaveform</span><span class="p">(</span><span class="n">t_rise</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">omega_max</span><span class="p">),</span>
+    <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">ConstantWaveform</span><span class="p">(</span><span class="n">t_sweep</span><span class="p">,</span> <span class="n">omega_max</span><span class="p">),</span>
+    <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">RampWaveform</span><span class="p">(</span><span class="n">t_fall</span><span class="p">,</span> <span class="n">omega_max</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
 <span class="p">)</span>
 
 <span class="c1"># corresponding waveform for detuning</span>
@@ -456,22 +454,12 @@ document.write(`
 </div>
 </div>
 </section>
-<section id="setting-up-the-calculator">
-<h2>Setting up the calculator<a class="headerlink" href="#setting-up-the-calculator" title="Link to this heading">#</a></h2>
+<section id="set-up-the-calculator-and-run-the-job">
+<h2>Set up the calculator and run the job<a class="headerlink" href="#set-up-the-calculator-and-run-the-job" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">amplitude_afm</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">)</span>
-<span class="n">pcalc</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">Pulser</span><span class="p">(</span><span class="n">qbits</span><span class="o">=</span><span class="n">q2d</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">amplitude_afm</span><span class="p">,</span> <span class="n">detuning</span><span class="o">=</span><span class="n">detuning_afm</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="running-the-job">
-<h2>Running the job<a class="headerlink" href="#running-the-job" title="Link to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pcalc</span><span class="o">.</span><span class="n">build_sequence</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pcalc</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">Pulser</span><span class="p">(</span><span class="n">qbits</span><span class="o">=</span><span class="n">q2d</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">amplitude_afm</span><span class="p">,</span> <span class="n">detuning</span><span class="o">=</span><span class="n">detuning_afm</span><span class="p">)</span>
+<span class="n">pcalc</span><span class="o">.</span><span class="n">build_sequence</span><span class="p">()</span>
 <span class="n">pcalc</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -495,7 +483,7 @@ document.write(`
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>60.1%. Run time:   0.02s. Est. time left: 00:00:00:00
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>70.0%. Run time:   0.02s. Est. time left: 00:00:00:00
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>70.0%. Run time:   0.03s. Est. time left: 00:00:00:00
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>80.0%. Run time:   0.03s. Est. time left: 00:00:00:00
@@ -508,66 +496,7 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total run time:   0.04s
-time in compute and simulation = 0.046807050704956055 s.
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pcalc</span><span class="o">.</span><span class="n">spins</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.00977225, -0.17867203, -0.05407258],
-       [-0.00977225, -0.17867203, -0.05407258],
-       [-0.04058019, -0.25082541, -0.22158193],
-       [-0.04058019, -0.25082541, -0.22158193],
-       [-0.00977225, -0.17867203, -0.05407258],
-       [-0.00977225, -0.17867203, -0.05407258]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pcalc</span><span class="o">.</span><span class="n">get_sij</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.99999739, -0.33000706, -0.69227483,  1.20298508,  1.12188504,
-        -0.68929972],
-       [-0.33000706,  0.99999739,  1.20298508, -0.69227483, -0.68929972,
-         1.12188504],
-       [-0.69227483,  1.20298508,  0.99999739, -0.59561159, -0.69227483,
-         1.20298508],
-       [ 1.20298508, -0.69227483, -0.59561159,  0.99999739,  1.20298508,
-        -0.69227483],
-       [ 1.12188504, -0.68929972, -0.69227483,  1.20298508,  0.99999739,
-        -0.33000706],
-       [-0.68929972,  1.12188504,  1.20298508, -0.69227483, -0.33000706,
-         0.99999739]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pcalc</span><span class="o">.</span><span class="n">structure_factor_from_sij</span><span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[[0.25846545],
-        [0.24365488]],
-
-       [[0.24192721],
-        [0.22691049]],
-
-       [[0.19740721],
-        [0.18243339]]])
+time in compute and simulation = 0.04987597465515137 s.
 </pre></div>
 </div>
 </div>
@@ -587,7 +516,29 @@ time in compute and simulation = 0.046807050704956055 s.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e99be45c6e6c509e74b408007c1495a8ae26241d22e8ae23c0fc3c75fbe5322e.png" src="../_images/e99be45c6e6c509e74b408007c1495a8ae26241d22e8ae23c0fc3c75fbe5322e.png" />
+<img alt="../_images/53886de142858ed8d25c6e7098e6bbc8aeccd8b05ed161fe76c1b169235be532.png" src="../_images/53886de142858ed8d25c6e7098e6bbc8aeccd8b05ed161fe76c1b169235be532.png" />
+</div>
+</div>
+<p>Visualizing the states 011001 and 100110, we see that they correspond to anti-ferromagnetic orderings.
+Here we use the <code class="docutils literal notranslate"><span class="pre">colouring</span></code> parameter to visualise this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">colouring</span><span class="o">=</span><span class="s2">&quot;011001&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/fcec86532049389fee97414cd915efadb5d27a9f35d61d3d476df2c2251deb98.png" src="../_images/fcec86532049389fee97414cd915efadb5d27a9f35d61d3d476df2c2251deb98.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">colouring</span><span class="o">=</span><span class="s2">&quot;100110&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/62b2da1a69b7905d980403e46bf77b7eaf70a890cba79256aa6f5f9800cfc92c.png" src="../_images/62b2da1a69b7905d980403e46bf77b7eaf70a890cba79256aa6f5f9800cfc92c.png" />
 </div>
 </div>
 </section>
@@ -601,7 +552,7 @@ time in compute and simulation = 0.046807050704956055 s.
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python version: 3.12.3
-qse version: 0.2.14
+qse version: 0.2.15
 </pre></div>
 </div>
 </div>
@@ -654,10 +605,9 @@ qse version: 0.2.14
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-square-lattice">2D square lattice</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hamiltonian-creation-for-2d-lattice">Hamiltonian creation for 2D lattice</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-calculator">Setting up the calculator</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-job">Running the job</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-2d-square-lattice">Create a 2D square lattice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-hamiltonian">Create the hamiltonian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-calculator-and-run-the-job">Set up the calculator and run the job</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-the-result">Sampling the result</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version">Version</a></li>
 </ul>
