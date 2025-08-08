@@ -16,8 +16,6 @@ from ase.geometry import (
     find_mic,
     get_angles,
     get_dihedrals,
-    get_distances,
-    wrap_positions,
 )
 from ase.utils import deprecated
 
@@ -460,37 +458,6 @@ class Qbits:
         # XXX extend has to calculator properties
         return name in self.arrays
 
-    def set_positions(self, newpositions, apply_constraint=True):
-        """
-        Set positions, honoring any constraints. To ignore constraints,
-        use *apply_constraint=False*.
-        """
-        if self.constraints and apply_constraint:
-            newpositions = np.array(newpositions, float)
-            for constraint in self.constraints:
-                constraint.adjust_positions(self, newpositions)
-
-        self.set_array("positions", newpositions, shape=(3,))
-
-    def get_positions(self, wrap=False, **wrap_kw):
-        """
-        Get array of positions.
-
-        Parameters:
-
-        wrap: bool
-            wrap qbits back to the cell before returning positions
-        wrap_kw: (keyword=value) pairs
-            optional keywords `pbc`, `center`, `pretty_translation`, `eps`,
-            see :func:`ase.geometry.wrap_positions`
-        """
-        if wrap:
-            if "pbc" not in wrap_kw:
-                wrap_kw["pbc"] = self.pbc
-            return wrap_positions(self.positions, self.cell, **wrap_kw)
-        else:
-            return self.arrays["positions"].copy()
-
     def get_properties(self, properties):
         """This method is experimental; currently for internal use."""
         # XXX Something about constraints.
@@ -754,7 +721,7 @@ class Qbits:
         self.shape = new_shape
         return self
 
-    def draw(self, radius=None, draw_bonds=True, show_labels=False):
+    def draw(self, radius=None, draw_bonds=True, show_labels=False, colouring=None):
         """
         Visualize the positions of a set of qubits.
 
@@ -769,12 +736,22 @@ class Qbits:
         show_labels: bool
             Whether to show the labels of the qubits.
             Defaults to False.
+        colouring: str | list
+            A set of integers used to assign different colors to each Qubit.
+            This can be used to view different magnetic orderings.
+            Must have the same length as the number of Qubits.
 
         See Also
         --------
         qse.draw
         """
-        _draw(self, radius=radius, draw_bonds=draw_bonds, show_labels=show_labels)
+        _draw(
+            self,
+            radius=radius,
+            draw_bonds=draw_bonds,
+            show_labels=show_labels,
+            colouring=colouring,
+        )
 
     def repeat(self, rep):
         """Create new repeated qbits object.
@@ -800,7 +777,7 @@ class Qbits:
             The displacement argument can be a float an xyz vector or an
             nx3 array (where n is the number of qbits).
         """
-        self.arrays["positions"] += np.array(displacement)
+        self.positions += np.array(displacement)
 
     def center_in_unit_cell(self, vacuum=None, axis=(0, 1, 2), about=None):
         """
@@ -883,14 +860,14 @@ class Qbits:
 
         self.positions += translation
 
-    def get_centroid(self, scaled=False):
+    def get_centroid(self):
         r"""
         Get the centroid of the positions.
 
-        Parameters
-        ----------
-        scaled : bool
-            If scaled=True the centroid in scaled coordinates is returned.
+        Returns
+        -------
+        np.ndarray
+            The centroid of the positions.
 
         Notes
         -----
@@ -902,11 +879,9 @@ class Qbits:
 
             \frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.
         """
-        if scaled:
-            return self.cell.scaled_positions(self.positions.mean(0))
         return self.positions.mean(0)
 
-    def set_centroid(self, centroid, scaled=False):
+    def set_centroid(self, centroid):
         r"""
         Set the centroid of the positions.
 
@@ -914,8 +889,6 @@ class Qbits:
         ----------
         centroid : float | np.ndarray
             The new centroid. Can be a float or a xyz vector
-        scaled : bool
-            If scaled=True the centroid is expected in scaled coordinates.
 
         Notes
         -----
@@ -927,11 +900,7 @@ class Qbits:
 
             \frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.
         """
-        difference = centroid - self.get_centroid(scaled=scaled)
-        if scaled:
-            self.set_scaled_positions(self.get_scaled_positions() + difference)
-        else:
-            self.set_positions(self.get_positions() + difference)
+        self.positions += centroid - self.get_centroid()
 
     def rotate(self, a, v="z", center=(0, 0, 0), rotate_cell=False):
         r"""
@@ -1116,6 +1085,7 @@ class Qbits:
 
         # Do the rotation
         rcoords = np.dot(A, np.transpose(rcoords))
+
         # Move back to the rotation point
         self.positions = np.transpose(rcoords) + center
 
@@ -1228,41 +1198,55 @@ class Qbits:
         start = self.get_dihedral(a1, a2, a3, a4)
         self.set_dihedral(a1, a2, a3, a4, angle + start, mask, indices)
 
-    def get_angle(self, index_1: int, index_2: int, index_3: int, mic: bool = False):
+    def get_angle(self, i: int, j: int, k: int):
         """
-        Get the angle in degress formed by three qbits.
+        Get the angle in degress formed by three qubits.
 
         Parameters
         ----------
-        index_1 : int
+        i : int
             The index of the first qubit.
-        index_2 : int
+        j : int
             The index of the second qubit.
-        index_3 : int
+        k : int
             The index of the third qubit.
-        mic : bool
-            Use mic=True to use the Minimum Image Convention and calculate the
-            angle across periodic boundaries.
+
+        Returns
+        -------
+        float
+            The angle between the qubits.
 
         Notes
         -----
         Let x1, x2, x3 be the vectors describing the positions of the three
         qubits. Then we calcule the angle between x1-x2 and x3-x2.
         """
-        return self.get_angles([[index_1, index_2, index_3]], mic=mic)[0]
+        return self.get_angles([[i, j, k]])[0]
 
-    def get_angles(self, indices, mic=False):
+    def get_angles(self, indices):
         """
-        Get angle formed by three qbits for multiple groupings.
+        Get the angle in degress formed by three qubits for multiple groupings.
 
-        Calculate angle in degrees between vectors between qbits a2->a1
-        and a2->a3, where a1, a2, and a3 are in each row of indices.
+        Parameters
+        ----------
+        indices : list | np.ndarray
+            The indices of the groupings of qubits.
+            Must be of shape (n, 3), where n is the number of groupings.
 
-        Use mic=True to use the Minimum Image Convention and calculate
-        the angle across periodic boundaries.
+        Returns
+        -------
+        np.ndarray
+            The angles between the qubits.
+
+        Notes
+        -----
+        Let x1, x2, x3 be the vectors describing the positions of the three
+        qubits. Then we calcule the angle between x1-x2 and x3-x2 for all the
+        different groupings.
         """
         indices = np.array(indices)
-        assert indices.shape[1] == 3
+        if indices.shape[1] != 3:
+            raise Exception("The indicies must be of shape (-1, 3).")
 
         a1s = self.positions[indices[:, 0]]
         a2s = self.positions[indices[:, 1]]
@@ -1270,9 +1254,6 @@ class Qbits:
 
         v12 = a1s - a2s
         v32 = a3s - a2s
-
-        if mic:
-            return get_angles(v12, v32, cell=self.cell, pbc=self.pbc)
 
         return get_angles(v12, v32, cell=None, pbc=None)
 
@@ -1336,63 +1317,59 @@ class Qbits:
             if seed is None:
                 seed = 42
             rng = np.random.RandomState(seed)
-        positions = self.arrays["positions"]
-        self.set_positions(positions + rng.normal(scale=stdev, size=positions.shape))
+        self.positions += rng.normal(scale=stdev, size=self.positions.shape)
 
-    def get_distance(self, a0, a1, mic=False, vector=False):
-        """Return distance between two qbits.
-
-        Use mic=True to use the Minimum Image Convention.
-        vector=True gives the distance vector (from a0 to a1).
+    def get_distance(self, i, j):
         """
-        return self.get_distances(a0, [a1], mic=mic, vector=vector)[0]
+        Return the distance between two qbits.
 
-    def get_distances(self, a, indices, mic=False, vector=False):
-        """Return distances of qbit No.i with a list of qbits.
+        Parameters
+        ----------
+        i : int
+            The index of the first qubit.
+        j : int
+            The index of the second qubit.
 
-        Use mic=True to use the Minimum Image Convention.
-        vector=True gives the distance vector (from a to self[indices]).
+        Returns
+        -------
+        float
+            The distance between the qubits.
         """
-        R = self.arrays["positions"]
-        p1 = [R[a]]
-        p2 = R[indices]
+        return np.linalg.norm(self.positions[i] - self.positions[j])
 
-        cell = None
-        pbc = None
-
-        if mic:
-            cell = self.cell
-            pbc = self.pbc
-
-        D, D_len = get_distances(p1, p2, cell=cell, pbc=pbc)
-
-        if vector:
-            D.shape = (-1, 3)
-            return D
-        else:
-            D_len.shape = (-1,)
-            return D_len
-
-    def get_all_distances(self, mic=False, vector=False):
-        """Return distances of all of the qbits with all of the qbits.
-
-        Use mic=True to use the Minimum Image Convention.
+    def get_distances(self, i, indices):
         """
-        R = self.arrays["positions"]
+        Return distances of the ith qubit with a list of qubits.
 
-        cell = None
-        pbc = None
+        Parameters
+        ----------
+        i : int
+            The index of the ith qubit.
+        indices : list[int]
+            The indices of other qubits.
 
-        if mic:
-            cell = self.cell
-            pbc = self.pbc
+        Returns
+        -------
+        np.ndarray
+            An array containing the distances.
+        """
+        return np.array([self.get_distance(i, j) for j in indices])
 
-        D, D_len = get_distances(R, cell=cell, pbc=pbc)
+    def get_all_distances(self):
+        """
+        Return the distances of all of the qubits with all of the other qubits.
 
-        if vector:
-            return D
-        else:
-            return D_len
+        Returns
+        -------
+        np.ndarray
+            An array of shape (nqbits, nqbits) containing the distances.
+        """
+        distances = np.zeros((self.nqbits, self.nqbits))
+        for i in range(self.nqbits - 1):
+            for j in range(i + 1, self.nqbits):
+                distances[i, j] = distances[j, i] = self.get_distance(i, j)
+
+        return distances
 
     def set_distance(
         self,
@@ -1510,16 +1487,12 @@ class Qbits:
 
         self.positions[:] = self.get_positions(wrap=True, **wrap_kw)
 
-    # Rajarshi: Removed this for the moment as there is no usage.
-    # def get_temperature(self): """Get the temperature in Kelvin."""
-
     def __eq__(self, other):
         """Check for identity of two qbits objects.
 
         Identity means: same positions, states, unit cell and
         periodic boundary conditions."""
         if not isinstance(other, Qbits):
-            # print("class check")
             return False
         a = self.arrays
         b = other.arrays
@@ -1543,9 +1516,6 @@ class Qbits:
         else:
             return not eq
 
-    # @deprecated('Please use qbits.cell.volume')
-    # We kind of want to deprecate this, but the ValueError behaviour
-    # might be desirable.  Should we do this?
     def get_volume(self):
         """Get volume of unit cell."""
         if self.cell.rank != 3:
