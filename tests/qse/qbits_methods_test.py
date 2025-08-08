@@ -307,7 +307,7 @@ def test_euler_rotate_distances(phi, theta, psi, center):
     assert np.allclose(qbits.get_all_distances(), distances)
 
 
-@pytest.mark.parametrize("angle", [90, 36.0])
+@pytest.mark.parametrize("angle", [-44, -15.99, 5, 10, 36.9, 90, 180.0, 299.0])
 def test_get_angle(angle):
     """Test get_angle on a simple 3-qbit system."""
     angle_rads = np.pi * angle / 180
@@ -319,14 +319,13 @@ def test_get_angle(angle):
         ]
     )
     qbits = qse.Qbits(positions=positions)
-    assert np.isclose(qbits.get_angle(0, 1, 2), angle)
+    qbits.translate(10 * np.random.rand())  # random displacement
+    qbits.euler_rotate(*(360 * np.random.rand(3)))  # random global rotation
 
-    # Angle should be invariant under global translation.
-    qbits.translate(-3.3)
-    assert np.isclose(qbits.get_angle(0, 1, 2), angle)
-
-    # Angle should be invariant under global rotation.
-    qbits.euler_rotate(10, 20, -44.5)
+    if angle > 180.0:
+        angle = 360.0 - angle
+    if angle < 0.0:
+        angle = -angle
     assert np.isclose(qbits.get_angle(0, 1, 2), angle)
 
 
