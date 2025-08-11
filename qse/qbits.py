@@ -1218,7 +1218,14 @@ class Qbits:
         """
         v1 = _norm_vector(self.positions[i] - self.positions[j])
         v2 = _norm_vector(self.positions[k] - self.positions[j])
-        return _to_degrees(np.arccos(np.dot(v1, v2)))
+        dot_prod = np.dot(v1, v2)
+
+        # The if-statements are in case of floating point errors.
+        if dot_prod > 1.0:
+            return 0.0
+        if dot_prod < -1.0:
+            return 180.0
+        return _to_degrees(np.arccos(dot_prod))
 
     def get_angles(self, indices):
         """
