@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None):
+def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
     """
     Visualize the positions of a set of qubits.
 
@@ -10,12 +10,11 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None)
     ----------
     qbits: qse.Qbits
         The Qbits object.
-    radius: float
+    radius: float | str
         A cutoff radius for visualizing bonds.
-        Defaults to the smallest distance between the passed qubits.
-    draw_bonds: bool
-        Whether to show bonds between qubits.
-        Defaults to True.
+        Pass 'nearest' to set the radius to the smallest
+        distance between the passed qubits.
+        If no value is passed the bonds will not be visualized.
     show_labels: bool
         Whether to show the labels of the qubits.
         Defaults to False.
@@ -23,6 +22,8 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None)
         A set of integers used to assign different colors to each Qubit.
         This can be used to view different magnetic orderings.
         Must have the same length as the number of Qubits.
+    units : str, optional
+        The units of distance.
     """
     if (colouring is not None) and (len(colouring) != qbits.nqbits):
         raise Exception("The length of colouring must equal the number of Qubits.")
@@ -39,6 +40,17 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None)
     positions = qbits.positions.copy()
     x, y, z = positions.T
 
+    draw_bonds = True
+    if radius is None:
+        draw_bonds = False
+    else:
+        rij = qbits.get_all_distances()
+        min_dist = rij[np.logical_not(np.eye(qbits.nqbits, dtype=bool))].min()
+        if radius == "nearest":
+            radius = min_dist
+        elif min_dist > radius:
+            draw_bonds = False
+
     if draw_bonds:
         rij = qbits.get_all_distances()
         ib = np.logical_not(np.eye(qbits.nqbits, dtype=bool))
@@ -54,7 +66,8 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None)
                 rcut = radius
 
     if draw_bonds:
-        nearest_neighbours = rij <= rcut
+        f_tol = 1.01  # fractional tolerance
+        nearest_neighbours = rij <= rcut * f_tol
         np.fill_diagonal(nearest_neighbours, False)
         ii, jj = np.where(nearest_neighbours)
         X, Y, Z = positions[ii].T
@@ -89,8 +102,8 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None)
     else:
         ax = fig.add_subplot()
         ax.set_aspect("equal")
-        ax.set_xticks([])
-        ax.set_yticks([])
+        ax.set_xlabel("x" + f" ({units})" if units is not None else "x")
+        ax.set_ylabel("y" + f" ({units})" if units is not None else "y")
 
         if draw_bonds:
             ax.quiver(
@@ -107,15 +120,16 @@ def draw(qbits, radius=None, draw_bonds=True, show_labels=False, colouring=None)
                 color="gray",
                 alpha=1 / C**3,
             )
+
         if colouring is not None:
-            colours = ["g", "r", "b", "c", "m", "y"]
+            colours = ["C0", "C2", "C1", "C3", "C4", "C5", "C6"]  # green as 2nd
             for c, label in enumerate(set(colouring)):
                 inds = [j == label for j in colouring]
                 ax.scatter(x[inds], y[inds], c=colours[c], label=label, s=80)
             ax.legend()
-
         else:
             ax.scatter(x, y, c="g", s=80)
+
         if show_labels:
             for ind in range(qbits.nqbits):
                 ax.text(x[ind], y[ind], s=qbits.labels[ind])
