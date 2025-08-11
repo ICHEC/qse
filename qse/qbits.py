@@ -1,8 +1,7 @@
 """
-Definition of the Qbits class.
-
 This module defines the central object in the QSE package: the Qbits object.
 """
+
 import copy
 import numbers
 from math import cos, sin
