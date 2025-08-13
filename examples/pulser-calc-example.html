@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Calculation Example &#8212; qse 0.2.17 documentation</title>
+    <title>Calculation Example &#8212; qse 0.2.18 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=88a1407a"></script>
+    <script src="../_static/documentation_options.js?v=c207c184"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -143,7 +143,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.17 documentation</p>
+    <p class="title logo__title">qse 0.2.18 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -443,14 +443,12 @@ We use <code class="docutils literal notranslate"><span class="pre">pulser</span
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">amplitude_afm</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
-<span class="n">detuning_afm</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pulse</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">Pulse</span><span class="p">(</span><span class="n">amplitude</span><span class="o">=</span><span class="n">amplitude_afm</span><span class="p">,</span> <span class="n">detuning</span><span class="o">=</span><span class="n">detuning_afm</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d9dfb6e9461fd8dd816534d794769920d15f556b6e1b9bca0588fb4aae824cbe.png" src="../_images/d9dfb6e9461fd8dd816534d794769920d15f556b6e1b9bca0588fb4aae824cbe.png" />
-<img alt="../_images/a0b3aed7360970dcf2448b678c5a41dd06096169794de036a4b9c20e27f6df13.png" src="../_images/a0b3aed7360970dcf2448b678c5a41dd06096169794de036a4b9c20e27f6df13.png" />
+<img alt="../_images/1e81b3ab1894e4ea019ab193679037de2a876ba51975db5e2685b6ee6ece728a.png" src="../_images/1e81b3ab1894e4ea019ab193679037de2a876ba51975db5e2685b6ee6ece728a.png" />
 </div>
 </div>
 </section>
@@ -483,20 +481,20 @@ We use <code class="docutils literal notranslate"><span class="pre">pulser</span
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>60.1%. Run time:   0.02s. Est. time left: 00:00:00:00
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>70.0%. Run time:   0.02s. Est. time left: 00:00:00:00
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>70.0%. Run time:   0.03s. Est. time left: 00:00:00:00
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>80.0%. Run time:   0.03s. Est. time left: 00:00:00:00
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>80.0%. Run time:   0.04s. Est. time left: 00:00:00:00
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>90.0%. Run time:   0.03s. Est. time left: 00:00:00:00
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>90.0%. Run time:   0.04s. Est. time left: 00:00:00:00
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100.0%. Run time:   0.03s. Est. time left: 00:00:00:00
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100.0%. Run time:   0.05s. Est. time left: 00:00:00:00
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total run time:   0.03s
-time in compute and simulation = 0.04529213905334473 s.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total run time:   0.05s
+time in compute and simulation = 0.057236671447753906 s.
 </pre></div>
 </div>
 </div>
@@ -511,12 +509,13 @@ time in compute and simulation = 0.04529213905334473 s.
 <span class="n">most_freq</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">count</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">}</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">most_freq</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="nb">list</span><span class="p">(</span><span class="n">most_freq</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/870f6333a05e881a2ae63e56ef7e371fbd99ac44dbeab2d1688315f85c5f4c0d.png" src="../_images/870f6333a05e881a2ae63e56ef7e371fbd99ac44dbeab2d1688315f85c5f4c0d.png" />
+<img alt="../_images/3e9ba597ae5ed697460da126f95b51158d86834eb0ddb9fe277eba67e7fd4ef9.png" src="../_images/3e9ba597ae5ed697460da126f95b51158d86834eb0ddb9fe277eba67e7fd4ef9.png" />
 </div>
 </div>
 <p>Visualizing the states 011001 and 100110, we see that they correspond to anti-ferromagnetic orderings.
@@ -528,7 +527,7 @@ Here we use the <code class="docutils literal notranslate"><span class="pre">col
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/fcec86532049389fee97414cd915efadb5d27a9f35d61d3d476df2c2251deb98.png" src="../_images/fcec86532049389fee97414cd915efadb5d27a9f35d61d3d476df2c2251deb98.png" />
+<img alt="../_images/7d50a58df95bc5c38b389253d1f9082d112788e8786761f4b46a0806d70d4e7a.png" src="../_images/7d50a58df95bc5c38b389253d1f9082d112788e8786761f4b46a0806d70d4e7a.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -538,7 +537,7 @@ Here we use the <code class="docutils literal notranslate"><span class="pre">col
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/62b2da1a69b7905d980403e46bf77b7eaf70a890cba79256aa6f5f9800cfc92c.png" src="../_images/62b2da1a69b7905d980403e46bf77b7eaf70a890cba79256aa6f5f9800cfc92c.png" />
+<img alt="../_images/c708f0c536b37900a97dace690826d13dc73f6b636298f329d960da1db69e047.png" src="../_images/c708f0c536b37900a97dace690826d13dc73f6b636298f329d960da1db69e047.png" />
 </div>
 </div>
 </section>
@@ -552,7 +551,7 @@ Here we use the <code class="docutils literal notranslate"><span class="pre">col
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python version: 3.12.3
-qse version: 0.2.17
+qse version: 0.2.18
 </pre></div>
 </div>
 </div>
