@@ -5,8 +5,8 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'pyproject.toml'  # Prevent infinite loop from version bump commit
+    paths:
+      - 'qse/**'
 
 jobs:
   bump-version:
