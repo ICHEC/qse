@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import re
 from pathlib import Path
-from tomlkit import parse, dumps
+
+from tomlkit import dumps, parse
 
 file_path = Path("pyproject.toml")
 
