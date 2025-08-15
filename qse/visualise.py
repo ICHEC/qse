@@ -137,3 +137,4 @@ def correlation(corr_matrix, labels=None):
 
     ax.set_xticks(range(n), labels)
     ax.set_yticks(range(n), labels[::-1])
+    return fig
