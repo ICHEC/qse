@@ -5,6 +5,8 @@ name: Python package
 
 on:
   push:
+    paths-ignore:
+        - 'pyproject.toml'
 
 jobs:
   build:
