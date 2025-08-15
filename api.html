@@ -736,20 +736,21 @@ identically), to center about the origin.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbits.draw">
-<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_bonds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.draw" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.draw" title="Link to this definition">#</a></dt>
 <dd><p>Visualize the positions of a set of qubits.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>radius</strong> (<em>float</em>) – A cutoff radius for visualizing bonds.
-Defaults to the smallest distance between the passed qubits.</p></li>
-<li><p><strong>draw_bonds</strong> (<em>bool</em>) – Whether to show bonds between qubits.
-Defaults to True.</p></li>
+<li><p><strong>radius</strong> (<em>float | str</em>) – A cutoff radius for visualizing bonds.
+Pass ‘nearest’ to set the radius to the smallest
+distance between the passed qubits.
+If no value is passed the bonds will not be visualized.</p></li>
 <li><p><strong>show_labels</strong> (<em>bool</em>) – Whether to show the labels of the qubits.
 Defaults to False.</p></li>
 <li><p><strong>colouring</strong> (<em>str | list</em>) – A set of integers used to assign different colors to each Qubit.
 This can be used to view different magnetic orderings.
 Must have the same length as the number of Qubits.</p></li>
+<li><p><strong>units</strong> (<em>str, optional</em>) – The units of distance.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1367,21 +1368,22 @@ or consistent for multi-dim usage.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.draw">
-<span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_bonds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/visualise.html#draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.draw" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/visualise.html#draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.draw" title="Link to this definition">#</a></dt>
 <dd><p>Visualize the positions of a set of qubits.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The Qbits object.</p></li>
-<li><p><strong>radius</strong> (<em>float</em>) – A cutoff radius for visualizing bonds.
-Defaults to the smallest distance between the passed qubits.</p></li>
-<li><p><strong>draw_bonds</strong> (<em>bool</em>) – Whether to show bonds between qubits.
-Defaults to True.</p></li>
+<li><p><strong>radius</strong> (<em>float | str</em>) – A cutoff radius for visualizing bonds.
+Pass ‘nearest’ to set the radius to the smallest
+distance between the passed qubits.
+If no value is passed the bonds will not be visualized.</p></li>
 <li><p><strong>show_labels</strong> (<em>bool</em>) – Whether to show the labels of the qubits.
 Defaults to False.</p></li>
 <li><p><strong>colouring</strong> (<em>str | list</em>) – A set of integers used to assign different colors to each Qubit.
 This can be used to view different magnetic orderings.
 Must have the same length as the number of Qubits.</p></li>
+<li><p><strong>units</strong> (<em>str, optional</em>) – The units of distance.</p></li>
 </ul>
 </dd>
 </dl>

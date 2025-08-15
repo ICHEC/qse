@@ -363,7 +363,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-2d-square-lattice">Create a 2D square lattice</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-hamiltonian">Create the hamiltonian</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-calculator-and-run-the-job">Set up the calculator and run the job</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-the-result">Sampling the result</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-the-result">Sample the result</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version">Version</a></li>
 </ul>
             </nav>
@@ -400,17 +400,19 @@ We use <code class="docutils literal notranslate"><span class="pre">pulser</span
 <span class="c1"># Now we generate the qbits object that represents a 2D lattice.</span>
 <span class="c1"># Keeping the lattice spacing a bit below the blockade radius keeps</span>
 <span class="c1"># the nearest neighbours antiferromagnetic.</span>
-<span class="n">blockade_radius</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">MockDevice</span><span class="o">.</span><span class="n">rydberg_blockade_radius</span><span class="p">(</span><span class="n">rabi_frequency</span><span class="p">)</span>
+<span class="n">blockade_radius</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">MockDevice</span><span class="o">.</span><span class="n">rydberg_blockade_radius</span><span class="p">(</span>
+    <span class="n">rabi_frequency</span>
+<span class="p">)</span>  <span class="c1"># in µm</span>
 <span class="n">q2d</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">square</span><span class="p">(</span>
     <span class="n">lattice_spacing</span><span class="o">=</span><span class="mf">0.8</span> <span class="o">*</span> <span class="n">blockade_radius</span><span class="p">,</span> <span class="n">repeats_x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">repeats_y</span><span class="o">=</span><span class="mi">2</span>
 <span class="p">)</span>
 
-<span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">blockade_radius</span><span class="p">)</span>
+<span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;µm&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b5a32203cce52640ca09d2a53a0440367776b9b18d4c32cc830bafdd438d0664.png" src="../_images/b5a32203cce52640ca09d2a53a0440367776b9b18d4c32cc830bafdd438d0664.png" />
+<img alt="../_images/7f0d85f412faa7429bb8fc1b31dba6097e9d82bd6ac60f044e1baac99664a7ac.png" src="../_images/7f0d85f412faa7429bb8fc1b31dba6097e9d82bd6ac60f044e1baac99664a7ac.png" />
 </div>
 </div>
 </section>
@@ -481,7 +483,7 @@ We use <code class="docutils literal notranslate"><span class="pre">pulser</span
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>60.1%. Run time:   0.02s. Est. time left: 00:00:00:00
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>70.0%. Run time:   0.03s. Est. time left: 00:00:00:00
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>70.0%. Run time:   0.02s. Est. time left: 00:00:00:00
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>80.0%. Run time:   0.03s. Est. time left: 00:00:00:00
@@ -494,14 +496,14 @@ We use <code class="docutils literal notranslate"><span class="pre">pulser</span
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total run time:   0.04s
-time in compute and simulation = 0.04826474189758301 s.
+time in compute and simulation = 0.0466160774230957 s.
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="sampling-the-result">
-<h2>Sampling the result<a class="headerlink" href="#sampling-the-result" title="Link to this heading">#</a></h2>
+<section id="sample-the-result">
+<h2>Sample the result<a class="headerlink" href="#sample-the-result" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="n">pcalc</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">sample_final_state</span><span class="p">()</span>
@@ -515,29 +517,29 @@ time in compute and simulation = 0.04826474189758301 s.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e0049d730379970aaa6d4ee4f04d285f7e39223eca826547b5b3b466622ccc97.png" src="../_images/e0049d730379970aaa6d4ee4f04d285f7e39223eca826547b5b3b466622ccc97.png" />
+<img alt="../_images/6409244806922112e95f2a0caf55721e133530a978b0de9031744390b257834b.png" src="../_images/6409244806922112e95f2a0caf55721e133530a978b0de9031744390b257834b.png" />
 </div>
 </div>
-<p>Visualizing the states 011001 and 100110, we see that they correspond to anti-ferromagnetic orderings.
-Here we use the <code class="docutils literal notranslate"><span class="pre">colouring</span></code> parameter to visualise this.</p>
+<p>The states <code class="docutils literal notranslate"><span class="pre">011001</span></code> and <code class="docutils literal notranslate"><span class="pre">100110</span></code> are the most prevalent, we can visualise them using the <code class="docutils literal notranslate"><span class="pre">colouring</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">draw</span></code>.
+We see that they correspond to anti-ferromagnetic orderings.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">colouring</span><span class="o">=</span><span class="s2">&quot;011001&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">,</span> <span class="n">colouring</span><span class="o">=</span><span class="s2">&quot;011001&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;µm&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/fcec86532049389fee97414cd915efadb5d27a9f35d61d3d476df2c2251deb98.png" src="../_images/fcec86532049389fee97414cd915efadb5d27a9f35d61d3d476df2c2251deb98.png" />
+<img alt="../_images/983c3f4ade37d8910ad660fa5f6e001fbb3b3b1020011f13e87364eba804cd8f.png" src="../_images/983c3f4ade37d8910ad660fa5f6e001fbb3b3b1020011f13e87364eba804cd8f.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">colouring</span><span class="o">=</span><span class="s2">&quot;100110&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">,</span> <span class="n">colouring</span><span class="o">=</span><span class="s2">&quot;100110&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;µm&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/62b2da1a69b7905d980403e46bf77b7eaf70a890cba79256aa6f5f9800cfc92c.png" src="../_images/62b2da1a69b7905d980403e46bf77b7eaf70a890cba79256aa6f5f9800cfc92c.png" />
+<img alt="../_images/9593b81b39ce264fe6d7044e6bea333a68fa3e58b4fcfa52c3258e47143c47d3.png" src="../_images/9593b81b39ce264fe6d7044e6bea333a68fa3e58b4fcfa52c3258e47143c47d3.png" />
 </div>
 </div>
 </section>
@@ -607,7 +609,7 @@ qse version: 0.2.18
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-2d-square-lattice">Create a 2D square lattice</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-hamiltonian">Create the hamiltonian</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-calculator-and-run-the-job">Set up the calculator and run the job</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-the-result">Sampling the result</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-the-result">Sample the result</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version">Version</a></li>
 </ul>
   </nav></div>

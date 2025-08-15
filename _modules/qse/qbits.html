@@ -1101,18 +1101,17 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.draw">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.draw">[docs]</a>
-    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">draw_bonds</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">colouring</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">colouring</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Visualize the positions of a set of qubits.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        radius: float</span>
+<span class="sd">        radius: float | str</span>
 <span class="sd">            A cutoff radius for visualizing bonds.</span>
-<span class="sd">            Defaults to the smallest distance between the passed qubits.</span>
-<span class="sd">        draw_bonds: bool</span>
-<span class="sd">            Whether to show bonds between qubits.</span>
-<span class="sd">            Defaults to True.</span>
+<span class="sd">            Pass &#39;nearest&#39; to set the radius to the smallest</span>
+<span class="sd">            distance between the passed qubits.</span>
+<span class="sd">            If no value is passed the bonds will not be visualized.</span>
 <span class="sd">        show_labels: bool</span>
 <span class="sd">            Whether to show the labels of the qubits.</span>
 <span class="sd">            Defaults to False.</span>
@@ -1120,6 +1119,8 @@ document.write(`
 <span class="sd">            A set of integers used to assign different colors to each Qubit.</span>
 <span class="sd">            This can be used to view different magnetic orderings.</span>
 <span class="sd">            Must have the same length as the number of Qubits.</span>
+<span class="sd">        units : str, optional</span>
+<span class="sd">            The units of distance.</span>
 
 <span class="sd">        See Also</span>
 <span class="sd">        --------</span>
@@ -1128,9 +1129,9 @@ document.write(`
         <span class="n">_draw</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span>
-            <span class="n">draw_bonds</span><span class="o">=</span><span class="n">draw_bonds</span><span class="p">,</span>
             <span class="n">show_labels</span><span class="o">=</span><span class="n">show_labels</span><span class="p">,</span>
             <span class="n">colouring</span><span class="o">=</span><span class="n">colouring</span><span class="p">,</span>
+            <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
