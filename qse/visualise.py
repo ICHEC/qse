@@ -40,10 +40,9 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
     positions = qbits.positions.copy()
     x, y, z = positions.T
 
-    draw_bonds = True
-    if radius is None:
-        draw_bonds = False
-    else:
+    draw_bonds = False if radius is None else True
+
+    if draw_bonds:
         rij = qbits.get_all_distances()
         min_dist = rij[np.logical_not(np.eye(qbits.nqbits, dtype=bool))].min()
         if radius == "nearest":
@@ -52,38 +51,20 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
             draw_bonds = False
 
     if draw_bonds:
-        rij = qbits.get_all_distances()
-        ib = np.logical_not(np.eye(qbits.nqbits, dtype=bool))
-        rcut0 = rij[ib].min()
-
-        if radius is None:
-            rcut = rcut0
-        else:
-            if rcut0 > radius:
-                rcut = radius
-                draw_bonds = False
-            else:
-                rcut = radius
-
-    if draw_bonds:
         f_tol = 1.01  # fractional tolerance
-        nearest_neighbours = rij <= rcut * f_tol
-        np.fill_diagonal(nearest_neighbours, False)
-        ii, jj = np.where(nearest_neighbours)
+        neighbours = rij <= radius * f_tol
+        np.fill_diagonal(neighbours, False)
+        ii, jj = np.where(neighbours)
         X, Y, Z = positions[ii].T
         U, V, W = (positions[jj] - positions[ii]).T
-        C = rij[nearest_neighbours]
+        C = rij[neighbours]
         C = C / C.min()
 
     fig = plt.figure()
+    ax = fig.add_subplot(projection="3d") if rank == 3 else fig.add_subplot()
+    ax.set_aspect("equal")
 
     if rank == 3:
-        ax = fig.add_subplot(projection="3d") if rank == 3 else fig.add_subplot()
-        ax.set_aspect("equal")
-        ax.set_xticks([])
-        ax.set_yticks([])
-        ax.set_zticks([])
-
         if draw_bonds:
             ax.quiver(
                 X,
@@ -100,8 +81,6 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
         ax.scatter(x, y, z, "o", color="blue")
 
     else:
-        ax = fig.add_subplot()
-        ax.set_aspect("equal")
         ax.set_xlabel("x" + f" ({units})" if units is not None else "x")
         ax.set_ylabel("y" + f" ({units})" if units is not None else "y")
 
