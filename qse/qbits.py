@@ -1222,9 +1222,9 @@ class Qbits:
         dot_prod = np.dot(v1, v2)
 
         # The if-statements are in case of floating point errors.
-        if dot_prod > 1.0:
+        if dot_prod >= 1.0:
             return 0.0
-        if dot_prod < -1.0:
+        if dot_prod <= -1.0:
             return 180.0
         return _to_degrees(np.arccos(dot_prod))
 
