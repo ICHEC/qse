@@ -114,7 +114,6 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
                 ax.text(x[ind], y[ind], s=qbits.labels[ind])
 
 
-
 def correlation(corr_matrix, labels=None):
     """
     Visualise a correlation matrix.
@@ -134,7 +133,7 @@ def correlation(corr_matrix, labels=None):
     fig.colorbar(im, ax=ax)
 
     if labels is None:
-        labels = ["%i" %i for i in range(n)]
+        labels = ["%i" % i for i in range(n)]
 
     ax.set_xticks(range(n), labels)
     ax.set_yticks(range(n), labels[::-1])
