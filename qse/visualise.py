@@ -126,18 +126,6 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
         for ind in range(qbits.nqbits):
             ax.text(x[ind], y[ind], s=qbits.labels[ind])
 
-        if colouring is not None:
-            colours = ["C0", "C2", "C1", "C3", "C4", "C5", "C6"]  # green as 2nd
-            for c, label in enumerate(set(colouring)):
-                inds = [j == label for j in colouring]
-                ax.scatter(x[inds], y[inds], c=colours[c], label=label, s=80)
-            ax.legend()
-        else:
-            ax.scatter(x, y, c="g", s=80)
-
-        if show_labels:
-            for ind in range(qbits.nqbits):
-                ax.text(x[ind], y[ind], s=qbits.labels[ind])
     return fig
 
 
