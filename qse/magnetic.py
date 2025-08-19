@@ -71,8 +71,8 @@ def syop(b: np.ndarray[bool], i: int):
         Of the form (s, c): where s is the basis after operation and c is sign.
     """
     s = b.copy()
-    s[i] = ~s[i]
     c = (-1) ** s[i] * 1j
+    s[i] = ~s[i]
     return (s, c)
 
 
