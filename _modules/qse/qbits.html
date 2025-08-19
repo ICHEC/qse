@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.qbits &#8212; qse 0.2.20 documentation</title>
+    <title>qse.qbits &#8212; qse 0.2.21 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=b9727246"></script>
+    <script src="../../_static/documentation_options.js?v=028ef05b"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -142,7 +142,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.20 documentation</p>
+    <p class="title logo__title">qse 0.2.21 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -314,14 +314,10 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for qse.qbits</h1><div class="highlight"><pre>
-<span></span><span class="c1"># Copyright 2008, 2009 CAMd</span>
-<span class="c1"># (see accompanying license files for details).</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Definition of the Qbits class.</span>
-
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This module defines the central object in the QSE package: the Qbits object.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">numbers</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
@@ -330,7 +326,6 @@ document.write(`
 <span class="kn">from</span> <span class="nn">ase.cell</span> <span class="kn">import</span> <span class="n">Cell</span>
 <span class="kn">from</span> <span class="nn">ase.geometry</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">find_mic</span><span class="p">,</span>
-    <span class="n">get_angles</span><span class="p">,</span>
     <span class="n">get_dihedrals</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">ase.utils</span> <span class="kn">import</span> <span class="n">deprecated</span>
@@ -1638,7 +1633,16 @@ document.write(`
 <span class="sd">        Let x1, x2, x3 be the vectors describing the positions of the three</span>
 <span class="sd">        qubits. Then we calcule the angle between x1-x2 and x3-x2.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_angles</span><span class="p">([[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]])[</span><span class="mi">0</span><span class="p">]</span></div>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">_norm_vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">_norm_vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="n">dot_prod</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
+
+        <span class="c1"># The if-statements are in case of floating point errors.</span>
+        <span class="k">if</span> <span class="n">dot_prod</span> <span class="o">&gt;=</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.0</span>
+        <span class="k">if</span> <span class="n">dot_prod</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">180.0</span>
+        <span class="k">return</span> <span class="n">_to_degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">dot_prod</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="Qbits.get_angles">
@@ -1667,15 +1671,7 @@ document.write(`
         <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;The indicies must be of shape (-1, 3).&quot;</span><span class="p">)</span>
-
-        <span class="n">a1s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">indices</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>
-        <span class="n">a2s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">indices</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>
-        <span class="n">a3s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">indices</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span>
-
-        <span class="n">v12</span> <span class="o">=</span> <span class="n">a1s</span> <span class="o">-</span> <span class="n">a2s</span>
-        <span class="n">v32</span> <span class="o">=</span> <span class="n">a3s</span> <span class="o">-</span> <span class="n">a2s</span>
-
-        <span class="k">return</span> <span class="n">get_angles</span><span class="p">(</span><span class="n">v12</span><span class="p">,</span> <span class="n">v32</span><span class="p">,</span> <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pbc</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_angle</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="Qbits.set_angle">
@@ -2073,6 +2069,10 @@ document.write(`
 
 <span class="k">def</span> <span class="nf">_to_rads</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+
+
+<span class="k">def</span> <span class="nf">_to_degrees</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">180</span> <span class="o">*</span> <span class="n">a</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
 
 
 <span class="k">def</span> <span class="nf">_string2vector</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
