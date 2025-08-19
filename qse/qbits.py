@@ -1,11 +1,7 @@
-# Copyright 2008, 2009 CAMd
-# (see accompanying license files for details).
-
 """
-Definition of the Qbits class.
-
 This module defines the central object in the QSE package: the Qbits object.
 """
+
 import copy
 import numbers
 from math import cos, sin
@@ -14,7 +10,6 @@ import numpy as np
 from ase.cell import Cell
 from ase.geometry import (
     find_mic,
-    get_angles,
     get_dihedrals,
 )
 from ase.utils import deprecated
@@ -1222,7 +1217,16 @@ class Qbits:
         Let x1, x2, x3 be the vectors describing the positions of the three
         qubits. Then we calcule the angle between x1-x2 and x3-x2.
         """
-        return self.get_angles([[i, j, k]])[0]
+        v1 = _norm_vector(self.positions[i] - self.positions[j])
+        v2 = _norm_vector(self.positions[k] - self.positions[j])
+        dot_prod = np.dot(v1, v2)
+
+        # The if-statements are in case of floating point errors.
+        if dot_prod >= 1.0:
+            return 0.0
+        if dot_prod <= -1.0:
+            return 180.0
+        return _to_degrees(np.arccos(dot_prod))
 
     def get_angles(self, indices):
         """
@@ -1248,15 +1252,7 @@ class Qbits:
         indices = np.array(indices)
         if indices.shape[1] != 3:
             raise Exception("The indicies must be of shape (-1, 3).")
-
-        a1s = self.positions[indices[:, 0]]
-        a2s = self.positions[indices[:, 1]]
-        a3s = self.positions[indices[:, 2]]
-
-        v12 = a1s - a2s
-        v32 = a3s - a2s
-
-        return get_angles(v12, v32, cell=None, pbc=None)
+        return np.array([self.get_angle(i, j, k) for i, j, k in indices])
 
     def set_angle(
         self, a1, a2=None, a3=None, angle=None, mask=None, indices=None, add=False
@@ -1619,6 +1615,10 @@ def _norm_vector(v):
 
 def _to_rads(a):
     return a * np.pi / 180
+
+
+def _to_degrees(a):
+    return 180 * a / np.pi
 
 
 def _string2vector(v):
