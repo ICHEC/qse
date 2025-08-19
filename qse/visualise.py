@@ -19,7 +19,8 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
         Whether to show the labels of the qubits.
         Defaults to False.
     colouring: str | list
-        A set of integers used to assign different colors to each Qubit.
+        A list or string used to assign different colors to each Qubit.
+        Each element must be either 0 or 1.
         This can be used to view different magnetic orderings.
         Must have the same length as the number of Qubits.
     units : str, optional
@@ -114,10 +115,11 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
             ax.plot([x[i], x[j]], [y[i], y[j]], c="gray", alpha=alpha, zorder=-1)
 
     if colouring is not None:
-        colours = ["C0", "C2", "C1", "C3", "C4", "C5", "C6"]  # green as 2nd
+        colours = ["C0", "C2"]  # green as 2nd
+        markers = ["^", "v"]
         for c, label in enumerate(set(colouring)):
             inds = [j == label for j in colouring]
-            ax.scatter(x[inds], y[inds], c=colours[c], label=label, s=80, zorder=1)
+            ax.scatter(x[inds], y[inds], c=colours[c], label=label, s=120, marker=markers[c], zorder=1)
         ax.legend()
     else:
         ax.scatter(x, y, c="g", s=80, zorder=1)
