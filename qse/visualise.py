@@ -119,7 +119,15 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
         markers = ["^", "v"]
         for c, label in enumerate(set(colouring)):
             inds = [j == label for j in colouring]
-            ax.scatter(x[inds], y[inds], c=colours[c], label=label, s=120, marker=markers[c], zorder=1)
+            ax.scatter(
+                x[inds],
+                y[inds],
+                c=colours[c],
+                label=label,
+                s=120,
+                marker=markers[c],
+                zorder=1,
+            )
         ax.legend()
     else:
         ax.scatter(x, y, c="g", s=80, zorder=1)
