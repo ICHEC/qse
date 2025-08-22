@@ -72,23 +72,22 @@ if [ $?  -ne 0 ]; then
   exit 1
 fi
 
-version=`grep version pyproject.toml`
-read -r major minor patch <<<$(echo $version|sed 's/=/\n/g'|tail -1|sed 's/"//g'|tr '.' ' ')
-new_version="version = \"$major.$minor.$[patch+1]\""
+# version=`grep version pyproject.toml`
+# read -r major minor patch <<<$(echo $version|sed 's/=/\n/g'|tail -1|sed 's/"//g'|tr '.' ' ')
+# new_version="version = \"$major.$minor.$[patch+1]\""
+# 
+# echo "Incrementing patch number: old -> $version new -> $new_version"
+# echo "updating pyproject.toml"
+# 
+# sed -i '' -e "s/$version/$new_version/g" pyproject.toml
+# 
+# if [ $? -ne 0 ]; then
+#     echo "error updating patch number!"
+#     exit 1
+# fi
+# committing pyproject change before push!"
+# git commit -m "changed $(grep version pyproject.toml)" pyproject.toml
 
-echo "Incrementing patch number: old -> $version new -> $new_version"
-echo "updating pyproject.toml"
-
-sed -i '' -e "s/$version/$new_version/g" pyproject.toml
-
-if [ $? -ne 0 ]; then
-    echo "error updating patch number!"
-    exit 1
-fi
-
-echo "All checks passed. Ready to push. committing pyproject change before push!"
-
-git commit -m "changed $(grep version pyproject.toml)" pyproject.toml
-
+echo "All checks passed. Ready to push!"
 
 exit 0
