@@ -15,7 +15,7 @@ _lattice_spacings = [0.5, 3.1]
 _repeats = [2, 3]
 
 
-def _lattice_checker(qbits, expected_qbits, lattice_spacing, expected_cellpar):
+def _lattice_checker(qbits, expected_qbits, lattice_spacing):
     assert isinstance(qbits, qse.Qbits)
     assert qbits.nqbits == expected_qbits
 
@@ -23,8 +23,9 @@ def _lattice_checker(qbits, expected_qbits, lattice_spacing, expected_cellpar):
     # is the lattice spacing.
     assert np.isclose(qbits.get_all_distances()[0][1:].min(), lattice_spacing)
 
-    # Check the cellpar corresponds to what we expect.
-    assert np.allclose(qbits.cell.cellpar(), expected_cellpar)
+    # Check 2D
+    assert np.allclose(qbits.cell[2], np.zeros(3))
+    assert np.allclose(qbits.positions[:, 2], np.zeros(qbits.nqbits))
 
     # Check the labels
     assert all(qbits.labels[i] == str(i) for i in range(qbits.nqbits))
@@ -34,7 +35,7 @@ def _lattice_checker(qbits, expected_qbits, lattice_spacing, expected_cellpar):
 @pytest.mark.parametrize("N", _repeats)
 def test_linear(lattice_spacing, N):
     qbits = chain(lattice_spacing, N)
-    _lattice_checker(qbits, N, lattice_spacing, [lattice_spacing * N, 0, 0, 90, 90, 90])
+    _lattice_checker(qbits, N, lattice_spacing)
 
 
 def test_linear_fail():
@@ -48,19 +49,15 @@ def test_linear_fail():
 @pytest.mark.parametrize("N1", _repeats)
 @pytest.mark.parametrize("N2", _repeats)
 @pytest.mark.parametrize(
-    "lattice_func, angles",
-    [
-        (square, [90, 90, 90]),
-        (triangular, [90, 90, 60]),
-    ],
+    "lattice_func",
+    [square, triangular],
 )
-def test_square_and_triangular(lattice_func, lattice_spacing, N1, N2, angles):
+def test_square_and_triangular(lattice_func, lattice_spacing, N1, N2):
     qbits = lattice_func(lattice_spacing, N1, N2)
     _lattice_checker(
         qbits,
         N1 * N2,
         lattice_spacing,
-        [lattice_spacing * N1, lattice_spacing * N2, 0] + angles,
     )
 
 
@@ -73,8 +70,6 @@ def test_hexagonal(lattice_spacing, N1, N2):
         qbits,
         N1 * N2 * 2,
         lattice_spacing,
-        [lattice_spacing * N1 * np.sqrt(3), lattice_spacing * N2 * np.sqrt(3), 0]
-        + [90, 90, 60],
     )
 
 
@@ -87,7 +82,6 @@ def test_kagome(lattice_spacing, N1, N2):
         qbits,
         N1 * N2 * 3,
         lattice_spacing,
-        [lattice_spacing * N1 * 2, lattice_spacing * N2 * 2, 0] + [90, 90, 60],
     )
 
 
