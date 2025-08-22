@@ -307,7 +307,7 @@ def test_euler_rotate_distances(phi, theta, psi, center):
     assert np.allclose(qbits.get_all_distances(), distances)
 
 
-@pytest.mark.parametrize("angle", [-44, -15.99, 5, 10, 36.9, 90, 180.0, 299.0])
+@pytest.mark.parametrize("angle", [0.0, -44, -15.99, 5, 10, 36.9, 90, 180.0, 299.0])
 def test_get_angle(angle):
     """Test get_angle on a simple 3-qbit system."""
     angle_rads = np.pi * angle / 180
@@ -324,9 +324,9 @@ def test_get_angle(angle):
 
     if angle > 180.0:
         angle = 360.0 - angle
-    if angle < 0.0:
+    elif angle < 0.0:
         angle = -angle
-    assert np.isclose(qbits.get_angle(0, 1, 2), angle)
+    assert np.isclose(qbits.get_angle(0, 1, 2), angle, atol=1e-6)
 
 
 def test_get_angles():

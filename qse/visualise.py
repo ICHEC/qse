@@ -37,10 +37,10 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
     # higher dimension. Either way, we need to see things in higher dimension.
 
     rank = max(cell_rank, position_rank)
-    positions = qbits.positions.copy()
-    x, y, z = positions.T
 
     draw_bonds = False if radius is None else True
+    rij = None
+    min_dist = None
 
     if draw_bonds:
         rij = qbits.get_all_distances()
@@ -50,6 +50,21 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
         elif min_dist > radius:
             draw_bonds = False
 
+    if rank == 3:
+        _draw_3d(qbits, draw_bonds, radius, rij, min_dist)
+    else:
+        _draw_2d(
+            qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_labels
+        )
+
+
+def _draw_3d(qbits, draw_bonds, radius, rij, min_dist):
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+    ax.set_aspect("equal")
+
+    positions = qbits.positions
+
     if draw_bonds:
         f_tol = 1.01  # fractional tolerance
         neighbours = rij <= radius * f_tol
@@ -57,58 +72,58 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
         ii, jj = np.where(neighbours)
         X, Y, Z = positions[ii].T
         U, V, W = (positions[jj] - positions[ii]).T
-        C = rij[neighbours]
-        C = C / C.min()
+        alpha = (min_dist / rij[neighbours]) ** 3
 
+        ax.quiver(
+            X,
+            Y,
+            Z,
+            U,
+            V,
+            W,
+            arrow_length_ratio=0,
+            linewidth=0.3,
+            color="gray",
+            alpha=alpha,
+        )
+    x, y, z = positions.T
+    ax.scatter(x, y, z, "o", color="blue")
+    return fig
+
+
+def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_labels):
     fig = plt.figure()
-    ax = fig.add_subplot(projection="3d") if rank == 3 else fig.add_subplot()
+    ax = fig.add_subplot()
     ax.set_aspect("equal")
+    ax.set_xlabel("x" + f" ({units})" if units is not None else "x")
+    ax.set_ylabel("y" + f" ({units})" if units is not None else "y")
 
-    if rank == 3:
-        if draw_bonds:
-            ax.quiver(
-                X,
-                Y,
-                Z,
-                U,
-                V,
-                W,
-                arrow_length_ratio=0,
-                linewidth=0.3,
-                color="gray",
-                alpha=1 / C**3,
-            )
-        ax.scatter(x, y, z, "o", color="blue")
+    x, y, _ = qbits.positions.T
+    if draw_bonds:
+        f_tol = 1.01  # fractional tolerance
+        neighbours = np.array(
+            [
+                (i, j)
+                for i in range(qbits.nqbits - 1)
+                for j in range(i + 1, qbits.nqbits)
+                if rij[i, j] <= radius * f_tol
+            ]
+        )
+        for i, j in neighbours:
+            alpha = (min_dist / rij[i, j]) ** 3
+            ax.plot([x[i], x[j]], [y[i], y[j]], c="gray", alpha=alpha, zorder=-1)
 
+    if colouring is not None:
+        colours = ["C0", "C2", "C1", "C3", "C4", "C5", "C6"]  # green as 2nd
+        for c, label in enumerate(set(colouring)):
+            inds = [j == label for j in colouring]
+            ax.scatter(x[inds], y[inds], c=colours[c], label=label, s=80, zorder=1)
+        ax.legend()
     else:
-        ax.set_xlabel("x" + f" ({units})" if units is not None else "x")
-        ax.set_ylabel("y" + f" ({units})" if units is not None else "y")
+        ax.scatter(x, y, c="g", s=80, zorder=1)
 
-        if draw_bonds:
-            ax.quiver(
-                X,
-                Y,
-                U,
-                V,
-                linewidth=1,
-                angles="xy",
-                scale_units="xy",
-                scale=2,
-                headaxislength=0,
-                headlength=0,
-                color="gray",
-                alpha=1 / C**3,
-            )
+    if show_labels:
+        for ind in range(qbits.nqbits):
+            ax.text(x[ind], y[ind], s=qbits.labels[ind])
 
-        if colouring is not None:
-            colours = ["C0", "C2", "C1", "C3", "C4", "C5", "C6"]  # green as 2nd
-            for c, label in enumerate(set(colouring)):
-                inds = [j == label for j in colouring]
-                ax.scatter(x[inds], y[inds], c=colours[c], label=label, s=80)
-            ax.legend()
-        else:
-            ax.scatter(x, y, c="g", s=80)
-
-        if show_labels:
-            for ind in range(qbits.nqbits):
-                ax.text(x[ind], y[ind], s=qbits.labels[ind])
+    return fig
