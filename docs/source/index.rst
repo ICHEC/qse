@@ -27,9 +27,7 @@ Contents
    :maxdepth: 1
 
    Home <self>
-   examples/generating_lattices
    examples/creating_and_manipulating_qbits
+   examples/generating_lattices
    examples/pulser-calc-example
-   examples/pulser-myqlm-conversion
-   theory/spatial-correlation
    api 
