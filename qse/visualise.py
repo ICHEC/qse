@@ -29,7 +29,6 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
         if len(colouring) != qbits.nqbits:
             raise Exception("The length of colouring must equal the number of Qubits.")
         colouring = [int(i) for i in colouring]
-        
 
     cell_rank = qbits.cell.rank
     position_rank = np.linalg.matrix_rank(qbits.positions)
@@ -130,8 +129,12 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
         inds1 = [j == 1 for j in colouring]
 
         for r, c in zip(rads, colors):
-            ax.scatter(x[inds0], y[inds0], s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8)
-            ax.scatter(x[inds1], y[inds1], s=r**2, color=(c, 0.1, 0.5), zorder=1, alpha=0.8)
+            ax.scatter(
+                x[inds0], y[inds0], s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8
+            )
+            ax.scatter(
+                x[inds1], y[inds1], s=r**2, color=(c, 0.1, 0.5), zorder=1, alpha=0.8
+            )
 
     else:
         rads = np.linspace(9, 2, 10)
