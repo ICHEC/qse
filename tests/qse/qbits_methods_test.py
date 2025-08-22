@@ -364,3 +364,29 @@ def test_set_angle(angle, indices):
     assert not np.isclose(angle, qbits.get_angle(*indices))
     qbits.set_angle(*indices, angle)
     assert np.isclose(angle, qbits.get_angle(*indices))
+
+
+@pytest.mark.parametrize("nqbits", [1, 2, 5])
+@pytest.mark.parametrize(
+    "repeats", [(1, 1, 1), (1, 2, 1), (1, 1, 3), (2, 3, 1), (2, 2, 2)]
+)
+def test_repeat(nqbits, repeats):
+    """Test repeat (also testing imul / mul since they are all related.)."""
+    cell = np.random.uniform(-2, 2, (3, 3))
+    positions = np.random.uniform(-2, 2, (nqbits, 3))
+    qbits = qse.Qbits(positions=positions, cell=cell)
+    qbits = qbits.repeat(repeats)
+
+    assert qbits.nqbits == nqbits * np.prod(repeats)
+
+    ps = []
+    for i in range(repeats[0]):
+        for j in range(repeats[1]):
+            for k in range(repeats[2]):
+                v = i * cell[0] + j * cell[1] + k * cell[2]
+                for p in positions:
+                    print(p)
+                    ps.append(v + p)
+
+    ps = np.array(ps)
+    assert np.allclose(ps, qbits.positions)
