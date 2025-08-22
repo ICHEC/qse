@@ -17,8 +17,7 @@ def test_spin_two_qubits():
     def expval(ops, state):
         return [(np.conj(state) @ (op @ state[:, None])).item() for op in ops]
 
-    ibasis = qse.magnetic.get_basis(hdim, n)
-    spin_qse = qse.magnetic.get_spins(statevector, ibasis, n)
+    spin_qse = qse.magnetic.get_spins(statevector, n)
 
     op_q0 = [np.kron(p, np.eye(2)) for p in [pauli_x, pauli_y, pauli_z]]
     op_q1 = [np.kron(np.eye(2), p) for p in [pauli_x, pauli_y, pauli_z]]

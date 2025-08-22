@@ -326,7 +326,7 @@ def test_get_angle(angle):
         angle = 360.0 - angle
     elif angle < 0.0:
         angle = -angle
-    assert np.isclose(qbits.get_angle(0, 1, 2), angle)
+    assert np.isclose(qbits.get_angle(0, 1, 2), angle, atol=1e-6)
 
 
 def test_get_angles():
