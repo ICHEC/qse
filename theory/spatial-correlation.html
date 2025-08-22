@@ -1,0 +1,741 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Computing spatial correlation in magnetic models &#8212; qse 0.2.22 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=15fa703d"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'theory/spatial-correlation';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">qse 0.2.22 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/creating_and_manipulating_qbits.html">Creating and manipulating Qbits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/generating_lattices.html">Generating Lattices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/pulser-calc-example.html">Calculation Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ICHEC/qse" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ICHEC/qse/issues/new?title=Issue%20on%20page%20%2Ftheory/spatial-correlation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/theory/spatial-correlation.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Computing spatial correlation in magnetic models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-spins">Classical Spins</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spin-correlation">Spin-Correlation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#properties">Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-spins">Quantum Spins</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-1-i-j">Case 1: $i = j$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-2-i-neq-j">Case 2: $i \neq j$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-expression">Final Expression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivation-of-the-final-expression">Derivation of the final expression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operator-decomposition">1. <strong>Operator Decomposition</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-value-for-i-j">2. <strong>Expectation Value for $i = j$</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-value-for-i-neq-j">3. <strong>Expectation Value for $i \neq j$</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-diagonal-term-langle-sigma-i-z-sigma-j-z-rangle">(a) <strong>Diagonal Term $(\langle \sigma_i^z \sigma_j^z \rangle$)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-off-diagonal-term-1-langle-sigma-i-sigma-j-rangle">(b) <strong>Off-Diagonal Term 1 ($\langle \sigma_i^+ \sigma_j^- \rangle$)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-off-diagonal-term-2-langle-sigma-i-sigma-j-rangle">(c) <strong>Off-Diagonal Term 2 ($\langle \sigma_i^- \sigma_j^+ \rangle$)</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-expression-for-i-neq-j">4. <strong>Final Expression for $i \neq j$</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rough-work">rough work</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="computing-spatial-correlation-in-magnetic-models">
+<h1>Computing spatial correlation in magnetic models<a class="headerlink" href="#computing-spatial-correlation-in-magnetic-models" title="Link to this heading">#</a></h1>
+<p>Imagine a lattice of say $N$ atoms, in $L_1\times L_2\times L_3$ geometry of repititions,
+with ${\bf A_1, A_2, A_3}$ as lattice vectors. A general point on this lattice ie given by</p>
+<p>$$
+{\bf X(n_1, n_2, n_3)} = n_1 {\bf A_1} + n_2 {\bf A_2} + n_3 {\bf A_3}
+$$</p>
+<p>Where $n_1, n_2, n_3$ are integers, and for the finite size chosen above, $n_i = 0,1,\dots L_i - 1$.
+We shorten the labels as $i\equiv (n_1, n_2, n_3)$, and express lattice positions as ${\bf X_i}$.</p>
+<section id="classical-spins">
+<h2>Classical Spins<a class="headerlink" href="#classical-spins" title="Link to this heading">#</a></h2>
+<p>Now, imagine a lattice where each of the site has a classical spin, represented by a unit vector ${\bf S_i}$. If the energy of this system is given by a classical Heisenberg model, then we have</p>
+<p>$$
+H = \sum_{ij} J_{ij}~{\bf S_i}\cdot {\bf S_j}
+$$</p>
+<p>where $J_{ij}$ is exchange between the spins, often restricted to nearest neighbours or next nearest neighbours.</p>
+<p>Depending on the exchange, the ground state, or lowest energy state of the system will have some specific configuration of spin vectors. For example, if $J_{ij} &lt; 0$, then independent of the scale of exchanges, the energy is minimized in ferromagnetic state, i.e., when all the spins are pointed in the same direction ${\bf S_i} = (0, 0, 1)$.</p>
+<p>When spins are in states other than ferromagnetic state, one needs some quantity for better comprehension of the nature of the spin orientation. There are several commonly known periodic states that can be visualised spatially, such as Neel type Antiferromagnetic states. Howevever, more complex periodic patterns, or somewhat disordered patterns are hard to make sense of visually. For this we compute the following:</p>
+<section id="spin-correlation">
+<h3>Spin-Correlation<a class="headerlink" href="#spin-correlation" title="Link to this heading">#</a></h3>
+<p>One computes $S_{ij} = \langle {\bf S_i} \cdot {S_j}\rangle$ for all $i, j$. For classical models, this could be for a single spin configuration, or at finite temperature, averaged of thermally generated ensemble of configurations. Then we compute Fourier transform of this:</p>
+<p>$$
+S({\bf q}) = \frac {1}{N^2} \sum_{ij} S_{ij}~e^{\left(i {\bf q}\cdot ({\bf X_i} - {\bf X_j})\right)}
+$$</p>
+<p>This is defined as the <strong>Structure Factor</strong>.</p>
+</section>
+<section id="properties">
+<h3>Properties<a class="headerlink" href="#properties" title="Link to this heading">#</a></h3>
+<p>To be added</p>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h3>
+<p>To be added</p>
+</section>
+</section>
+<section id="quantum-spins">
+<h2>Quantum Spins<a class="headerlink" href="#quantum-spins" title="Link to this heading">#</a></h2>
+<p>Let’s consider case of quantum spins, that is, say at each site we have a spin-$\frac 12$ object instead of classical spins. In that case we have to know the many-body quantum state, say $|\Psi \rangle$ in which the system exists, and the site correlation we need to compute is the expectation value of the spin operators:</p>
+<p>$$
+\langle\Psi| {\bf S_i}\cdot {\bf S_j}|\Psi\rangle
+$$</p>
+<p>To compute the expectation value $\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle$ for a system of $N$ spin-$\frac 12$ particles, where $\mathbf{S}_i = (S_i^x, S_i^y, S_i^z)$ are the spin operators at site $i$, we derive the expression by expanding the dot product and simplifying using the  properties of Pauli matrices. The spin operators are defined as $S_i^\alpha = \frac{\hbar}{2} \sigma_i^\alpha$ for $\alpha = x, y, z$, where $\sigma_i^\alpha$ are the Pauli matrices. Setting $\hbar = 1$ for simplicity, we have $S_i^\alpha = \frac{1}{2} \sigma_i^\alpha$.</p>
+<p>The operator $\mathbf{S}_i \cdot \mathbf{S}_j$ is:</p>
+<p>$$
+\mathbf{S}_i \cdot \mathbf{S}_j = S_i^x S_j^x + S_i^y S_j^y + S_i^z S_j^z.
+$$</p>
+<p>Substituting the expressions in terms of Pauli matrices:</p>
+<p>$$
+\mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y + \sigma_i^z \sigma_j^z \right).
+$$</p>
+<p>We now use the identity for the sum of the (x) and (y) components:</p>
+<p>$$
+\sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y = \sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+,
+$$</p>
+<p>where $\sigma_i^+ = \sigma_i^x + i\sigma_i^y$ and $\sigma_i^- = \sigma_i^x - i\sigma_i^y$ are the raising and lowering operators. This identity holds for all $i$ and $j$, but we must handle the case $i = j$ separately due to the properties of the operators.</p>
+<section id="case-1-i-j">
+<h3>Case 1: $i = j$<a class="headerlink" href="#case-1-i-j" title="Link to this heading">#</a></h3>
+<p>When $i = j$, the expectation value simplifies to:</p>
+<p>$$
+\mathbf{S}_i \cdot \mathbf{S}_i = (S_i^x)^2 + (S_i^y)^2 + (S_i^z)^2.
+$$</p>
+<p>For a spin-$\frac 12$ particle, the eigenvalues of $\mathbf{S}_i^2$ are $s(s+1) = \frac{3}{4}$ (since $s = \frac{1}{2}$), and the operator is proportional to the identity:</p>
+<p>$$
+\mathbf{S}_i \cdot \mathbf{S}_i = \frac{3}{4} \mathbb{I}.
+$$</p>
+<p>Thus, the expectation value is:</p>
+<p>$$
+\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_i | \Psi \rangle = \frac{3}{4} \langle \Psi | \mathbb{I} | \Psi \rangle = \frac{3}{4}.
+$$</p>
+</section>
+<section id="case-2-i-neq-j">
+<h3>Case 2: $i \neq j$<a class="headerlink" href="#case-2-i-neq-j" title="Link to this heading">#</a></h3>
+<p>For $i \neq j$, we use the expanded form:</p>
+<p>$$
+\mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y + \sigma_i^z \sigma_j^z \right) = \frac{1}{4} \left( \sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+ + \sigma_i^z \sigma_j^z \right).
+$$</p>
+<p>Thus, the expectation value is:
+$$
+\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle = \frac{1}{4} \left[ \langle \Psi | \sigma_i^+ \sigma_j^- | \Psi \rangle + \langle \Psi | \sigma_i^- \sigma_j^+ | \Psi \rangle + \langle \Psi | \sigma_i^z \sigma_j^z | \Psi \rangle \right].
+$$</p>
+</section>
+<section id="final-expression">
+<h3>Final Expression<a class="headerlink" href="#final-expression" title="Link to this heading">#</a></h3>
+<p>Combining both cases, the expectation value is:</p>
+<p>$$
+\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle =
+\begin{cases}
+\frac{3}{4} &amp; \text{if } i = j, \
+\frac{1}{4} \left( \langle \sigma_i^+ \sigma_j^- \rangle + \langle \sigma_i^- \sigma_j^+ \rangle + \langle \sigma_i^z \sigma_j^z \rangle \right) &amp; \text{if } i \neq j,
+\end{cases}
+$$</p>
+<p>where $\langle \cdot \rangle$ denotes the expectation value in the state $|\Psi\rangle$.</p>
+</section>
+<section id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>For $i = j$, the result is $\frac{3}{4}$.</p></li>
+<li><p>For $i \neq j$, the expectation value requires computing three terms: the expectation values of the operators $\sigma_i^+ \sigma_j^-$, $\sigma_i^- \sigma_j^+$, and $\sigma_i^z \sigma_j^z$ in the state $|\Psi\rangle$.</p></li>
+</ul>
+<p>This expression accounts for the quantum mechanical nature of the spin operators and is valid for any state $|\Psi\rangle$ in the Hilbert space. The operators $\sigma_i^\pm$ and $\sigma_i^z$ are defined in the basis of the $2^N$-dimensional Hilbert space, and their matrix elements can be evaluated once the state $|\Psi\rangle$ is specified.</p>
+</section>
+</section>
+<section id="derivation-of-the-final-expression">
+<h2>Derivation of the final expression<a class="headerlink" href="#derivation-of-the-final-expression" title="Link to this heading">#</a></h2>
+<p>Now let’s get a bit more in detail, and express the state $\Psi$ as linear combination of the product  state basis of the $N$-qubit or $N$-spin Hilbert space. Then $|\Psi\rangle = \sum_{\alpha}|\alpha\rangle$ where, $\alpha$ symbolically is $\alpha \equiv a_0a_1a_2 \dots a_{N-1}$, and $a_i$ are binary numbers.</p>
+<p>To compute the expectation value $\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle$ for a state $|\Psi\rangle = \sum_a c_a |a\rangle$, where $|a\rangle$ are computational basis states (e.g., $|a\rangle = |00101\rangle$), we express the operator $\mathbf{S}_i \cdot \mathbf{S}_j$ in terms of Pauli matrices and evaluate its expectation using the coefficients $c_a$. The derivation below assumes the basis convention where:</p>
+<ul class="simple">
+<li><p>$|0\rangle$ corresponds to $\sigma^z = +1$ (spin up in $z$-direction).</p></li>
+<li><p>$|1\rangle$ corresponds to $\sigma^z = -1$ (spin down in $z$-direction).</p></li>
+</ul>
+<section id="operator-decomposition">
+<h3>1. <strong>Operator Decomposition</strong><a class="headerlink" href="#operator-decomposition" title="Link to this heading">#</a></h3>
+<p>The spin operator $\mathbf{S}_i \cdot \mathbf{S}_j$ decomposes as:</p>
+<p>$$
+\mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y + \sigma_i^z \sigma_j^z \right).
+$$</p>
+<p>Using raising/lowering operators $(\sigma^\pm = \frac{1}{2}(\sigma^x \pm i\sigma^y)$):</p>
+<p>$$
+\sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y = 2(\sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+),
+$$</p>
+<p>so the operator simplifies to:</p>
+<p>$$
+\mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( 2\sigma_i^+ \sigma_j^- + 2\sigma_i^- \sigma_j^+ + \sigma_i^z \sigma_j^z \right) = \frac{1}{2} \sigma_i^+ \sigma_j^- + \frac{1}{2} \sigma_i^- \sigma_j^+ + \frac{1}{4} \sigma_i^z \sigma_j^z.
+$$</p>
+</section>
+<section id="expectation-value-for-i-j">
+<h3>2. <strong>Expectation Value for $i = j$</strong><a class="headerlink" href="#expectation-value-for-i-j" title="Link to this heading">#</a></h3>
+<p>When $i = j$:</p>
+<p>$$
+\langle \mathbf{S}_i \cdot \mathbf{S}_i \rangle = \langle (\mathbf{S}_i)^2 \rangle = s(s+1) = \frac{3}{4}.
+$$</p>
+</section>
+<section id="expectation-value-for-i-neq-j">
+<h3>3. <strong>Expectation Value for $i \neq j$</strong><a class="headerlink" href="#expectation-value-for-i-neq-j" title="Link to this heading">#</a></h3>
+<p>For $i \neq j$, the expectation value is:</p>
+<p>$$
+\langle \mathbf{S}_i \cdot \mathbf{S}_j \rangle = \frac{1}{2} \langle \sigma_i^+ \sigma_j^- \rangle + \frac{1}{2} \langle \sigma_i^- \sigma_j^+ \rangle + \frac{1}{4} \langle \sigma_i^z \sigma_j^z \rangle.
+$$</p>
+<p>We evaluate each term using the coefficients $c_a$:</p>
+<section id="a-diagonal-term-langle-sigma-i-z-sigma-j-z-rangle">
+<h4>(a) <strong>Diagonal Term $(\langle \sigma_i^z \sigma_j^z \rangle$)</strong><a class="headerlink" href="#a-diagonal-term-langle-sigma-i-z-sigma-j-z-rangle" title="Link to this heading">#</a></h4>
+<p>This term is <strong>diagonal</strong> in the basis, so:</p>
+<p>$$
+\sigma_i^z \sigma_j^z |a\rangle = (1 - 2a_i)(1 - 2a_j) |a\rangle,
+$$</p>
+<p>where $a_i, a_j \in {0, 1}$ are the bits of $|a\rangle$ at positions $i$ and $j$. Thus:</p>
+<p>$$
+\langle \sigma_i^z \sigma_j^z \rangle = \sum_{a} |c_a|^2 (1 - 2a_i)(1 - 2a_j).
+$$</p>
+</section>
+<section id="b-off-diagonal-term-1-langle-sigma-i-sigma-j-rangle">
+<h4>(b) <strong>Off-Diagonal Term 1 ($\langle \sigma_i^+ \sigma_j^- \rangle$)</strong><a class="headerlink" href="#b-off-diagonal-term-1-langle-sigma-i-sigma-j-rangle" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>$\sigma_j^-$ flips $a_j$ from 0 to 1 (if $a_j = 0$).</p></li>
+<li><p>$\sigma_i^+$ flips $a_i$ from 1 to 0 (if $a_i = 1$).</p></li>
+<li><p>Non-zero only when $a_j = 0$ and $a_i = 1$:</p></li>
+</ul>
+<p>$$
+\sigma_i^+ \sigma_j^- |a\rangle = |b\rangle, \quad \text{where } b = a \text{ with } a_j = 1 \text{ and } a_i = 0.
+$$</p>
+<p>The expectation is:</p>
+<p>$$
+\langle \sigma_i^+ \sigma_j^- \rangle = \sum_{\substack{a \ a_i=1, a_j=0}} c_a^* c_b, \quad b = a \oplus (2^i + 2^j).
+$$</p>
+</section>
+<section id="c-off-diagonal-term-2-langle-sigma-i-sigma-j-rangle">
+<h4>(c) <strong>Off-Diagonal Term 2 ($\langle \sigma_i^- \sigma_j^+ \rangle$)</strong><a class="headerlink" href="#c-off-diagonal-term-2-langle-sigma-i-sigma-j-rangle" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>$\sigma_j^+$ flips $a_j$ from 1 to 0 (if $a_j = 1$).</p></li>
+<li><p>$\sigma_i^-$ flips $a_i$ from 0 to 1 (if $a_i = 0$).</p></li>
+<li><p>Non-zero only when $a_j = 1$ and $a_i = 0$:</p></li>
+</ul>
+<p>$$
+\sigma_i^- \sigma_j^+ |a\rangle = |d\rangle, \quad \text{where } d = a \text{ with } a_j = 0 \text{ and } a_i = 1.
+$$</p>
+<p>The expectation is:</p>
+<p>$$
+\langle \sigma_i^- \sigma_j^+ \rangle = \sum_{\substack{a \ a_i=0, a_j=1}} c_a^* c_d, \quad d = a \oplus (2^i + 2^j).
+$$</p>
+</section>
+</section>
+<section id="final-expression-for-i-neq-j">
+<h3>4. <strong>Final Expression for $i \neq j$</strong><a class="headerlink" href="#final-expression-for-i-neq-j" title="Link to this heading">#</a></h3>
+<p>Combining all terms, we have the following:</p>
+<p>$$
+\langle \mathbf{S}<em>i \cdot \mathbf{S}<em>j \rangle = \frac{1}{2} \left( \sum</em>{\substack{a \ a_i=1, a_j=0}} c_a^* c_b \right) + \frac{1}{2} \left( \sum</em>{\substack{a \ a_i=0, a_j=1}} c_a^* c_d \right) + \frac{1}{4} \left( \sum_{a} |c_a|^2 (1 - 2a_i)(1 - 2a_j) \right)
+$$</p>
+<p>where:</p>
+<ul class="simple">
+<li><p>$b = a \oplus (2^i + 2^j)$ (flip bits at $i$ and $j$),</p></li>
+<li><p>$d = a \oplus (2^i + 2^j)$ (same as $b$).</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>Summary<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>For $i = j$</strong>: $\langle \mathbf{S}_i \cdot \mathbf{S}_j \rangle = \frac{3}{4}$.</p></li>
+<li><p><strong>For $i \neq j$</strong>: Use the boxed expression above, which depends on:</p>
+<ol class="arabic simple">
+<li><p>Diagonal terms: Weighted by $|c_a|^2$ and spin eigenvalues.</p></li>
+<li><p>Off-diagonal terms: Correlations between basis states differing by spin flips at $i$ and $j$.</p></li>
+</ol>
+</li>
+</ul>
+<p>This expression is efficiently computable by iterating over all basis states $a$ and summing contributions.</p>
+</section>
+<section id="rough-work">
+<h3>rough work<a class="headerlink" href="#rough-work" title="Link to this heading">#</a></h3>
+<p>$$
+|\alpha\rangle \equiv |a_0 a_1 a_2 … a_N\rangle
+= |a_0\rangle \times |a_1\rangle \times |a_2\rangle \times … |a_N\rangle
+$$</p>
+<p>$$
+(p_0^0|+\rangle + p_1^0|-\rangle) \times
+(p_0^1|+\rangle + p_1^1|-\rangle) \times
+(p_0^2|+\rangle + p_1^2|-\rangle) \times
+\dots
+(p_0^N|+\rangle + p_1^N|-\rangle)
+$$</p>
+<p>$$
+\langle S_{x,y,z}\rangle
+$$</p>
+<p>$$
+\langle S_{x,y,z}S_{x,y,z}\rangle
+$$
+$$
+|\psi\rangle = \sum_\alpha c_\alpha |\alpha \rangle
+$$</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-spins">Classical Spins</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spin-correlation">Spin-Correlation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#properties">Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-spins">Quantum Spins</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-1-i-j">Case 1: $i = j$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-2-i-neq-j">Case 2: $i \neq j$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-expression">Final Expression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivation-of-the-final-expression">Derivation of the final expression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operator-decomposition">1. <strong>Operator Decomposition</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-value-for-i-j">2. <strong>Expectation Value for $i = j$</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-value-for-i-neq-j">3. <strong>Expectation Value for $i \neq j$</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-diagonal-term-langle-sigma-i-z-sigma-j-z-rangle">(a) <strong>Diagonal Term $(\langle \sigma_i^z \sigma_j^z \rangle$)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-off-diagonal-term-1-langle-sigma-i-sigma-j-rangle">(b) <strong>Off-Diagonal Term 1 ($\langle \sigma_i^+ \sigma_j^- \rangle$)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-off-diagonal-term-2-langle-sigma-i-sigma-j-rangle">(c) <strong>Off-Diagonal Term 2 ($\langle \sigma_i^- \sigma_j^+ \rangle$)</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-expression-for-i-neq-j">4. <strong>Final Expression for $i \neq j$</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rough-work">rough work</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By ICHEC
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright ....
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
