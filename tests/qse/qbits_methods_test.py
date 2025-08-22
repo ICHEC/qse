@@ -6,7 +6,7 @@ import qse
 
 def _qbits_checker(qbits, positions, total_qubits):
     assert isinstance(qbits, qse.Qbits)
-    assert np.allclose(qbits.get_positions(), positions)
+    assert np.allclose(qbits.positions, positions)
     assert qbits.nqbits == total_qubits
 
 
@@ -44,6 +44,31 @@ def test_add_qbit():
     assert all(qbits.labels == [1, 2, 3, "q"])
 
 
+@pytest.mark.parametrize("nqbits", [2, 3, 4])
+def test_get_distance(nqbits):
+    """Test get_distance on a set of qbits."""
+    positions = np.random.rand(nqbits, 3)
+    qbits = qse.Qbits(positions=positions)
+
+    assert qbits.nqbits == positions.shape[0]
+
+    d = np.sqrt(((positions[0] - positions[1]) ** 2).sum())
+    assert np.isclose(qbits.get_distance(0, 1), d)
+
+
+@pytest.mark.parametrize("nqbits", [2, 3, 4])
+def test_get_distances(nqbits):
+    """Test get_distances on a set of qbits."""
+    positions = np.random.rand(nqbits, 3)
+    qbits = qse.Qbits(positions=positions)
+
+    assert qbits.nqbits == positions.shape[0]
+    inds = list(range(nqbits))
+    d = np.sqrt(((positions[0] - positions) ** 2).sum(1))
+    assert np.isclose(d[0], 0.0)
+    assert np.allclose(qbits.get_distances(0, inds), d)
+
+
 def test_get_all_distances():
     """Test get_all_distances on a simple set of qbits."""
     positions = np.array(
@@ -67,6 +92,16 @@ def test_get_all_distances():
     )
 
     assert np.allclose(qbits.get_all_distances(), distances)
+
+
+@pytest.mark.parametrize("nqbits", [2, 3, 4])
+def test_get_all_distances_properties(nqbits):
+    """Test the properties of get_all_distances."""
+    qbits = qse.Qbits(positions=np.random.rand(nqbits, 3))
+    distances = qbits.get_all_distances()
+    assert distances.shape == (nqbits, nqbits)
+    assert all(0.0 == i for i in np.diag(distances))
+    assert np.allclose(distances, distances.T)
 
 
 @pytest.mark.parametrize(
@@ -107,8 +142,8 @@ def test_rattle(nqbits):
     qbits = qse.Qbits(positions=positions)
     qbits.rattle()
 
-    assert qbits.get_positions().shape == positions.shape
-    assert not np.allclose(qbits.get_positions(), positions)
+    assert qbits.positions.shape == positions.shape
+    assert not np.allclose(qbits.positions, positions)
 
 
 @pytest.mark.parametrize("nqbits", [1, 2, 3, 10])
@@ -134,7 +169,7 @@ def test_translate(nqbits, type_of_disp):
             qbits.translate(disp)
     else:
         qbits.translate(disp)
-        assert np.allclose(qbits.get_positions(), positions + disp)
+        assert np.allclose(qbits.positions, positions + disp)
 
 
 def test_get_item():
@@ -150,11 +185,11 @@ def test_get_item():
     # test list
     for indices in [[0, 2], [1, 3, 2]]:
         assert isinstance(qbits[indices], qse.Qbits)
-        assert np.allclose(qbits[indices].get_positions(), positions[indices])
+        assert np.allclose(qbits[indices].positions, positions[indices])
 
     # test slice
     assert isinstance(qbits[1:3], qse.Qbits)
-    assert np.allclose(qbits[1:3].get_positions(), positions[1:3])
+    assert np.allclose(qbits[1:3].positions, positions[1:3])
 
 
 @pytest.mark.parametrize("indices", [1, [0, 1, 3]])
@@ -184,12 +219,12 @@ def test_rotate():
     qbits = qse.Qbits(positions=unit_square)
     qbits.rotate(90, "z")
 
-    assert not np.allclose(qbits.get_positions(), unit_square)
+    assert not np.allclose(qbits.positions, unit_square)
 
     unit_square_rt = np.array(
         [[0.0, 1.0, 0.0], [-1.0, 1.0, 0.0], [-1.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
     )
-    assert np.allclose(qbits.get_positions(), unit_square_rt)
+    assert np.allclose(qbits.positions, unit_square_rt)
 
     # Check that a centered square is invariant (with relabelling).
     square_centered = np.array(
@@ -197,7 +232,7 @@ def test_rotate():
     )
     qbits = qse.Qbits(positions=square_centered)
     qbits.rotate(90, "z")
-    assert np.allclose(qbits.get_positions(), square_centered[[2, 0, 3, 1]])
+    assert np.allclose(qbits.positions, square_centered[[2, 0, 3, 1]])
 
 
 @pytest.mark.parametrize("angle", [10, 20, 30])
@@ -223,7 +258,7 @@ def test_rotate_square_z(angle, axis):
             [np.cos(angle_rads), np.sin(angle_rads), 1.0],
         ]
     )
-    assert np.allclose(qbits.get_positions(), new_positions)
+    assert np.allclose(qbits.positions, new_positions)
 
 
 @pytest.mark.parametrize("a", ["x", "-y", (0.0, 2.0, 3)])
@@ -237,7 +272,7 @@ def test_rotate_distances(a, v, center):
 
     qbits.rotate(a, v, center)
 
-    assert not np.allclose(qbits.get_positions(), positions)
+    assert not np.allclose(qbits.positions, positions)
     assert np.allclose(qbits.get_all_distances(), distances)
 
 
@@ -253,7 +288,7 @@ def test_euler_rotate_and_rotate():
     qbits_2 = qse.Qbits(positions=positions)
     qbits_2.euler_rotate(-34)
 
-    assert np.allclose(qbits_1.get_positions(), qbits_2.get_positions())
+    assert np.allclose(qbits_1.positions, qbits_2.positions)
 
 
 @pytest.mark.parametrize("phi", [11.2, 45.0])
@@ -268,11 +303,11 @@ def test_euler_rotate_distances(phi, theta, psi, center):
 
     qbits.euler_rotate(phi, theta, psi, center)
 
-    assert not np.allclose(qbits.get_positions(), positions)
+    assert not np.allclose(qbits.positions, positions)
     assert np.allclose(qbits.get_all_distances(), distances)
 
 
-@pytest.mark.parametrize("angle", [90, 36.0])
+@pytest.mark.parametrize("angle", [0.0, -44, -15.99, 5, 10, 36.9, 90, 180.0, 299.0])
 def test_get_angle(angle):
     """Test get_angle on a simple 3-qbit system."""
     angle_rads = np.pi * angle / 180
@@ -284,14 +319,13 @@ def test_get_angle(angle):
         ]
     )
     qbits = qse.Qbits(positions=positions)
-    assert np.isclose(qbits.get_angle(0, 1, 2), angle)
+    qbits.translate(10 * np.random.rand())  # random displacement
+    qbits.euler_rotate(*(360 * np.random.rand(3)))  # random global rotation
 
-    # Angle should be invariant under global translation.
-    qbits.translate(-3.3)
-    assert np.isclose(qbits.get_angle(0, 1, 2), angle)
-
-    # Angle should be invariant under global rotation.
-    qbits.euler_rotate(10, 20, -44.5)
+    if angle > 180.0:
+        angle = 360.0 - angle
+    elif angle < 0.0:
+        angle = -angle
     assert np.isclose(qbits.get_angle(0, 1, 2), angle)
 
 
