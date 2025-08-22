@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+rads = np.linspace(12, 1, 10)
+colors = np.sqrt(np.linspace(0.1, 0.9, 10))
+
 
 def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
     """
@@ -90,9 +93,6 @@ def _draw_3d(qbits, draw_bonds, radius, rij, min_dist):
         )
     x, y, z = positions.T
 
-    rads = np.linspace(7, 2, 10)
-    colors = np.linspace(0.2, 0.7, 10)
-
     for r, c in zip(rads, colors):
         ax.scatter(x, y, z, s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8)
 
@@ -122,9 +122,6 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
             ax.plot([x[i], x[j]], [y[i], y[j]], c="gray", alpha=alpha, zorder=-1)
 
     if colouring is not None:
-        rads = np.linspace(10, 1, 10)
-        colors = np.linspace(0.1, 0.9, 10)
-
         inds0 = [j == 0 for j in colouring]
         inds1 = [j == 1 for j in colouring]
 
@@ -137,9 +134,6 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
             )
 
     else:
-        rads = np.linspace(9, 2, 10)
-        colors = np.linspace(0.2, 0.7, 10)
-
         for r, c in zip(rads, colors):
             ax.scatter(x, y, s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8)
 
