@@ -12,7 +12,7 @@ authors = [
     {name = "James Nelson", email = "james.nelson@ichec.ie"},
     {name = "Sherry Blair", email = "sherry.blair@ichec.ie"}
     ]
-version = "0.2.10"
+version = "0.2.24"
 requires-python = ">=3.10"
 dependencies = [
     "ase",
@@ -36,6 +36,7 @@ dev = [
     "black[jupyter]",
     "isort",
     "Flake8-pyproject",
+    "pulser == 1.4.0",  # required for tests
 ]
 pulser = ["pulser == 1.4.0"]
 myqlm = ["numpy == 1.26.4", "myqlm == 1.11.3"]
@@ -44,6 +45,7 @@ docs = [
     "sphinx-autoapi",
     "jupyter_book",
     "tomli",
+    "pulser == 1.4.0",  # required for creating the docs
 ]
 
 [tool.black]
@@ -73,3 +75,4 @@ ignore = [
 ]
 statistics = true
 show-source = true
+#

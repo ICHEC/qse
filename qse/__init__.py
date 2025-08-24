@@ -20,8 +20,6 @@ import importlib.metadata
 
 __version__ = importlib.metadata.version("qse")
 
-from ase import cell
-
 from qse.qbit import Qbit
 from qse.qbits import Qbits
 from qse.signal import Signal
