@@ -26,6 +26,10 @@ qse.utils
 .. automodule:: qse.utils
     :members:
 
+qse.visualise
+-------------
+.. automodule:: qse.visualise
+    :members:
    
 Indices and tables
 ------------------
