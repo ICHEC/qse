@@ -7,12 +7,10 @@ import numbers
 from math import cos, sin
 
 import numpy as np
-from ase.cell import Cell
 from ase.geometry import (
     find_mic,
     get_dihedrals,
 )
-from ase.utils import deprecated
 
 from qse.qbit import Qbit
 from qse.visualise import draw as _draw
@@ -39,15 +37,10 @@ class Qbits:
     scaled_positions: list of scaled-positions
         Like positions, but given in units of the unit cell.
         Can not be set at the same time as positions.
-    cell: 3x3 matrix or length 3 or 6 vector
-        Unit cell vectors.  Can also be given as just three
-        numbers for orthorhombic cells, or 6 numbers, where
-        first three are lengths of unit cell vectors, and the
-        other three are angles between them (in degrees), in following order:
-        [len(a), len(b), len(c), angle(b,c), angle(a,c), angle(a,b)].
+    cell: 3x3 matrix, optional
+        The unit cell vectors.
         First vector will lie in x-direction, second in xy-plane,
         and the third one in z-positive subspace.
-        Default value: [0, 0, 0].
     celldisp: Vector
         Unit cell displacement vector. To visualize a displaced cell
         around the center of mass of a Systems of qbits. Default value
@@ -95,8 +88,7 @@ class Qbits:
     ...    [[0, 0, 0],
     ...     [0.5, 0.5, 0.5]])
     >>> qdim = qse.Qbits(positions=xd)
-    >>> qdim.cell = [1,1,1]
-    >>> qdim.pbc = True
+    >>> qdim.cell = np.eye(3)
     >>> qlat = qdim.repeat([3,3,3])
 
     The qdim will have shape = (2,1,1) and qlat will have shape = (6, 3, 3)
@@ -159,10 +151,8 @@ class Qbits:
         self.new_array("labels", labels, "<U12")
 
         # cell
-        self._cellobj = Cell.new()
-        if cell is None:
-            cell = np.zeros((3, 3))
-        self.set_cell(cell)
+        self._cellobj = None
+        self.cell = cell
 
         # positions
         if positions is None:
@@ -259,64 +249,6 @@ class Qbits:
         _get_constraints, set_constraint, _del_constraints, "Constraints of the qbits."
     )
 
-    def set_cell(self, cell, scale_qbits=False, apply_constraint=True):
-        """Set unit cell vectors.
-
-        Parameters:
-
-        cell: 3x3 matrix or length 3 or 6 vector
-            Unit cell.  A 3x3 matrix (the three unit cell vectors) or
-            just three numbers for an orthorhombic cell. Another option is
-            6 numbers, which describes unit cell with lengths of unit cell
-            vectors and with angles between them (in degrees), in following
-            order: [len(a), len(b), len(c), angle(b,c), angle(a,c),
-            angle(a,b)].  First vector will lie in x-direction, second in
-            xy-plane, and the third one in z-positive subspace.
-        scale_qbits: bool
-            Fix qbit positions or move qbits with the unit cell?
-            Default behavior is to *not* move the qbits (scale_qbits=False).
-        apply_constraint: bool
-            Whether to apply constraints to the given cell.
-
-        Examples:
-
-        Two equivalent ways to define an orthorhombic cell:
-
-        >>> qbits = Qbits('He')
-        >>> a, b, c = 7, 7.5, 8
-        >>> qbits.set_cell([a, b, c])
-        >>> qbits.set_cell([(a, 0, 0), (0, b, 0), (0, 0, c)])
-
-        FCC unit cell:
-
-        >>> qbits.set_cell([(0, b, b), (b, 0, b), (b, b, 0)])
-
-        Hexagonal unit cell:
-
-        >>> qbits.set_cell([a, a, c, 90, 90, 120])
-
-        Rhombohedral unit cell:
-
-        >>> alpha = 77
-        >>> qbits.set_cell([a, a, a, alpha, alpha, alpha])
-        """
-
-        # Override pbcs if and only if given a Cell object:
-        # print('here', cell)
-        cell = Cell.new(cell)
-
-        # XXX not working well during initialize due to missing _constraints
-        if apply_constraint and hasattr(self, "_constraints"):
-            for constraint in self.constraints:
-                if hasattr(constraint, "adjust_cell"):
-                    constraint.adjust_cell(self, cell)
-
-        if scale_qbits:
-            M = np.linalg.solve(self.cell.complete(), cell.complete())
-            self.positions[:] = np.dot(self.positions, M)
-
-        self.cell[:] = cell
-
     def set_celldisp(self, celldisp):
         """Set the unit cell displacement vectors."""
         celldisp = np.array(celldisp, float)
@@ -325,37 +257,6 @@ class Qbits:
     def get_celldisp(self):
         """Get the unit cell displacement vectors."""
         return self._celldisp.copy()
-
-    def get_cell(self, complete=False):
-        """Get the three unit cell vectors as a `class`:ase.cell.Cell` object.
-
-        The Cell object resembles a 3x3 ndarray, and cell[i, j]
-        is the jth Cartesian coordinate of the ith cell vector."""
-        if complete:
-            return self.cell.complete()
-        return self.cell.copy()
-
-    @deprecated("Please use qbits.cell.cellpar() instead")
-    def get_cell_lengths_and_angles(self):
-        """Get unit cell parameters. Sequence of 6 numbers.
-
-        First three are unit cell vector lengths and second three
-        are angles between them::
-
-            [len(a), len(b), len(c), angle(b,c), angle(a,c), angle(a,b)]
-
-        in degrees.
-        """
-        return self.cell.cellpar()
-
-    @deprecated("Please use qbits.cell.reciprocal()")
-    def get_reciprocal_cell(self):
-        """Get the three reciprocal lattice vectors as a 3x3 ndarray.
-
-        Note that the commonly used factor of 2 pi for Fourier
-        transforms is not included here."""
-
-        return self.cell.reciprocal()
 
     @property
     def nqbits(self):
@@ -482,7 +383,7 @@ class Qbits:
         d["labels"] = self.arrays["labels"]
         d["positions"] = self.arrays["positions"]
         d["states"] = self.arrays["states"]
-        d["cell"] = self.cell  # np.asarray(self.cell)
+        d["cell"] = self.cell
         d["pbc"] = self.pbc
         if self._celldisp.any():
             d["celldisp"] = self._celldisp
@@ -549,12 +450,8 @@ class Qbits:
         tokens.append(txt + ",\n")
 
         cell = self.cell
-        if cell:
-            if cell.orthorhombic:
-                cell = cell.lengths().tolist()
-            else:
-                cell = cell.tolist()
-            tokens.append("cell={0}".format(cell) + ",\n")
+        if cell is not None:
+            tokens.append("cell={0}".format(list(cell)) + ",\n")
         if self._calc is not None:
             tokens.append("calculator={0}".format(self._calc.__class__.__name__))
         txt = "{0}(\n{1}{2})".format(
@@ -688,9 +585,12 @@ class Qbits:
         if isinstance(m, int):
             m = (m, m, m)
 
+        if self.cell is None:
+            raise ValueError("Cannot repeat without a defined unit cell.")
+
         for x, vec in zip(m, self.cell):
             if x != 1 and not vec.any():
-                raise ValueError("Cannot repeat along undefined lattice " "vector")
+                raise ValueError("Cannot repeat without a defined unit cell.")
 
         M = np.prod(m)
         n = len(self)
@@ -774,87 +674,6 @@ class Qbits:
             nx3 array (where n is the number of qbits).
         """
         self.positions += np.array(displacement)
-
-    def center_in_unit_cell(self, vacuum=None, axis=(0, 1, 2), about=None):
-        """
-        Center qbits in unit cell.
-
-        Centers the qbits in the unit cell, so there is the same
-        amount of vacuum on all sides.
-
-        vacuum: float (default: None)
-            If specified adjust the amount of vacuum when centering.
-            If vacuum=10.0 there will thus be 10 Angstrom of vacuum
-            on each side.
-        axis: int or sequence of ints
-            Axis or axes to act on.  Default: Act on all axes.
-        about: float or array (default: None)
-            If specified, center the qbits about <about>.
-            I.e., about=(0., 0., 0.) (or just "about=0.", interpreted
-            identically), to center about the origin.
-        """
-
-        # Find the orientations of the faces of the unit cell
-        cell = self.cell.complete()
-        dirs = np.zeros_like(cell)
-
-        lengths = cell.lengths()
-        for i in range(3):
-            dirs[i] = np.cross(cell[i - 1], cell[i - 2])
-            dirs[i] /= np.linalg.norm(dirs[i])
-            if dirs[i] @ cell[i] < 0.0:
-                dirs[i] *= -1
-
-        if isinstance(axis, int):
-            axes = (axis,)
-        else:
-            axes = axis
-
-        # Now, decide how much each basis vector should be made longer
-        pos = self.positions
-        longer = np.zeros(3)
-        shift = np.zeros(3)
-        for i in axes:
-            if len(pos):
-                scalarprod = pos @ dirs[i]
-                p0 = scalarprod.min()
-                p1 = scalarprod.max()
-            else:
-                p0 = 0
-                p1 = 0
-            height = cell[i] @ dirs[i]
-            if vacuum is not None:
-                lng = (p1 - p0 + 2 * vacuum) - height
-            else:
-                lng = 0.0  # Do not change unit cell size!
-            top = lng + height - p1
-            shf = 0.5 * (top - p0)
-            cosphi = cell[i] @ dirs[i] / lengths[i]
-            longer[i] = lng / cosphi
-            shift[i] = shf / cosphi
-
-        # Now, do it!
-        translation = np.zeros(3)
-        for i in axes:
-            nowlen = lengths[i]
-            if vacuum is not None:
-                self.cell[i] = cell[i] * (1 + longer[i] / nowlen)
-            translation += shift[i] * cell[i] / nowlen
-
-            # We calculated translations using the completed cell,
-            # so directions without cell vectors will have been centered
-            # along a "fake" vector of length 1.
-            # Therefore, we adjust by -0.5:
-            if not any(self.cell[i]):
-                translation[i] -= 0.5
-
-        # Optionally, translate to center about a point in space.
-        if about is not None:
-            for vector in self.cell:
-                translation -= vector / 2.0
-            translation += about
-
-        self.positions += translation
 
     def get_centroid(self):
         r"""
@@ -984,13 +803,11 @@ class Qbits:
             c * p - np.cross(p, s * v) + np.outer(np.dot(p, v), (1.0 - c) * v) + center
         )
         if rotate_cell:
-            rotcell = self.get_cell()
-            rotcell[:] = (
-                c * rotcell
-                - np.cross(rotcell, s * v)
-                + np.outer(np.dot(rotcell, v), (1.0 - c) * v)
+            self.cell[:] = (
+                c * self.cell()
+                - np.cross(self.cell(), s * v)
+                + np.outer(np.dot(self.cell(), v), (1.0 - c) * v)
             )
-            self.set_cell(rotcell)
 
     def _centering_as_array(self, center):
         if isinstance(center, str):
@@ -1575,8 +1392,12 @@ class Qbits:
 
     @cell.setter
     def cell(self, cell):
-        cell = Cell.ascell(cell)
-        self._cellobj[:] = cell
+        if cell is None:
+            self._cellobj = None
+        else:
+            if (cell.shape[0] != 3) or (cell.shape[1] != 3):
+                raise Exception("The cell must be a 3x3 matrix.")
+            self._cellobj = cell
 
     def write(self, filename, format=None, **kwargs):
         """Write qbits object to a file.
