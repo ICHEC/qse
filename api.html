@@ -482,6 +482,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.magnetic">qse.magnetic</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_basis"><code class="docutils literal notranslate"><span class="pre">get_basis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_number_operator"><code class="docutils literal notranslate"><span class="pre">get_number_operator()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_sisj"><code class="docutils literal notranslate"><span class="pre">get_sisj()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_spins"><code class="docutils literal notranslate"><span class="pre">get_spins()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">structure_factor_from_sij()</span></code></a></li>
@@ -1898,6 +1899,29 @@ Defaults to the full Hilbert space, <span class="math notranslate nohighlight">\
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="qse.magnetic.get_number_operator">
+<span class="sig-prename descclassname"><span class="pre">qse.magnetic.</span></span><span class="sig-name descname"><span class="pre">get_number_operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">statevector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nqbits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibasis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qse/magnetic.html#get_number_operator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.magnetic.get_number_operator" title="Link to this definition">#</a></dt>
+<dd><p>Get the expectation value of the number operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>statevector</strong> (<em>np.ndarray[complex]</em>) – <span class="math notranslate nohighlight">\(2^N\)</span> sized complex array representing the statevector.</p></li>
+<li><p><strong>nqbits</strong> (<em>int</em>) – Number of Qubits or Spins, <span class="math notranslate nohighlight">\(N\)</span>.</p></li>
+<li><p><strong>ibasis</strong> (<em>np.ndarray[bool], optional</em>) – Boolean array representing product basis for qubits passed for computing.
+Defaults to the full Hilbert space.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>np.ndarray[float]</em> – An N array with expectation values of the number operators.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The number operator for qubit <span class="math notranslate nohighlight">\(i\)</span> is given by
+<span class="math notranslate nohighlight">\(n_i|b_1,...,b_i,...,b_N\rangle=b_i|b_1,...,b_i,...,b_N\rangle\)</span>.
+This function returns the vector <span class="math notranslate nohighlight">\(\langle\psi|n_i|\psi\rangle\)</span>.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="qse.magnetic.get_sisj">
 <span class="sig-prename descclassname"><span class="pre">qse.magnetic.</span></span><span class="sig-name descname"><span class="pre">get_sisj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">statevector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nqbits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ibasis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/qse/magnetic.html#get_sisj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.magnetic.get_sisj" title="Link to this definition">#</a></dt>
 <dd><p>Compute the spin correlation function
@@ -2173,6 +2197,7 @@ at each of these lattice sites.</p>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.magnetic">qse.magnetic</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_basis"><code class="docutils literal notranslate"><span class="pre">get_basis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_number_operator"><code class="docutils literal notranslate"><span class="pre">get_number_operator()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_sisj"><code class="docutils literal notranslate"><span class="pre">get_sisj()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.get_spins"><code class="docutils literal notranslate"><span class="pre">get_spins()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.magnetic.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">structure_factor_from_sij()</span></code></a></li>

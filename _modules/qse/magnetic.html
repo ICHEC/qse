@@ -599,6 +599,43 @@ document.write(`
     <span class="n">struc_fac</span> <span class="o">=</span> <span class="n">struc_fac</span><span class="o">.</span><span class="n">real</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">struc_fac</span></div>
 
+
+
+<div class="viewcode-block" id="get_number_operator">
+<a class="viewcode-back" href="../../api.html#qse.magnetic.get_number_operator">[docs]</a>
+<span class="k">def</span> <span class="nf">get_number_operator</span><span class="p">(</span>
+    <span class="n">statevector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">complex</span><span class="p">],</span> <span class="n">nqbits</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ibasis</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the expectation value of the number operators.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    statevector: np.ndarray[complex]</span>
+<span class="sd">        :math:`2^N` sized complex array representing the statevector.</span>
+<span class="sd">    nqbits: int</span>
+<span class="sd">        Number of Qubits or Spins, :math:`N`.</span>
+<span class="sd">    ibasis: np.ndarray[bool], optional</span>
+<span class="sd">        Boolean array representing product basis for qubits passed for computing.</span>
+<span class="sd">        Defaults to the full Hilbert space.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    np.ndarray[float]</span>
+<span class="sd">        An N array with expectation values of the number operators.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The number operator for qubit :math:`i` is given by</span>
+<span class="sd">    :math:`n_i|b_1,...,b_i,...,b_N\rangle=b_i|b_1,...,b_i,...,b_N\rangle`.</span>
+<span class="sd">    This function returns the vector :math:`\langle\psi|n_i|\psi\rangle`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">ibasis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ibasis</span> <span class="o">=</span> <span class="n">get_basis</span><span class="p">(</span><span class="n">nqbits</span><span class="p">)</span>
+
+    <span class="n">probs</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">statevector</span><span class="p">)</span> <span class="o">*</span> <span class="n">statevector</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ibasis</span> <span class="o">*</span> <span class="n">probs</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
 </pre></div>
 
                 </article>
