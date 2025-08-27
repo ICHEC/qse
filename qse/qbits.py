@@ -2,7 +2,6 @@
 This module defines the central object in the QSE package: the Qbits object.
 """
 
-import copy
 import numbers
 from math import cos, sin
 
@@ -10,9 +9,7 @@ import numpy as np
 from ase.cell import Cell
 from ase.geometry import (
     find_mic,
-    get_dihedrals,
 )
-from ase.utils import deprecated
 
 from qse.qbit import Qbit
 from qse.visualise import draw as _draw
@@ -384,8 +381,6 @@ class Qbits:
             tokens.append("...\n")
             for i in self[-3:]:
                 tokens.append("{0}".format(i) + ",\n")
-
-        tokens.append(txt + ",\n")
 
         cell = self.cell
         if cell:
@@ -836,7 +831,6 @@ class Qbits:
 
         # Move back to the rotation point
         self.positions = np.transpose(rcoords) + center
-
 
     def _masked_rotate(self, center, axis, diff, mask):
         # do rotation of subgroup by copying it to temporary qbits object

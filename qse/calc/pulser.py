@@ -96,7 +96,10 @@ class Pulser(Calculator):
         )
 
         super().__init__(
-            qbits=qbits, label=label, is_calculator_available=CALCULATOR_AVAILABLE, installation_message=installation_message, 
+            qbits=qbits,
+            label=label,
+            is_calculator_available=CALCULATOR_AVAILABLE,
+            installation_message=installation_message,
         )
         self.device = pulser.devices.MockDevice if device is None else device
         self.emulator = QutipEmulator if emulator is None else emulator

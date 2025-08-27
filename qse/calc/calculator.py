@@ -52,15 +52,15 @@ class Calculator:
         attached.  When restarting, qbits will get its positions and
         unit-cell updated from file.
     """
+
     def __init__(
         self,
         qbits,
-        label:str,
+        label: str,
         is_calculator_available: bool,
         installation_message: str,
     ):
-        """
-        """
+        """ """
         if not is_calculator_available:
             raise Exception(installation_message)
 
