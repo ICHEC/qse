@@ -37,10 +37,10 @@ class Qbits:
     scaled_positions: list of scaled-positions
         Like positions, but given in units of the unit cell.
         Can not be set at the same time as positions.
-    cell: 3x3 matrix, optional
+    cell: np.ndarray, optional
         The unit cell vectors.
-        First vector will lie in x-direction, second in xy-plane,
-        and the third one in z-positive subspace.
+        The first vector corresponds to the x-direction, second to the
+          xy-plane and the third to the z-positive subspace.
     celldisp: Vector
         Unit cell displacement vector. To visualize a displaced cell
         around the center of mass of a Systems of qbits. Default value
@@ -159,7 +159,6 @@ class Qbits:
             if scaled_positions is None:
                 positions = np.zeros((len(self.arrays["labels"]), 3))
             else:
-                assert self.cell.rank == 3
                 positions = np.dot(scaled_positions, self.cell)
         self.new_array("positions", positions, float, (3,))
 
@@ -408,8 +407,6 @@ class Qbits:
 
             constraints = [dict2constraint(d) for d in constraints]
 
-        # labels = dct.pop('labels', None)
-
         info = dct.pop("info", None)
 
         qbits = cls(
@@ -582,15 +579,14 @@ class Qbits:
 
     def __imul__(self, m):
         """In-place repeat of qbits."""
-        if isinstance(m, int):
-            m = (m, m, m)
-
         if self.cell is None:
             raise ValueError("Cannot repeat without a defined unit cell.")
 
         for x, vec in zip(m, self.cell):
             if x != 1 and not vec.any():
                 raise ValueError("Cannot repeat without a defined unit cell.")
+        if isinstance(m, int):
+            m = (m, m, m)
 
         M = np.prod(m)
         n = len(self)
@@ -599,13 +595,12 @@ class Qbits:
             self.arrays[name] = np.tile(a, (M,) + (1,) * (len(a.shape) - 1))
 
         positions = self.arrays["positions"]
-        i0 = 0
+        i = 0
         for m0 in range(m[0]):
             for m1 in range(m[1]):
                 for m2 in range(m[2]):
-                    i1 = i0 + n
-                    positions[i0:i1] += np.dot((m0, m1, m2), self.cell)
-                    i0 = i1
+                    positions[i : i + n] += np.dot((m0, m1, m2), self.cell)
+                    i += n
 
         if self.constraints is not None:
             self.constraints = [c.repeat(m, n) for c in self.constraints]
@@ -1330,16 +1325,6 @@ class Qbits:
         else:
             return not eq
 
-    def get_volume(self):
-        """Get volume of unit cell."""
-        if self.cell.rank != 3:
-            raise ValueError(
-                "You have {0} lattice vectors: volume not defined".format(
-                    self.cell.rank
-                )
-            )
-        return self.cell.volume
-
     def _get_positions(self):
         """Return reference to positions-array for in-place manipulations."""
         return self.arrays["positions"]
@@ -1365,14 +1350,12 @@ class Qbits:
             :
         ] = sts  # (sts.T / np.linalg.norm(sts, axis=1)).T # need to be normalized
 
-    # below is equivalent to defining @property states
     states = property(
         _get_states,
         _set_states,
         doc="Attribute for direct " + "manipulation of the states.",
     )
 
-    # Rajarshi: Write method to get labels
     def _get_labels(self):
         """Return array of labels"""
         return self.arrays["labels"]
@@ -1387,7 +1370,6 @@ class Qbits:
 
     @property
     def cell(self):
-        """The :class:`ase.cell.Cell` for direct manipulation."""
         return self._cellobj
 
     @cell.setter
