@@ -20,11 +20,10 @@ from qse.visualise import draw as _draw
 
 class Qbits:
     """
-    The Qbits object can represent an isolated molecule, or a
-    periodically repeated structure.  It has a unit cell and
-    there may be periodic boundary conditions along any of the three
-    unit cell axes. Information about the qbits (qubit state and
-    position) is stored in ndarrays.
+    The Qbits object can represent a set of Qubits in either a
+    a periodically repeated structure or an arbitray geometry. 
+    Information about the qubits (for example position or labels)
+    is stored in np.ndarrays.
 
     Parameters
     ----------
@@ -568,7 +567,14 @@ class Qbits:
         return qbits
 
     def extend(self, other):
-        """Extend qbits object by appending qbits from *other*."""
+        """
+        Extend qbits object by appending qbits from other.
+
+        Parameters
+        ----------
+        other : qse.Qbit | qse.Qbits
+            The qbit or qbits to be appended on.
+        """
         if isinstance(other, Qbit):
             other = self.from_qbit_list([other])
 
@@ -603,7 +609,15 @@ class Qbits:
         return self
 
     def append(self, qbit):
-        """Append qbit to end."""
+        """
+        Append qbit to end.
+        
+        Parameters
+        ----------
+        qbit : qse.Qbit
+            The qbit to be appended on.
+
+        """
         self.extend(self.__class__([qbit]))
 
     def __iter__(self):
@@ -677,7 +691,14 @@ class Qbits:
             self.arrays[name] = a[mask]
 
     def pop(self, i=-1):
-        """Remove and return qbit at index *i* (default last)."""
+        """
+        Remove and return qbit at index i (default last).
+
+        Parameters
+        ----------
+        i : int
+            The index to be removed and returned.
+        """
         qbit = self[i]
         qbit.cut_reference_to_qbits()
         del self[i]
@@ -750,12 +771,17 @@ class Qbits:
         )
 
     def repeat(self, rep):
-        """Create new repeated qbits object.
+        """
+        Create a new qbits object by repeating along the unit cell.
 
-        The *rep* argument should be a sequence of three positive
-        integers like *(2,3,1)* or a single integer (*r*) equivalent
-        to *(r,r,r)*."""
-
+        Parameters
+        ----------
+        rep : int | tuple
+            The repetitions along each unit cell vector.
+            Must either be a sequence of three positive integers
+            like (2,3,1) or a single integer r equivalent
+            to (r,r,r).
+        """
         qbits = self.copy()
         qbits *= rep
         return qbits
@@ -1138,7 +1164,7 @@ class Qbits:
             if mask[i]:
                 group += self[i]
         group.translate(-center)
-        group.rotate(diff * 180 / np.pi, axis)
+        group.rotate(diff, axis)
         group.translate(center)
         # set positions in original qbits object
         j = 0
@@ -1167,9 +1193,6 @@ class Qbits:
         ...                          [1, 0, 0], [2, 1, 0], [2, -1, 0]])
         >>> qbits.set_dihedral(1, 2, 3, 4, 210, mask=[0, 0, 0, 1, 1, 1])
         """
-
-        angle = _to_rads(angle)
-
         # if not provided, set mask to the last qbit in the
         # dihedral description
         if mask is None and indices is None:
@@ -1214,8 +1237,8 @@ class Qbits:
 
         Notes
         -----
-        Let x1, x2, x3 be the vectors describing the positions of the three
-        qubits. Then we calcule the angle between x1-x2 and x3-x2.
+        Let x_i, x_j, x_k be the vectors describing the positions of the three
+        qubits. Then we calcule the angle between x_i-x_j and x_k-x_j.
         """
         v1 = _norm_vector(self.positions[i] - self.positions[j])
         v2 = _norm_vector(self.positions[k] - self.positions[j])
@@ -1255,28 +1278,40 @@ class Qbits:
         return np.array([self.get_angle(i, j, k) for i, j, k in indices])
 
     def set_angle(
-        self, a1, a2=None, a3=None, angle=None, mask=None, indices=None, add=False
+        self, i, j, k, angle, mask=None, indices=None, add=False
     ):
         """
         Set angle (in degrees) formed by three qbits.
 
-        Sets the angle between vectors *a2*->*a1* and *a2*->*a3*.
+        Parameters
+        ----------
+        i : int
+            The index of the first qubit.
+        j : int
+            The index of the second qubit.
+        k : int
+            The index of the third qubit.
+        angle : float
+            The angle (in degrees) to be set.
+        mask : np.ndarray[bool], optional
+        indices : np.ndarray[int], optional
+        add : bool, optional
+            If True, the angle will be changed by the value given.
+            Defaults to False.
 
-        If *add* is `True`, the angle will be changed by the value given.
-
-        Same usage as in :meth:`ase.Qbits.set_dihedral`.
         If *mask* and *indices*
         are given, *indices* overwrites *mask*. If *mask* and *indices*
         are not set, only *a3* is moved.
+
+        Notes
+        -----
+        Let x_i, x_j, x_k be the vectors describing the positions of the three
+        qubits. Then we set the angle between x_i-x_j and x_k-x_j.
         """
-
-        if any(a is None for a in [a2, a3, angle]):
-            raise ValueError("a2, a3, and angle must not be None")
-
         # If not provided, set mask to the last qbit in the angle description
         if mask is None and indices is None:
             mask = np.zeros(len(self))
-            mask[a3] = 1
+            mask[k] = 1
         elif indices is not None:
             mask = [index in indices for index in range(len(self))]
 
@@ -1284,28 +1319,28 @@ class Qbits:
             diff = angle
         else:
             # Compute necessary in angle change, from current value
-            diff = angle - self.get_angle(a1, a2, a3)
+            diff = angle - self.get_angle(i, j, k)
 
-        diff = _to_rads(diff)
-        # Do rotation of subgroup by copying it to temporary qbits object and
-        # then rotating that
-        v10 = self.positions[a1] - self.positions[a2]
-        v12 = self.positions[a3] - self.positions[a2]
-        v10 /= np.linalg.norm(v10)
-        v12 /= np.linalg.norm(v12)
-        axis = np.cross(v10, v12)
-        center = self.positions[a2]
-        self._masked_rotate(center, axis, diff, mask)
+        v1 = _norm_vector(self.positions[i] - self.positions[j])
+        v2 = _norm_vector(self.positions[k] - self.positions[j])
+        self._masked_rotate(center=self.positions[j], axis=np.cross(v1, v2), diff=diff, mask=mask)
 
     def rattle(self, stdev=0.001, seed=None, rng=None):
-        """Randomly displace qbits.
+        """
+        Displace the qbit positions by a random amount drawn from a
+        normal distribution with zero mean.
 
-        This method adds random displacements to the qbit positions,
-        taking a possible constraint into account.  The random numbers are
-        drawn from a normal distribution of standard deviation stdev.
-
-        For a parallel calculation, it is important to use the same
-        seed on all processors!"""
+        Parameters
+        ----------
+        stdev : float, optional
+            The standard deviation of the normal distribution.
+            Defaults to 0.001.
+        seed : int, optional
+            The seed of the distribution.
+            Defaults to 42.
+        rng : numpy.random.Generator, optional
+            The random number generator for the distribution.
+        """
 
         if seed is not None and rng is not None:
             raise ValueError("Please do not provide both seed and rng.")
