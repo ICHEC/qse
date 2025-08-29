@@ -142,3 +142,29 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
             ax.text(x[ind], y[ind], s=qbits.labels[ind])
 
     return fig
+
+
+def correlation(corr_matrix, labels=None):
+    """
+    Visualise a correlation matrix.
+
+    Parameters
+    ----------
+    corr_matrix: np.ndarray
+        The correlation matrix to be visualised.
+    labels: list[str], optional
+        Labels to be displayed.
+    """
+    n = corr_matrix.shape[0]
+
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    im = ax.imshow(corr_matrix[::-1])  # use opposite convention to plt.
+    fig.colorbar(im, ax=ax)
+
+    if labels is None:
+        labels = ["%i" % i for i in range(n)]
+
+    ax.set_xticks(range(n), labels)
+    ax.set_yticks(range(n), labels[::-1])
+    return fig
