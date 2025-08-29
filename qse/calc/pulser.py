@@ -34,7 +34,8 @@ class Pulser(Calculator):
     qbits: qse.Qbits
         The qbits object.
     channel : str
-        Which channel to use. For example "rydberg_global" for Rydberg or "mw_global" for microwave.
+        Which channel to use. For example "rydberg_global" for Rydberg or
+        "mw_global" for microwave.
         Defaults to "rydberg_global".
     magnetic_field : np.ndarray | list
         A magnetic field. Must be a 3-component array or list.
@@ -170,7 +171,7 @@ class Pulser(Calculator):
             pulser.Pulse(amplitude=self.amplitude, detuning=self.detuning, phase=0),
             "ch0",
         )
-        if self.channel is "mw_global":
+        if self.channel == "mw_global":
             basis = "XY"
         else:
             basis = "ground-rydberg"
@@ -183,8 +184,7 @@ class Pulser(Calculator):
 
     def calculate(self, progress=True):
         """
-        Do the calculation.
-        # system_changes=all_changes -> check it's relevance.
+        Run the calculation.
         """
         # we need to have/add an attribute to calc for device
         # check whether all the emulator `classes` have .from_sequence method.
