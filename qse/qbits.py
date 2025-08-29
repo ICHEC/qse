@@ -9,7 +9,6 @@ from math import cos, sin
 import numpy as np
 from ase.cell import Cell
 from ase.geometry import (
-    find_mic,
     get_dihedrals,
 )
 from ase.utils import deprecated
@@ -21,7 +20,7 @@ from qse.visualise import draw as _draw
 class Qbits:
     """
     The Qbits object can represent a set of Qubits in either a
-    a periodically repeated structure or an arbitray geometry. 
+    a periodically repeated structure or an arbitray geometry.
     Information about the qubits (for example position or labels)
     is stored in np.ndarrays.
 
@@ -611,7 +610,7 @@ class Qbits:
     def append(self, qbit):
         """
         Append qbit to end.
-        
+
         Parameters
         ----------
         qbit : qse.Qbit
@@ -1277,9 +1276,7 @@ class Qbits:
             raise Exception("The indicies must be of shape (-1, 3).")
         return np.array([self.get_angle(i, j, k) for i, j, k in indices])
 
-    def set_angle(
-        self, i, j, k, angle, mask=None, indices=None, add=False
-    ):
+    def set_angle(self, i, j, k, angle, mask=None, indices=None, add=False):
         """
         Set angle (in degrees) formed by three qbits.
 
@@ -1294,19 +1291,21 @@ class Qbits:
         angle : float
             The angle (in degrees) to be set.
         mask : np.ndarray[bool], optional
-        indices : np.ndarray[int], optional
+            An array of truth values which determine if a given qbit
+            should be moved.
+        indicies : np.ndarray[int], optional
+            An array of the qbit indices to be moved.
         add : bool, optional
             If True, the angle will be changed by the value given.
             Defaults to False.
-
-        If *mask* and *indices*
-        are given, *indices* overwrites *mask*. If *mask* and *indices*
-        are not set, only *a3* is moved.
 
         Notes
         -----
         Let x_i, x_j, x_k be the vectors describing the positions of the three
         qubits. Then we set the angle between x_i-x_j and x_k-x_j.
+
+        If mask and indices are given, indices overwrites mask.
+        If mask and indices are not set, only qbit k is moved.
         """
         # If not provided, set mask to the last qbit in the angle description
         if mask is None and indices is None:
@@ -1323,7 +1322,9 @@ class Qbits:
 
         v1 = _norm_vector(self.positions[i] - self.positions[j])
         v2 = _norm_vector(self.positions[k] - self.positions[j])
-        self._masked_rotate(center=self.positions[j], axis=np.cross(v1, v2), diff=diff, mask=mask)
+        self._masked_rotate(
+            center=self.positions[j], axis=np.cross(v1, v2), diff=diff, mask=mask
+        )
 
     def rattle(self, stdev=0.001, seed=None, rng=None):
         """
@@ -1405,75 +1406,65 @@ class Qbits:
 
     def set_distance(
         self,
-        a0,
-        a1,
+        i,
+        j,
         distance,
         fix=0.5,
-        mic=False,
         mask=None,
         indices=None,
         add=False,
-        factor=False,
     ):
-        """Set the distance between two qbits.
+        """
+        Set the distance between qbits i and j to a given value.
 
-        Set the distance between qbits *a0* and *a1* to *distance*.
-        By default, the center of the two qbits will be fixed.  Use
-        *fix=0* to fix the first qbit, *fix=1* to fix the second
-        qbit and *fix=0.5* (default) to fix the center of the bond.
+        Parameters
+        ----------
+        i : int
+            The index of the first qubit.
+        j : int
+            The index of the second qubit.
+        distance : float
+            The distance to be set.
+        fix : float, optional
+            By default, the center of the two qbits will be fixed.  Use
+            fix=0 to fix the first qbit, fix=1 to fix the second
+            qbit and fix=0.5 (default) to fix the center.
+        mask : np.ndarray[bool], optional
+            An array of truth values which determine if a given qbit
+            should be moved.
+        indicies : np.ndarray[int], optional
+            An array of the qbit indices to be moved.
+        add : bool, optional
+            When True, the distance is changed by the value given.
+            Defaults to False.
 
-        If *mask* or *indices* are set (*mask* overwrites *indices*),
-        only the qbits defined there are moved
-        (see :meth:`ase.Qbits.set_dihedral`).
+        Notes
+        -----
+        If mask or indices are set (mask overwrites indices),
+        only the qbits defined there are moved.
+        It is assumed that the qbits in mask/indices move together
+        with  qbit j. If fix=1, only i will therefore be moved.
+        """
 
-        When *add* is true, the distance is changed by the value given.
-        In combination
-        with *factor* True, the value given is a factor scaling the distance.
-
-        It is assumed that the qbits in *mask*/*indices* move together
-        with *a1*. If *fix=1*, only *a0* will therefore be moved."""
-
-        if a0 % len(self) == a1 % len(self):
+        if i == j:
             raise ValueError("a0 and a1 must not be the same")
 
         if add:
-            oldDist = self.get_distance(a0, a1, mic=mic)
-            if factor:
-                newDist = oldDist * distance
-            else:
-                newDist = oldDist + distance
-            self.set_distance(
-                a0,
-                a1,
-                newDist,
-                fix=fix,
-                mic=mic,
-                mask=mask,
-                indices=indices,
-                add=False,
-                factor=False,
-            )
-            return
+            distance += self.get_distance(i, j)
 
-        R = self.arrays["positions"]
-        D = np.array([R[a1] - R[a0]])
-
-        if mic:
-            D, D_len = find_mic(D, self.cell, self.pbc)
-        else:
-            D_len = np.array([np.sqrt((D**2).sum())])
-        x = 1.0 - distance / D_len[0]
+        d_vec = self.positions[j] - self.positions[i]
+        x = 1.0 - distance / np.linalg.norm(d_vec)
 
         if mask is None and indices is None:
-            indices = [a0, a1]
+            indices = [i, j]
         elif mask:
-            indices = [i for i in range(len(self)) if mask[i]]
+            indices = [indx for indx in range(len(self)) if mask[indx]]
 
-        for i in indices:
-            if i == a0:
-                R[a0] += (x * fix) * D[0]
+        for indx in indices:
+            if indx == i:
+                self.positions[indx] += (x * fix) * d_vec
             else:
-                R[i] -= (x * (1.0 - fix)) * D[0]
+                self.positions[indx] -= (x * (1.0 - fix)) * d_vec
 
     def get_scaled_positions(self, wrap=True):
         """Get positions relative to unit cell.
