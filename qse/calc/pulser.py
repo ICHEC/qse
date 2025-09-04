@@ -33,6 +33,13 @@ class Pulser(Calculator):
         The detuning pulse.
     qbits: qse.Qbits
         The qbits object.
+    channel : str
+        Which channel to use. For example "rydberg_global" for Rydberg or
+        "mw_global" for microwave.
+        Defaults to "rydberg_global".
+    magnetic_field : np.ndarray | list
+        A magnetic field. Must be a 3-component array or list.
+        Can only be bassed when using the Microwave channel ("mw_global").
     device: pulser.devices.Device
         The device.
         Defaults to pulser.devices.MockDevice.
@@ -85,6 +92,8 @@ class Pulser(Calculator):
         qbits=None,
         amplitude=None,
         detuning=None,
+        channel="rydberg_global",
+        magnetic_field=None,
         device=None,
         emulator=None,
         label="pulser-run",
@@ -102,7 +111,13 @@ class Pulser(Calculator):
         self.emulator = QutipEmulator if emulator is None else emulator
         self.wtimes = wtimes
         self.results = None
-        self.channel = "rydberg_global"
+        self.channel = channel
+        self.magnetic_field = magnetic_field
+
+        if magnetic_field is not None and channel != "mw_global":
+            raise Exception(
+                "A magnetic field can only be passed when using the Microwave channel."
+            )
 
         self.amplitude = amplitude
         self.detuning = detuning
@@ -150,11 +165,17 @@ class Pulser(Calculator):
         """
         self._sequence = pulser.Sequence(self.register, self.device)
         self._sequence.declare_channel("ch0", self.channel)
+        if self.magnetic_field is not None:
+            self._sequence.set_magnetic_field(*self.magnetic_field)
         self._sequence.add(
             pulser.Pulse(amplitude=self.amplitude, detuning=self.detuning, phase=0),
             "ch0",
         )
-        self._sequence.measure("ground-rydberg")
+        if self.channel == "mw_global":
+            basis = "XY"
+        else:
+            basis = "ground-rydberg"
+        self._sequence.measure(basis)
         self._sim = self.emulator.from_sequence(self._sequence)
 
     @property
@@ -163,8 +184,7 @@ class Pulser(Calculator):
 
     def calculate(self, progress=True):
         """
-        Do the calculation.
-        # system_changes=all_changes -> check it's relevance.
+        Run the calculation.
         """
         # we need to have/add an attribute to calc for device
         # check whether all the emulator `classes` have .from_sequence method.
