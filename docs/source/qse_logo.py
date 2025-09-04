@@ -11,5 +11,5 @@ for font_size, c, alpha in zip(font_sizes, colors, alphas):
     plt.text(x=-0.06, y=0.1, s="QSE", size=font_size, color=(0.1, c, 0.5), alpha=alpha)
 
 plt.axis('off')
-#plt.savefig("logo.svg", format='svg', transparent=True)
-plt.show()
+plt.savefig("logo.svg", format='svg', transparent=True)
+#plt.show()
