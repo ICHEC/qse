@@ -1,13 +1,13 @@
-#!/usr/bin/env python3
-r"""
+"""
 Functions for computing magnetic correlation
 """
+
 import numpy as np
 
 import qse
 
 
-def get_basis(hsize: int, N: int):
+def get_basis(nqbits: int, hsize: int = None):
     """
     Returns a boolean array representing basis in qubit product state.
     Originally it is intended for the full qubit space, for which
@@ -16,23 +16,26 @@ def get_basis(hsize: int, N: int):
 
     Parameters
     ----------
-    hsize: int
+    nqbits: int
+        The number of qubits, :math:`N`.
+    hsize: int, optional
         The size of the hamiltonian or hilbert space.
-    N: int
-        The number of qubits.
+        Defaults to the full Hilbert space, :math:`2^N`.
 
     Returns
     -------
     np.ndarray
         The basis of shape (hsize, N).
     """
-    ibasis = np.empty((hsize, N), dtype=bool)
+    if hsize is None:
+        hsize = 2**nqbits
+    ibasis = np.empty((hsize, nqbits), dtype=bool)
     for i in range(hsize):
-        ibasis[i, :] = np.fromiter(np.binary_repr(i, N), dtype=int).astype(bool)
+        ibasis[i, :] = np.fromiter(np.binary_repr(i, nqbits), dtype=int).astype(bool)
     return ibasis
 
 
-def sxop(b: np.ndarray[bool], i: int):
+def _sxop(b: np.ndarray[bool], i: int):
     """
     The :math:`S_x` operator on a boolian array b (basically bit flip).
 
@@ -53,7 +56,7 @@ def sxop(b: np.ndarray[bool], i: int):
     return s
 
 
-def syop(b: np.ndarray[bool], i: int):
+def _syop(b: np.ndarray[bool], i: int):
     """
     The :math:`S_y` opertor on a boolian array b (this gives a flipped bit
     at ith index and a sign).
@@ -71,12 +74,12 @@ def syop(b: np.ndarray[bool], i: int):
         Of the form (s, c): where s is the basis after operation and c is sign.
     """
     s = b.copy()
-    s[i] = ~s[i]
     c = (-1) ** s[i] * 1j
+    s[i] = ~s[i]
     return (s, c)
 
 
-def get_index(arr: np.ndarray, val):
+def _get_index(arr: np.ndarray, val):
     """
     Get index where value matches in the array.
     Results in either single integer, or an array containing indices.
@@ -97,7 +100,7 @@ def get_index(arr: np.ndarray, val):
 
 
 def get_spins(
-    statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int
+    statevector: np.ndarray[complex], nqbits: int, ibasis: np.ndarray[bool] = None
 ) -> np.ndarray[float]:
     r"""
     Get the expectation value of the spin operators :math:`(S_x, S_y, S_z)`.
@@ -106,10 +109,11 @@ def get_spins(
     ----------
     statevector: np.ndarray[complex]
         :math:`2^N` sized complex array representing the statevector.
-    ibasis: np.ndarray[bool]
+    nqbits: int
+        Number of Qubits or Spins, :math:`N`.
+    ibasis: np.ndarray[bool], optional
         Boolean array representing product basis for qubits passed for computing.
-    N: int
-        Number of Qubits or Spins.
+        Defaults to the full Hilbert space.
 
     Returns
     -------
@@ -123,28 +127,31 @@ def get_spins(
     The state is given as follows:
     :math:`|\psi\rangle  = \sum_i \text{statevector}[i] \, \text{ibasis}[i]`.
     """
-    szi = np.zeros(N, dtype=float)
+    if ibasis is None:
+        ibasis = get_basis(nqbits)
+
+    szi = np.zeros(nqbits, dtype=float)
     for l, b in enumerate(ibasis):
         c_alpha = statevector[l]
         prob = (c_alpha * c_alpha.conj()).real
         zi = 1 - 2 * b
         szi += prob * zi
 
-    sxi = np.zeros(N, dtype=complex)
+    sxi = np.zeros(nqbits, dtype=complex)
     for l, b in enumerate(ibasis):
         c_alpha = statevector[l]
-        states = [sxop(b, i) for i in range(N)]
-        indices = [np.where((ibasis == s).all(axis=1))[0][0] for s in states]
+        states = [_sxop(b, i) for i in range(nqbits)]
+        indices = [_get_index(ibasis, s) for s in states]
         ci = statevector[indices]
         sxi += c_alpha * ci.conj()
 
-    syi = np.zeros(N, dtype=complex)
+    syi = np.zeros(nqbits, dtype=complex)
     for l, b in enumerate(ibasis):
         c_alpha = statevector[l]
-        out = [syop(b, i) for i in range(N)]
+        out = [_syop(b, i) for i in range(nqbits)]
         states = [i[0] for i in out]
         cc = np.array([i[1] for i in out])
-        indices = [np.where((ibasis == s).all(axis=1))[0][0] for s in states]
+        indices = [_get_index(ibasis, s) for s in states]
         ci = statevector[indices]
         syi += c_alpha * ci.conj() * cc
 
@@ -153,7 +160,9 @@ def get_spins(
 
 
 def get_sisj(
-    statevector: np.ndarray[complex], ibasis: np.ndarray[bool], N: int
+    statevector: np.ndarray[complex],
+    nqbits: int,
+    ibasis: np.ndarray[bool] = None,
 ) -> np.ndarray[float]:
     r"""
     Compute the spin correlation function
@@ -163,10 +172,11 @@ def get_sisj(
     ----------
     statevector: np.ndarray[complex]
         :math:`2^N` sized complex array representing the statevector.
-    ibasis: np.ndarray[bool]
+    nqbits: int
+        Number of Qubits or Spins, :math:`N`.
+    ibasis: np.ndarray[bool], optional
         Boolean array representing product basis for qubits passed for computing.
-    N: int
-        Number of Qubits or Spins.
+        Defaults to the full Hilbert space.
 
     Returns
     -------
@@ -180,7 +190,10 @@ def get_sisj(
     :math:`S_i = (S_x, S_y, S_z)`. The state :math:`|\psi\rangle` is given as follows:
     :math:`|\psi\rangle  = \sum_i \text{statevector}[i] \, \text{ibasis}[i]`.
     """
-    s_ij = np.zeros((N, N), dtype=float)
+    if ibasis is None:
+        ibasis = get_basis(nqbits)
+
+    s_ij = np.zeros((nqbits, nqbits), dtype=float)
 
     # z-z part of the correlation
     for l, b in enumerate(ibasis):
@@ -193,10 +206,12 @@ def get_sisj(
     # x-x and y-y part of the correlation
     for l, b in enumerate(ibasis):
         c_alpha = statevector[l]
-        states_ij = np.array([sxop(sxop(b, i), j) for i in range(N) for j in range(N)])
-        indices = np.array(
-            [np.where((ibasis == s).all(axis=1))[0][0] for s in states_ij]
-        ).reshape(N, N)
+        states_ij = np.array(
+            [_sxop(_sxop(b, i), j) for i in range(nqbits) for j in range(nqbits)]
+        )
+        indices = np.array([_get_index(ibasis, s) for s in states_ij]).reshape(
+            nqbits, nqbits
+        )
         cij = statevector[indices].conj()
         zi = 1 - 2 * b
         zip = -zi
@@ -256,3 +271,37 @@ def structure_factor_from_sij(
     struc_fac /= normalize
     struc_fac = struc_fac.real.copy()
     return struc_fac
+
+
+def get_number_operator(
+    statevector: np.ndarray[complex], nqbits: int, ibasis: np.ndarray[bool] = None
+) -> np.ndarray[float]:
+    r"""
+    Get the expectation value of the number operators.
+
+    Parameters
+    ----------
+    statevector: np.ndarray[complex]
+        :math:`2^N` sized complex array representing the statevector.
+    nqbits: int
+        Number of Qubits or Spins, :math:`N`.
+    ibasis: np.ndarray[bool], optional
+        Boolean array representing product basis for qubits passed for computing.
+        Defaults to the full Hilbert space.
+
+    Returns
+    -------
+    np.ndarray[float]
+        An N array with expectation values of the number operators.
+
+    Notes
+    -----
+    The number operator for qubit :math:`i` is given by
+    :math:`n_i|b_1,...,b_i,...,b_N\rangle=b_i|b_1,...,b_i,...,b_N\rangle`.
+    This function returns the vector :math:`\langle\psi|n_i|\psi\rangle`.
+    """
+    if ibasis is None:
+        ibasis = get_basis(nqbits)
+
+    probs = (np.conj(statevector) * statevector).real
+    return (ibasis * probs[:, None]).sum(0)

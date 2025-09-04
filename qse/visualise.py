@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+rads = np.linspace(12, 1, 10)
+colors = np.sqrt(np.linspace(0.1, 0.9, 10))
+
 
 def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
     """
@@ -25,8 +28,10 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
     units : str, optional
         The units of distance.
     """
-    if (colouring is not None) and (len(colouring) != qbits.nqbits):
-        raise Exception("The length of colouring must equal the number of Qubits.")
+    if colouring is not None:
+        if len(colouring) != qbits.nqbits:
+            raise Exception("The length of colouring must equal the number of Qubits.")
+        colouring = [int(i) for i in colouring]
 
     cell_rank = qbits.cell.rank
     position_rank = np.linalg.matrix_rank(qbits.positions)
@@ -87,7 +92,10 @@ def _draw_3d(qbits, draw_bonds, radius, rij, min_dist):
             alpha=alpha,
         )
     x, y, z = positions.T
-    ax.scatter(x, y, z, "o", color="blue")
+
+    for r, c in zip(rads, colors):
+        ax.scatter(x, y, z, s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8)
+
     return fig
 
 
@@ -114,13 +122,20 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
             ax.plot([x[i], x[j]], [y[i], y[j]], c="gray", alpha=alpha, zorder=-1)
 
     if colouring is not None:
-        colours = ["C0", "C2", "C1", "C3", "C4", "C5", "C6"]  # green as 2nd
-        for c, label in enumerate(set(colouring)):
-            inds = [j == label for j in colouring]
-            ax.scatter(x[inds], y[inds], c=colours[c], label=label, s=80, zorder=1)
-        ax.legend()
+        inds0 = [j == 0 for j in colouring]
+        inds1 = [j == 1 for j in colouring]
+
+        for r, c in zip(rads, colors):
+            ax.scatter(
+                x[inds0], y[inds0], s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8
+            )
+            ax.scatter(
+                x[inds1], y[inds1], s=r**2, color=(c, 0.1, 0.5), zorder=1, alpha=0.8
+            )
+
     else:
-        ax.scatter(x, y, c="g", s=80, zorder=1)
+        for r, c in zip(rads, colors):
+            ax.scatter(x, y, s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8)
 
     if show_labels:
         for ind in range(qbits.nqbits):
