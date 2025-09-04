@@ -142,3 +142,33 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
             ax.text(x[ind], y[ind], s=qbits.labels[ind])
 
     return fig
+
+
+def view_matrix(corr_matrix, labels_x=None, labels_y=None):
+    """
+    Visualise a matrix.
+
+    Parameters
+    ----------
+    matrix: np.ndarray
+        The matrix to be visualised.
+    labels_x: list, optional
+        Labels to be displayed on the x axis.
+    labels_y: list, optional
+        Labels to be displayed on the y axis.
+    """
+
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    im = ax.imshow(corr_matrix[::-1])  # use opposite convention to plt.
+    fig.colorbar(im, ax=ax)
+
+    n, m = corr_matrix.shape
+
+    if labels_x is None:
+        labels_x = ["%i" % i for i in range(n)]
+        labels_y = ["%i" % i for i in range(m)]
+
+    ax.set_xticks(range(n), labels_x)
+    ax.set_yticks(range(m), labels_y[::-1])
+    return fig
