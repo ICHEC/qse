@@ -129,27 +129,31 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
     return fig
 
 
-def correlation(corr_matrix, labels=None):
+def view_matrix(corr_matrix, labels_x=None, labels_y=None):
     """
-    Visualise a correlation matrix.
+    Visualise a matrix.
 
     Parameters
     ----------
-    corr_matrix: np.ndarray
-        The correlation matrix to be visualised.
-    labels: list[str], optional
-        Labels to be displayed.
+    matrix: np.ndarray
+        The matrix to be visualised.
+    labels_x: list, optional
+        Labels to be displayed on the x axis.
+    labels_y: list, optional
+        Labels to be displayed on the y axis.
     """
-    n = corr_matrix.shape[0]
 
     fig = plt.figure()
     ax = fig.add_subplot()
     im = ax.imshow(corr_matrix[::-1])  # use opposite convention to plt.
     fig.colorbar(im, ax=ax)
 
-    if labels is None:
-        labels = ["%i" % i for i in range(n)]
+    n, m = corr_matrix.shape
 
-    ax.set_xticks(range(n), labels)
-    ax.set_yticks(range(n), labels[::-1])
+    if labels_x is None:
+        labels_x = ["%i" % i for i in range(n)]
+        labels_y = ["%i" % i for i in range(m)]
+
+    ax.set_xticks(range(n), labels_x)
+    ax.set_yticks(range(m), labels_y[::-1])
     return fig
