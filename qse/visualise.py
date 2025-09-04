@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.colors import TwoSlopeNorm
 
 rads = np.linspace(12, 1, 10)
 colors = np.sqrt(np.linspace(0.1, 0.9, 10))
@@ -160,15 +161,17 @@ def view_matrix(corr_matrix, labels_x=None, labels_y=None):
 
     fig = plt.figure()
     ax = fig.add_subplot()
-    im = ax.imshow(corr_matrix[::-1])  # use opposite convention to plt.
+
+    if labels_x is not None:
+        ax.set_xticks(range(corr_matrix.shape[0]), labels_x)
+
+    if labels_y is not None:
+        ax.set_yticks(range(corr_matrix.shape[1]), labels_y)
+
+    im = ax.imshow(corr_matrix, cmap="RdBu", norm=TwoSlopeNorm(0., corr_matrix.min(), corr_matrix.max()))
+
+
     fig.colorbar(im, ax=ax)
 
-    n, m = corr_matrix.shape
-
-    if labels_x is None:
-        labels_x = ["%i" % i for i in range(n)]
-        labels_y = ["%i" % i for i in range(m)]
-
-    ax.set_xticks(range(n), labels_x)
-    ax.set_yticks(range(m), labels_y[::-1])
+    ax.invert_yaxis()  # More natural to invert y-axis for these plots.
     return fig
