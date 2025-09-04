@@ -33,9 +33,9 @@ See the `contributing page <https://github.com/ICHEC/qse/blob/main/CONTRIBUTIONS
    :maxdepth: 1
    :caption: Tutorials
 
-   examples/creating_and_manipulating_qbits
-   examples/generating_lattices
-   examples/pulser-calc-example
+   tutorials/creating_and_manipulating_qbits
+   tutorials/generating_lattices
+   tutorials/pulser-calc-example
 
 
 .. toctree::
