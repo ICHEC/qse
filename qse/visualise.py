@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.colors import TwoSlopeNorm
 
 rads = np.linspace(12, 1, 10)
 colors = np.sqrt(np.linspace(0.1, 0.9, 10))
@@ -141,4 +142,45 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
         for ind in range(qbits.nqbits):
             ax.text(x[ind], y[ind], s=qbits.labels[ind])
 
+    return fig
+
+
+def view_matrix(matrix, labels_x=None, labels_y=None, vcenter=None):
+    """
+    Visualise a matrix.
+
+    Parameters
+    ----------
+    matrix: np.ndarray
+        The matrix to be visualised.
+    labels_x: list, optional
+        Labels to be displayed on the x axis.
+    labels_y: list, optional
+        Labels to be displayed on the y axis.
+    vcenter: float, optional
+        The center of the colorbar.
+    """
+
+    fig = plt.figure()
+    ax = fig.add_subplot()
+
+    if labels_x is not None:
+        ax.set_xticks(range(matrix.shape[0]), labels_x)
+
+    if labels_y is not None:
+        ax.set_yticks(range(matrix.shape[1]), labels_y)
+
+    norm = None
+    if vcenter is not None:
+        norm = TwoSlopeNorm(vmin=matrix.min(), vcenter=vcenter, vmax=matrix.max())
+
+    im = ax.imshow(
+        matrix,
+        cmap="RdBu",
+        norm=norm,
+    )
+
+    fig.colorbar(im, ax=ax)
+
+    ax.invert_yaxis()  # More natural to invert y-axis for these plots.
     return fig
