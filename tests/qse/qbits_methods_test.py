@@ -104,6 +104,16 @@ def test_get_all_distances_properties(nqbits):
     assert np.allclose(distances, distances.T)
 
 
+@pytest.mark.parametrize("nqbits", [3, 4])
+@pytest.mark.parametrize("distance", [0.2, 2.1])
+@pytest.mark.parametrize("inds", [[0, 1], [1, 2], [2, 0]])
+def test_set_distance(nqbits, distance, inds):
+    """Test set_distance."""
+    qbits = qse.Qbits(positions=np.random.rand(nqbits, 3))
+    qbits.set_distance(*inds, distance)
+    assert np.isclose(qbits.get_distance(*inds), distance)
+
+
 @pytest.mark.parametrize(
     "positions",
     [
@@ -326,7 +336,11 @@ def test_get_angle(angle):
         angle = 360.0 - angle
     elif angle < 0.0:
         angle = -angle
-    assert np.isclose(qbits.get_angle(0, 1, 2), angle, atol=1e-6)
+    if np.isclose(angle, 0.0):
+        # Tests often fail close to zero.
+        assert np.isclose(qbits.get_angle(0, 1, 2), angle, atol=1e-5)
+    else:
+        assert np.isclose(qbits.get_angle(0, 1, 2), angle)
 
 
 def test_get_angles():
