@@ -12,11 +12,6 @@ in a vendor agnostic way. ASE's modular nature, and extensability make it very u
 
    This project is under active development.
 
-
-Installation
-------------
-See the `installation page <https://github.com/ICHEC/qse/blob/main/INSTALLATION.md>`_.
-
 Contributing
 ------------
 See the `contributing page <https://github.com/ICHEC/qse/blob/main/CONTRIBUTIONS.md>`_.
@@ -27,6 +22,7 @@ See the `contributing page <https://github.com/ICHEC/qse/blob/main/CONTRIBUTIONS
    :maxdepth: 1
 
    Home <self>
+   INSTALLATION
 
 .. toctree::
    :hidden:

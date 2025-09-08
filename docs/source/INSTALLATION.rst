@@ -1,0 +1,49 @@
+Installation
+============
+It is recommmended to install within a new Conda environment.
+To create a new conda environment use
+
+.. code-block:: bash
+
+    conda create -n <my-env> python=<python_version>
+
+where we recommend 3.10, 3.11 or 3.12 for the version of Python.
+The environment can then be activated with
+
+.. code-block:: bash
+
+    conda activate <my-env>
+
+Make sure you're in the directory where the ``pyproject.toml`` file is situated and install the package and its dependencies using ``pip``
+
+.. code-block:: bash
+
+    pip install .
+
+If you want to be able to edit the code and have the changes immediately take place without requiring a new installation, use the editable flag
+
+.. code-block:: bash
+
+    pip install -e .
+
+You can verify the package and dependencies were installed correctly with
+
+.. code-block:: bash
+
+    pip list
+
+if you installed ``qse`` in editable mode, ``pip list`` should show it having an editable project location.
+
+Installing optional dependencies
+--------------------------------
+You can install Pulser with ``qse`` using
+
+.. code-block:: bash
+
+    pip install ".[pulser]"
+
+and myQLM using
+
+.. code-block:: bash
+
+    pip install ".[myqlm]"
