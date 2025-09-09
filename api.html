@@ -499,6 +499,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.utils.print_environment"><code class="docutils literal notranslate"><span class="pre">print_environment()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.visualise">qse.visualise</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
             </nav>
@@ -2036,6 +2040,32 @@ at each of these lattice sites.</p>
 </dd></dl>
 
 </section>
+<section id="module-qse.visualise">
+<span id="qse-visualise"></span><h2>qse.visualise<a class="headerlink" href="#module-qse.visualise" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="qse.visualise.draw">
+<span class="sig-prename descclassname"><span class="pre">qse.visualise.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/visualise.html#draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.visualise.draw" title="Link to this definition">#</a></dt>
+<dd><p>Visualize the positions of a set of qubits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The Qbits object.</p></li>
+<li><p><strong>radius</strong> (<em>float | str</em>) – A cutoff radius for visualizing bonds.
+Pass ‘nearest’ to set the radius to the smallest
+distance between the passed qubits.
+If no value is passed the bonds will not be visualized.</p></li>
+<li><p><strong>show_labels</strong> (<em>bool</em>) – Whether to show the labels of the qubits.
+Defaults to False.</p></li>
+<li><p><strong>colouring</strong> (<em>str | list</em>) – A set of integers used to assign different colors to each Qubit.
+This can be used to view different magnetic orderings.
+Must have the same length as the number of Qubits.</p></li>
+<li><p><strong>units</strong> (<em>str, optional</em>) – The units of distance.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="indices-and-tables">
 <h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -2212,6 +2242,10 @@ at each of these lattice sites.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.utils">qse.utils</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.utils.int2bin"><code class="docutils literal notranslate"><span class="pre">int2bin()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.utils.print_environment"><code class="docutils literal notranslate"><span class="pre">print_environment()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.visualise">qse.visualise</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
