@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.calc.pulser &#8212; qse 0.2.25 documentation</title>
+    <title>qse.calc.pulser &#8212; qse 0.2.26 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../_static/documentation_options.js?v=80eff2ec"></script>
+    <script src="../../../_static/documentation_options.js?v=979b728a"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -142,7 +142,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.25 documentation</p>
+    <p class="title logo__title">qse 0.2.26 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -357,6 +357,13 @@ document.write(`
 <span class="sd">        The detuning pulse.</span>
 <span class="sd">    qbits: qse.Qbits</span>
 <span class="sd">        The qbits object.</span>
+<span class="sd">    channel : str</span>
+<span class="sd">        Which channel to use. For example &quot;rydberg_global&quot; for Rydberg or</span>
+<span class="sd">        &quot;mw_global&quot; for microwave.</span>
+<span class="sd">        Defaults to &quot;rydberg_global&quot;.</span>
+<span class="sd">    magnetic_field : np.ndarray | list</span>
+<span class="sd">        A magnetic field. Must be a 3-component array or list.</span>
+<span class="sd">        Can only be passed when using the Microwave channel (&quot;mw_global&quot;).</span>
 <span class="sd">    device: pulser.devices.Device</span>
 <span class="sd">        The device.</span>
 <span class="sd">        Defaults to pulser.devices.MockDevice.</span>
@@ -409,6 +416,8 @@ document.write(`
         <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">amplitude</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">detuning</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">channel</span><span class="o">=</span><span class="s2">&quot;rydberg_global&quot;</span><span class="p">,</span>
+        <span class="n">magnetic_field</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">emulator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;pulser-run&quot;</span><span class="p">,</span>
@@ -426,7 +435,13 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span> <span class="o">=</span> <span class="n">QutipEmulator</span> <span class="k">if</span> <span class="n">emulator</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">emulator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span> <span class="o">=</span> <span class="n">wtimes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="s2">&quot;rydberg_global&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">magnetic_field</span> <span class="o">=</span> <span class="n">magnetic_field</span>
+
+        <span class="k">if</span> <span class="n">magnetic_field</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">channel</span> <span class="o">!=</span> <span class="s2">&quot;mw_global&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;A magnetic field can only be passed when using the Microwave channel.&quot;</span>
+            <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span> <span class="o">=</span> <span class="n">detuning</span>
@@ -476,11 +491,17 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="o">.</span><span class="n">declare_channel</span><span class="p">(</span><span class="s2">&quot;ch0&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">magnetic_field</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="o">.</span><span class="n">set_magnetic_field</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">magnetic_field</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
             <span class="n">pulser</span><span class="o">.</span><span class="n">Pulse</span><span class="p">(</span><span class="n">amplitude</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">,</span> <span class="n">detuning</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">detuning</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
             <span class="s2">&quot;ch0&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="s2">&quot;ground-rydberg&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">==</span> <span class="s2">&quot;mw_global&quot;</span><span class="p">:</span>
+            <span class="n">basis</span> <span class="o">=</span> <span class="s2">&quot;XY&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">basis</span> <span class="o">=</span> <span class="s2">&quot;ground-rydberg&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emulator</span><span class="o">.</span><span class="n">from_sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span><span class="p">)</span></div>
 
 
@@ -492,8 +513,7 @@ document.write(`
 <a class="viewcode-back" href="../../../api.html#qse.calc.Pulser.calculate">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Do the calculation.</span>
-<span class="sd">        # system_changes=all_changes -&gt; check it&#39;s relevance.</span>
+<span class="sd">        Run the calculation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># we need to have/add an attribute to calc for device</span>
         <span class="c1"># check whether all the emulator `classes` have .from_sequence method.</span>

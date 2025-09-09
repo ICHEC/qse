@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API reference &#8212; qse 0.2.25 documentation</title>
+    <title>API reference &#8212; qse 0.2.26 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=80eff2ec"></script>
+    <script src="_static/documentation_options.js?v=979b728a"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -143,7 +143,7 @@
   
   
   
-    <p class="title logo__title">qse 0.2.25 documentation</p>
+    <p class="title logo__title">qse 0.2.26 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -1677,7 +1677,7 @@ with the rest of the results, without being a fatal ReadError.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qse.calc.Pulser">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">Pulser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detuning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emulator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pulser-run'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wtimes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/pulser.html#Pulser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Pulser" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">Pulser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detuning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rydberg_global'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnetic_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emulator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pulser-run'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wtimes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/pulser.html#Pulser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Pulser" title="Link to this definition">#</a></dt>
 <dd><p>QSE-Calculator for pulser.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1685,6 +1685,11 @@ with the rest of the results, without being a fatal ReadError.</p>
 <li><p><strong>amplitude</strong> (<em>qse.Signal, pulser.waveforms.Waveform</em>) – The amplitude pulse.</p></li>
 <li><p><strong>detuning</strong> (<em>qse.Signal, pulser.waveforms.Waveform</em>) – The detuning pulse.</p></li>
 <li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The qbits object.</p></li>
+<li><p><strong>channel</strong> (<em>str</em>) – Which channel to use. For example “rydberg_global” for Rydberg or
+“mw_global” for microwave.
+Defaults to “rydberg_global”.</p></li>
+<li><p><strong>magnetic_field</strong> (<em>np.ndarray | list</em>) – A magnetic field. Must be a 3-component array or list.
+Can only be passed when using the Microwave channel (“mw_global”).</p></li>
 <li><p><strong>device</strong> (<em>pulser.devices.Device</em>) – The device.
 Defaults to pulser.devices.MockDevice.</p></li>
 <li><p><strong>emulator</strong> – The emulator.
@@ -1733,8 +1738,7 @@ amplitude pulse and detuning pulse.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.calc.Pulser.calculate">
 <span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/pulser.html#Pulser.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Pulser.calculate" title="Link to this definition">#</a></dt>
-<dd><p>Do the calculation.
-# system_changes=all_changes -&gt; check it’s relevance.</p>
+<dd><p>Run the calculation.</p>
 </dd></dl>
 
 <dl class="py attribute">
