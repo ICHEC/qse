@@ -30,7 +30,7 @@ qse.visualise
 -------------
 .. automodule:: qse.visualise
     :members:
-   
+
 Indices and tables
 ------------------
 * :ref:`genindex`

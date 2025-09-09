@@ -39,7 +39,7 @@ class Pulser(Calculator):
         Defaults to "rydberg_global".
     magnetic_field : np.ndarray | list
         A magnetic field. Must be a 3-component array or list.
-        Can only be bassed when using the Microwave channel ("mw_global").
+        Can only be passed when using the Microwave channel ("mw_global").
     device: pulser.devices.Device
         The device.
         Defaults to pulser.devices.MockDevice.
