@@ -176,7 +176,7 @@ def view_matrix(matrix, labels_x=None, labels_y=None, vcenter=None):
 
     im = ax.imshow(
         matrix,
-        cmap="RdBu",
+        cmap="PiYG",
         norm=norm,
     )
 
