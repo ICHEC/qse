@@ -145,7 +145,7 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
     return fig
 
 
-def view_matrix(corr_matrix, labels_x=None, labels_y=None):
+def view_matrix(matrix, labels_x=None, labels_y=None, vcenter=None):
     """
     Visualise a matrix.
 
@@ -157,19 +157,28 @@ def view_matrix(corr_matrix, labels_x=None, labels_y=None):
         Labels to be displayed on the x axis.
     labels_y: list, optional
         Labels to be displayed on the y axis.
+    vcenter: float, optional
+        The center of the colorbar.
     """
 
     fig = plt.figure()
     ax = fig.add_subplot()
 
     if labels_x is not None:
-        ax.set_xticks(range(corr_matrix.shape[0]), labels_x)
+        ax.set_xticks(range(matrix.shape[0]), labels_x)
 
     if labels_y is not None:
-        ax.set_yticks(range(corr_matrix.shape[1]), labels_y)
+        ax.set_yticks(range(matrix.shape[1]), labels_y)
 
-    im = ax.imshow(corr_matrix, cmap="RdBu", norm=TwoSlopeNorm(0., corr_matrix.min(), corr_matrix.max()))
+    norm = None
+    if vcenter is not None:
+        norm = TwoSlopeNorm(vmin=matrix.min(), vcenter=vcenter, vmax=matrix.max())
 
+    im = ax.imshow(
+        matrix,
+        cmap="PiYG",
+        norm=norm,
+    )
 
     fig.colorbar(im, ax=ax)
 
