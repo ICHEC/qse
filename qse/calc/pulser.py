@@ -9,7 +9,6 @@ from time import time
 
 from qse import Signal
 from qse.calc.calculator import Calculator
-from qse.calc.messages import CalculatorSetupError
 
 try:
     import pulser
@@ -26,6 +25,53 @@ class Pulser(Calculator):
     r"""
     QSE-Calculator for pulser.
 
+    Parameters
+    ----------
+    amplitude: qse.Signal, pulser.waveforms.Waveform
+        The amplitude pulse.
+    detuning: qse.Signal, pulser.waveforms.Waveform
+        The detuning pulse.
+    qbits: qse.Qbits
+        The qbits object.
+    channel : str
+        Which channel to use. For example "rydberg_global" for Rydberg or
+        "mw_global" for microwave.
+        Defaults to "rydberg_global".
+    magnetic_field : np.ndarray | list
+        A magnetic field. Must be a 3-component array or list.
+        Can only be passed when using the Microwave channel ("mw_global").
+    device: pulser.devices.Device
+        The device.
+        Defaults to pulser.devices.MockDevice.
+    emulator
+        The emulator.
+        Defaults to QutipEmulator.
+    label: str
+        The label.
+        Defaults to "pulser-run".
+    wtimes: bool
+        Whether to print the times.
+        Defaults to True.
+
+    Examples
+    --------
+    A simple example of using the Pulser calculator:
+
+    >>> qbits = qse.lattices.chain(4.0, 4)
+    >>> duration = 400
+    >>> pulser_calc = qse.calc.Pulser(
+    ...     amplitude=qse.Signal(np.ones(6) * 1.01, duration),
+    ...     detuning=qse.Signal(np.ones(6) * 0.12, duration),
+    ...     qbits=qbits,
+    ... )
+    >>> pulser_calc.build_sequence()
+    >>> pulser_calc.calculate()
+    >>> pulser_calc.get_spins()
+
+    Notes
+    -----
+    Pulser will only use the x-y coordinates of the Qbits object.
+
     Pulser is an open-source Python software package.
     It provides easy-to-use libraries for designing and
     simulating pulse sequences that act on programmable
@@ -35,73 +81,24 @@ class Pulser(Calculator):
     White paper: Quantum 6, 629 (2022)
     Source code: https://github.com/pasqal-io/Pulser
     License: Apache 2.0
-    - see [LICENSE](https://github.com/pasqal-io/Pulser/blob/master/LICENSE) for details
-
-    Parameters
-    ----------
-    auto_write: bool
-        Flag to enable the auto-write mode. If enabled the
-        ``write()`` routine is called after every
-        calculation, which mimics the behavior of the
-        ``FileIOCalculator``. Default is ``False``.
-    basis_set: str
-        Name of the basis set to be use.
-        The default is ``DZVP-MOLOPT-SR-GTH``.
-    basis_set_file: str
-        Filename of the basis set file.
-        Default is ``BASIS_MOLOPT``.
-        Set the environment variable $CP2K_DATA_DIR
-        to enabled automatic file discovered.
-    charge: float
-        The total charge of the system.  Default is ``0``.
-    cutoff: float
-        The cutoff of the finest grid level.  Default is ``400 * Rydberg``.
-    debug: bool
-        Flag to enable debug mode. This will print all
-        communication between the CP2K-shell and the
-        CP2K-calculator. Default is ``False``.
-    force_eval_method: str
-        The method CP2K uses to evaluate energies and forces.
-        The default is ``Quickstep``, which is CP2K's
-        module for electronic structure methods like DFT.
-    max_scf: int
-        Maximum number of SCF iteration to be performed for
-        one optimization. Default is ``50``.
-    print_level: str
-        PRINT_LEVEL of global output.
-        Possible options are:
-        DEBUG Everything is written out, useful for debugging purposes only
-        HIGH Lots of output
-        LOW Little output
-        MEDIUM Quite some output
-        SILENT Almost no output
-        Default is 'LOW'
+    - see [LICENSE](https://github.com/pasqal-io/Pulser/blob/master/LICENSE)
+    for details.
     """
 
     implemented_properties = ["energy", "state", "fidality"]
-    default_parameters = dict(
-        auto_write=False,
-        folder="./",
-        max_scf=50,
-        print_level="LOW",
-        label="q",
-        qbits=None,
-    )
 
     def __init__(
         self,
         qbits=None,
         amplitude=None,
         detuning=None,
+        channel="rydberg_global",
+        magnetic_field=None,
         device=None,
         emulator=None,
         label="pulser-run",
         wtimes=True,
     ):
-        """
-        Construct pulser-calculator object.
-        we need qubits, amplitude, detuning, device and emulator.
-        """
         installation_message = (
             "Pulser is not installed. To install, "
             "see https://pulser.readthedocs.io/en/stable/installation.html."
@@ -112,164 +109,107 @@ class Pulser(Calculator):
         )
         self.device = pulser.devices.MockDevice if device is None else device
         self.emulator = QutipEmulator if emulator is None else emulator
-        self.label = label
         self.wtimes = wtimes
-        self.parameters = None
         self.results = None
-        self.channel = "rydberg_global"
-        if amplitude is not None:
-            if isinstance(amplitude, (Signal, pulser.waveforms.Waveform)):
-                self.amplitude = amplitude
-            else:
-                self.amplitude = Signal(amplitude)
-        if detuning is not None:
-            if isinstance(detuning, (Signal, pulser.waveforms.Waveform)):
-                self.detuning = detuning
-            else:
-                self.detuning = Signal(detuning)
+        self.channel = channel
+        self.magnetic_field = magnetic_field
 
-        # assert self.amplitude.duration == self.detuning.duration
-        self.duration = self.amplitude.duration
-        wa = isinstance(self.amplitude, pulser.waveforms.Waveform)
-        wd = isinstance(self.detuning, pulser.waveforms.Waveform)
-        if wa:
-            amp = self.amplitude
-        else:
-            amp = pulser.waveforms.InterpolatedWaveform(
-                duration=self.duration, values=self.amplitude.values
-            )
-        if wd:
-            det = self.detuning
-        else:
-            det = pulser.waveforms.InterpolatedWaveform(
-                duration=self.duration, values=self.detuning.values
+        if magnetic_field is not None and channel != "mw_global":
+            raise Exception(
+                "A magnetic field can only be passed when using the Microwave channel."
             )
 
-        self.pulse = pulser.Pulse(amplitude=amp, detuning=det, phase=0)
+        self.amplitude = amplitude
+        self.detuning = detuning
 
-        # self.pulse = pulser.Pulse(
-        #    amplitude=pulser.waveforms.InterpolatedWaveform(
-        #        duration=self.duration,
-        #        values=self.amplitude.values),
-        #        duration=self.duration,
-        #    detuning=pulser.waveforms.InterpolatedWaveform(
-        #        values=self.detuning.values), phase=0
-        # )
-        # pulser part which defines Hamiltonian parameters done. #
-        self._register, self._sequence, self._sim = None, None, None
-        self.qbits = qbits if qbits is not None else None
+        self._sequence = None
+        self._sim = None
+        self.statevector = None
         self.spins = None
         self.sij = None
 
     @property
-    def qbits(self):
-        return self._qbits
+    def amplitude(self):
+        return self._amplitude
 
-    @qbits.setter
-    def qbits(self, qbits, prefix="q"):
-        if qbits is None:
-            self._qbits, self._coords, self._register, self._sequence = (
-                None,
-                None,
-                None,
-                None,
-            )
-        else:
-            self._qbits = qbits
-            self._coords = qbits.positions[:, :2]
-            self._register = pulser.Register.from_coordinates(
-                self.coords, prefix=prefix
-            )
-            self.sequence = pulser.Sequence
+    @amplitude.setter
+    def amplitude(self, amplitude):
+        self._amplitude = _format_pulse(amplitude)
+
+    @property
+    def detuning(self):
+        return self._detuning
+
+    @detuning.setter
+    def detuning(self, detuning):
+        self._detuning = _format_pulse(detuning)
 
     @property
     def coords(self):
-        return self._coords
+        if self._qbits is None:
+            return None
+        return self._qbits.positions[:, :2]
 
     @property
     def register(self):
-        return self._register
+        return pulser.Register.from_coordinates(self.coords, prefix="q")
 
     @property
     def sequence(self):
         return self._sequence
 
-    @sequence.setter
-    def sequence(self, sequence):
-        self._sequence = sequence(self.register, self.device)
+    def build_sequence(self):
+        """
+        Build the sequence of operations involving the qubit coordinates,
+        amplitude pulse and detuning pulse.
+        """
+        self._sequence = pulser.Sequence(self.register, self.device)
         self._sequence.declare_channel("ch0", self.channel)
-        self._sequence.add(self.pulse, "ch0")
-        self._sequence.measure("ground-rydberg")
+        if self.magnetic_field is not None:
+            self._sequence.set_magnetic_field(*self.magnetic_field)
+        self._sequence.add(
+            pulser.Pulse(amplitude=self.amplitude, detuning=self.detuning, phase=0),
+            "ch0",
+        )
+        if self.channel == "mw_global":
+            basis = "XY"
+        else:
+            basis = "ground-rydberg"
+        self._sequence.measure(basis)
         self._sim = self.emulator.from_sequence(self._sequence)
 
     @property
     def sim(self):
         return self._sim
 
-    def build_sequence(self):
-        pass
-
-    def __del__(self):
-        """deleting process. Empty"""
-        pass
-
-    def set(self, **kwargs):
-        """Set parameters like set(key1=value1, key2=value2, ...)."""
-        msg = (
-            '"%s" is not a known keyword for the Pulser calculator. '
-            "To access all features of Pulser by means of an input "
-            'template, consider using the "inp" keyword instead.'
-        )
-        for key in kwargs:
-            if key not in self.default_parameters:
-                raise CalculatorSetupError(msg % key)
-
-        changed_parameters = Calculator.set(self, **kwargs)
-        if changed_parameters:
-            self.reset()
-
-    def write(self, label):
-        """
-        Write qbits, parameters and calculated results into restart files.
-        Not yet implemented.
-
-        Parameters
-        ----------
-        label : string
-            used in filename
-        """
-        pass
-
-    def read(self, label):
-        """
-        Read qbits, parameters and calculated results from restart files.
-        Not yet implemented.
-
-        Parameters
-        ----------
-        label : string
-            used in filename
-        """
-        pass
-
     def calculate(self, progress=True):
         """
-        Do the calculation.
-        # system_changes=all_changes -> check it's relevance.
+        Run the calculation.
         """
         # we need to have/add an attribute to calc for device
         # check whether all the emulator `classes` have .from_sequence method.
         if self.wtimes:
             t1 = time()
+
         self.results = self.sim.run(progress_bar=progress)
-        # self.qbits.states = self.results.get_final_state()
+
         final_state = self.results.get_final_state()
         self.statevector = qutip.core.dimensions.to_tensor_rep(final_state).flatten()
-        # if self.parameters.auto_write:
-        #    self.write(self.label)
+
         self.spins = self.get_spins()
-        # self.sij = self.get_sij()
-        # self.struc_fac = self.structure_factor_from_sij()
+
         if self.wtimes:
             t2 = time()
             print(f"time in compute and simulation = {t2 - t1} s.")
+
+
+def _format_pulse(pulse):
+    if pulse is None or isinstance(pulse, pulser.waveforms.Waveform):
+        return pulse
+    if isinstance(pulse, Signal):
+        return pulser.waveforms.InterpolatedWaveform(
+            duration=pulse.duration, values=pulse.values
+        )
+    raise Exception(
+        "Pulses must be either `qse.Signal` or `pulser.waveforms.Waveform`."
+    )
