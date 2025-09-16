@@ -6,6 +6,7 @@ from qse.lattices import (
     chain,
     hexagonal,
     kagome,
+    ring,
     square,
     triangular,
 )
@@ -24,6 +25,9 @@ def _lattice_checker(qbits, expected_qbits, lattice_spacing, expected_cellpar):
 
     # Check the cellpar corresponds to what we expect.
     assert np.allclose(qbits.cell.cellpar(), expected_cellpar)
+
+    # Check the labels
+    assert all(qbits.labels[i] == str(i) for i in range(qbits.nqbits))
 
 
 @pytest.mark.parametrize("lattice_spacing", _lattice_spacings)
@@ -106,3 +110,13 @@ def test_lattices_fail(lattice_func):
         Exception, match="The repeats_y must be an integer greater than 1. repeats_y=1"
     ):
         lattice_func(1.0, 2, 1)
+
+
+@pytest.mark.parametrize("spacing", [0.5, 2.98])
+@pytest.mark.parametrize("nqbits", [2, 4, 7])
+def test_ring(spacing, nqbits):
+    """Test the nearest neighbour distance is the spacing in the ring geometry."""
+    qbits = ring(spacing, nqbits)
+    distances = qbits.get_all_distances()
+    assert np.allclose(np.diag(distances, k=1), spacing)
+    assert np.allclose(np.diag(distances, k=-1), spacing)

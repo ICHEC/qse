@@ -15,14 +15,15 @@ __all__ = [
     "Qbits",
     "Signal",
     "utils",
+    "visualise",
 ]
-__version__ = "0.1.2"
+import importlib.metadata
 
-from ase import cell
+__version__ = importlib.metadata.version("qse")
 
 from qse.qbit import Qbit
 from qse.qbits import Qbits
 from qse.signal import Signal
 from qse.visualise import draw
 
-from qse import calc, lattices, magnetic, utils  # isort: skip
+from qse import calc, lattices, magnetic, utils, visualise  # isort: skip

@@ -5,7 +5,8 @@ name: Python package
 
 on:
   push:
-    paths: ['examples/**', 'qse/**', 'pyproject.toml', 'tests/**']
+    paths-ignore:
+        - 'pyproject.toml'
 
 jobs:
   build:
@@ -35,4 +36,4 @@ jobs:
         black . --check --diff
     - name: Test with pytest
       run: |
-        python -m pytest
+        python -m pytest tests/qse tests/qse_pulser

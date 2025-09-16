@@ -8,6 +8,7 @@ from typing import Any, Dict, List, Optional, Set
 import numpy as np
 from ase.outputs import Properties, all_outputs
 
+import qse.magnetic as magnetic
 from qse.calc.messages import (
     CalculationFailed,
     CalculatorSetupError,
@@ -230,7 +231,8 @@ class Calculator:
         installation_message: str,
         **kwargs,
     ):
-        """Basic calculator implementation.
+        """
+        Basic calculator implementation.
         label: str
             Name used for all files.  Not supported by all calculators.
             May contain a directory, but please use the directory parameter
@@ -265,6 +267,8 @@ class Calculator:
         if not hasattr(self, "name"):
             self.name = self.__class__.__name__.lower()
 
+        self.sij = None
+
     @property
     def label(self):
         return self._label
@@ -296,7 +300,8 @@ class Calculator:
         self.results = {}
 
     def read(self, label):
-        """Read qbits, parameters and calculated properties from output file.
+        """
+        Read qbits, parameters and calculated properties from output file.
 
         Read result from self.label file.  Raise ReadError if the file
         is not there.  If the file is corrupted or contains an error
@@ -312,7 +317,8 @@ class Calculator:
 
         The FileIOCalculator.read() method will typically read qbits
         and parameters and get the results dict by calling the
-        read_results() method."""
+        read_results() method.
+        """
 
         self.set_label(label)
 
@@ -326,9 +332,6 @@ class Calculator:
             qbits.calc = self
         return qbits
 
-    # def set_qbits(self, qbits):
-    #    self.qbits = qbits
-    #    #qbits.calc = self
     @property
     def qbits(self):
         return self._qbits
@@ -337,14 +340,13 @@ class Calculator:
     def qbits(self, qbits):
         self._qbits = qbits
 
-    # qbits = property(fget=get_qbits, fset=set_qbits, doc=f'qbits property, getter {get_qbits}, setter {set_qbits}')
-
     @classmethod
     def read_qbits(cls, restart, **kwargs):
         return cls(restart=restart, label=restart, **kwargs).get_qbits()
 
     def set(self, **kwargs):
-        """Set parameters like set(key1=value1, key2=value2, ...).
+        """
+        Set parameters like set(key1=value1, key2=value2, ...).
 
         A dictionary containing the parameters that have been changed
         is returned.
@@ -355,7 +357,8 @@ class Calculator:
         verbosity, then there is no need to call reset().
 
         The special keyword 'parameters' can be used to read
-        parameters from a file."""
+        parameters from a file.
+        """
 
         if "parameters" in kwargs:
             filename = kwargs.pop("parameters")
@@ -437,8 +440,11 @@ class Calculator:
         return False
 
     def calculate(self, qbits=None, properties=["energy"], system_changes=all_changes):
-        """Do the calculation.
+        """
+        Do the calculation.
 
+        Parameters
+        ----------
         properties: list of str
             List of what needs to be calculated.  Can be any combination
             of 'energy', 'forces', 'stress', 'dipole', 'charges', 'magmom'
@@ -489,6 +495,70 @@ class Calculator:
 
     def export_properties(self):
         return Properties(self.results)
+
+    def get_spins(self):
+        """
+        Get spin expectation values.
+        If the hamiltonian isn't simulated, it triggers simulation first.
+
+        Returns
+        -------
+        np.ndarray
+            Array of Nx3 containing spin expectation values.
+
+        See Also
+        --------
+        qse.magnetic.get_spins for more details.
+        """
+        if self.results is None:
+            self.calculate()
+
+        return magnetic.get_spins(self.statevector, len(self.qbits))
+
+    def get_sij(self):
+        r"""
+        Get spin correlation s_ij.
+        If the hamiltonian isn't simulated, it triggers simulation first.
+
+        Returns
+        -------
+        np.ndarray
+            Array of NxN shape containing spin correlations.
+
+        See Also
+        --------
+        qse.magnetic.get_sij for more details.
+        """
+        if self.results is None:
+            self.calculate()
+
+        sij = magnetic.get_sisj(self.statevector, len(self.qbits))
+        self.sij = sij  # quick fix. TODO: proper property setup done
+        return sij
+
+    def structure_factor_from_sij(self, L1: int, L2: int, L3: int):
+        r"""
+        Get the structure factor.
+
+        Parameters
+        ----------
+        L1: int
+            Extent of lattice in x direction.
+        L2: int
+            Extent of lattice in y direction.
+        L3: int
+            Extent of lattice in z direction.
+
+        Returns
+        -------
+        np.ndarray
+            Array containing the structure factor.
+
+        See Also
+        --------
+        qse.magnetic.structure_factor_from_sij for more details.
+        """
+        return magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
 
 
 class FileIOCalculator(Calculator):

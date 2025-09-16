@@ -9,7 +9,6 @@ from time import time
 
 import numpy as np
 
-import qse.magnetic as magnetic
 from qse.calc.calculator import Calculator
 
 qat_available = False
@@ -34,7 +33,7 @@ try:
         qlmaas_available = True
     else:
         AQPU_remote = None
-except ModuleNotFoundError:
+except (ModuleNotFoundError, ImportError):
     qlmaas_available = False
 
 if qat_available:
@@ -72,9 +71,33 @@ default_params = {
 }
 
 
-# for rydberg system we need additional parameters: mix,max of amplitude and detuning to set based on device.
+# for rydberg system we need additional parameters: mix,max of
+# amplitude and detuning to set based on device.
 class Myqlm(Calculator):
-    """QSE-Calculator for MyQLM"""
+    """
+    QSE-Calculator for MyQLM
+
+    Parameters
+    ----------
+    qbits
+        ...
+    amplitude
+        ...
+    detuning
+        ...
+    duration
+        ...
+    qpu
+        ...
+    analog
+        ...
+    system
+        ...
+    label
+        ...
+    wtimes
+        ...
+    """
 
     implemented_properties = ["energy", "state", "fidality"]
     default_parameters = dict(label="q", qbits=None)
@@ -123,9 +146,9 @@ class Myqlm(Calculator):
             else np.zeros(self.params["default_points"])
         )
         self.detuning = self._waveform(self.det, tmax=self.duration)
-        # self.duration = len(self.amplitude) # needs to change for time independent problems
+        # self.duration = len(self.amplitude) # needs to change
+        # for time independent problems
         self.C6 = self.params["C6"]
-        #
         self.qpu = None
         self.spins = None
         self.sij = None
@@ -144,8 +167,6 @@ class Myqlm(Calculator):
         else:
             ham = None
         return ham
-
-    #
 
     def _generate_rydberg_hamiltonian(self):
         rij = self.qbits.get_all_distances()
@@ -167,14 +188,12 @@ class Myqlm(Calculator):
                     * self._occ_op(nqbits, i)
                     * self._occ_op(nqbits, j)
                 )
-        Hamiltonian = [  # qat.core.Observable(
+
+        return [
             (amplitude, H_amplitude),
             (detuning, H_detuning),
             (1, H_interact),
         ]
-        return Hamiltonian
-
-    #
 
     def _waveform(self, vi, tmax):
         ti = np.linspace(0, tmax, vi.shape[0])
@@ -195,6 +214,18 @@ class Myqlm(Calculator):
         return arith_expr
 
     def calculate(self, qbits=None, properties=..., system_changes=...):
+        """
+        _summary_
+
+        Parameters
+        ----------
+        qbits : _type_, optional
+            _description_, by default None
+        properties : _type_, optional
+            _description_, by default ...
+        system_changes : _type_, optional
+            _description_, by default ...
+        """
         # return super().calculate(qbits, properties, system_changes)
         # self.Hamiltonian = self._get_hamiltonian()
         if self.wtimes:
@@ -225,53 +256,3 @@ class Myqlm(Calculator):
         if self.wtimes:
             t2 = time()
             print(f"time in compute and simulation = {t2 - t1} s.")
-
-    #
-
-    def get_spins(self):
-        """Get spin expectation values
-        If the hamiltonian isn't simulated, it triggers simulation first.
-
-        Returns:
-            np.ndarray: Array of Nx3 containing spin expectation values.
-        See :py.func: `qse.magnetic.get_spins` for more details.
-        """
-        if self.results is None:
-            self.calculate()
-        #
-        nqbits = len(self.qbits)
-        ibasis = magnetic.get_basis(2**nqbits, nqbits)
-        si = magnetic.get_spins(self.statevector, ibasis, nqbits)
-        return si
-
-    def get_sij(self):
-        r"""Get spin correlation s_ij
-        If the hamiltonian isn't simulated, it triggers simulation first.
-
-        Returns:
-            np.ndarray: Array of NxN shape containing spin correlations.
-        See :py.func: `qse.magnetic.get_sij` for more details.
-        """
-        if self.results is None:
-            self.calculate()
-        #
-        nqbits = len(self.qbits)
-        ibasis = magnetic.get_basis(2**nqbits, nqbits)
-        sij = magnetic.get_sisj(self.statevector, ibasis, nqbits)
-        self.sij = sij  # quick fix. TODO: proper property setup done
-        return sij
-
-    def structure_factor_from_sij(self, L1: int, L2: int, L3: int):
-        r"""Get the structure factor
-
-        Args:
-            L1 (int): Extent of lattice in x direction
-            L2 (int): Extent of lattice in y direction
-            L3 (int): Extent of lattice in z direction
-
-        Returns:
-            np.ndarray: Array containing the structure factor
-        See :py.func: `qse.magnetic.structure_factor_from_sij` for more details.
-        """
-        struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
-        return struc_fac
