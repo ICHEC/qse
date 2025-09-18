@@ -3,54 +3,66 @@ import pytest
 
 import qse
 
-
-@pytest.mark.parametrize("hsize, N", [(8, 4), (3, 3)])
-def test_get_basis_shape(hsize, N):
-    """Check that get_basis outputs a hsize * N shape"""
-    ibasis = qse.magnetic.get_basis(hsize, N)
-    assert ibasis.shape == (hsize, N)
+pauli_x = np.array([[0.0, 1.0], [1.0, 0.0]])
+pauli_y = np.array([[0.0, -1.0j], [1.0j, 0.0]])
+pauli_z = np.array([[1.0, 0.0], [0.0, -1.0]])
 
 
-@pytest.mark.parametrize(
-    "statevector, ibasis, results",
-    [
-        (
-            np.array([1 / np.sqrt(2), 1 / np.sqrt(2)], dtype=complex),
-            qse.magnetic.get_basis(2**1, 1),
-            np.array([1, 0, 0], dtype=complex).T.real,
-        ),
-        (
-            np.array([1 / 2, 1 / 2, 1 / 2, 1 / 2], dtype=complex),
-            qse.magnetic.get_basis(2**2, 2),
-            np.array([[1, 0, 0], [1, 0, 0]], dtype=complex),
-        ),
-        (
-            np.array([1 / np.sqrt(2), 0, 0, 1 / np.sqrt(2)], dtype=complex),
-            qse.magnetic.get_basis(2**2, 2),
-            np.array(
-                [
-                    [0, 0, 0],
-                    [0, 0, 0],
-                ],
-                dtype=complex,
-            ),
-        ),
-    ],
-)
-def test_get_spins_on_simple_statevectors(statevector, ibasis, results):
-    """Test output of get_spins on simple quantum states"""
-    N = int(np.log2(statevector.shape[0]))
-    spins = qse.magnetic.get_spins(statevector, ibasis, N)
-    assert np.allclose(results, spins)
-
-
-@pytest.mark.parametrize("k", [1, 2, 3, 4])
-def test_spin_values_are_less_than_one(k):
-    "Test that the absolute values of the computed spins is less than 1"
-    real_part = np.random.rand(2**k)
-    imag_part = np.random.rand(2**k)
-    statevector = real_part + 1j * imag_part
+def random_state(hdim):
+    statevector = np.random.rand(hdim) + 1j * np.random.rand(hdim)
     statevector /= np.linalg.norm(statevector)
-    ibasis = qse.magnetic.get_basis(2**k, k)
-    spins = qse.magnetic.get_spins(statevector, ibasis, k)
-    assert np.all(np.abs(spins) <= 1)
+    return statevector
+
+
+def kron_list(ops):
+    x = ops[0]
+    if len(ops) == 1:
+        return x
+    for op in ops[1:]:
+        x = np.kron(x, op)
+    return x
+
+
+def expval(op, state):
+    return (np.conj(state) @ (op @ state[:, None])).item()
+
+
+def test_spin_two_qubits():
+    """Check get_spins works for two qubits."""
+    n = 2
+    statevector = random_state(2**n)
+    spin_qse = qse.magnetic.get_spins(statevector, n)
+
+    op_q0 = [np.kron(p, np.eye(2)) for p in [pauli_x, pauli_y, pauli_z]]
+    expval_q0 = [expval(op, statevector) for op in op_q0]
+    op_q1 = [np.kron(np.eye(2), p) for p in [pauli_x, pauli_y, pauli_z]]
+    expval_q1 = [expval(op, statevector) for op in op_q1]
+
+    spin_np = np.stack([expval_q0, expval_q1])
+
+    assert np.allclose(spin_qse, spin_np)
+
+
+@pytest.mark.parametrize("basis_state", ["1", "00", "001", "101011"])
+def test_number_operator_basis(basis_state):
+    """Check the number operator for basis states."""
+    n = len(basis_state)
+    psi = np.zeros(2**n)
+    psi[int(basis_state, 2)] = 1.0
+    n_op = qse.magnetic.get_number_operator(psi, n)
+    assert np.allclose(n_op, [float(basis_state[i]) for i in range(n)])
+
+
+@pytest.mark.parametrize("n", [1, 2, 3])
+def test_number_operator_random(n):
+    """Check the number operator for random states."""
+    psi = random_state(2**n)
+
+    np_n_op = np.zeros(n, dtype=complex)
+    for i in range(n):
+        op_list = [np.eye(2)] * n
+        op_list[i] = np.array([[0.0, 0.0], [0.0, 1.0]])
+        np_n_op[i] = expval(kron_list(op_list), psi)
+
+    n_op = qse.magnetic.get_number_operator(psi, n)
+    assert np.allclose(n_op, np_n_op)

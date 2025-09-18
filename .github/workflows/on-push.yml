@@ -5,7 +5,8 @@ name: Python package
 
 on:
   push:
-    paths: ['examples/**', 'qse/**', 'pyproject.toml', 'tests/**']
+    paths-ignore:
+        - 'pyproject.toml'
 
 jobs:
   build:
