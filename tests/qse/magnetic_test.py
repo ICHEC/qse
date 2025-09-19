@@ -27,6 +27,13 @@ def expval(op, state):
     return (np.conj(state) @ (op @ state[:, None])).item()
 
 
+@pytest.mark.parametrize("n_qubits, h_size", [(4, 2**4), (3, 2**3-1)])
+def test_get_basis_shape(n_qubits, h_size):
+    """Check that get_basis outputs a n_qubits * h_size shape"""
+    ibasis = qse.magnetic.get_basis(n_qubits, h_size)
+    assert ibasis.shape == (h_size, n_qubits)
+
+
 def test_spin_two_qubits():
     """Check get_spins works for two qubits."""
     n = 2
