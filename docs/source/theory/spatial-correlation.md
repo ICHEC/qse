@@ -100,6 +100,7 @@ $$
 $$
 
 Thus, the expectation value is:
+
 $$
 \langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle = \frac{1}{4} \left[ \langle \Psi | \sigma_i^+ \sigma_j^- | \Psi \rangle + \langle \Psi | \sigma_i^- \sigma_j^+ | \Psi \rangle + \langle \Psi | \sigma_i^z \sigma_j^z | \Psi \rangle \right].
 $$
