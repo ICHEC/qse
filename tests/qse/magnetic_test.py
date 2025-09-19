@@ -27,11 +27,19 @@ def expval(op, state):
     return (np.conj(state) @ (op @ state[:, None])).item()
 
 
-@pytest.mark.parametrize("n_qubits, h_size", [(4, 2**4), (3, 2**3-1)])
-def test_get_basis_shape(n_qubits, h_size):
+@pytest.mark.parametrize("n_qubits, hsize", [(4, 2**4), (3, 2**3-1)])
+def test_get_basis_shape(n_qubits, hsize):
     """Check that get_basis outputs a n_qubits * h_size shape"""
-    ibasis = qse.magnetic.get_basis(n_qubits, h_size)
-    assert ibasis.shape == (h_size, n_qubits)
+    ibasis = qse.magnetic.get_basis(n_qubits, hsize)
+    assert ibasis.shape == (hsize, n_qubits)
+
+@pytest.mark.parametrize("hdim", [1,2,3,4,5])
+def test_spin_values_are_less_than_one(hdim):
+    "Test that the absolute values of the computed spins is less than 1"
+    statevector = random_state(2**hdim)
+    basis = qse.magnetic.get_basis(hdim, 2**hdim)
+    spins = qse.magnetic.get_spins(statevector, hdim, basis)
+    assert np.all(np.abs(spins) <= 1)
 
 
 def test_spin_two_qubits():
