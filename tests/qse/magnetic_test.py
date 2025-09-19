@@ -27,18 +27,36 @@ def expval(op, state):
     return (np.conj(state) @ (op @ state[:, None])).item()
 
 
-@pytest.mark.parametrize("n_qubits, hsize", [(4, 2**4), (3, 2**3-1)])
+def compute_sisj_2dim_algebraic(psi):
+    "Computes the elements s12 = s21 for a two qubit system"
+    a = psi[0]
+    b = psi[1]
+    c = psi[2]
+    d = psi[3]
+    r = (
+        2 * np.conj(b) * c
+        + 2 * np.conj(c) * b
+        + np.abs(a) ** 2
+        - np.abs(b) ** 2
+        - np.abs(c) ** 2
+        + np.abs(d) ** 2
+    )
+    return r
+
+
+@pytest.mark.parametrize("n_qubits, hsize", [(4, 2**4), (3, 2**3 - 1)])
 def test_get_basis_shape(n_qubits, hsize):
     """Check that get_basis outputs a n_qubits * h_size shape"""
     ibasis = qse.magnetic.get_basis(n_qubits, hsize)
     assert ibasis.shape == (hsize, n_qubits)
 
-@pytest.mark.parametrize("hdim", [1,2,3,4,5])
+
+@pytest.mark.parametrize("hdim", [1, 2, 3, 4, 5])
 def test_spin_values_are_less_than_one(hdim):
     "Test that the absolute values of the computed spins is less than 1"
     statevector = random_state(2**hdim)
-    basis = qse.magnetic.get_basis(hdim, 2**hdim)
-    spins = qse.magnetic.get_spins(statevector, hdim, basis)
+    ibasis = qse.magnetic.get_basis(hdim, 2**hdim)
+    spins = qse.magnetic.get_spins(statevector, hdim, ibasis)
     assert np.all(np.abs(spins) <= 1)
 
 
@@ -47,7 +65,6 @@ def test_spin_two_qubits():
     n = 2
     statevector = random_state(2**n)
     spin_qse = qse.magnetic.get_spins(statevector, n)
-
     op_q0 = [np.kron(p, np.eye(2)) for p in [pauli_x, pauli_y, pauli_z]]
     expval_q0 = [expval(op, statevector) for op in op_q0]
     op_q1 = [np.kron(np.eye(2), p) for p in [pauli_x, pauli_y, pauli_z]]
