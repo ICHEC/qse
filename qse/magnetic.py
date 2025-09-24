@@ -79,7 +79,7 @@ def _syop(b: np.ndarray[bool], i: int):
     return (s, c)
 
 
-def _get_index(arr: np.ndarray, val):
+def _get_index(arr: np.ndarray[bool], val):
     """
     Get index where value matches in the array.
     Results in either single integer, or an array containing indices.
@@ -201,26 +201,28 @@ def get_sisj(
         prob = (c_alpha * c_alpha.conj()).real
         zi = 1 - 2 * b
         zizj = np.outer(zi, zi)
-        s_ij += prob * zizj
+       s_ij += 0.75 * prob * zizj
 
     # x-x and y-y part of the correlation
     for l, b in enumerate(ibasis):
-        c_alpha = statevector[l]
+        c_alpha = statevector[l].conj() # this is $c_a^*$
         states_ij = np.array(
             [_sxop(_sxop(b, i), j) for i in range(nqbits) for j in range(nqbits)]
         )
         indices = np.array([_get_index(ibasis, s) for s in states_ij]).reshape(
             nqbits, nqbits
         )
-        cij = statevector[indices].conj()
-        zi = 1 - 2 * b
-        zip = -zi
-        zij1 = np.outer(zip, zi)
-        zij2 = np.outer(zi, zip)
-        zij = zij1 + zij2
+        cij = statevector[indices]      # this is $c_a'$
+        zi = b.copy()
+        zip = ~zi
+        zij1 = np.outer(zi, zip)        # ai * (1-aj)
+        zij2 = np.outer(zip, zi)        # (1-ai) * aj
+        zij = zij1 + zij2               # sum of sigma +- and -+ term.
         tmp = ((c_alpha * cij) * zij).real
-        np.fill_diagonal(tmp, 0)
-        s_ij += 2 * tmp
+        s_ij += 0.5 * tmp
+    #
+    # normalise it to 1 for structure factor.
+    sij *= 4/3
     return s_ij
 
 
