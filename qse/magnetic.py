@@ -222,7 +222,7 @@ def get_sisj(
         s_ij += 0.5 * tmp
     #
     # normalise it to 1 for structure factor.
-    sij *= 4 / 3
+    s_ij *= 4 / 3
     return s_ij
 
 
