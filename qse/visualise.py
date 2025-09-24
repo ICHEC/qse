@@ -34,15 +34,19 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
             raise Exception("The length of colouring must equal the number of Qubits.")
         colouring = [int(i) for i in colouring]
 
-    cell_rank = qbits.cell.rank
     position_rank = np.linalg.matrix_rank(qbits.positions)
-    # if cell_rank is more than position_rank, it means that a higher dimensional cell
-    # is present, and actual structure requires repettition of cells to
-    # clearly visualize. if position_rank is more than cell_rank, it means the repettion
-    # happens in lower dimension of a local geometry which visualized in
-    # higher dimension. Either way, we need to see things in higher dimension.
 
-    rank = max(cell_rank, position_rank)
+    if qbits.cell is None:
+        rank = position_rank
+    else:
+        cell_rank = np.linalg.matrix_rank(qbits.cell)
+        rank = max(cell_rank, position_rank)
+        # if cell_rank is more than position_rank, it means that a higher
+        # dimensional cell is present, and actual structure requires
+        # repettition of cells to clearly visualize.
+        # If position_rank is more than cell_rank, it means the repettion
+        # happens in lower dimension of a local geometry which visualized in
+        # higher dimension. Either way, we need to see things in higher dimension.
 
     draw_bonds = False if radius is None else True
     rij = None
