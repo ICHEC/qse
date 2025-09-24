@@ -58,3 +58,4 @@ html_theme_options = {
     "use_edit_page_button": False,
     "use_issues_button": True,
 }
+html_logo = "logo.svg"
