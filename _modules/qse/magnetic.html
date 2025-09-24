@@ -412,7 +412,7 @@ document.write(`
     <span class="k">return</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_get_index</span><span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_get_index</span><span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">[</span><span class="nb">bool</span><span class="p">],</span> <span class="n">val</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get index where value matches in the array.</span>
 <span class="sd">    Results in either single integer, or an array containing indices.</span>
@@ -539,26 +539,28 @@ document.write(`
         <span class="n">prob</span> <span class="o">=</span> <span class="p">(</span><span class="n">c_alpha</span> <span class="o">*</span> <span class="n">c_alpha</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span><span class="o">.</span><span class="n">real</span>
         <span class="n">zi</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">b</span>
         <span class="n">zizj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">zi</span><span class="p">,</span> <span class="n">zi</span><span class="p">)</span>
-        <span class="n">s_ij</span> <span class="o">+=</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">zizj</span>
+        <span class="n">s_ij</span> <span class="o">+=</span> <span class="mf">0.75</span> <span class="o">*</span> <span class="n">prob</span> <span class="o">*</span> <span class="n">zizj</span>
 
     <span class="c1"># x-x and y-y part of the correlation</span>
     <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ibasis</span><span class="p">):</span>
-        <span class="n">c_alpha</span> <span class="o">=</span> <span class="n">statevector</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+        <span class="n">c_alpha</span> <span class="o">=</span> <span class="n">statevector</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span>  <span class="c1"># this is $c_a^*$</span>
         <span class="n">states_ij</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
             <span class="p">[</span><span class="n">_sxop</span><span class="p">(</span><span class="n">_sxop</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">i</span><span class="p">),</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nqbits</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nqbits</span><span class="p">)]</span>
         <span class="p">)</span>
         <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">_get_index</span><span class="p">(</span><span class="n">ibasis</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">states_ij</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
             <span class="n">nqbits</span><span class="p">,</span> <span class="n">nqbits</span>
         <span class="p">)</span>
-        <span class="n">cij</span> <span class="o">=</span> <span class="n">statevector</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span>
-        <span class="n">zi</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">b</span>
-        <span class="nb">zip</span> <span class="o">=</span> <span class="o">-</span><span class="n">zi</span>
-        <span class="n">zij1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="nb">zip</span><span class="p">,</span> <span class="n">zi</span><span class="p">)</span>
-        <span class="n">zij2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">zi</span><span class="p">,</span> <span class="nb">zip</span><span class="p">)</span>
-        <span class="n">zij</span> <span class="o">=</span> <span class="n">zij1</span> <span class="o">+</span> <span class="n">zij2</span>
+        <span class="n">cij</span> <span class="o">=</span> <span class="n">statevector</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>  <span class="c1"># this is $c_a&#39;$</span>
+        <span class="n">zi</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="nb">zip</span> <span class="o">=</span> <span class="o">~</span><span class="n">zi</span>
+        <span class="n">zij1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">zi</span><span class="p">,</span> <span class="nb">zip</span><span class="p">)</span>  <span class="c1"># ai * (1-aj)</span>
+        <span class="n">zij2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="nb">zip</span><span class="p">,</span> <span class="n">zi</span><span class="p">)</span>  <span class="c1"># (1-ai) * aj</span>
+        <span class="n">zij</span> <span class="o">=</span> <span class="n">zij1</span> <span class="o">+</span> <span class="n">zij2</span>  <span class="c1"># sum of sigma +- and -+ term.</span>
         <span class="n">tmp</span> <span class="o">=</span> <span class="p">((</span><span class="n">c_alpha</span> <span class="o">*</span> <span class="n">cij</span><span class="p">)</span> <span class="o">*</span> <span class="n">zij</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">s_ij</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">tmp</span>
+        <span class="n">s_ij</span> <span class="o">+=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">tmp</span>
+    <span class="c1">#</span>
+    <span class="c1"># normalise it to 1 for structure factor.</span>
+    <span class="n">s_ij</span> <span class="o">*=</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span>
     <span class="k">return</span> <span class="n">s_ij</span></div>
 
 
