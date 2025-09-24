@@ -201,7 +201,7 @@ def get_sisj(
         prob = (c_alpha * c_alpha.conj()).real
         zi = 1 - 2 * b
         zizj = np.outer(zi, zi)
-       s_ij += 0.75 * prob * zizj
+        s_ij += 0.75 * prob * zizj
 
     # x-x and y-y part of the correlation
     for l, b in enumerate(ibasis):
