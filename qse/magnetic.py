@@ -205,24 +205,24 @@ def get_sisj(
 
     # x-x and y-y part of the correlation
     for l, b in enumerate(ibasis):
-        c_alpha = statevector[l].conj() # this is $c_a^*$
+        c_alpha = statevector[l].conj()  # this is $c_a^*$
         states_ij = np.array(
             [_sxop(_sxop(b, i), j) for i in range(nqbits) for j in range(nqbits)]
         )
         indices = np.array([_get_index(ibasis, s) for s in states_ij]).reshape(
             nqbits, nqbits
         )
-        cij = statevector[indices]      # this is $c_a'$
+        cij = statevector[indices]  # this is $c_a'$
         zi = b.copy()
         zip = ~zi
-        zij1 = np.outer(zi, zip)        # ai * (1-aj)
-        zij2 = np.outer(zip, zi)        # (1-ai) * aj
-        zij = zij1 + zij2               # sum of sigma +- and -+ term.
+        zij1 = np.outer(zi, zip)  # ai * (1-aj)
+        zij2 = np.outer(zip, zi)  # (1-ai) * aj
+        zij = zij1 + zij2  # sum of sigma +- and -+ term.
         tmp = ((c_alpha * cij) * zij).real
         s_ij += 0.5 * tmp
     #
     # normalise it to 1 for structure factor.
-    sij *= 4/3
+    sij *= 4 / 3
     return s_ij
 
 
