@@ -105,7 +105,10 @@ class Pulser(Calculator):
         )
 
         super().__init__(
-            CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
+            qbits=qbits,
+            label=label,
+            is_calculator_available=CALCULATOR_AVAILABLE,
+            installation_message=installation_message,
         )
         self.device = pulser.devices.MockDevice if device is None else device
         self.emulator = QutipEmulator if emulator is None else emulator
@@ -125,8 +128,6 @@ class Pulser(Calculator):
         self._sequence = None
         self._sim = None
         self.statevector = None
-        self.spins = None
-        self.sij = None
 
     @property
     def amplitude(self):
