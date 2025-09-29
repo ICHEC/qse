@@ -1,26 +1,5 @@
 import qse.magnetic as magnetic
 
-# Recognized names of calculators sorted alphabetically:
-names = ["myqlm", "pulser", "qiskit"]
-
-
-special = {
-    "myqlm": "MYQLM",
-    "pulser": "Pulser",
-    "qiskit": "Qiskit",
-}
-
-
-external_calculators = {}
-
-
-def register_calculator_class(name, cls):
-    """Add the class into the database."""
-    assert name not in external_calculators
-    external_calculators[name] = cls
-    names.append(name)
-    names.sort()
-
 
 def get_calculator_class(name):
     """Return calculator class."""
@@ -28,12 +7,6 @@ def get_calculator_class(name):
         from qse.calc.pulser import Pulser as Calculator
     elif name == "myqlm":
         from qse.calc.myqlm import MyQLM as Calculator
-    elif name in external_calculators:
-        Calculator = external_calculators[name]
-    else:
-        classname = special.get(name, name.title())
-        module = __import__("qse.calculators." + name, {}, None, [classname])
-        Calculator = getattr(module, classname)
     return Calculator
 
 

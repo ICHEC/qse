@@ -7,9 +7,7 @@ from math import cos, sin
 
 import numpy as np
 from ase.cell import Cell
-from ase.geometry import (
-    find_mic,
-)
+from ase.geometry import find_mic
 
 from qse.qbit import Qbit
 from qse.visualise import draw as _draw
