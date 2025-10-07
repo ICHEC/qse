@@ -89,8 +89,6 @@ class Myqlm(Calculator):
         ...
     qpu
         ...
-    analog
-        ...
     system
         ...
     label
@@ -109,7 +107,6 @@ class Myqlm(Calculator):
         detuning=None,
         duration=None,
         qpu=None,
-        analog=True,
         system="rydberg",
         label="myqlm-run",
         wtimes=True,
@@ -123,39 +120,34 @@ class Myqlm(Calculator):
             CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
         )
 
-        self.qpu = AQPU if qpu is None else qpu
+        self.qpu = AQPU() if qpu is None else qpu
         self.label = label
         self.wtimes = wtimes
-        self.results = None
         self.system = system
         self.params = dict(default_params[self.system])
-        # if any of the default parameters are passed
-        # as arguments, use them to update self.params
+
         self.duration = (
             duration if duration is not None else self.params["default_duration"]
         )
-        self.amp = (
+        amp = (
             amplitude
             if amplitude is not None
             else np.zeros(self.params["default_points"])
         )
-        self.amplitude = self._waveform(self.amp, tmax=self.duration)
-        self.det = (
+        self.amplitude = _waveform(amp, tmax=self.duration)
+
+        det = (
             detuning
             if detuning is not None
             else np.zeros(self.params["default_points"])
         )
-        self.detuning = self._waveform(self.det, tmax=self.duration)
-        # self.duration = len(self.amplitude) # needs to change
-        # for time independent problems
+        self.detuning = _waveform(det, tmax=self.duration)
+
         self.C6 = self.params["C6"]
-        self.qpu = None
+
+        self.results = None
         self.spins = None
         self.sij = None
-
-    def _occ_op(self, nqbits, qi):
-        ti = qat.core.Term(1.0, "Z", [qi])
-        return (1 + qat.core.Observable(nqbits, pauli_terms=[ti])) / 2
 
     @property
     def Hamiltonian(self):
@@ -169,24 +161,24 @@ class Myqlm(Calculator):
         return ham
 
     def _generate_rydberg_hamiltonian(self):
-        rij = self.qbits.get_all_distances()
         nqbits = self.qbits.nqbits
-        # > add checks for ensuring whether amplitudes/detunings etc
-        # > are within allowed limits compatible with pulser virtual device
+
         amplitude = self.amplitude
         detuning = self.detuning
 
-        H1_terms = [qat.core.Term(0.5, "X", [i]) for i in range(nqbits)]
-        H2_terms = [qat.core.Term(0.5, "Z", [i]) for i in range(nqbits)]
-        H_amplitude = qat.core.Observable(nqbits, pauli_terms=H1_terms)
-        H_detuning = qat.core.Observable(nqbits, pauli_terms=H2_terms)
+        H_amplitude = qat.core.Observable(
+            nqbits, pauli_terms=[qat.core.Term(0.5, "X", [i]) for i in range(nqbits)]
+        )
+        H_detuning = qat.core.Observable(
+            nqbits, pauli_terms=[qat.core.Term(0.5, "Z", [i]) for i in range(nqbits)]
+        )
+
+        rij = self.qbits.get_all_distances()
         H_interact = 0
         for i in range(nqbits):
             for j in range(i + 1, nqbits):
                 H_interact += (
-                    (self.C6 / rij[i, j] ** 6)
-                    * self._occ_op(nqbits, i)
-                    * self._occ_op(nqbits, j)
+                    (self.C6 / rij[i, j] ** 6) * _occ_op(nqbits, i) * _occ_op(nqbits, j)
                 )
 
         return [
@@ -195,50 +187,22 @@ class Myqlm(Calculator):
             (1, H_interact),
         ]
 
-    def _waveform(self, vi, tmax):
-        ti = np.linspace(0, tmax, vi.shape[0])
-        vi_m = np.diff(vi)
-        ti_m = np.diff(ti)
-        vi_p = vi[1:] + vi[:-1]
-        ti_p = ti[1:] + ti[:-1]
-        a = vi_m / ti_m
-        b = 0.5 * (vi_p - a * ti_p)
-        arith_expr = 0
-        t_var = qat.core.Variable("t")
-        for i, (ai, bi) in enumerate(zip(a, b)):
-            # Create ax + b by calculating the slope and the offset
-            respective_line = ai * t_var + bi
-            arith_expr += (
-                qat.core.variables.heaviside(t_var, ti[i], ti[i + 1]) * respective_line
-            )
-        return arith_expr
-
-    def calculate(self, qbits=None, properties=..., system_changes=...):
+    def calculate(self):
         """
-        _summary_
-
-        Parameters
-        ----------
-        qbits : _type_, optional
-            _description_, by default None
-        properties : _type_, optional
-            _description_, by default ...
-        system_changes : _type_, optional
-            _description_, by default ...
+        Run the calculation.
         """
-        # return super().calculate(qbits, properties, system_changes)
-        # self.Hamiltonian = self._get_hamiltonian()
+
         if self.wtimes:
             t1 = time()
         self.schedule = qat.core.Schedule(drive=self.Hamiltonian, tmax=self.duration)
         self.job = self.schedule.to_job()
-        self.qpu = AQPU()
         self.async_result = self.qpu.submit(self.job)
         self.results = self.async_result.join()
         self.probabities = np.fromiter(
             (s.probability for s in self.results), dtype=float
         )
         self.basis = np.fromiter((s.state.int for s in self.results), dtype=int)
+
         # don't know why result.statevector is Nonetype, fill it with state
         if hasattr(self.results[0], "amplitude"):
             statevector = np.fromiter(
@@ -256,3 +220,27 @@ class Myqlm(Calculator):
         if self.wtimes:
             t2 = time()
             print(f"time in compute and simulation = {t2 - t1} s.")
+
+
+def _waveform(vi, tmax):
+    ti = np.linspace(0, tmax, vi.shape[0])
+    vi_m = np.diff(vi)
+    ti_m = np.diff(ti)
+    vi_p = vi[1:] + vi[:-1]
+    ti_p = ti[1:] + ti[:-1]
+    a = vi_m / ti_m
+    b = 0.5 * (vi_p - a * ti_p)
+    arith_expr = 0
+    t_var = qat.core.Variable("t")
+    for i, (ai, bi) in enumerate(zip(a, b)):
+        # Create ax + b by calculating the slope and the offset
+        respective_line = ai * t_var + bi
+        arith_expr += (
+            qat.core.variables.heaviside(t_var, ti[i], ti[i + 1]) * respective_line
+        )
+    return arith_expr
+
+
+def _occ_op(nqbits, qi):
+    ti = qat.core.Term(1.0, "Z", [qi])
+    return (1 + qat.core.Observable(nqbits, pauli_terms=[ti])) / 2
