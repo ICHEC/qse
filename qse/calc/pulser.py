@@ -27,12 +27,12 @@ class Pulser(Calculator):
 
     Parameters
     ----------
+    qbits: qse.Qbits
+        The qbits object.
     amplitude: qse.Signal, pulser.waveforms.Waveform
         The amplitude pulse.
     detuning: qse.Signal, pulser.waveforms.Waveform
         The detuning pulse.
-    qbits: qse.Qbits
-        The qbits object.
     channel : str
         Which channel to use. For example "rydberg_global" for Rydberg or
         "mw_global" for microwave.
@@ -60,9 +60,9 @@ class Pulser(Calculator):
     >>> qbits = qse.lattices.chain(4.0, 4)
     >>> duration = 400
     >>> pulser_calc = qse.calc.Pulser(
+    ...     qbits=qbits,
     ...     amplitude=qse.Signal(np.ones(6) * 1.01, duration),
     ...     detuning=qse.Signal(np.ones(6) * 0.12, duration),
-    ...     qbits=qbits,
     ... )
     >>> pulser_calc.build_sequence()
     >>> pulser_calc.calculate()
@@ -195,8 +195,6 @@ class Pulser(Calculator):
 
         final_state = self.results.get_final_state()
         self.statevector = qutip.core.dimensions.to_tensor_rep(final_state).flatten()
-
-        self.spins = self.get_spins()
 
         if self.wtimes:
             t2 = time()

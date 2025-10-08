@@ -63,7 +63,6 @@ default_params = {
         "max_delta": 125.7,  # rad/µs from pulser
         "min_atom_distance": 4,  # µm from pulser
         "max_duration": 4000,  # ns from pulser (max sequence duration),
-        "default_duration": 0.5,
         "default_points": 6,
     },
     "ssh": {},
@@ -85,11 +84,7 @@ class Myqlm(Calculator):
         ...
     detuning
         ...
-    duration
-        ...
     qpu
-        ...
-    analog
         ...
     system
         ...
@@ -107,9 +102,7 @@ class Myqlm(Calculator):
         qbits=None,
         amplitude=None,
         detuning=None,
-        duration=None,
         qpu=None,
-        analog=True,
         system="rydberg",
         label="myqlm-run",
         wtimes=True,
@@ -129,25 +122,22 @@ class Myqlm(Calculator):
         self.results = None
         self.system = system
         self.params = dict(default_params[self.system])
-        # if any of the default parameters are passed
-        # as arguments, use them to update self.params
-        self.duration = (
-            duration if duration is not None else self.params["default_duration"]
-        )
+
+        self.duration = amplitude.duration / 1000  # convert to µs
+
         self.amp = (
             amplitude
             if amplitude is not None
             else np.zeros(self.params["default_points"])
         )
-        self.amplitude = self._waveform(self.amp, tmax=self.duration)
+        self.amplitude = self._waveform(self.amp.values, tmax=self.duration)
         self.det = (
             detuning
             if detuning is not None
             else np.zeros(self.params["default_points"])
         )
-        self.detuning = self._waveform(self.det, tmax=self.duration)
-        # self.duration = len(self.amplitude) # needs to change
-        # for time independent problems
+        self.detuning = self._waveform(self.det.values, tmax=self.duration)
+
         self.C6 = self.params["C6"]
         self.qpu = None
         self.spins = None
@@ -155,7 +145,7 @@ class Myqlm(Calculator):
 
     def _occ_op(self, nqbits, qi):
         ti = qat.core.Term(1.0, "Z", [qi])
-        return (1 + qat.core.Observable(nqbits, pauli_terms=[ti])) / 2
+        return (1 - qat.core.Observable(nqbits, pauli_terms=[ti])) / 2
 
     @property
     def Hamiltonian(self):
@@ -226,24 +216,27 @@ class Myqlm(Calculator):
         system_changes : _type_, optional
             _description_, by default ...
         """
-        # return super().calculate(qbits, properties, system_changes)
-        # self.Hamiltonian = self._get_hamiltonian()
         if self.wtimes:
             t1 = time()
+
         self.schedule = qat.core.Schedule(drive=self.Hamiltonian, tmax=self.duration)
         self.job = self.schedule.to_job()
         self.qpu = AQPU()
         self.async_result = self.qpu.submit(self.job)
         self.results = self.async_result.join()
+
         self.probabities = np.fromiter(
             (s.probability for s in self.results), dtype=float
         )
         self.basis = np.fromiter((s.state.int for s in self.results), dtype=int)
         # don't know why result.statevector is Nonetype, fill it with state
+
         if hasattr(self.results[0], "amplitude"):
             statevector = np.fromiter(
                 (s.amplitude for s in self.results), dtype=complex
-            )
+            )[
+                ::-1
+            ]  # myqlm uses opposite statevector convention to normal.
             N = len(self.qbits)
             hsize = 2**N
             if statevector.shape[0] < hsize:
