@@ -63,7 +63,6 @@ default_params = {
         "max_delta": 125.7,  # rad/µs from pulser
         "min_atom_distance": 4,  # µm from pulser
         "max_duration": 4000,  # ns from pulser (max sequence duration),
-        "default_points": 6,
     },
     "ssh": {},
     "fermion": {},
@@ -123,20 +122,8 @@ class Myqlm(Calculator):
         self.system = system
         self.params = dict(default_params[self.system])
 
-        self.duration = amplitude.duration / 1000  # convert to µs
-
-        self.amp = (
-            amplitude
-            if amplitude is not None
-            else np.zeros(self.params["default_points"])
-        )
-        self.amplitude = self._waveform(self.amp.values, tmax=self.duration)
-        self.det = (
-            detuning
-            if detuning is not None
-            else np.zeros(self.params["default_points"])
-        )
-        self.detuning = self._waveform(self.det.values, tmax=self.duration)
+        self.amplitude = amplitude
+        self.detuning = detuning
 
         self.C6 = self.params["C6"]
         self.qpu = None
@@ -163,13 +150,12 @@ class Myqlm(Calculator):
         nqbits = self.qbits.nqbits
         # > add checks for ensuring whether amplitudes/detunings etc
         # > are within allowed limits compatible with pulser virtual device
-        amplitude = self.amplitude
-        detuning = self.detuning
 
         H1_terms = [qat.core.Term(0.5, "X", [i]) for i in range(nqbits)]
         H2_terms = [qat.core.Term(0.5, "Z", [i]) for i in range(nqbits)]
         H_amplitude = qat.core.Observable(nqbits, pauli_terms=H1_terms)
         H_detuning = qat.core.Observable(nqbits, pauli_terms=H2_terms)
+
         H_interact = 0
         for i in range(nqbits):
             for j in range(i + 1, nqbits):
@@ -180,12 +166,14 @@ class Myqlm(Calculator):
                 )
 
         return [
-            (amplitude, H_amplitude),
-            (detuning, H_detuning),
+            (self._waveform(self.amplitude), H_amplitude),
+            (self._waveform(self.detuning), H_detuning),
             (1, H_interact),
         ]
 
-    def _waveform(self, vi, tmax):
+    def _waveform(self, signal):
+        vi = signal.values
+        tmax = signal.duration / 1000  # convert to µs
         ti = np.linspace(0, tmax, vi.shape[0])
         vi_m = np.diff(vi)
         ti_m = np.diff(ti)
@@ -219,7 +207,10 @@ class Myqlm(Calculator):
         if self.wtimes:
             t1 = time()
 
-        self.schedule = qat.core.Schedule(drive=self.Hamiltonian, tmax=self.duration)
+        tmax = (
+            max(self.amplitude.duration, self.detuning.duration) / 1000.0
+        )  # convert to µs
+        self.schedule = qat.core.Schedule(drive=self.Hamiltonian, tmax=tmax)
         self.job = self.schedule.to_job()
         self.qpu = AQPU()
         self.async_result = self.qpu.submit(self.job)

@@ -1,3 +1,4 @@
+import datetime
 import sys
 
 import numpy as np
@@ -51,3 +52,12 @@ elif calculator == "myqlm":
 calc.calculate()
 spins = calc.get_spins()
 print(spins)
+
+results = {
+    "calculator": calculator,
+    "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    "qse": qse.__version__,
+    "spins": spins,
+}
+print(results)
+np.save(f"results_{calculator}.npy", results)

@@ -34,9 +34,9 @@ def test_pulser_calc():
 
     # Initialise the pulser calculator
     pulser_calc = qse.calc.Pulser(
+        qbits=qbits,
         amplitude=qse.Signal(np.ones(6) * omega0, duration),
         detuning=qse.Signal(np.ones(6) * delta0, duration),
-        qbits=qbits,
         label="test_run",
     )
     assert pulser_calc.amplitude.duration == duration
@@ -50,8 +50,9 @@ def test_pulser_calc():
     # Compute
     pulser_calc.build_sequence()
     pulser_calc.calculate()
-    pulser_calc.get_spins()
-    pulser_calc.get_sij()
 
-    assert pulser_calc.spins.shape == (repeats, 3)
-    assert pulser_calc.sij.shape == (repeats, repeats)
+    spins = pulser_calc.get_spins()
+    assert spins.shape == (repeats, 3)
+
+    sij = pulser_calc.get_sij()
+    assert sij.shape == (repeats, repeats)
