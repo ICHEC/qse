@@ -58,6 +58,7 @@ results = {
     "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     "qse": qse.__version__,
     "spins": spins,
+    "state": calc.statevector,
 }
 print(results)
 np.save(f"results_{calculator}.npy", results)
