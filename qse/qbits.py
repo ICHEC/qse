@@ -7,7 +7,10 @@ from math import cos, sin
 
 import numpy as np
 from ase.cell import Cell
-from ase.geometry import find_mic
+from ase.geometry import (
+    find_mic,
+)
+from ase.utils import deprecated
 
 from qse.qbit import Qbit
 from qse.visualise import draw as _draw
@@ -43,6 +46,10 @@ class Qbits:
         First vector will lie in x-direction, second in xy-plane,
         and the third one in z-positive subspace.
         Default value: [0, 0, 0].
+    pbc: one or three bool
+        Periodic boundary conditions flags.  Examples: True,
+        False, 0, 1, (1, 1, 0), (True, False, False).  Default
+        value: False.
     calculator: calculator object
         Used to attach a calculator for doing computation.
 
@@ -67,6 +74,7 @@ class Qbits:
     ...     [0.5, 0.5, 0.5]])
     >>> qdim = qse.Qbits(positions=xd)
     >>> qdim.cell = [1,1,1]
+    >>> qdim.pbc = True
     >>> qlat = qdim.repeat([3,3,3])
 
     The qdim will have shape = (2,1,1) and qlat will have shape = (6, 3, 3)
@@ -84,6 +92,7 @@ class Qbits:
         positions=None,
         scaled_positions=None,
         cell=None,
+        pbc=None,
         calculator=None,
     ):
         if (positions is not None) and (scaled_positions is not None):
@@ -147,6 +156,12 @@ class Qbits:
 
         # shape
         self._shape = (self.nqbits, 1, 1)
+
+        # pbc
+        self._pbc = np.zeros(3, bool)
+        if pbc is None:
+            pbc = False
+        self.set_pbc(pbc)
 
         # calculator
         self.calc = calculator
@@ -223,6 +238,7 @@ class Qbits:
         >>> qbits.set_cell([a, a, a, alpha, alpha, alpha])
         """
 
+        # Override pbcs if and only if given a Cell object:
         # print('here', cell)
         cell = Cell.new(cell)
 
@@ -241,9 +257,35 @@ class Qbits:
             return self.cell.complete()
         return self.cell.copy()
 
+    @deprecated("Please use qbits.cell.reciprocal()")
+    def get_reciprocal_cell(self):
+        """Get the three reciprocal lattice vectors as a 3x3 ndarray.
+
+        Note that the commonly used factor of 2 pi for Fourier
+        transforms is not included here."""
+
+        return self.cell.reciprocal()
+
     @property
     def nqbits(self):
         return len(self)
+
+    @property
+    def pbc(self):
+        """Reference to pbc-flags for in-place manipulations."""
+        return self._pbc
+
+    @pbc.setter
+    def pbc(self, pbc):
+        self._pbc[:] = pbc
+
+    def set_pbc(self, pbc):
+        """Set periodic boundary condition flags."""
+        self.pbc = pbc
+
+    def get_pbc(self):
+        """Get periodic boundary condition flags."""
+        return self.pbc.copy()
 
     def new_array(self, name, a, dtype=None, shape=None):
         """Add new array.
@@ -310,19 +352,9 @@ class Qbits:
                     )
                 b[:] = a
 
-    def has(self, name):
-        """
-        Check for existence of array.
-
-        name must be one of: 'momenta', 'masses', 'initial_magmoms',
-        'initial_charges'.
-        """
-        # XXX extend has to calculator properties
-        return name in self.arrays
-
     def copy(self):
         """Return a copy."""
-        qbits = self.__class__(cell=self.cell)
+        qbits = self.__class__(cell=self.cell, pbc=self.pbc)
 
         qbits.arrays = {}
         for name, a in self.arrays.items():
@@ -340,7 +372,8 @@ class Qbits:
         d["positions"] = self.arrays["positions"]
         d["states"] = self.arrays["states"]
         d["cell"] = self.cell  # np.asarray(self.cell)
-        # Calculator...  trouble.
+        d["pbc"] = self.pbc
+
         return d
 
     @classmethod
@@ -348,7 +381,7 @@ class Qbits:
         """Rebuild qbits object from dictionary representation (todict)."""
         dct = dct.copy()
         kw = {}
-        for name in ["labels", "positions", "states", "cell"]:
+        for name in ["labels", "positions", "states", "cell", "pbc"]:
             kw[name] = dct.pop(name)
 
         qbits = cls(**kw)
@@ -379,6 +412,12 @@ class Qbits:
             tokens.append("...\n")
             for i in self[-3:]:
                 tokens.append("{0}".format(i) + ",\n")
+
+        if self.pbc.any() and not self.pbc.all():
+            txt = "pbc={0}".format(self.pbc.tolist())
+        else:
+            txt = "pbc={0}".format(self.pbc[0])
+        tokens.append(txt + ",\n")
 
         cell = self.cell
         if cell:
@@ -455,7 +494,7 @@ class Qbits:
         -------
         Qbit | Qbits.
             If indices is a scalar a Qbit object is returned. If indices
-            is a list or a slice, a Qbits object with the same cell, and
+            is a list or a slice, a Qbits object with the same cell, pbc, and
             other associated info as the original Qbits object is returned.
         """
 
@@ -476,9 +515,7 @@ class Qbits:
                     )
                 indices = np.arange(len(self))[indices]
 
-        qbits = self.__class__(
-            cell=self.cell,
-        )
+        qbits = self.__class__(cell=self.cell, pbc=self.pbc)
 
         qbits.arrays = {}
         for name, a in self.arrays.items():
@@ -954,14 +991,16 @@ class Qbits:
         self._masked_rotate(center, axis, diff, mask)
 
     def rattle(self, stdev=0.001, seed=None, rng=None):
-        """Randomly displace qbits.
+        """
+        Randomly displace qbits.
 
         This method adds random displacements to the qbit positions.
-        The random numbers are drawn from a normal distribution of
-        standard deviation stdev.
+        The random numbers are
+        drawn from a normal distribution of standard deviation stdev.
 
         For a parallel calculation, it is important to use the same
-        seed on all processors!"""
+        seed on all processors!
+        """
 
         if seed is not None and rng is not None:
             raise ValueError("Please do not provide both seed and rng.")
@@ -1080,7 +1119,7 @@ class Qbits:
         D = np.array([R[a1] - R[a0]])
 
         if mic:
-            D, D_len = find_mic(D, self.cell)
+            D, D_len = find_mic(D, self.cell, self.pbc)
         else:
             D_len = np.array([np.sqrt((D**2).sum())])
         x = 1.0 - distance / D_len[0]
@@ -1096,9 +1135,20 @@ class Qbits:
             else:
                 R[i] -= (x * (1.0 - fix)) * D[0]
 
-    def set_scaled_positions(self, scaled):
-        """Set positions relative to unit cell."""
-        self.positions[:] = self.cell.cartesian_positions(scaled)
+    def wrap(self, **wrap_kw):
+        """Wrap positions to unit cell.
+
+        Parameters:
+
+        wrap_kw: (keyword=value) pairs
+            optional keywords `pbc`, `center`, `pretty_translation`, `eps`,
+            see :func:`ase.geometry.wrap_positions`
+        """
+
+        if "pbc" not in wrap_kw:
+            wrap_kw["pbc"] = self.pbc
+
+        self.positions[:] = self.get_positions(wrap=True, **wrap_kw)
 
     def __eq__(self, other):
         """Check for identity of two qbits objects.
@@ -1114,6 +1164,7 @@ class Qbits:
             and (a["positions"] == b["positions"]).all()
             and (a["states"] == b["states"]).all()
             and (self.cell == other.cell).all()
+            and (self.pbc == other.pbc).all()
         )
 
     def __ne__(self, other):
@@ -1143,7 +1194,7 @@ class Qbits:
         return self.arrays["positions"]
 
     def _set_positions(self, pos):
-        """Set positions directly."""
+        """Set positions directly, bypassing constraints."""
         self.arrays["positions"][:] = pos
 
     positions = property(
@@ -1158,7 +1209,7 @@ class Qbits:
         return self.arrays["states"]
 
     def _set_states(self, sts):
-        """Set states directly."""
+        """Set states directly, bypassing constraints."""
         self.arrays["states"][
             :
         ] = sts  # (sts.T / np.linalg.norm(sts, axis=1)).T # need to be normalized
@@ -1210,14 +1261,6 @@ class Qbits:
         from pulser import Register
 
         return Register.from_coordinates(self.positions[:, :2], prefix="q")
-
-    #
-
-    # Rajarshi: Deleted the edit method, which in original
-    # ASE approach lets users manipulate Atoms object. At
-    # some stage we may adopt similar approach depending on
-    # the usage/usecase.
-    # def edit(self): Modify qbits interactively through ASE's GUI viewer.
 
 
 def _norm_vector(v):
