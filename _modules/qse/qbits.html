@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.qbits &#8212; qse 0.2.28 documentation</title>
+    <title>qse.qbits &#8212; qse 1.0.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=66c17169"></script>
+    <script src="../../_static/documentation_options.js?v=f9c1cefe"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -146,8 +146,8 @@
       
     
     
-    <img src="../../_static/logo.svg" class="logo__image only-light" alt="qse 0.2.28 documentation - Home"/>
-    <script>document.write(`<img src="../../_static/logo.svg" class="logo__image only-dark" alt="qse 0.2.28 documentation - Home"/>`);</script>
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.0 documentation - Home"/>
+    <script>document.write(`<img src="../../_static/logo.svg" class="logo__image only-dark" alt="qse 1.0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -332,7 +332,6 @@ document.write(`
 <span class="sd">This module defines the central object in the QSE package: the Qbits object.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">numbers</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
 
@@ -340,7 +339,6 @@ document.write(`
 <span class="kn">from</span> <span class="nn">ase.cell</span> <span class="kn">import</span> <span class="n">Cell</span>
 <span class="kn">from</span> <span class="nn">ase.geometry</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">find_mic</span><span class="p">,</span>
-    <span class="n">get_dihedrals</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">ase.utils</span> <span class="kn">import</span> <span class="n">deprecated</span>
 
@@ -380,32 +378,12 @@ document.write(`
 <span class="sd">        First vector will lie in x-direction, second in xy-plane,</span>
 <span class="sd">        and the third one in z-positive subspace.</span>
 <span class="sd">        Default value: [0, 0, 0].</span>
-<span class="sd">    celldisp: Vector</span>
-<span class="sd">        Unit cell displacement vector. To visualize a displaced cell</span>
-<span class="sd">        around the center of mass of a Systems of qbits. Default value</span>
-<span class="sd">        = (0,0,0)</span>
 <span class="sd">    pbc: one or three bool</span>
 <span class="sd">        Periodic boundary conditions flags.  Examples: True,</span>
 <span class="sd">        False, 0, 1, (1, 1, 0), (True, False, False).  Default</span>
 <span class="sd">        value: False.</span>
-<span class="sd">    constraint: constraint object(s)</span>
-<span class="sd">        Used for applying one or more constraints during structure</span>
-<span class="sd">        optimization.</span>
 <span class="sd">    calculator: calculator object</span>
 <span class="sd">        Used to attach a calculator for doing computation.</span>
-<span class="sd">    info: dict of key-value pairs</span>
-<span class="sd">        Dictionary of key-value pairs with additional information</span>
-<span class="sd">        about the system.  The following keys may be used by ase:</span>
-
-<span class="sd">          - spacegroup: Spacegroup instance</span>
-<span class="sd">          - unit_cell: &#39;conventional&#39; | &#39;primitive&#39; | int | 3 ints</span>
-<span class="sd">          - adsorbate_info: Information about special adsorption sites</span>
-
-<span class="sd">        Items in the info attribute survives copy and slicing and can</span>
-<span class="sd">        be stored in and retrieved from trajectory files given that the</span>
-<span class="sd">        key is a string, the value is JSON-compatible and, if the value is a</span>
-<span class="sd">        user-defined object, its base class is importable.  One should</span>
-<span class="sd">        not make any assumptions about the existence of keys.</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -447,10 +425,7 @@ document.write(`
         <span class="n">scaled_positions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">pbc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">celldisp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">constraint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">calculator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">info</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">scaled_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
@@ -520,19 +495,8 @@ document.write(`
             <span class="n">pbc</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_pbc</span><span class="p">(</span><span class="n">pbc</span><span class="p">)</span>
 
-        <span class="c1"># celldisp</span>
-        <span class="k">if</span> <span class="n">celldisp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">celldisp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_celldisp</span><span class="p">(</span><span class="n">celldisp</span><span class="p">)</span>
-
-        <span class="c1"># constraint</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_constraint</span><span class="p">(</span><span class="n">constraint</span><span class="p">)</span>
-
         <span class="c1"># calculator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">calculator</span>
-
-        <span class="c1"># info</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">info</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_qbit_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbit_list</span><span class="p">):</span>
@@ -566,37 +530,9 @@ document.write(`
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">calc</span><span class="p">,</span> <span class="s2">&quot;set_qbits&quot;</span><span class="p">):</span>
             <span class="n">calc</span><span class="o">.</span><span class="n">set_qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Qbits.set_constraint">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.set_constraint">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_constraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraint</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply one or more constrains.</span>
-
-<span class="sd">        The *constraint* argument must be one constraint object or a</span>
-<span class="sd">        list of constraint objects.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">constraint</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">constraint</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span> <span class="o">=</span> <span class="n">constraint</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">constraint</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">constraint</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">constraint</span><span class="p">]</span></div>
-
-
-    <span class="k">def</span> <span class="nf">_get_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span>
-
-    <span class="k">def</span> <span class="nf">_del_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="n">constraints</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span>
-        <span class="n">_get_constraints</span><span class="p">,</span> <span class="n">set_constraint</span><span class="p">,</span> <span class="n">_del_constraints</span><span class="p">,</span> <span class="s2">&quot;Constraints of the qbits.&quot;</span>
-    <span class="p">)</span>
-
 <div class="viewcode-block" id="Qbits.set_cell">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.set_cell">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">scale_qbits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">apply_constraint</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">set_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">scale_qbits</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set unit cell vectors.</span>
 
 <span class="sd">        Parameters:</span>
@@ -612,8 +548,6 @@ document.write(`
 <span class="sd">        scale_qbits: bool</span>
 <span class="sd">            Fix qbit positions or move qbits with the unit cell?</span>
 <span class="sd">            Default behavior is to *not* move the qbits (scale_qbits=False).</span>
-<span class="sd">        apply_constraint: bool</span>
-<span class="sd">            Whether to apply constraints to the given cell.</span>
 
 <span class="sd">        Examples:</span>
 
@@ -642,32 +576,11 @@ document.write(`
         <span class="c1"># print(&#39;here&#39;, cell)</span>
         <span class="n">cell</span> <span class="o">=</span> <span class="n">Cell</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span>
 
-        <span class="c1"># XXX not working well during initialize due to missing _constraints</span>
-        <span class="k">if</span> <span class="n">apply_constraint</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_constraints&quot;</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">constraint</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">constraint</span><span class="p">,</span> <span class="s2">&quot;adjust_cell&quot;</span><span class="p">):</span>
-                    <span class="n">constraint</span><span class="o">.</span><span class="n">adjust_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">)</span>
-
         <span class="k">if</span> <span class="n">scale_qbits</span><span class="p">:</span>
             <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">complete</span><span class="p">(),</span> <span class="n">cell</span><span class="o">.</span><span class="n">complete</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">cell</span></div>
-
-
-<div class="viewcode-block" id="Qbits.set_celldisp">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.set_celldisp">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_celldisp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">celldisp</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the unit cell displacement vectors.&quot;&quot;&quot;</span>
-        <span class="n">celldisp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">celldisp</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_celldisp</span> <span class="o">=</span> <span class="n">celldisp</span></div>
-
-
-<div class="viewcode-block" id="Qbits.get_celldisp">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_celldisp">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_celldisp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the unit cell displacement vectors.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_celldisp</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Qbits.get_cell">
@@ -680,22 +593,6 @@ document.write(`
         <span class="k">if</span> <span class="n">complete</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">complete</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="Qbits.get_cell_lengths_and_angles">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_cell_lengths_and_angles">[docs]</a>
-    <span class="nd">@deprecated</span><span class="p">(</span><span class="s2">&quot;Please use qbits.cell.cellpar() instead&quot;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">get_cell_lengths_and_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get unit cell parameters. Sequence of 6 numbers.</span>
-
-<span class="sd">        First three are unit cell vector lengths and second three</span>
-<span class="sd">        are angles between them::</span>
-
-<span class="sd">            [len(a), len(b), len(c), angle(b,c), angle(a,c), angle(a,b)]</span>
-
-<span class="sd">        in degrees.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">cellpar</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Qbits.get_reciprocal_cell">
@@ -811,42 +708,16 @@ document.write(`
                 <span class="n">b</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">a</span></div>
 
 
-<div class="viewcode-block" id="Qbits.has">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.has">[docs]</a>
-    <span class="k">def</span> <span class="nf">has</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Check for existence of array.</span>
-
-<span class="sd">        name must be one of: &#39;momenta&#39;, &#39;masses&#39;, &#39;initial_magmoms&#39;,</span>
-<span class="sd">        &#39;initial_charges&#39;.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># XXX extend has to calculator properties</span>
-        <span class="k">return</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span></div>
-
-
-<div class="viewcode-block" id="Qbits.get_properties">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_properties">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;This method is experimental; currently for internal use.&quot;&quot;&quot;</span>
-        <span class="c1"># XXX Something about constraints.</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Qbits object has no calculator.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc</span><span class="o">.</span><span class="n">calculate_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">properties</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="Qbits.copy">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.copy">[docs]</a>
     <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a copy.&quot;&quot;&quot;</span>
-        <span class="n">qbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
-            <span class="n">cell</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="n">pbc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pbc</span><span class="p">,</span> <span class="n">info</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">celldisp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_celldisp</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="p">)</span>
+        <span class="n">qbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="n">pbc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pbc</span><span class="p">)</span>
 
         <span class="n">qbits</span><span class="o">.</span><span class="n">arrays</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">qbits</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">qbits</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="p">)</span>
-        <span class="c1">#</span>
+
         <span class="n">qbits</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span>  <span class="c1"># this was necessary, and took long time to realise!</span>
 
         <span class="k">return</span> <span class="n">qbits</span></div>
@@ -863,13 +734,7 @@ document.write(`
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;states&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">&quot;states&quot;</span><span class="p">]</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span>  <span class="c1"># np.asarray(self.cell)</span>
         <span class="n">d</span><span class="p">[</span><span class="s2">&quot;pbc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbc</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_celldisp</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
-            <span class="n">d</span><span class="p">[</span><span class="s2">&quot;celldisp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_celldisp</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="p">:</span>
-            <span class="n">d</span><span class="p">[</span><span class="s2">&quot;constraints&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">:</span>
-            <span class="n">d</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span>
-        <span class="c1"># Calculator...  trouble.</span>
+
         <span class="k">return</span> <span class="n">d</span></div>
 
 
@@ -883,19 +748,7 @@ document.write(`
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="s2">&quot;positions&quot;</span><span class="p">,</span> <span class="s2">&quot;states&quot;</span><span class="p">,</span> <span class="s2">&quot;cell&quot;</span><span class="p">,</span> <span class="s2">&quot;pbc&quot;</span><span class="p">]:</span>
             <span class="n">kw</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dct</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
-        <span class="n">constraints</span> <span class="o">=</span> <span class="n">dct</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;constraints&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">constraints</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">ase.constraints</span> <span class="kn">import</span> <span class="n">dict2constraint</span>
-
-            <span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">dict2constraint</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">constraints</span><span class="p">]</span>
-
-        <span class="c1"># labels = dct.pop(&#39;labels&#39;, None)</span>
-
-        <span class="n">info</span> <span class="o">=</span> <span class="n">dct</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-
-        <span class="n">qbits</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
-            <span class="n">constraint</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span> <span class="n">celldisp</span><span class="o">=</span><span class="n">dct</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;celldisp&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">info</span><span class="o">=</span><span class="n">info</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span>
-        <span class="p">)</span>
+        <span class="n">qbits</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
         <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">qbits</span><span class="p">)</span>
 
         <span class="c1"># Some arrays are named differently from the qbits __init__ keywords.</span>
@@ -1033,12 +886,7 @@ document.write(`
                     <span class="p">)</span>
                 <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))[</span><span class="n">indices</span><span class="p">]</span>
 
-        <span class="n">qbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
-            <span class="n">cell</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span>
-            <span class="n">pbc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pbc</span><span class="p">,</span>
-            <span class="n">info</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span>
-            <span class="n">celldisp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_celldisp</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="n">qbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="n">pbc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pbc</span><span class="p">)</span>
 
         <span class="n">qbits</span><span class="o">.</span><span class="n">arrays</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -1098,9 +946,6 @@ document.write(`
                     <span class="n">i1</span> <span class="o">=</span> <span class="n">i0</span> <span class="o">+</span> <span class="n">n</span>
                     <span class="n">positions</span><span class="p">[</span><span class="n">i0</span><span class="p">:</span><span class="n">i1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">((</span><span class="n">m0</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">)</span>
                     <span class="n">i0</span> <span class="o">=</span> <span class="n">i1</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">m</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)])</span>
 
@@ -1174,90 +1019,6 @@ document.write(`
 <span class="sd">            nx3 array (where n is the number of qbits).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">displacement</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="Qbits.center_in_unit_cell">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.center_in_unit_cell">[docs]</a>
-    <span class="k">def</span> <span class="nf">center_in_unit_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vacuum</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">about</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Center qbits in unit cell.</span>
-
-<span class="sd">        Centers the qbits in the unit cell, so there is the same</span>
-<span class="sd">        amount of vacuum on all sides.</span>
-
-<span class="sd">        vacuum: float (default: None)</span>
-<span class="sd">            If specified adjust the amount of vacuum when centering.</span>
-<span class="sd">            If vacuum=10.0 there will thus be 10 Angstrom of vacuum</span>
-<span class="sd">            on each side.</span>
-<span class="sd">        axis: int or sequence of ints</span>
-<span class="sd">            Axis or axes to act on.  Default: Act on all axes.</span>
-<span class="sd">        about: float or array (default: None)</span>
-<span class="sd">            If specified, center the qbits about &lt;about&gt;.</span>
-<span class="sd">            I.e., about=(0., 0., 0.) (or just &quot;about=0.&quot;, interpreted</span>
-<span class="sd">            identically), to center about the origin.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># Find the orientations of the faces of the unit cell</span>
-        <span class="n">cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">complete</span><span class="p">()</span>
-        <span class="n">dirs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span>
-
-        <span class="n">lengths</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">lengths</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
-            <span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">cell</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">])</span>
-            <span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">@</span> <span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">:</span>
-                <span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-            <span class="n">axes</span> <span class="o">=</span> <span class="p">(</span><span class="n">axis</span><span class="p">,)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">axes</span> <span class="o">=</span> <span class="n">axis</span>
-
-        <span class="c1"># Now, decide how much each basis vector should be made longer</span>
-        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span>
-        <span class="n">longer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="n">shift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
-                <span class="n">scalarprod</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">@</span> <span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                <span class="n">p0</span> <span class="o">=</span> <span class="n">scalarprod</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-                <span class="n">p1</span> <span class="o">=</span> <span class="n">scalarprod</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">p0</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="n">p1</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">height</span> <span class="o">=</span> <span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">@</span> <span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">vacuum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">lng</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p0</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">vacuum</span><span class="p">)</span> <span class="o">-</span> <span class="n">height</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">lng</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Do not change unit cell size!</span>
-            <span class="n">top</span> <span class="o">=</span> <span class="n">lng</span> <span class="o">+</span> <span class="n">height</span> <span class="o">-</span> <span class="n">p1</span>
-            <span class="n">shf</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">top</span> <span class="o">-</span> <span class="n">p0</span><span class="p">)</span>
-            <span class="n">cosphi</span> <span class="o">=</span> <span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">@</span> <span class="n">dirs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">lengths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">longer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lng</span> <span class="o">/</span> <span class="n">cosphi</span>
-            <span class="n">shift</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">shf</span> <span class="o">/</span> <span class="n">cosphi</span>
-
-        <span class="c1"># Now, do it!</span>
-        <span class="n">translation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
-            <span class="n">nowlen</span> <span class="o">=</span> <span class="n">lengths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">vacuum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">longer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">nowlen</span><span class="p">)</span>
-            <span class="n">translation</span> <span class="o">+=</span> <span class="n">shift</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">nowlen</span>
-
-            <span class="c1"># We calculated translations using the completed cell,</span>
-            <span class="c1"># so directions without cell vectors will have been centered</span>
-            <span class="c1"># along a &quot;fake&quot; vector of length 1.</span>
-            <span class="c1"># Therefore, we adjust by -0.5:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
-                <span class="n">translation</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="mf">0.5</span>
-
-        <span class="c1"># Optionally, translate to center about a point in space.</span>
-        <span class="k">if</span> <span class="n">about</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">vector</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">:</span>
-                <span class="n">translation</span> <span class="o">-=</span> <span class="n">vector</span> <span class="o">/</span> <span class="mf">2.0</span>
-            <span class="n">translation</span> <span class="o">+=</span> <span class="n">about</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">+=</span> <span class="n">translation</span></div>
 
 
 <div class="viewcode-block" id="Qbits.get_centroid">
@@ -1501,54 +1262,6 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">rcoords</span><span class="p">)</span> <span class="o">+</span> <span class="n">center</span></div>
 
 
-<div class="viewcode-block" id="Qbits.get_dihedral">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_dihedral">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_dihedral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">mic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate dihedral angle.</span>
-
-<span class="sd">        Calculate dihedral angle (in degrees) between the vectors a0-&gt;a1</span>
-<span class="sd">        and a2-&gt;a3.</span>
-
-<span class="sd">        Use mic=True to use the Minimum Image Convention and calculate the</span>
-<span class="sd">        angle across periodic boundaries.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dihedrals</span><span class="p">([[</span><span class="n">a0</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">]],</span> <span class="n">mic</span><span class="o">=</span><span class="n">mic</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="Qbits.get_dihedrals">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_dihedrals">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_dihedrals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">mic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate dihedral angles.</span>
-
-<span class="sd">        Calculate dihedral angles (in degrees) between the list of vectors</span>
-<span class="sd">        a0-&gt;a1 and a2-&gt;a3, where a0, a1, a2 and a3 are in each row of indices.</span>
-
-<span class="sd">        Use mic=True to use the Minimum Image Convention and calculate the</span>
-<span class="sd">        angles across periodic boundaries.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span>
-
-        <span class="n">a0s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">indices</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>
-        <span class="n">a1s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">indices</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>
-        <span class="n">a2s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">indices</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span>
-        <span class="n">a3s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">indices</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]]</span>
-
-        <span class="c1"># vectors 0-&gt;1, 1-&gt;2, 2-&gt;3</span>
-        <span class="n">v0</span> <span class="o">=</span> <span class="n">a1s</span> <span class="o">-</span> <span class="n">a0s</span>
-        <span class="n">v1</span> <span class="o">=</span> <span class="n">a2s</span> <span class="o">-</span> <span class="n">a1s</span>
-        <span class="n">v2</span> <span class="o">=</span> <span class="n">a3s</span> <span class="o">-</span> <span class="n">a2s</span>
-
-        <span class="n">cell</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">pbc</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="k">if</span> <span class="n">mic</span><span class="p">:</span>
-            <span class="n">cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span>
-            <span class="n">pbc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbc</span>
-
-        <span class="k">return</span> <span class="n">get_dihedrals</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">cell</span><span class="o">=</span><span class="n">cell</span><span class="p">,</span> <span class="n">pbc</span><span class="o">=</span><span class="n">pbc</span><span class="p">)</span></div>
-
-
     <span class="k">def</span> <span class="nf">_masked_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
         <span class="c1"># do rotation of subgroup by copying it to temporary qbits object</span>
         <span class="c1"># and then rotating that</span>
@@ -1568,59 +1281,6 @@ document.write(`
             <span class="k">if</span> <span class="n">mask</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">position</span>
                 <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
-
-<div class="viewcode-block" id="Qbits.set_dihedral">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.set_dihedral">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_dihedral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the dihedral angle (degrees) between vectors a1-&gt;a2 and</span>
-<span class="sd">        a3-&gt;a4 by changing the qbit indexed by a4.</span>
-
-<span class="sd">        If mask is not None, all the qbits described in mask</span>
-<span class="sd">        (read: the entire subgroup) are moved. Alternatively to the mask,</span>
-<span class="sd">        the indices of the qbits to be rotated can be supplied. If both</span>
-<span class="sd">        *mask* and *indices* are given, *indices* overwrites *mask*.</span>
-
-<span class="sd">        **Important**: If *mask* or *indices* is given and does not contain</span>
-<span class="sd">        *a4*, *a4* will NOT be moved. In most cases you therefore want</span>
-<span class="sd">        to include *a4* in *mask*/*indices*.</span>
-
-<span class="sd">        Example: the following defines a very crude</span>
-<span class="sd">        ethane-like molecule and twists one half of it by 30 degrees.</span>
-
-<span class="sd">        &gt;&gt;&gt; qbits = Qbits(&#39;HHCCHH&#39;, [[-1, 1, 0], [-1, -1, 0], [0, 0, 0],</span>
-<span class="sd">        ...                          [1, 0, 0], [2, 1, 0], [2, -1, 0]])</span>
-<span class="sd">        &gt;&gt;&gt; qbits.set_dihedral(1, 2, 3, 4, 210, mask=[0, 0, 0, 1, 1, 1])</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">angle</span> <span class="o">=</span> <span class="n">_to_rads</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
-
-        <span class="c1"># if not provided, set mask to the last qbit in the</span>
-        <span class="c1"># dihedral description</span>
-        <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">indices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-            <span class="n">mask</span><span class="p">[</span><span class="n">a4</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="n">indices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">mask</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span> <span class="ow">in</span> <span class="n">indices</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))]</span>
-
-        <span class="c1"># compute necessary in dihedral change, from current value</span>
-        <span class="n">current</span> <span class="o">=</span> <span class="n">_to_rads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dihedral</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">))</span>
-        <span class="n">diff</span> <span class="o">=</span> <span class="n">angle</span> <span class="o">-</span> <span class="n">current</span>
-        <span class="n">axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">a3</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">a2</span><span class="p">]</span>
-        <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">a3</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_masked_rotate</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="Qbits.rotate_dihedral">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.rotate_dihedral">[docs]</a>
-    <span class="k">def</span> <span class="nf">rotate_dihedral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Rotate dihedral angle.</span>
-
-<span class="sd">        Same usage as in :meth:`ase.Qbits.set_dihedral`: Rotate a group by a</span>
-<span class="sd">        predefined dihedral angle, starting from its current configuration.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dihedral</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_dihedral</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">,</span> <span class="n">angle</span> <span class="o">+</span> <span class="n">start</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">indices</span><span class="p">)</span></div>
-
 
 <div class="viewcode-block" id="Qbits.get_angle">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.get_angle">[docs]</a>
@@ -1737,14 +1397,16 @@ document.write(`
 <div class="viewcode-block" id="Qbits.rattle">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.rattle">[docs]</a>
     <span class="k">def</span> <span class="nf">rattle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stdev</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Randomly displace qbits.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Randomly displace qbits.</span>
 
-<span class="sd">        This method adds random displacements to the qbit positions,</span>
-<span class="sd">        taking a possible constraint into account.  The random numbers are</span>
+<span class="sd">        This method adds random displacements to the qbit positions.</span>
+<span class="sd">        The random numbers are</span>
 <span class="sd">        drawn from a normal distribution of standard deviation stdev.</span>
 
 <span class="sd">        For a parallel calculation, it is important to use the same</span>
-<span class="sd">        seed on all processors!&quot;&quot;&quot;</span>
+<span class="sd">        seed on all processors!</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">rng</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Please do not provide both seed and rng.&quot;</span><span class="p">)</span>
@@ -1892,41 +1554,6 @@ document.write(`
                 <span class="n">R</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">fix</span><span class="p">))</span> <span class="o">*</span> <span class="n">D</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="Qbits.get_scaled_positions">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_scaled_positions">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_scaled_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wrap</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get positions relative to unit cell.</span>
-
-<span class="sd">        If wrap is True, qbits outside the unit cell will be wrapped into</span>
-<span class="sd">        the cell in those directions with periodic boundary conditions</span>
-<span class="sd">        so that the scaled coordinates are between zero and one.</span>
-
-<span class="sd">        If any cell vectors are zero, the corresponding coordinates</span>
-<span class="sd">        are evaluated as if the cell were completed using</span>
-<span class="sd">        ``cell.complete()``.  This means coordinates will be Cartesian</span>
-<span class="sd">        as long as the non-zero cell vectors span a Cartesian axis or</span>
-<span class="sd">        plane.&quot;&quot;&quot;</span>
-
-        <span class="n">fractional</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">scaled_positions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">wrap</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">periodic</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pbc</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">periodic</span><span class="p">:</span>
-                    <span class="c1"># Yes, we need to do it twice.</span>
-                    <span class="c1"># See the scaled_positions.py test.</span>
-                    <span class="n">fractional</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">%=</span> <span class="mf">1.0</span>
-                    <span class="n">fractional</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">%=</span> <span class="mf">1.0</span>
-
-        <span class="k">return</span> <span class="n">fractional</span></div>
-
-
-<div class="viewcode-block" id="Qbits.set_scaled_positions">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.set_scaled_positions">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_scaled_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scaled</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set positions relative to unit cell.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">cartesian_positions</span><span class="p">(</span><span class="n">scaled</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="Qbits.wrap">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.wrap">[docs]</a>
     <span class="k">def</span> <span class="nf">wrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">wrap_kw</span><span class="p">):</span>
@@ -2063,14 +1690,6 @@ document.write(`
 
         <span class="k">return</span> <span class="n">Register</span><span class="o">.</span><span class="n">from_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">)</span></div>
 
-
-    <span class="c1">#</span>
-
-    <span class="c1"># Rajarshi: Deleted the edit method, which in original</span>
-    <span class="c1"># ASE approach lets users manipulate Atoms object. At</span>
-    <span class="c1"># some stage we may adopt similar approach depending on</span>
-    <span class="c1"># the usage/usecase.</span>
-    <span class="c1"># def edit(self): Modify qbits interactively through ASE&#39;s GUI viewer.</span>
 
 
 <span class="k">def</span> <span class="nf">_norm_vector</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>

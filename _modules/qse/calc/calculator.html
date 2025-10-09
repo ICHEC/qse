@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.calc.calculator &#8212; qse 0.2.28 documentation</title>
+    <title>qse.calc.calculator &#8212; qse 1.0.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../../_static/documentation_options.js?v=66c17169"></script>
+    <script src="../../../_static/documentation_options.js?v=f9c1cefe"></script>
     <script src="../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -146,8 +146,8 @@
       
     
     
-    <img src="../../../_static/logo.svg" class="logo__image only-light" alt="qse 0.2.28 documentation - Home"/>
-    <script>document.write(`<img src="../../../_static/logo.svg" class="logo__image only-dark" alt="qse 0.2.28 documentation - Home"/>`);</script>
+    <img src="../../../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.0 documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/logo.svg" class="logo__image only-dark" alt="qse 1.0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -328,151 +328,14 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for qse.calc.calculator</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">ase.outputs</span> <span class="kn">import</span> <span class="n">Properties</span><span class="p">,</span> <span class="n">all_outputs</span>
+<span></span><span class="kn">import</span> <span class="nn">pathlib</span>
 
 <span class="kn">import</span> <span class="nn">qse.magnetic</span> <span class="k">as</span> <span class="nn">magnetic</span>
-<span class="kn">from</span> <span class="nn">qse.calc.messages</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">CalculationFailed</span><span class="p">,</span>
-    <span class="n">CalculatorSetupError</span><span class="p">,</span>
-    <span class="n">PropertyNotImplementedError</span><span class="p">,</span>
-    <span class="n">PropertyNotPresent</span><span class="p">,</span>
-<span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">compare_qbits</span><span class="p">(</span><span class="n">qbits1</span><span class="p">,</span> <span class="n">qbits2</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-15</span><span class="p">,</span> <span class="n">excluded_properties</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check for system changes since last calculation.  Properties in</span>
-<span class="sd">    ``excluded_properties`` are not checked.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">qbits1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">system_changes</span> <span class="o">=</span> <span class="n">all_changes</span><span class="p">[:]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">system_changes</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="n">properties_to_check</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">all_changes</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">excluded_properties</span><span class="p">:</span>
-            <span class="n">properties_to_check</span> <span class="o">-=</span> <span class="nb">set</span><span class="p">(</span><span class="n">excluded_properties</span><span class="p">)</span>
-
-        <span class="c1"># Check properties that aren&#39;t in Qbits.arrays but are attributes of</span>
-        <span class="c1"># Qbits objects</span>
-        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;cell&quot;</span><span class="p">,</span> <span class="s2">&quot;pbc&quot;</span><span class="p">]:</span>
-            <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties_to_check</span><span class="p">:</span>
-                <span class="n">properties_to_check</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">equal</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">qbits1</span><span class="p">,</span> <span class="n">prop</span><span class="p">),</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">qbits2</span><span class="p">,</span> <span class="n">prop</span><span class="p">),</span> <span class="n">atol</span><span class="o">=</span><span class="n">tol</span><span class="p">):</span>
-                    <span class="n">system_changes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
-
-        <span class="n">arrays1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">qbits1</span><span class="o">.</span><span class="n">arrays</span><span class="p">)</span>
-        <span class="n">arrays2</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">qbits2</span><span class="o">.</span><span class="n">arrays</span><span class="p">)</span>
-
-        <span class="c1"># Add any properties that are only in qbits1.arrays or only in</span>
-        <span class="c1"># qbits2.arrays (and aren&#39;t excluded).  Note that if, e.g. arrays1 has</span>
-        <span class="c1"># `initial_charges` which is merely zeros and arrays2 does not have</span>
-        <span class="c1"># this array, we&#39;ll still assume that the system has changed.  However,</span>
-        <span class="c1"># this should only occur rarely.</span>
-        <span class="n">system_changes</span> <span class="o">+=</span> <span class="n">properties_to_check</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">arrays1</span> <span class="o">^</span> <span class="n">arrays2</span><span class="p">)</span>
-
-        <span class="c1"># Finally, check all of the non-excluded properties shared by the qbits</span>
-        <span class="c1"># arrays.</span>
-        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties_to_check</span> <span class="o">&amp;</span> <span class="n">arrays1</span> <span class="o">&amp;</span> <span class="n">arrays2</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">equal</span><span class="p">(</span><span class="n">qbits1</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="n">prop</span><span class="p">],</span> <span class="n">qbits2</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="n">prop</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="n">tol</span><span class="p">):</span>
-                <span class="n">system_changes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">system_changes</span>
-
-
-<span class="n">all_properties</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;energy&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;energies&quot;</span><span class="p">,</span>
-<span class="p">]</span>  <span class="c1"># Rajarshi: this needs to populate according to usage</span>
-
-
-<span class="n">all_changes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="s2">&quot;positions&quot;</span><span class="p">,</span> <span class="s2">&quot;states&quot;</span><span class="p">,</span> <span class="s2">&quot;cell&quot;</span><span class="p">,</span> <span class="s2">&quot;pbc&quot;</span><span class="p">]</span>
-
-<span class="c1"># Recognized names of calculators sorted alphabetically:</span>
-<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;myqlm&quot;</span><span class="p">,</span> <span class="s2">&quot;pulser&quot;</span><span class="p">,</span> <span class="s2">&quot;qiskit&quot;</span><span class="p">]</span>
-
-
-<span class="n">special</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;myqlm&quot;</span><span class="p">:</span> <span class="s2">&quot;MYQLM&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;pulser&quot;</span><span class="p">:</span> <span class="s2">&quot;Pulser&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;qiskit&quot;</span><span class="p">:</span> <span class="s2">&quot;Qiskit&quot;</span><span class="p">,</span>
-<span class="p">}</span>
-
-
-<span class="n">external_calculators</span> <span class="o">=</span> <span class="p">{}</span>
-
-
-<span class="k">def</span> <span class="nf">register_calculator_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add the class into the database.&quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">external_calculators</span>
-    <span class="n">external_calculators</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span>
-    <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">names</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-
-
-<span class="k">def</span> <span class="nf">get_calculator_class</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return calculator class.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;pulser&quot;</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">qse.calc.pulser</span> <span class="kn">import</span> <span class="n">Pulser</span> <span class="k">as</span> <span class="n">Calculator</span>
-    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;myqlm&quot;</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">qse.calc.myqlm</span> <span class="kn">import</span> <span class="n">MyQLM</span> <span class="k">as</span> <span class="n">Calculator</span>
-    <span class="k">elif</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">external_calculators</span><span class="p">:</span>
-        <span class="n">Calculator</span> <span class="o">=</span> <span class="n">external_calculators</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">classname</span> <span class="o">=</span> <span class="n">special</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>
-        <span class="n">module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s2">&quot;qse.calculators.&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span> <span class="p">{},</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="n">classname</span><span class="p">])</span>
-        <span class="n">Calculator</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">classname</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">Calculator</span>
-
-
-<span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;ndarray-enabled comparison function.&quot;&quot;&quot;</span>
-    <span class="c1"># XXX Known bugs:</span>
-    <span class="c1">#  * Comparing cell objects (pbc not part of array representation)</span>
-    <span class="c1">#  * Infinite recursion for cyclic dicts</span>
-    <span class="c1">#  * Can of worms is open</span>
-    <span class="k">if</span> <span class="n">tol</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Use `equal(a, b, rtol=..., atol=...)` instead of `tol=...`&quot;</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="p">(</span>
-            <span class="n">rtol</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">atol</span> <span class="ow">is</span> <span class="kc">None</span>
-        <span class="p">),</span> <span class="s2">&quot;Do not use deprecated `tol` with `atol` and/or `rtol`&quot;</span>
-        <span class="n">rtol</span> <span class="o">=</span> <span class="n">tol</span>
-        <span class="n">atol</span> <span class="o">=</span> <span class="n">tol</span>
-
-    <span class="n">a_is_dict</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
-    <span class="n">b_is_dict</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">a_is_dict</span> <span class="ow">or</span> <span class="n">b_is_dict</span><span class="p">:</span>
-        <span class="c1"># Check that both a and b are dicts</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">a_is_dict</span> <span class="ow">and</span> <span class="n">b_is_dict</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">!=</span> <span class="n">b</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">equal</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">a</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">if</span> <span class="n">rtol</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">atol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">rtol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">rtol</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">if</span> <span class="n">atol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">atol</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">Parameters</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dictionary for parameters.</span>
-
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dictionary for parameters.</span>
 <span class="sd">    Special feature: If param is a Parameters instance, then param.xc</span>
 <span class="sd">    is a shorthand for param[&#39;xc&#39;].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -525,80 +388,48 @@ document.write(`
         <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tostring</span><span class="p">())</span>
 
 
+<span class="k">def</span> <span class="nf">get_calculator_class</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return calculator class.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;pulser&quot;</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">qse.calc.pulser</span> <span class="kn">import</span> <span class="n">Pulser</span> <span class="k">as</span> <span class="n">Calculator</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;myqlm&quot;</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">qse.calc.myqlm</span> <span class="kn">import</span> <span class="n">MyQLM</span> <span class="k">as</span> <span class="n">Calculator</span>
+    <span class="k">return</span> <span class="n">Calculator</span>
+
+
 <div class="viewcode-block" id="Calculator">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator">[docs]</a>
 <span class="k">class</span> <span class="nc">Calculator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Base-class for all QSE calculators, adapted from ASE calculators.</span>
+<span class="sd">    Base-class for all QSE calculators.</span>
 
-<span class="sd">    A calculator must raise PropertyNotImplementedError if asked for a</span>
-<span class="sd">    property that it can&#39;t calculate.  So, if calculation of the</span>
-<span class="sd">    stress tensor has not been implemented, get_stress(qbits) should</span>
-<span class="sd">    raise PropertyNotImplementedError.  This can be achieved simply by not</span>
-<span class="sd">    including the string &#39;stress&#39; in the list implemented_properties</span>
-<span class="sd">    which is a class member.  These are the names of the standard</span>
-<span class="sd">    properties: &#39;energy&#39;, &#39;forces&#39;, &#39;stress&#39;, &#39;dipole&#39;, &#39;charges&#39;,</span>
-<span class="sd">    &#39;magmom&#39; and &#39;magmoms&#39;.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    label: str</span>
+<span class="sd">        Name used for all files.  Not supported by all calculators.</span>
+<span class="sd">        May contain a directory, but please use the directory parameter</span>
+<span class="sd">        for that instead.</span>
+<span class="sd">    qbits: Qbits object</span>
+<span class="sd">        Optional Qbits object to which the calculator will be</span>
+<span class="sd">        attached.  When restarting, qbits will get its positions and</span>
+<span class="sd">        unit-cell updated from file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">implemented_properties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="s2">&quot;Properties calculator can handle (energy, forces, ...)&quot;</span>
-
-    <span class="n">default_parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="s2">&quot;Default parameters&quot;</span>
-
-    <span class="n">ignored_changes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="s2">&quot;Properties of Qbits which we ignore for the purposes of cache &quot;</span>
-    <span class="s2">&quot;invalidation with check_state().&quot;</span>
-
-    <span class="n">discard_results_on_any_change</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="s2">&quot;Whether we purge the results following any change in the set() method.  &quot;</span>
-    <span class="s2">&quot;Most (file I/O) calculators will probably want this.&quot;</span>
-
-    <span class="n">_deprecated</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
+        <span class="n">qbits</span><span class="p">,</span>
+        <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">is_calculator_available</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">installation_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Basic calculator implementation.</span>
-<span class="sd">        label: str</span>
-<span class="sd">            Name used for all files.  Not supported by all calculators.</span>
-<span class="sd">            May contain a directory, but please use the directory parameter</span>
-<span class="sd">            for that instead.</span>
-<span class="sd">        qbits: Qbits object</span>
-<span class="sd">            Optional Qbits object to which the calculator will be</span>
-<span class="sd">            attached.  When restarting, qbits will get its positions and</span>
-<span class="sd">            unit-cell updated from file.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_calculator_available</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">installation_message</span><span class="p">)</span>
 
-        <span class="c1"># print(kwargs.keys())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;qbits&quot;</span><span class="p">)</span>  <span class="c1"># copy of qbits object from last calculation</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;label&quot;</span><span class="p">)</span>
-        <span class="c1"># self._label = label</span>
-        <span class="c1"># self.qbits = qbits</span>
-        <span class="c1"># self.label = kwargs.get(&#39;label&#39;)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># calculated properties (energy, forces, ...)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># calculational parameters</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="c1"># print(self.label)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># Use default parameters if they were not read from file:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_default_parameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span> <span class="o">=</span> <span class="n">qbits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="n">label</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="bp">self</span>
-
-        <span class="c1"># self.set(**kwargs)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">spins</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sij</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
@@ -609,67 +440,6 @@ document.write(`
     <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="n">label</span>
 
-    <span class="k">def</span> <span class="nf">get_default_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Parameters</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_parameters</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">todict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skip_default</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="n">defaults</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_default_parameters</span><span class="p">()</span>
-        <span class="n">dct</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">&quot;todict&quot;</span><span class="p">):</span>
-                <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">todict</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">skip_default</span><span class="p">:</span>
-                <span class="n">default</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;_no_default_&quot;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">default</span> <span class="o">!=</span> <span class="s2">&quot;_no_default_&quot;</span> <span class="ow">and</span> <span class="n">equal</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">default</span><span class="p">):</span>
-                    <span class="k">continue</span>
-            <span class="n">dct</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">return</span> <span class="n">dct</span>
-
-<div class="viewcode-block" id="Calculator.reset">
-<a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.reset">[docs]</a>
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear all information from old calculation.&quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="p">{}</span></div>
-
-
-<div class="viewcode-block" id="Calculator.read">
-<a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.read">[docs]</a>
-    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Read qbits, parameters and calculated properties from output file.</span>
-
-<span class="sd">        Read result from self.label file.  Raise ReadError if the file</span>
-<span class="sd">        is not there.  If the file is corrupted or contains an error</span>
-<span class="sd">        message from the calculation, a ReadError should also be</span>
-<span class="sd">        raised.  In case of succes, these attributes must set:</span>
-
-<span class="sd">        qbits: Qbits object</span>
-<span class="sd">            The state of the qbits from last calculation.</span>
-<span class="sd">        parameters: Parameters object</span>
-<span class="sd">            The parameter dictionary.</span>
-<span class="sd">        results: dict</span>
-<span class="sd">            Calculated properties like energy and forces.</span>
-
-<span class="sd">        The FileIOCalculator.read() method will typically read qbits</span>
-<span class="sd">        and parameters and get the results dict by calling the</span>
-<span class="sd">        read_results() method.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">label</span><span class="p">)</span></div>
-
-
-    <span class="k">def</span> <span class="nf">get_qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># raise ValueError(&#39;Calculator has no qbits&#39;)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;qbits is None&quot;</span><span class="p">)</span>
-            <span class="n">qbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">qbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">qbits</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="bp">self</span>
-        <span class="k">return</span> <span class="n">qbits</span>
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span>
@@ -678,173 +448,14 @@ document.write(`
     <span class="k">def</span> <span class="nf">qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span> <span class="o">=</span> <span class="n">qbits</span>
 
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">read_qbits</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">restart</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">restart</span><span class="o">=</span><span class="n">restart</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">restart</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">get_qbits</span><span class="p">()</span>
-
-<div class="viewcode-block" id="Calculator.set">
-<a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.set">[docs]</a>
-    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set parameters like set(key1=value1, key2=value2, ...).</span>
-
-<span class="sd">        A dictionary containing the parameters that have been changed</span>
-<span class="sd">        is returned.</span>
-
-<span class="sd">        Subclasses must implement a set() method that will look at the</span>
-<span class="sd">        chaneged parameters and decide if a call to reset() is needed.</span>
-<span class="sd">        If the changed parameters are harmless, like a change in</span>
-<span class="sd">        verbosity, then there is no need to call reset().</span>
-
-<span class="sd">        The special keyword &#39;parameters&#39; can be used to read</span>
-<span class="sd">        parameters from a file.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">if</span> <span class="s2">&quot;parameters&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;parameters&quot;</span><span class="p">)</span>
-            <span class="n">parameters</span> <span class="o">=</span> <span class="n">Parameters</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-            <span class="n">parameters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="n">kwargs</span> <span class="o">=</span> <span class="n">parameters</span>
-
-        <span class="n">changed_parameters</span> <span class="o">=</span> <span class="p">{}</span>
-
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">oldvalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equal</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">oldvalue</span><span class="p">):</span>
-                <span class="n">changed_parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">discard_results_on_any_change</span> <span class="ow">and</span> <span class="n">changed_parameters</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">changed_parameters</span></div>
-
-
-<div class="viewcode-block" id="Calculator.check_state">
-<a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.check_state">[docs]</a>
-    <span class="k">def</span> <span class="nf">check_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-15</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check for any system changes since last calculation.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">compare_qbits</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">,</span> <span class="n">qbits</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span> <span class="n">excluded_properties</span><span class="o">=</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ignored_changes</span><span class="p">)</span>
-        <span class="p">)</span></div>
-
-
-    <span class="k">def</span> <span class="nf">get_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">force_consistent</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="n">energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_property</span><span class="p">(</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="n">qbits</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">force_consistent</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s2">&quot;free_energy&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
-                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-                <span class="c1"># XXX but we don&#39;t know why the energy is not there.</span>
-                <span class="c1"># We should raise PropertyNotPresent.  Discuss</span>
-                <span class="k">raise</span> <span class="n">PropertyNotImplementedError</span><span class="p">(</span>
-                    <span class="s1">&#39;Force consistent/free energy (&quot;free_energy&quot;) &#39;</span>
-                    <span class="s2">&quot;not provided by </span><span class="si">{0}</span><span class="s2"> calculator&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-                <span class="p">)</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;free_energy&quot;</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">energy</span>
-
-    <span class="k">def</span> <span class="nf">get_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_calculation</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">implemented_properties</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">PropertyNotImplementedError</span><span class="p">(</span>
-                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> property not implemented&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-            <span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">qbits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">qbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span>
-            <span class="n">system_changes</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">system_changes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_state</span><span class="p">(</span><span class="n">qbits</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">system_changes</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_calculation</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">qbits</span><span class="p">,</span> <span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">system_changes</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
-            <span class="c1"># For some reason the calculator was not able to do what we want,</span>
-            <span class="c1"># and that is OK.</span>
-            <span class="k">raise</span> <span class="n">PropertyNotImplementedError</span><span class="p">(</span>
-                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> not present in this &quot;</span> <span class="s2">&quot;calculation&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-            <span class="p">)</span>
-
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="k">def</span> <span class="nf">calculation_required</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">properties</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-        <span class="n">system_changes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_state</span><span class="p">(</span><span class="n">qbits</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">system_changes</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
 <div class="viewcode-block" id="Calculator.calculate">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.calculate">[docs]</a>
-    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">],</span> <span class="n">system_changes</span><span class="o">=</span><span class="n">all_changes</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Do the calculation.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        properties: list of str</span>
-<span class="sd">            List of what needs to be calculated.  Can be any combination</span>
-<span class="sd">            of &#39;energy&#39;, &#39;forces&#39;, &#39;stress&#39;, &#39;dipole&#39;, &#39;charges&#39;, &#39;magmom&#39;</span>
-<span class="sd">            and &#39;magmoms&#39;.</span>
-<span class="sd">        system_changes: list of str</span>
-<span class="sd">            List of what has changed since last calculation.  Can be</span>
-<span class="sd">            any combination of these six: &#39;positions&#39;, &#39;numbers&#39;, &#39;cell&#39;,</span>
-<span class="sd">            &#39;pbc&#39;, &#39;initial_charges&#39; and &#39;initial_magmoms&#39;.</span>
-
-<span class="sd">        Subclasses need to implement this, but can ignore properties</span>
-<span class="sd">        and system_changes if they want.  Calculated properties should</span>
-<span class="sd">        be inserted into results dictionary like shown in this dummy</span>
-<span class="sd">        example::</span>
-
-<span class="sd">            self.results = {&#39;energy&#39;: 0.0,</span>
-<span class="sd">                            &#39;forces&#39;: np.zeros((len(qbits), 3)),</span>
-<span class="sd">                            &#39;stress&#39;: np.zeros(6),</span>
-<span class="sd">                            &#39;dipole&#39;: np.zeros(3),</span>
-<span class="sd">                            &#39;charges&#39;: np.zeros(len(qbits)),</span>
-<span class="sd">                            &#39;magmom&#39;: 0.0,</span>
-<span class="sd">                            &#39;magmoms&#39;: np.zeros(len(qbits))}</span>
-
-<span class="sd">        The subclass implementation should first call this</span>
-<span class="sd">        implementation to set the qbits attribute and create any missing</span>
-<span class="sd">        directories.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-        <span class="k">if</span> <span class="n">qbits</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_directory</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_directory</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="Calculator.calculate_properties">
-<a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.calculate_properties">[docs]</a>
-    <span class="k">def</span> <span class="nf">calculate_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;This method is experimental; currently for internal use.&quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_outputs</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No such property: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-        <span class="c1"># We ignore system changes for now.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">qbits</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">system_changes</span><span class="o">=</span><span class="n">all_changes</span><span class="p">)</span>
-
-        <span class="n">props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">export_properties</span><span class="p">()</span>
-
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">props</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">PropertyNotPresent</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">props</span></div>
-
-
-    <span class="k">def</span> <span class="nf">export_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Properties</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Calculator.get_spins">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.get_spins">[docs]</a>
@@ -919,88 +530,6 @@ document.write(`
         <span class="k">return</span> <span class="n">magnetic</span><span class="o">.</span><span class="n">structure_factor_from_sij</span><span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">L3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sij</span><span class="p">)</span></div>
 </div>
 
-
-
-<span class="k">class</span> <span class="nc">FileIOCalculator</span><span class="p">(</span><span class="n">Calculator</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for calculators that write/read input/output files.&quot;&quot;&quot;</span>
-
-    <span class="n">command</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="s2">&quot;Command used to start calculation&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">restart</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">ignore_bad_restart_file</span><span class="o">=</span><span class="n">Calculator</span><span class="o">.</span><span class="n">_deprecated</span><span class="p">,</span>
-        <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">command</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-    <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;File-IO calculator.</span>
-
-<span class="sd">        command: str</span>
-<span class="sd">            Command used to start calculation.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">Calculator</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">restart</span><span class="p">,</span> <span class="n">ignore_bad_restart_file</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">qbits</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
-        <span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">command</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">=</span> <span class="n">command</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;ASE_&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;_COMMAND&quot;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">],</span> <span class="n">system_changes</span><span class="o">=</span><span class="n">all_changes</span><span class="p">):</span>
-        <span class="n">Calculator</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">system_changes</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_input</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">system_changes</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">CalculatorSetupError</span><span class="p">(</span>
-                <span class="s2">&quot;Please set $</span><span class="si">{}</span><span class="s2"> environment variable &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="s2">&quot;ASE_&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;_COMMAND&quot;</span>
-                <span class="p">)</span>
-                <span class="o">+</span> <span class="s2">&quot;or supply the command keyword&quot;</span>
-            <span class="p">)</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span>
-        <span class="k">if</span> <span class="s2">&quot;PREFIX&quot;</span> <span class="ow">in</span> <span class="n">command</span><span class="p">:</span>
-            <span class="n">command</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;PREFIX&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-            <span class="c1"># Actually this may never happen with shell=True, since</span>
-            <span class="c1"># probably the shell launches successfully.  But we soon want</span>
-            <span class="c1"># to allow calling the subprocess directly, and then this</span>
-            <span class="c1"># distinction (failed to launch vs failed to run) is useful.</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Failed to execute &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">EnvironmentError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
-
-        <span class="n">errorcode</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-
-        <span class="k">if</span> <span class="n">errorcode</span><span class="p">:</span>
-            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="s1">&#39;Calculator &quot;</span><span class="si">{}</span><span class="s1">&quot; failed with command &quot;</span><span class="si">{}</span><span class="s1">&quot; failed in &#39;</span>
-                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> with error code </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">errorcode</span><span class="p">)</span>
-            <span class="p">)</span>
-            <span class="k">raise</span> <span class="n">CalculationFailed</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">read_results</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">write_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">system_changes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Write input file(s).</span>
-
-<span class="sd">        Call this method first in subclasses so that directories are</span>
-<span class="sd">        created automatically.&quot;&quot;&quot;</span>
-
-        <span class="n">absdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">absdir</span> <span class="o">!=</span> <span class="n">os</span><span class="o">.</span><span class="n">curdir</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">read_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read energy, forces, ... from output file(s).&quot;&quot;&quot;</span>
-        <span class="k">pass</span>
 </pre></div>
 
                 </article>

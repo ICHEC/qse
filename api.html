@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API reference &#8212; qse 0.2.28 documentation</title>
+    <title>API reference &#8212; qse 1.0.0 documentation</title>
   
   
   
@@ -39,7 +39,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=66c17169"></script>
+    <script src="_static/documentation_options.js?v=f9c1cefe"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -147,8 +147,8 @@
       
     
     
-    <img src="_static/logo.svg" class="logo__image only-light" alt="qse 0.2.28 documentation - Home"/>
-    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="qse 0.2.28 documentation - Home"/>`);</script>
+    <img src="_static/logo.svg" class="logo__image only-light" alt="qse 1.0.0 documentation - Home"/>
+    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="qse 1.0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -393,8 +393,6 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.append"><code class="docutils literal notranslate"><span class="pre">Qbits.append()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.calc"><code class="docutils literal notranslate"><span class="pre">Qbits.calc</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.cell"><code class="docutils literal notranslate"><span class="pre">Qbits.cell</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.center_in_unit_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.center_in_unit_cell()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.constraints"><code class="docutils literal notranslate"><span class="pre">Qbits.constraints</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.copy"><code class="docutils literal notranslate"><span class="pre">Qbits.copy()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.draw"><code class="docutils literal notranslate"><span class="pre">Qbits.draw()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.euler_rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.euler_rotate()</span></code></a></li>
@@ -405,19 +403,12 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_angles"><code class="docutils literal notranslate"><span class="pre">Qbits.get_angles()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_array"><code class="docutils literal notranslate"><span class="pre">Qbits.get_array()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.get_cell()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_cell_lengths_and_angles"><code class="docutils literal notranslate"><span class="pre">Qbits.get_cell_lengths_and_angles()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.get_celldisp()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_centroid"><code class="docutils literal notranslate"><span class="pre">Qbits.get_centroid()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.get_dihedral()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_dihedrals"><code class="docutils literal notranslate"><span class="pre">Qbits.get_dihedrals()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_distance"><code class="docutils literal notranslate"><span class="pre">Qbits.get_distance()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_distances"><code class="docutils literal notranslate"><span class="pre">Qbits.get_distances()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.get_pbc()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_properties"><code class="docutils literal notranslate"><span class="pre">Qbits.get_properties()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_reciprocal_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.get_reciprocal_cell()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_scaled_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.get_scaled_positions()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_volume"><code class="docutils literal notranslate"><span class="pre">Qbits.get_volume()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.has"><code class="docutils literal notranslate"><span class="pre">Qbits.has()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.labels"><code class="docutils literal notranslate"><span class="pre">Qbits.labels</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.new_array"><code class="docutils literal notranslate"><span class="pre">Qbits.new_array()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.pbc</span></code></a></li>
@@ -426,17 +417,12 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rattle"><code class="docutils literal notranslate"><span class="pre">Qbits.rattle()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.repeat"><code class="docutils literal notranslate"><span class="pre">Qbits.repeat()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.rotate()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rotate_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.rotate_dihedral()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_angle"><code class="docutils literal notranslate"><span class="pre">Qbits.set_angle()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_array"><code class="docutils literal notranslate"><span class="pre">Qbits.set_array()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.set_cell()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.set_celldisp()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_centroid"><code class="docutils literal notranslate"><span class="pre">Qbits.set_centroid()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_constraint"><code class="docutils literal notranslate"><span class="pre">Qbits.set_constraint()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.set_dihedral()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_distance"><code class="docutils literal notranslate"><span class="pre">Qbits.set_distance()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.set_pbc()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_scaled_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.set_scaled_positions()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.shape"><code class="docutils literal notranslate"><span class="pre">Qbits.shape</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.states"><code class="docutils literal notranslate"><span class="pre">Qbits.states</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.todict"><code class="docutils literal notranslate"><span class="pre">Qbits.todict()</span></code></a></li>
@@ -450,36 +436,20 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.calc">qse.calc</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.CalculationFailed"><code class="docutils literal notranslate"><span class="pre">CalculationFailed</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator"><code class="docutils literal notranslate"><span class="pre">Calculator</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.calculate"><code class="docutils literal notranslate"><span class="pre">Calculator.calculate()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.calculate_properties"><code class="docutils literal notranslate"><span class="pre">Calculator.calculate_properties()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.check_state"><code class="docutils literal notranslate"><span class="pre">Calculator.check_state()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.default_parameters"><code class="docutils literal notranslate"><span class="pre">Calculator.default_parameters</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.discard_results_on_any_change"><code class="docutils literal notranslate"><span class="pre">Calculator.discard_results_on_any_change</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.get_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.get_sij()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.get_spins"><code class="docutils literal notranslate"><span class="pre">Calculator.get_spins()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.ignored_changes"><code class="docutils literal notranslate"><span class="pre">Calculator.ignored_changes</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Calculator.implemented_properties</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.read"><code class="docutils literal notranslate"><span class="pre">Calculator.read()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.reset"><code class="docutils literal notranslate"><span class="pre">Calculator.reset()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.set"><code class="docutils literal notranslate"><span class="pre">Calculator.set()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.structure_factor_from_sij()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.CalculatorSetupError"><code class="docutils literal notranslate"><span class="pre">CalculatorSetupError</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm"><code class="docutils literal notranslate"><span class="pre">Myqlm</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.calculate"><code class="docutils literal notranslate"><span class="pre">Myqlm.calculate()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.default_parameters"><code class="docutils literal notranslate"><span class="pre">Myqlm.default_parameters</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Myqlm.implemented_properties</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotImplementedError"><code class="docutils literal notranslate"><span class="pre">PropertyNotImplementedError</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotPresent"><code class="docutils literal notranslate"><span class="pre">PropertyNotPresent</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser"><code class="docutils literal notranslate"><span class="pre">Pulser</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.build_sequence"><code class="docutils literal notranslate"><span class="pre">Pulser.build_sequence()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.calculate"><code class="docutils literal notranslate"><span class="pre">Pulser.calculate()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Pulser.implemented_properties</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -622,15 +592,15 @@ Qbits object. Defaults to None.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qse.Qbits">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">Qbits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaled_positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">celldisp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">Qbits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaled_positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pbc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits" title="Link to this definition">#</a></dt>
 <dd><p>The Qbits object can represent an isolated molecule, or a
 periodically repeated structure.  It has a unit cell and
 there may be periodic boundary conditions along any of the three
 unit cell axes. Information about the qbits (qubit state and
 position) is stored in ndarrays.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul>
+<dd class="field-odd"><ul class="simple">
 <li><p><strong>labels</strong> (<em>list of str</em>) – A list of strings corresponding to a label for each qubit.</p></li>
 <li><p><strong>states</strong> (<em>list of 2-length arrays.</em>) – State of each qubit.</p></li>
 <li><p><strong>positions</strong> (<em>list of xyz-positions</em>) – Qubit positions.  Anything that can be converted to an
@@ -646,30 +616,10 @@ other three are angles between them (in degrees), in following order:
 First vector will lie in x-direction, second in xy-plane,
 and the third one in z-positive subspace.
 Default value: [0, 0, 0].</p></li>
-<li><p><strong>celldisp</strong> (<em>Vector</em>) – Unit cell displacement vector. To visualize a displaced cell
-around the center of mass of a Systems of qbits. Default value
-= (0,0,0)</p></li>
 <li><p><strong>pbc</strong> (<em>one or three bool</em>) – Periodic boundary conditions flags.  Examples: True,
 False, 0, 1, (1, 1, 0), (True, False, False).  Default
 value: False.</p></li>
-<li><p><strong>constraint</strong> (<em>constraint object(s)</em>) – Used for applying one or more constraints during structure
-optimization.</p></li>
 <li><p><strong>calculator</strong> (<em>calculator object</em>) – Used to attach a calculator for doing computation.</p></li>
-<li><p><strong>info</strong> (<em>dict of key-value pairs</em>) – Dictionary of key-value pairs with additional information
-about the system.  The following keys may be used by ase:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>spacegroup: Spacegroup instance</p></li>
-<li><p>unit_cell: ‘conventional’ | ‘primitive’ | int | 3 ints</p></li>
-<li><p>adsorbate_info: Information about special adsorption sites</p></li>
-</ul>
-</div></blockquote>
-<p>Items in the info attribute survives copy and slicing and can
-be stored in and retrieved from trajectory files given that the
-key is a string, the value is JSON-compatible and, if the value is a
-user-defined object, its base class is importable.  One should
-not make any assumptions about the existence of keys.</p>
-</li>
 </ul>
 </dd>
 </dl>
@@ -717,32 +667,6 @@ to the qbits object.</p>
 <dt class="sig sig-object py" id="qse.Qbits.cell">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cell</span></span><a class="headerlink" href="#qse.Qbits.cell" title="Link to this definition">#</a></dt>
 <dd><p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">ase.cell.Cell</span></code> for direct manipulation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.center_in_unit_cell">
-<span class="sig-name descname"><span class="pre">center_in_unit_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vacuum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">1,</span> <span class="pre">2)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">about</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.center_in_unit_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.center_in_unit_cell" title="Link to this definition">#</a></dt>
-<dd><p>Center qbits in unit cell.</p>
-<p>Centers the qbits in the unit cell, so there is the same
-amount of vacuum on all sides.</p>
-<dl class="simple">
-<dt>vacuum: float (default: None)</dt><dd><p>If specified adjust the amount of vacuum when centering.
-If vacuum=10.0 there will thus be 10 Angstrom of vacuum
-on each side.</p>
-</dd>
-<dt>axis: int or sequence of ints</dt><dd><p>Axis or axes to act on.  Default: Act on all axes.</p>
-</dd>
-<dt>about: float or array (default: None)</dt><dd><p>If specified, center the qbits about &lt;about&gt;.
-I.e., about=(0., 0., 0.) (or just “about=0.”, interpreted
-identically), to center about the origin.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="qse.Qbits.constraints">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">constraints</span></span><a class="headerlink" href="#qse.Qbits.constraints" title="Link to this definition">#</a></dt>
-<dd><p>Constraints of the qbits.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -898,24 +822,6 @@ is the jth Cartesian coordinate of the ith cell vector.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.get_cell_lengths_and_angles">
-<span class="sig-name descname"><span class="pre">get_cell_lengths_and_angles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.get_cell_lengths_and_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.get_cell_lengths_and_angles" title="Link to this definition">#</a></dt>
-<dd><p>Get unit cell parameters. Sequence of 6 numbers.</p>
-<p>First three are unit cell vector lengths and second three
-are angles between them:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="n">angle</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">),</span> <span class="n">angle</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">c</span><span class="p">),</span> <span class="n">angle</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)]</span>
-</pre></div>
-</div>
-<p>in degrees.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.get_celldisp">
-<span class="sig-name descname"><span class="pre">get_celldisp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.get_celldisp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.get_celldisp" title="Link to this definition">#</a></dt>
-<dd><p>Get the unit cell displacement vectors.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbits.get_centroid">
 <span class="sig-name descname"><span class="pre">get_centroid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.get_centroid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.get_centroid" title="Link to this definition">#</a></dt>
 <dd><p>Get the centroid of the positions.</p>
@@ -930,26 +836,6 @@ are angles between them:</p>
 the centroid is given by</p>
 <div class="math notranslate nohighlight">
 \[\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.\]</div>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.get_dihedral">
-<span class="sig-name descname"><span class="pre">get_dihedral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.get_dihedral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.get_dihedral" title="Link to this definition">#</a></dt>
-<dd><p>Calculate dihedral angle.</p>
-<p>Calculate dihedral angle (in degrees) between the vectors a0-&gt;a1
-and a2-&gt;a3.</p>
-<p>Use mic=True to use the Minimum Image Convention and calculate the
-angle across periodic boundaries.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.get_dihedrals">
-<span class="sig-name descname"><span class="pre">get_dihedrals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.get_dihedrals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.get_dihedrals" title="Link to this definition">#</a></dt>
-<dd><p>Calculate dihedral angles.</p>
-<p>Calculate dihedral angles (in degrees) between the list of vectors
-a0-&gt;a1 and a2-&gt;a3, where a0, a1, a2 and a3 are in each row of indices.</p>
-<p>Use mic=True to use the Minimum Image Convention and calculate the
-angles across periodic boundaries.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -993,12 +879,6 @@ angles across periodic boundaries.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.get_properties">
-<span class="sig-name descname"><span class="pre">get_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">properties</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.get_properties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.get_properties" title="Link to this definition">#</a></dt>
-<dd><p>This method is experimental; currently for internal use.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbits.get_reciprocal_cell">
 <span class="sig-name descname"><span class="pre">get_reciprocal_cell</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.get_reciprocal_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.get_reciprocal_cell" title="Link to this definition">#</a></dt>
 <dd><p>Get the three reciprocal lattice vectors as a 3x3 ndarray.</p>
@@ -1007,31 +887,9 @@ transforms is not included here.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.get_scaled_positions">
-<span class="sig-name descname"><span class="pre">get_scaled_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.get_scaled_positions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.get_scaled_positions" title="Link to this definition">#</a></dt>
-<dd><p>Get positions relative to unit cell.</p>
-<p>If wrap is True, qbits outside the unit cell will be wrapped into
-the cell in those directions with periodic boundary conditions
-so that the scaled coordinates are between zero and one.</p>
-<p>If any cell vectors are zero, the corresponding coordinates
-are evaluated as if the cell were completed using
-<code class="docutils literal notranslate"><span class="pre">cell.complete()</span></code>.  This means coordinates will be Cartesian
-as long as the non-zero cell vectors span a Cartesian axis or
-plane.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbits.get_volume">
 <span class="sig-name descname"><span class="pre">get_volume</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.get_volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.get_volume" title="Link to this definition">#</a></dt>
 <dd><p>Get volume of unit cell.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.has">
-<span class="sig-name descname"><span class="pre">has</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.has"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.has" title="Link to this definition">#</a></dt>
-<dd><p>Check for existence of array.</p>
-<p>name must be one of: ‘momenta’, ‘masses’, ‘initial_magmoms’,
-‘initial_charges’.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -1069,8 +927,8 @@ plane.</p>
 <dt class="sig sig-object py" id="qse.Qbits.rattle">
 <span class="sig-name descname"><span class="pre">rattle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stdev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.rattle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.rattle" title="Link to this definition">#</a></dt>
 <dd><p>Randomly displace qbits.</p>
-<p>This method adds random displacements to the qbit positions,
-taking a possible constraint into account.  The random numbers are
+<p>This method adds random displacements to the qbit positions.
+The random numbers are
 drawn from a normal distribution of standard deviation stdev.</p>
 <p>For a parallel calculation, it is important to use the same
 seed on all processors!</p>
@@ -1132,14 +990,6 @@ the coordinate vector to</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.rotate_dihedral">
-<span class="sig-name descname"><span class="pre">rotate_dihedral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.rotate_dihedral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.rotate_dihedral" title="Link to this definition">#</a></dt>
-<dd><p>Rotate dihedral angle.</p>
-<p>Same usage as in <code class="xref py py-meth docutils literal notranslate"><span class="pre">ase.Qbits.set_dihedral()</span></code>: Rotate a group by a
-predefined dihedral angle, starting from its current configuration.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbits.set_angle">
 <span class="sig-name descname"><span class="pre">set_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_angle" title="Link to this definition">#</a></dt>
 <dd><p>Set angle (in degrees) formed by three qbits.</p>
@@ -1161,7 +1011,7 @@ If <em>a</em> is <em>None</em>, then the array is deleted.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbits.set_cell">
-<span class="sig-name descname"><span class="pre">set_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apply_constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_cell" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_cell" title="Link to this definition">#</a></dt>
 <dd><p>Set unit cell vectors.</p>
 <p>Parameters:</p>
 <dl class="simple">
@@ -1175,8 +1025,6 @@ xy-plane, and the third one in z-positive subspace.</p>
 </dd>
 <dt>scale_qbits: bool</dt><dd><p>Fix qbit positions or move qbits with the unit cell?
 Default behavior is to <em>not</em> move the qbits (scale_qbits=False).</p>
-</dd>
-<dt>apply_constraint: bool</dt><dd><p>Whether to apply constraints to the given cell.</p>
 </dd>
 </dl>
 <p>Examples:</p>
@@ -1203,12 +1051,6 @@ Default behavior is to <em>not</em> move the qbits (scale_qbits=False).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.set_celldisp">
-<span class="sig-name descname"><span class="pre">set_celldisp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">celldisp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_celldisp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_celldisp" title="Link to this definition">#</a></dt>
-<dd><p>Set the unit cell displacement vectors.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbits.set_centroid">
 <span class="sig-name descname"><span class="pre">set_centroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centroid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_centroid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_centroid" title="Link to this definition">#</a></dt>
 <dd><p>Set the centroid of the positions.</p>
@@ -1223,35 +1065,6 @@ Default behavior is to <em>not</em> move the qbits (scale_qbits=False).</p>
 the centroid is given by</p>
 <div class="math notranslate nohighlight">
 \[\frac{\textbf{x}_1 + \textbf{x}_2 + ... + \textbf{x}_k}{k}.\]</div>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.set_constraint">
-<span class="sig-name descname"><span class="pre">set_constraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">constraint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_constraint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_constraint" title="Link to this definition">#</a></dt>
-<dd><p>Apply one or more constrains.</p>
-<p>The <em>constraint</em> argument must be one constraint object or a
-list of constraint objects.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.set_dihedral">
-<span class="sig-name descname"><span class="pre">set_dihedral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_dihedral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_dihedral" title="Link to this definition">#</a></dt>
-<dd><p>Set the dihedral angle (degrees) between vectors a1-&gt;a2 and
-a3-&gt;a4 by changing the qbit indexed by a4.</p>
-<p>If mask is not None, all the qbits described in mask
-(read: the entire subgroup) are moved. Alternatively to the mask,
-the indices of the qbits to be rotated can be supplied. If both
-<em>mask</em> and <em>indices</em> are given, <em>indices</em> overwrites <em>mask</em>.</p>
-<p><strong>Important</strong>: If <em>mask</em> or <em>indices</em> is given and does not contain
-<em>a4</em>, <em>a4</em> will NOT be moved. In most cases you therefore want
-to include <em>a4</em> in <em>mask</em>/<em>indices</em>.</p>
-<p>Example: the following defines a very crude
-ethane-like molecule and twists one half of it by 30 degrees.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span> <span class="o">=</span> <span class="n">Qbits</span><span class="p">(</span><span class="s1">&#39;HHCCHH&#39;</span><span class="p">,</span> <span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-<span class="gp">... </span>                         <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span><span class="o">.</span><span class="n">set_dihedral</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">210</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="py method">
@@ -1276,12 +1089,6 @@ with <em>a1</em>. If <em>fix=1</em>, only <em>a0</em> will therefore be moved.</
 <dt class="sig sig-object py" id="qse.Qbits.set_pbc">
 <span class="sig-name descname"><span class="pre">set_pbc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pbc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_pbc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_pbc" title="Link to this definition">#</a></dt>
 <dd><p>Set periodic boundary condition flags.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.Qbits.set_scaled_positions">
-<span class="sig-name descname"><span class="pre">set_scaled_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scaled</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_scaled_positions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_scaled_positions" title="Link to this definition">#</a></dt>
-<dd><p>Set positions relative to unit cell.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -1410,91 +1217,26 @@ Must have the same length as the number of Qubits.</p></li>
 <section id="module-qse.calc">
 <span id="qse-calc"></span><h2>qse.calc<a class="headerlink" href="#module-qse.calc" title="Link to this heading">#</a></h2>
 <p>Interface to different QSE calculators.</p>
-<dl class="py exception">
-<dt class="sig sig-object py" id="qse.calc.CalculationFailed">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">CalculationFailed</span></span><a class="reference internal" href="_modules/qse/calc/messages.html#CalculationFailed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.CalculationFailed" title="Link to this definition">#</a></dt>
-<dd><p>Calculation failed unexpectedly.</p>
-<dl class="simple">
-<dt>Reasons to raise this error are:</dt><dd><ul class="simple">
-<li><p>Calculation did not converge</p></li>
-<li><p>Calculation ran out of memory</p></li>
-<li><p>Segmentation fault or other abnormal termination</p></li>
-<li><p>Arithmetic trouble (singular matrices, NaN, …)</p></li>
-</ul>
-</dd>
-</dl>
-<p>Typically raised during calculation.</p>
-</dd></dl>
-
 <dl class="py class">
 <dt class="sig sig-object py" id="qse.calc.Calculator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">Calculator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_calculator_available</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">installation_message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator" title="Link to this definition">#</a></dt>
-<dd><p>Base-class for all QSE calculators, adapted from ASE calculators.</p>
-<p>A calculator must raise PropertyNotImplementedError if asked for a
-property that it can’t calculate.  So, if calculation of the
-stress tensor has not been implemented, get_stress(qbits) should
-raise PropertyNotImplementedError.  This can be achieved simply by not
-including the string ‘stress’ in the list implemented_properties
-which is a class member.  These are the names of the standard
-properties: ‘energy’, ‘forces’, ‘stress’, ‘dipole’, ‘charges’,
-‘magmom’ and ‘magmoms’.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.calc.Calculator.calculate">
-<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['energy']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_changes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['labels',</span> <span class="pre">'positions',</span> <span class="pre">'states',</span> <span class="pre">'cell',</span> <span class="pre">'pbc']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator.calculate" title="Link to this definition">#</a></dt>
-<dd><p>Do the calculation.</p>
-<dl class="field-list">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">Calculator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_calculator_available</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">installation_message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator" title="Link to this definition">#</a></dt>
+<dd><p>Base-class for all QSE calculators.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul>
-<li><p><strong>properties</strong> (<em>list of str</em>) – List of what needs to be calculated.  Can be any combination
-of ‘energy’, ‘forces’, ‘stress’, ‘dipole’, ‘charges’, ‘magmom’
-and ‘magmoms’.</p></li>
-<li><p><strong>system_changes</strong> (<em>list of str</em>) – List of what has changed since last calculation.  Can be
-any combination of these six: ‘positions’, ‘numbers’, ‘cell’,
-‘pbc’, ‘initial_charges’ and ‘initial_magmoms’.</p></li>
-<li><p><strong>Subclasses need to implement this, but can ignore properties</strong></p></li>
-<li><p><strong>and system_changes if they want.  Calculated properties should</strong></p></li>
-<li><p><strong>be inserted into results dictionary like shown in this dummy</strong></p></li>
-<li><p><strong>example::</strong> –</p>
-<dl class="simple">
-<dt>self.results = {‘energy’: 0.0,</dt><dd><p>‘forces’: np.zeros((len(qbits), 3)),
-‘stress’: np.zeros(6),
-‘dipole’: np.zeros(3),
-‘charges’: np.zeros(len(qbits)),
-‘magmom’: 0.0,
-‘magmoms’: np.zeros(len(qbits))}</p>
-</dd>
-</dl>
-</li>
-<li><p><strong>The subclass implementation should first call this</strong></p></li>
-<li><p><strong>implementation to set the qbits attribute and create any missing</strong></p></li>
-<li><p><strong>directories.</strong></p></li>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> (<em>str</em>) – Name used for all files.  Not supported by all calculators.
+May contain a directory, but please use the directory parameter
+for that instead.</p></li>
+<li><p><strong>qbits</strong> (<em>Qbits object</em>) – Optional Qbits object to which the calculator will be
+attached.  When restarting, qbits will get its positions and
+unit-cell updated from file.</p></li>
 </ul>
 </dd>
 </dl>
-</dd></dl>
-
 <dl class="py method">
-<dt class="sig sig-object py" id="qse.calc.Calculator.calculate_properties">
-<span class="sig-name descname"><span class="pre">calculate_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator.calculate_properties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator.calculate_properties" title="Link to this definition">#</a></dt>
-<dd><p>This method is experimental; currently for internal use.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.calc.Calculator.check_state">
-<span class="sig-name descname"><span class="pre">check_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-15</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator.check_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator.check_state" title="Link to this definition">#</a></dt>
-<dd><p>Check for any system changes since last calculation.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="qse.calc.Calculator.default_parameters">
-<span class="sig-name descname"><span class="pre">default_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#qse.calc.Calculator.default_parameters" title="Link to this definition">#</a></dt>
-<dd><p>Default parameters</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="qse.calc.Calculator.discard_results_on_any_change">
-<span class="sig-name descname"><span class="pre">discard_results_on_any_change</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#qse.calc.Calculator.discard_results_on_any_change" title="Link to this definition">#</a></dt>
-<dd><p>Whether we purge the results following any change in the set() method.</p>
+<dt class="sig sig-object py" id="qse.calc.Calculator.calculate">
+<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator.calculate" title="Link to this definition">#</a></dt>
+<dd><p>Do the calculation.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1529,59 +1271,6 @@ If the hamiltonian isn’t simulated, it triggers simulation first.</p>
 </div>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="qse.calc.Calculator.ignored_changes">
-<span class="sig-name descname"><span class="pre">ignored_changes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#qse.calc.Calculator.ignored_changes" title="Link to this definition">#</a></dt>
-<dd><p>Properties of Qbits which we ignore for the purposes of cache</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="qse.calc.Calculator.implemented_properties">
-<span class="sig-name descname"><span class="pre">implemented_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#qse.calc.Calculator.implemented_properties" title="Link to this definition">#</a></dt>
-<dd><p>Properties calculator can handle (energy, forces, …)</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.calc.Calculator.read">
-<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator.read" title="Link to this definition">#</a></dt>
-<dd><p>Read qbits, parameters and calculated properties from output file.</p>
-<p>Read result from self.label file.  Raise ReadError if the file
-is not there.  If the file is corrupted or contains an error
-message from the calculation, a ReadError should also be
-raised.  In case of succes, these attributes must set:</p>
-<dl class="simple">
-<dt>qbits: Qbits object</dt><dd><p>The state of the qbits from last calculation.</p>
-</dd>
-<dt>parameters: Parameters object</dt><dd><p>The parameter dictionary.</p>
-</dd>
-<dt>results: dict</dt><dd><p>Calculated properties like energy and forces.</p>
-</dd>
-</dl>
-<p>The FileIOCalculator.read() method will typically read qbits
-and parameters and get the results dict by calling the
-read_results() method.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.calc.Calculator.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator.reset" title="Link to this definition">#</a></dt>
-<dd><p>Clear all information from old calculation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.calc.Calculator.set">
-<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator.set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator.set" title="Link to this definition">#</a></dt>
-<dd><p>Set parameters like set(key1=value1, key2=value2, …).</p>
-<p>A dictionary containing the parameters that have been changed
-is returned.</p>
-<p>Subclasses must implement a set() method that will look at the
-chaneged parameters and decide if a call to reset() is needed.
-If the changed parameters are harmless, like a change in
-verbosity, then there is no need to call reset().</p>
-<p>The special keyword ‘parameters’ can be used to read
-parameters from a file.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.calc.Calculator.structure_factor_from_sij">
 <span class="sig-name descname"><span class="pre">structure_factor_from_sij</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/calculator.html#Calculator.structure_factor_from_sij"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Calculator.structure_factor_from_sij" title="Link to this definition">#</a></dt>
@@ -1604,22 +1293,6 @@ parameters from a file.</p>
 </div>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="qse.calc.CalculatorSetupError">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">CalculatorSetupError</span></span><a class="reference internal" href="_modules/qse/calc/messages.html#CalculatorSetupError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.CalculatorSetupError" title="Link to this definition">#</a></dt>
-<dd><p>Calculation cannot be performed with the given parameters.</p>
-<dl class="simple">
-<dt>Reasons to raise this errors are:</dt><dd><ul class="simple">
-<li><p>The calculator is not properly configured
-(missing executable, environment variables, …)</p></li>
-<li><p>The given qbits object is not supported</p></li>
-<li><p>Calculator parameters are unsupported</p></li>
-</ul>
-</dd>
-</dl>
-<p>Typically raised before a calculation.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -1656,32 +1329,6 @@ parameters from a file.</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="qse.calc.Myqlm.default_parameters">
-<span class="sig-name descname"><span class="pre">default_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'label':</span> <span class="pre">'q',</span> <span class="pre">'qbits':</span> <span class="pre">None}</span></em><a class="headerlink" href="#qse.calc.Myqlm.default_parameters" title="Link to this definition">#</a></dt>
-<dd><p>Default parameters</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="qse.calc.Myqlm.implemented_properties">
-<span class="sig-name descname"><span class="pre">implemented_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['energy',</span> <span class="pre">'state',</span> <span class="pre">'fidality']</span></em><a class="headerlink" href="#qse.calc.Myqlm.implemented_properties" title="Link to this definition">#</a></dt>
-<dd><p>Properties calculator can handle (energy, forces, …)</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="qse.calc.PropertyNotImplementedError">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">PropertyNotImplementedError</span></span><a class="reference internal" href="_modules/qse/calc/messages.html#PropertyNotImplementedError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.PropertyNotImplementedError" title="Link to this definition">#</a></dt>
-<dd><p>Raised if a calculator does not implement the requested property.</p>
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="qse.calc.PropertyNotPresent">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">PropertyNotPresent</span></span><a class="reference internal" href="_modules/qse/calc/messages.html#PropertyNotPresent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.PropertyNotPresent" title="Link to this definition">#</a></dt>
-<dd><p>Requested property is missing.</p>
-<p>Maybe it was never calculated, or for some reason was not extracted
-with the rest of the results, without being a fatal ReadError.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -1748,12 +1395,6 @@ amplitude pulse and detuning pulse.</p>
 <dt class="sig sig-object py" id="qse.calc.Pulser.calculate">
 <span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/pulser.html#Pulser.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Pulser.calculate" title="Link to this definition">#</a></dt>
 <dd><p>Run the calculation.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="qse.calc.Pulser.implemented_properties">
-<span class="sig-name descname"><span class="pre">implemented_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['energy',</span> <span class="pre">'state',</span> <span class="pre">'fidality']</span></em><a class="headerlink" href="#qse.calc.Pulser.implemented_properties" title="Link to this definition">#</a></dt>
-<dd><p>Properties calculator can handle (energy, forces, …)</p>
 </dd></dl>
 
 </dd></dl>
@@ -2159,8 +1800,6 @@ Must have the same length as the number of Qubits.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.append"><code class="docutils literal notranslate"><span class="pre">Qbits.append()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.calc"><code class="docutils literal notranslate"><span class="pre">Qbits.calc</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.cell"><code class="docutils literal notranslate"><span class="pre">Qbits.cell</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.center_in_unit_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.center_in_unit_cell()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.constraints"><code class="docutils literal notranslate"><span class="pre">Qbits.constraints</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.copy"><code class="docutils literal notranslate"><span class="pre">Qbits.copy()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.draw"><code class="docutils literal notranslate"><span class="pre">Qbits.draw()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.euler_rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.euler_rotate()</span></code></a></li>
@@ -2171,19 +1810,12 @@ Must have the same length as the number of Qubits.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_angles"><code class="docutils literal notranslate"><span class="pre">Qbits.get_angles()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_array"><code class="docutils literal notranslate"><span class="pre">Qbits.get_array()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.get_cell()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_cell_lengths_and_angles"><code class="docutils literal notranslate"><span class="pre">Qbits.get_cell_lengths_and_angles()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.get_celldisp()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_centroid"><code class="docutils literal notranslate"><span class="pre">Qbits.get_centroid()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.get_dihedral()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_dihedrals"><code class="docutils literal notranslate"><span class="pre">Qbits.get_dihedrals()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_distance"><code class="docutils literal notranslate"><span class="pre">Qbits.get_distance()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_distances"><code class="docutils literal notranslate"><span class="pre">Qbits.get_distances()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.get_pbc()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_properties"><code class="docutils literal notranslate"><span class="pre">Qbits.get_properties()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_reciprocal_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.get_reciprocal_cell()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_scaled_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.get_scaled_positions()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.get_volume"><code class="docutils literal notranslate"><span class="pre">Qbits.get_volume()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.has"><code class="docutils literal notranslate"><span class="pre">Qbits.has()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.labels"><code class="docutils literal notranslate"><span class="pre">Qbits.labels</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.new_array"><code class="docutils literal notranslate"><span class="pre">Qbits.new_array()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.pbc</span></code></a></li>
@@ -2192,17 +1824,12 @@ Must have the same length as the number of Qubits.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rattle"><code class="docutils literal notranslate"><span class="pre">Qbits.rattle()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.repeat"><code class="docutils literal notranslate"><span class="pre">Qbits.repeat()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.rotate()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.rotate_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.rotate_dihedral()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_angle"><code class="docutils literal notranslate"><span class="pre">Qbits.set_angle()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_array"><code class="docutils literal notranslate"><span class="pre">Qbits.set_array()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_cell"><code class="docutils literal notranslate"><span class="pre">Qbits.set_cell()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_celldisp"><code class="docutils literal notranslate"><span class="pre">Qbits.set_celldisp()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_centroid"><code class="docutils literal notranslate"><span class="pre">Qbits.set_centroid()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_constraint"><code class="docutils literal notranslate"><span class="pre">Qbits.set_constraint()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_dihedral"><code class="docutils literal notranslate"><span class="pre">Qbits.set_dihedral()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_distance"><code class="docutils literal notranslate"><span class="pre">Qbits.set_distance()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_pbc"><code class="docutils literal notranslate"><span class="pre">Qbits.set_pbc()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.set_scaled_positions"><code class="docutils literal notranslate"><span class="pre">Qbits.set_scaled_positions()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.shape"><code class="docutils literal notranslate"><span class="pre">Qbits.shape</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.states"><code class="docutils literal notranslate"><span class="pre">Qbits.states</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.todict"><code class="docutils literal notranslate"><span class="pre">Qbits.todict()</span></code></a></li>
@@ -2216,36 +1843,20 @@ Must have the same length as the number of Qubits.</p></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.calc">qse.calc</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.CalculationFailed"><code class="docutils literal notranslate"><span class="pre">CalculationFailed</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator"><code class="docutils literal notranslate"><span class="pre">Calculator</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.calculate"><code class="docutils literal notranslate"><span class="pre">Calculator.calculate()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.calculate_properties"><code class="docutils literal notranslate"><span class="pre">Calculator.calculate_properties()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.check_state"><code class="docutils literal notranslate"><span class="pre">Calculator.check_state()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.default_parameters"><code class="docutils literal notranslate"><span class="pre">Calculator.default_parameters</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.discard_results_on_any_change"><code class="docutils literal notranslate"><span class="pre">Calculator.discard_results_on_any_change</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.get_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.get_sij()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.get_spins"><code class="docutils literal notranslate"><span class="pre">Calculator.get_spins()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.ignored_changes"><code class="docutils literal notranslate"><span class="pre">Calculator.ignored_changes</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Calculator.implemented_properties</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.read"><code class="docutils literal notranslate"><span class="pre">Calculator.read()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.reset"><code class="docutils literal notranslate"><span class="pre">Calculator.reset()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.set"><code class="docutils literal notranslate"><span class="pre">Calculator.set()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.structure_factor_from_sij()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.CalculatorSetupError"><code class="docutils literal notranslate"><span class="pre">CalculatorSetupError</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm"><code class="docutils literal notranslate"><span class="pre">Myqlm</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.calculate"><code class="docutils literal notranslate"><span class="pre">Myqlm.calculate()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.default_parameters"><code class="docutils literal notranslate"><span class="pre">Myqlm.default_parameters</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Myqlm.implemented_properties</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotImplementedError"><code class="docutils literal notranslate"><span class="pre">PropertyNotImplementedError</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.PropertyNotPresent"><code class="docutils literal notranslate"><span class="pre">PropertyNotPresent</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser"><code class="docutils literal notranslate"><span class="pre">Pulser</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.build_sequence"><code class="docutils literal notranslate"><span class="pre">Pulser.build_sequence()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.calculate"><code class="docutils literal notranslate"><span class="pre">Pulser.calculate()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.implemented_properties"><code class="docutils literal notranslate"><span class="pre">Pulser.implemented_properties</span></code></a></li>
 </ul>
 </li>
 </ul>
