@@ -112,7 +112,10 @@ class Myqlm(Calculator):
         )
 
         super().__init__(
-            CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
+            qbits=qbits,
+            label=label,
+            is_calculator_available=CALCULATOR_AVAILABLE,
+            installation_message=installation_message,
         )
 
         self.qpu = AQPU if qpu is None else qpu
