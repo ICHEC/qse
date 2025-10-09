@@ -124,8 +124,7 @@ class Myqlm(Calculator):
         self.results = None
         self.system = system
         self.params = dict(default_params[self.system])
-        # if any of the default parameters are passed
-        # as arguments, use them to update self.params
+
         self.duration = (
             duration if duration is not None else self.params["default_duration"]
         )
