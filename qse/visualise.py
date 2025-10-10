@@ -6,7 +6,9 @@ rads = np.linspace(12, 1, 10)
 colors = np.sqrt(np.linspace(0.1, 0.9, 10))
 
 
-def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
+def draw(
+    qbits, radius=None, show_labels=False, colouring=None, units=None, equal_aspect=True
+):
     """
     Visualize the positions of a set of qubits.
 
@@ -28,6 +30,9 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
         Must have the same length as the number of Qubits.
     units : str, optional
         The units of distance.
+    equal_aspect : bool, optional
+        Whether to have the same scaling for the axes.
+        Defaults to True.
     """
     if colouring is not None:
         if len(colouring) != qbits.nqbits:
@@ -57,17 +62,26 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
             draw_bonds = False
 
     if rank == 3:
-        _draw_3d(qbits, draw_bonds, radius, rij, min_dist)
+        _draw_3d(qbits, draw_bonds, radius, rij, min_dist, equal_aspect)
     else:
         _draw_2d(
-            qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_labels
+            qbits,
+            draw_bonds,
+            radius,
+            rij,
+            min_dist,
+            units,
+            colouring,
+            show_labels,
+            equal_aspect,
         )
 
 
-def _draw_3d(qbits, draw_bonds, radius, rij, min_dist):
+def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, equal_aspect):
     fig = plt.figure()
     ax = fig.add_subplot(projection="3d")
-    ax.set_aspect("equal")
+    if equal_aspect:
+        ax.set_aspect("equal")
 
     positions = qbits.positions
 
@@ -100,10 +114,23 @@ def _draw_3d(qbits, draw_bonds, radius, rij, min_dist):
     return fig
 
 
-def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_labels):
+def _draw_2d(
+    qbits,
+    draw_bonds,
+    radius,
+    rij,
+    min_dist,
+    units,
+    colouring,
+    show_labels,
+    equal_aspect,
+):
     fig = plt.figure()
     ax = fig.add_subplot()
-    ax.set_aspect("equal")
+
+    if equal_aspect:
+        ax.set_aspect("equal")
+
     ax.set_xlabel("x" + f" ({units})" if units is not None else "x")
     ax.set_ylabel("y" + f" ({units})" if units is not None else "y")
 
