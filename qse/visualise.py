@@ -61,8 +61,14 @@ def draw(
         elif min_dist > radius:
             draw_bonds = False
 
+    fig = plt.figure()
+    projection = "3d" if rank == 3 else None
+    ax = fig.add_subplot(projection=projection)
+    if equal_aspect:
+        ax.set_aspect("equal")
+
     if rank == 3:
-        _draw_3d(qbits, draw_bonds, radius, rij, min_dist, equal_aspect)
+        _draw_3d(qbits, draw_bonds, radius, rij, min_dist, ax)
     else:
         _draw_2d(
             qbits,
@@ -73,16 +79,12 @@ def draw(
             units,
             colouring,
             show_labels,
-            equal_aspect,
+            ax,
         )
+    return fig
 
 
-def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, equal_aspect):
-    fig = plt.figure()
-    ax = fig.add_subplot(projection="3d")
-    if equal_aspect:
-        ax.set_aspect("equal")
-
+def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, ax):
     positions = qbits.positions
 
     if draw_bonds:
@@ -111,8 +113,6 @@ def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, equal_aspect):
     for r, c in zip(rads, colors):
         ax.scatter(x, y, z, s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8)
 
-    return fig
-
 
 def _draw_2d(
     qbits,
@@ -123,14 +123,8 @@ def _draw_2d(
     units,
     colouring,
     show_labels,
-    equal_aspect,
+    ax,
 ):
-    fig = plt.figure()
-    ax = fig.add_subplot()
-
-    if equal_aspect:
-        ax.set_aspect("equal")
-
     ax.set_xlabel("x" + f" ({units})" if units is not None else "x")
     ax.set_ylabel("y" + f" ({units})" if units is not None else "y")
 
@@ -168,8 +162,6 @@ def _draw_2d(
     if show_labels:
         for ind in range(qbits.nqbits):
             ax.text(x[ind], y[ind], s=qbits.labels[ind])
-
-    return fig
 
 
 def view_matrix(matrix, labels_x=None, labels_y=None, vcenter=None):
