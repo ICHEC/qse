@@ -195,8 +195,8 @@ class Pulser(Calculator):
         self.results = self.sim.run(progress_bar=progress)
 
         final_state = self.results.get_final_state()
-        self.statevector = qutip.core.dimensions.to_tensor_rep(final_state).flatten()
 
+        self.statevector = qutip.core.dimensions.to_tensor_rep(final_state).flatten()
         self.spins = self.get_spins()
 
         if self.wtimes:
