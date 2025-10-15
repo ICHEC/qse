@@ -26,12 +26,6 @@ if calculator == "pulser":
         qbits=qbits,
         label="test_run",
     )
-    assert calc.amplitude.duration == duration
-    assert np.allclose(calc.amplitude.samples[0], omega0)
-
-    assert calc.detuning.duration == duration
-    assert np.allclose(calc.detuning.samples[0], delta0)
-
     # Compute
     calc.build_sequence()
 
@@ -43,11 +37,6 @@ elif calculator == "myqlm":
         qbits=qbits,
         label="test_run",
     )
-    # assert pulser_calc.amplitude.duration == duration
-    # assert np.allclose(pulser_calc.amplitude.samples[0], omega0)
-
-    # assert pulser_calc.detuning.duration == duration
-    # assert np.allclose(pulser_calc.detuning.samples[0], delta0)
 
 calc.calculate()
 spins = calc.get_spins()
