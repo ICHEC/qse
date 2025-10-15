@@ -198,9 +198,7 @@ class Pulser(Calculator):
 
         # In the qutip backend pulser uses the convention of 0 (1) being the excited (ground) state.
         # Hence we must reverse the state vector.
-        self.statevector = qutip.core.dimensions.to_tensor_rep(final_state).flatten()[
-            ::-1
-        ]
+        self.statevector = final_state.full().flatten()[::-1]
         self.spins = self.get_spins()
 
         if self.wtimes:
