@@ -13,7 +13,6 @@ from qse.calc.calculator import Calculator
 try:
     import pulser
     import pulser.waveforms
-    import qutip
     from pulser_simulation import QutipEmulator
 
     CALCULATOR_AVAILABLE = True
