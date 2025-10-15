@@ -26,14 +26,14 @@ class Qbits:
 
     Parameters
     ----------
-    labels: list of str
-        A list of strings corresponding to a label for each qubit.
-    states: list of 2-length arrays.
-        State of each qubit.
     positions: list of xyz-positions
         Qubit positions.  Anything that can be converted to an
         ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),
         ...].
+    labels: list of str
+        A list of strings corresponding to a label for each qubit.
+    states: list of 2-length arrays.
+        State of each qubit.
     scaled_positions: list of scaled-positions
         Like positions, but given in units of the unit cell.
         Can not be set at the same time as positions.
@@ -87,9 +87,9 @@ class Qbits:
 
     def __init__(
         self,
+        positions=None,
         labels=None,
         states=None,
-        positions=None,
         scaled_positions=None,
         cell=None,
         pbc=None,

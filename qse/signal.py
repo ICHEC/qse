@@ -10,9 +10,9 @@ class Signal:
     Parameters
     ----------
     values : list | np.ndarray
-        The values of the signal.
+        The values of the signal in microsecond.
     duration : int
-        Duration of the signal.
+        Duration of the signal in nanoseconds.
         Defaults to the length of the passed values.
 
     Examples
@@ -236,6 +236,3 @@ class Signal:
             String representation.
         """
         return f"Signal(duration={self.duration}, values={self.values})"
-
-    # TODO: Define interpolating scheme to resample points
-    # if duration is changed externally.
