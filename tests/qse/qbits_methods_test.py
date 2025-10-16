@@ -404,3 +404,68 @@ def test_repeat(nqbits, repeats):
 
     ps = np.array(ps)
     assert np.allclose(ps, qbits.positions)
+
+
+@pytest.mark.parametrize(
+    "cell, expected",
+    [
+        (4.232 * np.eye(3), np.eye(3) / 4.232),  # square
+        (
+            np.array(  # rectangular
+                [
+                    [1.0, 0.0, 0.0],
+                    [0.0, 2.0, 0.0],
+                    [0.0, 0.0, 1.0],
+                ]
+            ),
+            np.array(
+                [
+                    [1.0, 0.0, 0.0],
+                    [0.0, 1.0 / 2.0, 0.0],
+                    [0.0, 0.0, 1.0],
+                ]
+            ),
+        ),
+        (
+            np.array(  # hex
+                [
+                    [1.0, 0.0, 0.0],
+                    [0.5, 0.5 * np.sqrt(3), 0.0],
+                    [0.0, 0.0, 1.0],
+                ]
+            ),
+            np.array(
+                [
+                    [1.0, -1.0 / np.sqrt(3), 0.0],
+                    [0.0, 2.0 / np.sqrt(3), 0.0],
+                    [0.0, 0.0, 1.0],
+                ]
+            ),
+        ),
+        (
+            0.5
+            * np.array(  # fcc
+                [
+                    [0.0, 1.0, 1.0],
+                    [1.0, 0.0, 1.0],
+                    [1.0, 1.0, 0.0],
+                ]
+            ),
+            np.array(
+                [
+                    [-1.0, 1.0, 1.0],
+                    [1.0, -1.0, 1.0],
+                    [1.0, 1.0, -1.0],
+                ]
+            ),
+        ),
+    ],
+)
+def test_reciprocal_cell(cell, expected):
+    """Test the get_reciprocal_cell method."""
+    qbits = qse.Qbits(cell=cell)
+    r_cell = qbits.get_reciprocal_cell()
+    assert np.allclose(r_cell, expected)
+
+    # Check the two cells are orthonormal
+    assert np.allclose(cell @ r_cell.T, np.eye(3))
