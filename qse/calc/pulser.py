@@ -209,6 +209,9 @@ def _format_pulse(pulse):
     if pulse is None or isinstance(pulse, pulser.waveforms.Waveform):
         return pulse
     if isinstance(pulse, Signal):
+        # pulser.waveforms.InterpolatedWaveform needs minimum 2
+        # values. In the case where we have a single value,
+        # we use pulser.waveforms.ConstantWaveform.
         if len(pulse.values) == 1:
             return pulser.waveforms.ConstantWaveform(
                 duration=pulse.duration, value=pulse.values
