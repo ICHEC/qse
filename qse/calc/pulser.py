@@ -13,7 +13,6 @@ from qse.calc.calculator import Calculator
 try:
     import pulser
     import pulser.waveforms
-    import qutip
     from pulser_simulation import QutipEmulator
 
     CALCULATOR_AVAILABLE = True
@@ -195,8 +194,10 @@ class Pulser(Calculator):
         self.results = self.sim.run(progress_bar=progress)
 
         final_state = self.results.get_final_state()
-        self.statevector = qutip.core.dimensions.to_tensor_rep(final_state).flatten()
 
+        # In the qutip backend pulser uses the convention of 0 (1) being
+        # the excited (ground) state. Hence we must reverse the state vector.
+        self.statevector = final_state.full().flatten()[::-1]
         self.spins = self.get_spins()
 
         if self.wtimes:
