@@ -548,6 +548,13 @@ document.write(`
     <span class="k">if</span> <span class="n">pulse</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pulse</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">pulse</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pulse</span><span class="p">,</span> <span class="n">Signal</span><span class="p">):</span>
+        <span class="c1"># pulser.waveforms.InterpolatedWaveform needs minimum 2</span>
+        <span class="c1"># values. In the case where we have a single value,</span>
+        <span class="c1"># we use pulser.waveforms.ConstantWaveform.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pulse</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">ConstantWaveform</span><span class="p">(</span>
+                <span class="n">duration</span><span class="o">=</span><span class="n">pulse</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">pulse</span><span class="o">.</span><span class="n">values</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">InterpolatedWaveform</span><span class="p">(</span>
             <span class="n">duration</span><span class="o">=</span><span class="n">pulse</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">pulse</span><span class="o">.</span><span class="n">values</span>
         <span class="p">)</span>
