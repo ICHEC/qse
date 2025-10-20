@@ -54,8 +54,6 @@ except ImportError:
 
 default_params = {
     "rydberg": {
-        "amplitude": None,
-        "detuning": None,
         "C6": 5420158.53,  # unit (rad/µs)(µm)**6
         "min_omega": None,
         "max_omega": 12.57,  # rad/µs from pulser
@@ -63,8 +61,6 @@ default_params = {
         "max_delta": 125.7,  # rad/µs from pulser
         "min_atom_distance": 4,  # µm from pulser
         "max_duration": 4000,  # ns from pulser (max sequence duration),
-        "default_duration": 0.5,
-        "default_points": 6,
     },
     "ssh": {},
     "fermion": {},
@@ -73,26 +69,24 @@ default_params = {
 
 class Myqlm(Calculator):
     """
-    QSE-Calculator for MyQLM
+    QSE-Calculator for MyQLM.
 
     Parameters
     ----------
-    qbits
-        ...
-    amplitude
-        ...
-    detuning
-        ...
-    duration
-        ...
-    qpu
-        ...
-    system
-        ...
-    label
-        ...
-    wtimes
-        ...
+    qbits: qse.Qbits
+        The qbits object.
+    amplitude : qse.Signal
+        The amplitude pulse.
+    detuning : qse.Signal
+        The detuning pulse.
+    qpu : qat.qpus
+        The Quantum Processing Unit for executing the job.
+    label: str
+        The label.
+        Defaults to "pulser-run".
+    wtimes: bool
+        Whether to print the times.
+        Defaults to True.
     """
 
     def __init__(
@@ -100,9 +94,7 @@ class Myqlm(Calculator):
         qbits=None,
         amplitude=None,
         detuning=None,
-        duration=None,
         qpu=None,
-        system="rydberg",
         label="myqlm-run",
         wtimes=True,
     ):
@@ -122,23 +114,12 @@ class Myqlm(Calculator):
         self.label = label
         self.wtimes = wtimes
         self.results = None
-        self.system = system
+        self.system = "rydberg"
+
         self.params = dict(default_params[self.system])
 
-        self.duration = (
-            duration if duration is not None else self.params["default_duration"]
-        )
-        self.amplitude = (
-            amplitude
-            if amplitude is not None
-            else np.zeros(self.params["default_points"])
-        )
-
-        self.detuning = (
-            detuning
-            if detuning is not None
-            else np.zeros(self.params["default_points"])
-        )
+        self.amplitude = amplitude
+        self.detuning = detuning
 
         self.C6 = self.params["C6"]
 
@@ -160,12 +141,12 @@ class Myqlm(Calculator):
         H_amplitude = qat.core.Observable(
             nqbits, pauli_terms=[qat.core.Term(0.5, "X", [i]) for i in range(nqbits)]
         )
-        amplitude = _waveform(self.amplitude, tmax=self.duration)
+        amplitude = _waveform(self.amplitude)
 
         H_detuning = qat.core.Observable(
             nqbits, pauli_terms=[qat.core.Term(0.5, "Z", [i]) for i in range(nqbits)]
         )
-        detuning = _waveform(self.detuning, tmax=self.duration)
+        detuning = _waveform(self.detuning)
 
         rij = self.qbits.get_all_distances()
         H_interact = 0
@@ -188,7 +169,10 @@ class Myqlm(Calculator):
         if self.wtimes:
             t1 = time()
 
-        self.schedule = qat.core.Schedule(drive=self.Hamiltonian, tmax=self.duration)
+        tmax = (
+            max(self.amplitude.duration, self.detuning.duration) / 1000
+        )  # convert to microseconds.
+        self.schedule = qat.core.Schedule(drive=self.Hamiltonian, tmax=tmax)
         self.job = self.schedule.to_job()
         self.async_result = self.qpu.submit(self.job)
         self.results = self.async_result.join()
@@ -217,7 +201,9 @@ class Myqlm(Calculator):
             print(f"time in compute and simulation = {t2 - t1} s.")
 
 
-def _waveform(vi, tmax):
+def _waveform(pulse):
+    vi = pulse.values
+    tmax = pulse.duration / 1000  # convert to microseconds.
     ti = np.linspace(0, tmax, vi.shape[0])
     vi_m = np.diff(vi)
     ti_m = np.diff(ti)
@@ -238,4 +224,4 @@ def _waveform(vi, tmax):
 
 def _occ_op(nqbits, qi):
     ti = qat.core.Term(1.0, "Z", [qi])
-    return (1 + qat.core.Observable(nqbits, pauli_terms=[ti])) / 2
+    return (1 - qat.core.Observable(nqbits, pauli_terms=[ti])) / 2
