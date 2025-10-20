@@ -3,7 +3,8 @@ import numpy as np
 
 class ExactSimulator:
     """
-    An exact calculator.
+    A calculator that evoles the qubit system exactly.
+    Only supported for a single qubit.
 
     Parameters
     ----------
@@ -19,8 +20,7 @@ class ExactSimulator:
         self.detuning = detuning
 
     def calculate(self):
-        delta_t = self.amplitude.duration / len(self.amplitude.values)
-        delta_t /= 1000  # Convert to microseconds.
+        delta_t = _nano_to_micro(self.amplitude.duration / len(self.amplitude.values))
         state = np.array([[1.0], [0.0]])
         for amp, det in zip(self.amplitude.values, self.detuning.values):
             unitary = _get_unitary(amp, det, delta_t)
@@ -43,3 +43,7 @@ def _check_pulses(amplitude, detuning):
         raise Exception(
             "The amplitude and detuning must have the same amount of values."
         )
+
+
+def _nano_to_micro(t):
+    return t / 1000
