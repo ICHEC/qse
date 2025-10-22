@@ -10,7 +10,6 @@ from ase.cell import Cell
 from ase.geometry import (
     find_mic,
 )
-from ase.utils import deprecated
 
 from qse.qbit import Qbit
 from qse.visualise import draw as _draw
@@ -257,12 +256,20 @@ class Qbits:
             return self.cell.complete()
         return self.cell.copy()
 
-    @deprecated("Please use qbits.cell.reciprocal()")
     def get_reciprocal_cell(self):
-        """Get the three reciprocal lattice vectors as a 3x3 ndarray.
+        """
+        Get the three reciprocal lattice vectors as a 3x3 ndarray.
 
-        Note that the commonly used factor of 2 pi for Fourier
-        transforms is not included here."""
+        Returns
+        -------
+        np.ndarray
+            The reciprocal cell.
+
+        Notes
+        -----
+        The commonly used factor of 2 pi for Fourier
+        transforms is not included here.
+        """
 
         return self.cell.reciprocal()
 
