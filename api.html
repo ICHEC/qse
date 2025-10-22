@@ -1303,36 +1303,26 @@ If the hamiltonian isn’t simulated, it triggers simulation first.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="qse.calc.Myqlm">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">Myqlm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detuning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rydberg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'myqlm-run'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wtimes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/myqlm.html#Myqlm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Myqlm" title="Link to this definition">#</a></dt>
-<dd><p>QSE-Calculator for MyQLM</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">Myqlm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detuning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'myqlm-run'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wtimes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/myqlm.html#Myqlm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Myqlm" title="Link to this definition">#</a></dt>
+<dd><p>QSE-Calculator for MyQLM.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>qbits</strong> – …</p></li>
-<li><p><strong>amplitude</strong> – …</p></li>
-<li><p><strong>detuning</strong> – …</p></li>
-<li><p><strong>duration</strong> – …</p></li>
-<li><p><strong>qpu</strong> – …</p></li>
-<li><p><strong>analog</strong> – …</p></li>
-<li><p><strong>system</strong> – …</p></li>
-<li><p><strong>label</strong> – …</p></li>
-<li><p><strong>wtimes</strong> – …</p></li>
+<li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The qbits object.</p></li>
+<li><p><strong>amplitude</strong> (<em>qse.Signal</em>) – The amplitude pulse.</p></li>
+<li><p><strong>detuning</strong> (<em>qse.Signal</em>) – The detuning pulse.</p></li>
+<li><p><strong>qpu</strong> (<em>qat.qpus</em>) – The Quantum Processing Unit for executing the job.</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – The label.
+Defaults to “pulser-run”.</p></li>
+<li><p><strong>wtimes</strong> (<em>bool</em>) – Whether to print the times.
+Defaults to True.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.calc.Myqlm.calculate">
-<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Ellipsis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_changes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Ellipsis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/myqlm.html#Myqlm.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Myqlm.calculate" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>qbits</strong> (<em>_type_, optional</em>) – _description_, by default None</p></li>
-<li><p><strong>properties</strong> (<em>_type_, optional</em>) – _description_, by default …</p></li>
-<li><p><strong>system_changes</strong> (<em>_type_, optional</em>) – _description_, by default …</p></li>
-</ul>
-</dd>
-</dl>
+<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/myqlm.html#Myqlm.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Myqlm.calculate" title="Link to this definition">#</a></dt>
+<dd><p>Run the calculation.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1344,9 +1334,9 @@ If the hamiltonian isn’t simulated, it triggers simulation first.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The qbits object.</p></li>
 <li><p><strong>amplitude</strong> (<em>qse.Signal, pulser.waveforms.Waveform</em>) – The amplitude pulse.</p></li>
 <li><p><strong>detuning</strong> (<em>qse.Signal, pulser.waveforms.Waveform</em>) – The detuning pulse.</p></li>
-<li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The qbits object.</p></li>
 <li><p><strong>channel</strong> (<em>str</em>) – Which channel to use. For example “rydberg_global” for Rydberg or
 “mw_global” for microwave.
 Defaults to “rydberg_global”.</p></li>
@@ -1368,9 +1358,9 @@ Defaults to True.</p></li>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="mf">4.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">duration</span> <span class="o">=</span> <span class="mi">400</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">Pulser</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">qbits</span><span class="o">=</span><span class="n">qbits</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">amplitude</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.01</span><span class="p">,</span> <span class="n">duration</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="n">detuning</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.12</span><span class="p">,</span> <span class="n">duration</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="n">qbits</span><span class="o">=</span><span class="n">qbits</span><span class="p">,</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span><span class="o">.</span><span class="n">build_sequence</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>

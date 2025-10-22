@@ -358,12 +358,12 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
+<span class="sd">    qbits: qse.Qbits</span>
+<span class="sd">        The qbits object.</span>
 <span class="sd">    amplitude: qse.Signal, pulser.waveforms.Waveform</span>
 <span class="sd">        The amplitude pulse.</span>
 <span class="sd">    detuning: qse.Signal, pulser.waveforms.Waveform</span>
 <span class="sd">        The detuning pulse.</span>
-<span class="sd">    qbits: qse.Qbits</span>
-<span class="sd">        The qbits object.</span>
 <span class="sd">    channel : str</span>
 <span class="sd">        Which channel to use. For example &quot;rydberg_global&quot; for Rydberg or</span>
 <span class="sd">        &quot;mw_global&quot; for microwave.</span>
@@ -391,9 +391,9 @@ document.write(`
 <span class="sd">    &gt;&gt;&gt; qbits = qse.lattices.chain(4.0, 4)</span>
 <span class="sd">    &gt;&gt;&gt; duration = 400</span>
 <span class="sd">    &gt;&gt;&gt; pulser_calc = qse.calc.Pulser(</span>
+<span class="sd">    ...     qbits=qbits,</span>
 <span class="sd">    ...     amplitude=qse.Signal(np.ones(6) * 1.01, duration),</span>
 <span class="sd">    ...     detuning=qse.Signal(np.ones(6) * 0.12, duration),</span>
-<span class="sd">    ...     qbits=qbits,</span>
 <span class="sd">    ... )</span>
 <span class="sd">    &gt;&gt;&gt; pulser_calc.build_sequence()</span>
 <span class="sd">    &gt;&gt;&gt; pulser_calc.calculate()</span>

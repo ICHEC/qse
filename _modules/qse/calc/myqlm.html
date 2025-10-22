@@ -384,8 +384,6 @@ document.write(`
 
 <span class="n">default_params</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;rydberg&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;amplitude&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="s2">&quot;detuning&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
         <span class="s2">&quot;C6&quot;</span><span class="p">:</span> <span class="mf">5420158.53</span><span class="p">,</span>  <span class="c1"># unit (rad/µs)(µm)**6</span>
         <span class="s2">&quot;min_omega&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
         <span class="s2">&quot;max_omega&quot;</span><span class="p">:</span> <span class="mf">12.57</span><span class="p">,</span>  <span class="c1"># rad/µs from pulser</span>
@@ -393,56 +391,42 @@ document.write(`
         <span class="s2">&quot;max_delta&quot;</span><span class="p">:</span> <span class="mf">125.7</span><span class="p">,</span>  <span class="c1"># rad/µs from pulser</span>
         <span class="s2">&quot;min_atom_distance&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>  <span class="c1"># µm from pulser</span>
         <span class="s2">&quot;max_duration&quot;</span><span class="p">:</span> <span class="mi">4000</span><span class="p">,</span>  <span class="c1"># ns from pulser (max sequence duration),</span>
-        <span class="s2">&quot;default_duration&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-        <span class="s2">&quot;default_points&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
     <span class="p">},</span>
     <span class="s2">&quot;ssh&quot;</span><span class="p">:</span> <span class="p">{},</span>
     <span class="s2">&quot;fermion&quot;</span><span class="p">:</span> <span class="p">{},</span>
 <span class="p">}</span>
 
 
-<span class="c1"># for rydberg system we need additional parameters: mix,max of</span>
-<span class="c1"># amplitude and detuning to set based on device.</span>
 <div class="viewcode-block" id="Myqlm">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Myqlm">[docs]</a>
 <span class="k">class</span> <span class="nc">Myqlm</span><span class="p">(</span><span class="n">Calculator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    QSE-Calculator for MyQLM</span>
+<span class="sd">    QSE-Calculator for MyQLM.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    qbits</span>
-<span class="sd">        ...</span>
-<span class="sd">    amplitude</span>
-<span class="sd">        ...</span>
-<span class="sd">    detuning</span>
-<span class="sd">        ...</span>
-<span class="sd">    duration</span>
-<span class="sd">        ...</span>
-<span class="sd">    qpu</span>
-<span class="sd">        ...</span>
-<span class="sd">    analog</span>
-<span class="sd">        ...</span>
-<span class="sd">    system</span>
-<span class="sd">        ...</span>
-<span class="sd">    label</span>
-<span class="sd">        ...</span>
-<span class="sd">    wtimes</span>
-<span class="sd">        ...</span>
+<span class="sd">    qbits: qse.Qbits</span>
+<span class="sd">        The qbits object.</span>
+<span class="sd">    amplitude : qse.Signal</span>
+<span class="sd">        The amplitude pulse.</span>
+<span class="sd">    detuning : qse.Signal</span>
+<span class="sd">        The detuning pulse.</span>
+<span class="sd">    qpu : qat.qpus</span>
+<span class="sd">        The Quantum Processing Unit for executing the job.</span>
+<span class="sd">    label: str</span>
+<span class="sd">        The label.</span>
+<span class="sd">        Defaults to &quot;pulser-run&quot;.</span>
+<span class="sd">    wtimes: bool</span>
+<span class="sd">        Whether to print the times.</span>
+<span class="sd">        Defaults to True.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">implemented_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;fidality&quot;</span><span class="p">]</span>
-    <span class="n">default_parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">amplitude</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">detuning</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">duration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">qpu</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">analog</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">system</span><span class="o">=</span><span class="s2">&quot;rydberg&quot;</span><span class="p">,</span>
         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;myqlm-run&quot;</span><span class="p">,</span>
         <span class="n">wtimes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
@@ -458,39 +442,18 @@ document.write(`
             <span class="n">installation_message</span><span class="o">=</span><span class="n">installation_message</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">qpu</span> <span class="o">=</span> <span class="n">AQPU</span> <span class="k">if</span> <span class="n">qpu</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">qpu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qpu</span> <span class="o">=</span> <span class="n">AQPU</span><span class="p">()</span> <span class="k">if</span> <span class="n">qpu</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">qpu</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span> <span class="o">=</span> <span class="n">wtimes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="n">system</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">default_params</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">])</span>
-        <span class="c1"># if any of the default parameters are passed</span>
-        <span class="c1"># as arguments, use them to update self.params</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">duration</span> <span class="k">if</span> <span class="n">duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;default_duration&quot;</span><span class="p">]</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">amp</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">amplitude</span>
-            <span class="k">if</span> <span class="n">amplitude</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;default_points&quot;</span><span class="p">])</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_waveform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amp</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">det</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">detuning</span>
-            <span class="k">if</span> <span class="n">detuning</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;default_points&quot;</span><span class="p">])</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_waveform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">det</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
-        <span class="c1"># self.duration = len(self.amplitude) # needs to change</span>
-        <span class="c1"># for time independent problems</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">C6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;C6&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">qpu</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">spins</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sij</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="s2">&quot;rydberg&quot;</span>
 
-    <span class="k">def</span> <span class="nf">_occ_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">,</span> <span class="n">qi</span><span class="p">):</span>
-        <span class="n">ti</span> <span class="o">=</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Term</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">qi</span><span class="p">])</span>
-        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Observable</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">pauli_terms</span><span class="o">=</span><span class="p">[</span><span class="n">ti</span><span class="p">]))</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">default_params</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span> <span class="o">=</span> <span class="n">detuning</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">C6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;C6&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">Hamiltonian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -504,24 +467,25 @@ document.write(`
         <span class="k">return</span> <span class="n">ham</span>
 
     <span class="k">def</span> <span class="nf">_generate_rydberg_hamiltonian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">rij</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">get_all_distances</span><span class="p">()</span>
         <span class="n">nqbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">nqbits</span>
         <span class="c1"># &gt; add checks for ensuring whether amplitudes/detunings etc</span>
         <span class="c1"># &gt; are within allowed limits compatible with pulser virtual device</span>
-        <span class="n">amplitude</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span>
-        <span class="n">detuning</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span>
+        <span class="n">H_amplitude</span> <span class="o">=</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Observable</span><span class="p">(</span>
+            <span class="n">nqbits</span><span class="p">,</span> <span class="n">pauli_terms</span><span class="o">=</span><span class="p">[</span><span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Term</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nqbits</span><span class="p">)]</span>
+        <span class="p">)</span>
+        <span class="n">amplitude</span> <span class="o">=</span> <span class="n">_waveform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">)</span>
 
-        <span class="n">H1_terms</span> <span class="o">=</span> <span class="p">[</span><span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Term</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nqbits</span><span class="p">)]</span>
-        <span class="n">H2_terms</span> <span class="o">=</span> <span class="p">[</span><span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Term</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nqbits</span><span class="p">)]</span>
-        <span class="n">H_amplitude</span> <span class="o">=</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Observable</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">pauli_terms</span><span class="o">=</span><span class="n">H1_terms</span><span class="p">)</span>
-        <span class="n">H_detuning</span> <span class="o">=</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Observable</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">pauli_terms</span><span class="o">=</span><span class="n">H2_terms</span><span class="p">)</span>
+        <span class="n">H_detuning</span> <span class="o">=</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Observable</span><span class="p">(</span>
+            <span class="n">nqbits</span><span class="p">,</span> <span class="n">pauli_terms</span><span class="o">=</span><span class="p">[</span><span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Term</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nqbits</span><span class="p">)]</span>
+        <span class="p">)</span>
+        <span class="n">detuning</span> <span class="o">=</span> <span class="n">_waveform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">detuning</span><span class="p">)</span>
+
+        <span class="n">rij</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">get_all_distances</span><span class="p">()</span>
         <span class="n">H_interact</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nqbits</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">):</span>
                 <span class="n">H_interact</span> <span class="o">+=</span> <span class="p">(</span>
-                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C6</span> <span class="o">/</span> <span class="n">rij</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">**</span> <span class="mi">6</span><span class="p">)</span>
-                    <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_occ_op</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-                    <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_occ_op</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C6</span> <span class="o">/</span> <span class="n">rij</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">**</span> <span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="n">_occ_op</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">_occ_op</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
                 <span class="p">)</span>
 
         <span class="k">return</span> <span class="p">[</span>
@@ -530,52 +494,28 @@ document.write(`
             <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">H_interact</span><span class="p">),</span>
         <span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_waveform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vi</span><span class="p">,</span> <span class="n">tmax</span><span class="p">):</span>
-        <span class="n">ti</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tmax</span><span class="p">,</span> <span class="n">vi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">vi_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">vi</span><span class="p">)</span>
-        <span class="n">ti_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">ti</span><span class="p">)</span>
-        <span class="n">vi_p</span> <span class="o">=</span> <span class="n">vi</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">vi</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">ti_p</span> <span class="o">=</span> <span class="n">ti</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">ti</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="n">vi_m</span> <span class="o">/</span> <span class="n">ti_m</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">vi_p</span> <span class="o">-</span> <span class="n">a</span> <span class="o">*</span> <span class="n">ti_p</span><span class="p">)</span>
-        <span class="n">arith_expr</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">t_var</span> <span class="o">=</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">ai</span><span class="p">,</span> <span class="n">bi</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)):</span>
-            <span class="c1"># Create ax + b by calculating the slope and the offset</span>
-            <span class="n">respective_line</span> <span class="o">=</span> <span class="n">ai</span> <span class="o">*</span> <span class="n">t_var</span> <span class="o">+</span> <span class="n">bi</span>
-            <span class="n">arith_expr</span> <span class="o">+=</span> <span class="p">(</span>
-                <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">heaviside</span><span class="p">(</span><span class="n">t_var</span><span class="p">,</span> <span class="n">ti</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ti</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">respective_line</span>
-            <span class="p">)</span>
-        <span class="k">return</span> <span class="n">arith_expr</span>
-
 <div class="viewcode-block" id="Myqlm.calculate">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Myqlm.calculate">[docs]</a>
-    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">properties</span><span class="o">=...</span><span class="p">,</span> <span class="n">system_changes</span><span class="o">=...</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        qbits : _type_, optional</span>
-<span class="sd">            _description_, by default None</span>
-<span class="sd">        properties : _type_, optional</span>
-<span class="sd">            _description_, by default ...</span>
-<span class="sd">        system_changes : _type_, optional</span>
-<span class="sd">            _description_, by default ...</span>
+<span class="sd">        Run the calculation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># return super().calculate(qbits, properties, system_changes)</span>
-        <span class="c1"># self.Hamiltonian = self._get_hamiltonian()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wtimes</span><span class="p">:</span>
             <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">schedule</span> <span class="o">=</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Schedule</span><span class="p">(</span><span class="n">drive</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Hamiltonian</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
+
+        <span class="n">tmax</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">detuning</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>
+        <span class="p">)</span>  <span class="c1"># convert to microseconds.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schedule</span> <span class="o">=</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Schedule</span><span class="p">(</span><span class="n">drive</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Hamiltonian</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="n">tmax</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">job</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">schedule</span><span class="o">.</span><span class="n">to_job</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">qpu</span> <span class="o">=</span> <span class="n">AQPU</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">async_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qpu</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">job</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_result</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">probabities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span>
             <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">probability</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">((</span><span class="n">s</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">int</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
         <span class="c1"># don&#39;t know why result.statevector is Nonetype, fill it with state</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;amplitude&quot;</span><span class="p">):</span>
             <span class="n">statevector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span>
@@ -595,6 +535,32 @@ document.write(`
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;time in compute and simulation = </span><span class="si">{</span><span class="n">t2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t1</span><span class="si">}</span><span class="s2"> s.&quot;</span><span class="p">)</span></div>
 </div>
 
+
+
+<span class="k">def</span> <span class="nf">_waveform</span><span class="p">(</span><span class="n">pulse</span><span class="p">):</span>
+    <span class="n">vi</span> <span class="o">=</span> <span class="n">pulse</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">tmax</span> <span class="o">=</span> <span class="n">pulse</span><span class="o">.</span><span class="n">duration</span> <span class="o">/</span> <span class="mi">1000</span>  <span class="c1"># convert to microseconds.</span>
+    <span class="n">ti</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tmax</span><span class="p">,</span> <span class="n">vi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">vi_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">vi</span><span class="p">)</span>
+    <span class="n">ti_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">ti</span><span class="p">)</span>
+    <span class="n">vi_p</span> <span class="o">=</span> <span class="n">vi</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">vi</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ti_p</span> <span class="o">=</span> <span class="n">ti</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">ti</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">vi_m</span> <span class="o">/</span> <span class="n">ti_m</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">vi_p</span> <span class="o">-</span> <span class="n">a</span> <span class="o">*</span> <span class="n">ti_p</span><span class="p">)</span>
+    <span class="n">arith_expr</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">t_var</span> <span class="o">=</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">ai</span><span class="p">,</span> <span class="n">bi</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)):</span>
+        <span class="c1"># Create ax + b by calculating the slope and the offset</span>
+        <span class="n">respective_line</span> <span class="o">=</span> <span class="n">ai</span> <span class="o">*</span> <span class="n">t_var</span> <span class="o">+</span> <span class="n">bi</span>
+        <span class="n">arith_expr</span> <span class="o">+=</span> <span class="p">(</span>
+            <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">heaviside</span><span class="p">(</span><span class="n">t_var</span><span class="p">,</span> <span class="n">ti</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ti</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">respective_line</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">arith_expr</span>
+
+
+<span class="k">def</span> <span class="nf">_occ_op</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">qi</span><span class="p">):</span>
+    <span class="n">ti</span> <span class="o">=</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Term</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">qi</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Observable</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">pauli_terms</span><span class="o">=</span><span class="p">[</span><span class="n">ti</span><span class="p">]))</span> <span class="o">/</span> <span class="mi">2</span>
 </pre></div>
 
                 </article>
