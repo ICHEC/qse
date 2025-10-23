@@ -197,7 +197,10 @@ class Pulser(Calculator):
 
         # In the qutip backend pulser uses the convention of 0 (1) being
         # the excited (ground) state. Hence we must reverse the state vector.
-        self.statevector = final_state.full().flatten()[::-1]
+        self.statevector = final_state.full().flatten()
+        if self.channel == "rydberg_global":
+            self.statevector = self.statevector[::-1]
+        # at the moment there does not seem an effective or better alternative than
         self.spins = self.get_spins()
 
         if self.wtimes:
