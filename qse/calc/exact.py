@@ -2,7 +2,7 @@ import numpy as np
 
 
 class ExactSimulator:
-    """
+    r"""
     A calculator that evoles the qubit system exactly.
     Only supported for a single qubit.
 
@@ -12,6 +12,30 @@ class ExactSimulator:
         The amplitude pulse.
     detuning: qse.Signal
         The detuning pulse.
+
+    Notes
+    -----
+    For a single qubit the Hamiltonian is
+
+    .. math::
+        H = \frac{\Omega}{2} e^{-i\phi}|0\rangle\langle 1| +
+        \frac{\Omega}{2} e^{i\phi}|0\rangle\langle 1|
+        -\delta|1\rangle\langle 1|
+
+    where :math:`\Omega` is the amplitude, :math:`\phi` the phase and
+    :math:`\delta` the detuning.
+    Setting the phase to zero and adding a constant :math:`I\delta/2` we get
+
+    .. math::
+        H = \frac{\Omega X + \delta Z}{2}
+
+    Then the time evolution unitary is given by
+
+    .. math::
+        U(t) = e^{-iH t} =
+        \cos(\Delta t/2) I - i \sin(\Delta t/2) \frac{\Omega X + \delta Z}{\Delta}
+
+    Where :math:`\Delta=\sqrt{\delta^2+\Omega^2}`.
     """
 
     def __init__(self, amplitude=None, detuning=None):
