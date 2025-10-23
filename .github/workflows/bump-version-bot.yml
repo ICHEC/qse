@@ -30,8 +30,33 @@ jobs:
 
       - name: Commit and push changes
         run: |
+          VERSION_BRANCH="auto-bump-version/patch-$(date +%s)"
+          COMMIT_MESSAGE="chore: bump patch version [skip ci]"
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # check if there are changes to commit
           git add pyproject.toml
-          git commit -m "chore: bump patch version [skip ci]" || echo "No changes to commit"
-          git push
+          if ! git diff --cached --quiet; then
+            echo "changes detected. Creating new branch and PR ..."
+
+            # Create a new branch and switch to it.
+            git checkout -b $VERSION_BRANCH
+
+            # Commit the changes
+            git commit -m "$COMMIT_MESSAGE"
+
+            # Push the new branch
+            git push origin $VERSION_BRANCH
+
+            # Create the pull request using github CLI
+            PR_URL=$(gh pr create --title "🤖 Auto Bump Version Patch" --body "This PR was automatically created to bump the patch version." --base main --head $VERSION_BRANCH --label "version-bump")
+
+            echo "Pull request created successfully"
+
+            gh pr merge $PR_URL --squash --auto # later we add --delete-branch if everything works.
+          else
+            echo "No changes to pyproject.toml. Skipping the PR creation"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
