@@ -443,6 +443,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.structure_factor_from_sij()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.ExactSimulator"><code class="docutils literal notranslate"><span class="pre">ExactSimulator</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm"><code class="docutils literal notranslate"><span class="pre">Myqlm</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.calculate"><code class="docutils literal notranslate"><span class="pre">Myqlm.calculate()</span></code></a></li>
 </ul>
@@ -1302,6 +1303,37 @@ If the hamiltonian isn’t simulated, it triggers simulation first.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="qse.calc.ExactSimulator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">ExactSimulator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detuning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/exact.html#ExactSimulator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.ExactSimulator" title="Link to this definition">#</a></dt>
+<dd><p>A calculator that evoles the qubit system exactly.
+Only supported for a single qubit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>amplitude</strong> (<em>qse.Signal</em>) – The amplitude pulse.</p></li>
+<li><p><strong>detuning</strong> (<em>qse.Signal</em>) – The detuning pulse.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For a single qubit the Hamiltonian is</p>
+<div class="math notranslate nohighlight">
+\[H = \frac{\Omega}{2} e^{-i\phi}|0\rangle\langle 1| +
+\frac{\Omega}{2} e^{i\phi}|0\rangle\langle 1|
+-\delta|1\rangle\langle 1|\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Omega\)</span> is the amplitude, <span class="math notranslate nohighlight">\(\phi\)</span> the phase and
+<span class="math notranslate nohighlight">\(\delta\)</span> the detuning.
+Setting the phase to zero and adding a constant <span class="math notranslate nohighlight">\(I\delta/2\)</span> we get</p>
+<div class="math notranslate nohighlight">
+\[H = \frac{\Omega X + \delta Z}{2}\]</div>
+<p>Then the time evolution unitary is given by</p>
+<div class="math notranslate nohighlight">
+\[U(t) = e^{-iH t} =
+\cos(\Delta t/2) I - i \sin(\Delta t/2) \frac{\Omega X + \delta Z}{\Delta}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(\Delta=\sqrt{\delta^2+\Omega^2}\)</span>.</p>
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="qse.calc.Myqlm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">Myqlm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detuning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'myqlm-run'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wtimes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/myqlm.html#Myqlm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.Myqlm" title="Link to this definition">#</a></dt>
 <dd><p>QSE-Calculator for MyQLM.</p>
@@ -1846,6 +1878,7 @@ Must have the same length as the number of Qubits.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Calculator.structure_factor_from_sij"><code class="docutils literal notranslate"><span class="pre">Calculator.structure_factor_from_sij()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.ExactSimulator"><code class="docutils literal notranslate"><span class="pre">ExactSimulator</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm"><code class="docutils literal notranslate"><span class="pre">Myqlm</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Myqlm.calculate"><code class="docutils literal notranslate"><span class="pre">Myqlm.calculate()</span></code></a></li>
 </ul>
