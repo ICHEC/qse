@@ -58,5 +58,6 @@ jobs:
             gh pr merge $PR_URL --squash --auto # later we add --delete-branch if everything works.
           else
             echo "No changes to pyproject.toml. Skipping the PR creation"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
