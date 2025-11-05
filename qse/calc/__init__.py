@@ -2,20 +2,12 @@
 
 __all__ = [
     "Calculator",
-    "PropertyNotImplementedError",
-    "PropertyNotPresent",
+    "ExactSimulator",
     "Pulser",
     "Myqlm",
-    "CalculatorSetupError",
-    "CalculationFailed",
 ]
 
 from qse.calc.calculator import Calculator
-from qse.calc.messages import (
-    CalculationFailed,
-    CalculatorSetupError,
-    PropertyNotImplementedError,
-    PropertyNotPresent,
-)
+from qse.calc.exact import ExactSimulator
 from qse.calc.myqlm import Myqlm
 from qse.calc.pulser import Pulser

@@ -55,3 +55,53 @@ def test_pulser_calc():
 
     assert pulser_calc.spins.shape == (repeats, 3)
     assert pulser_calc.sij.shape == (repeats, repeats)
+
+
+def _infidelity(state_1, state_2):
+    """Calculate the infidelity between two states."""
+    return 1.0 - np.abs((np.conj(state_1).T @ state_2).item()) ** 2
+
+
+def single_qubit_evolution(time, delta, omega):
+    """Exact evolution for a single qubit (with zero phase)."""
+    magnitude = np.sqrt(delta**2 + omega**2)
+    delta_b = delta / magnitude
+    omega_b = omega / magnitude
+    angle = magnitude * time * 0.5
+    return np.array(
+        [
+            [np.cos(angle) - 1j * np.sin(angle) * delta_b],
+            [-1j * np.sin(angle) * omega_b],
+        ]
+    )
+
+
+@pytest.mark.parametrize("omega", [10.01, 0.453, 5.6])
+@pytest.mark.parametrize("delta", [0.12, 5.242, -13.0])
+def test_single_qubit(omega, delta):
+    """Test the pulser calculator against the exact calculator for a single qbit."""
+    duration = 400
+
+    # pass time in micro seconds.
+    exact_calc = qse.calc.ExactSimulator(
+        amplitude=qse.Signal(np.ones(6) * omega, duration),
+        detuning=qse.Signal(np.ones(6) * delta, duration),
+    )
+    # Compute
+    exact_calc.calculate()
+
+    # Define the lattice
+    qbits = qse.Qbits(positions=np.zeros((1, 3)))
+
+    # Initialise the pulser calculator
+    pulser_calc = qse.calc.Pulser(
+        amplitude=qse.Signal(np.ones(6) * omega, duration),
+        detuning=qse.Signal(np.ones(6) * delta, duration),
+        qbits=qbits,
+    )
+
+    # Compute
+    pulser_calc.build_sequence()
+    pulser_calc.calculate()
+
+    assert _infidelity(exact_calc.statevector, pulser_calc.statevector) < 1e-5
