@@ -6,7 +6,9 @@ rads = np.linspace(12, 1, 10)
 colors = np.sqrt(np.linspace(0.1, 0.9, 10))
 
 
-def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
+def draw(
+    qbits, radius=None, show_labels=False, colouring=None, units=None, equal_aspect=True
+):
     """
     Visualize the positions of a set of qubits.
 
@@ -28,6 +30,9 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
         Must have the same length as the number of Qubits.
     units : str, optional
         The units of distance.
+    equal_aspect : bool, optional
+        Whether to have the same scaling for the axes.
+        Defaults to True.
     """
     if colouring is not None:
         if len(colouring) != qbits.nqbits:
@@ -56,19 +61,30 @@ def draw(qbits, radius=None, show_labels=False, colouring=None, units=None):
         elif min_dist > radius:
             draw_bonds = False
 
+    fig = plt.figure()
+    projection = "3d" if rank == 3 else None
+    ax = fig.add_subplot(projection=projection)
+    if equal_aspect:
+        ax.set_aspect("equal")
+
     if rank == 3:
-        _draw_3d(qbits, draw_bonds, radius, rij, min_dist)
+        _draw_3d(qbits, draw_bonds, radius, rij, min_dist, ax)
     else:
         _draw_2d(
-            qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_labels
+            qbits,
+            draw_bonds,
+            radius,
+            rij,
+            min_dist,
+            units,
+            colouring,
+            show_labels,
+            ax,
         )
+    return fig
 
 
-def _draw_3d(qbits, draw_bonds, radius, rij, min_dist):
-    fig = plt.figure()
-    ax = fig.add_subplot(projection="3d")
-    ax.set_aspect("equal")
-
+def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, ax):
     positions = qbits.positions
 
     if draw_bonds:
@@ -97,13 +113,18 @@ def _draw_3d(qbits, draw_bonds, radius, rij, min_dist):
     for r, c in zip(rads, colors):
         ax.scatter(x, y, z, s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8)
 
-    return fig
 
-
-def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_labels):
-    fig = plt.figure()
-    ax = fig.add_subplot()
-    ax.set_aspect("equal")
+def _draw_2d(
+    qbits,
+    draw_bonds,
+    radius,
+    rij,
+    min_dist,
+    units,
+    colouring,
+    show_labels,
+    ax,
+):
     ax.set_xlabel("x" + f" ({units})" if units is not None else "x")
     ax.set_ylabel("y" + f" ({units})" if units is not None else "y")
 
@@ -141,8 +162,6 @@ def _draw_2d(qbits, draw_bonds, radius, rij, min_dist, units, colouring, show_la
     if show_labels:
         for ind in range(qbits.nqbits):
             ax.text(x[ind], y[ind], s=qbits.labels[ind])
-
-    return fig
 
 
 def view_matrix(matrix, labels_x=None, labels_y=None, vcenter=None):
