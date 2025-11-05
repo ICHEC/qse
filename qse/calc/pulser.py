@@ -13,7 +13,6 @@ from qse.calc.calculator import Calculator
 try:
     import pulser
     import pulser.waveforms
-    import qutip
     from pulser_simulation import QutipEmulator
 
     CALCULATOR_AVAILABLE = True
@@ -27,12 +26,12 @@ class Pulser(Calculator):
 
     Parameters
     ----------
+    qbits: qse.Qbits
+        The qbits object.
     amplitude: qse.Signal, pulser.waveforms.Waveform
         The amplitude pulse.
     detuning: qse.Signal, pulser.waveforms.Waveform
         The detuning pulse.
-    qbits: qse.Qbits
-        The qbits object.
     channel : str
         Which channel to use. For example "rydberg_global" for Rydberg or
         "mw_global" for microwave.
@@ -60,9 +59,9 @@ class Pulser(Calculator):
     >>> qbits = qse.lattices.chain(4.0, 4)
     >>> duration = 400
     >>> pulser_calc = qse.calc.Pulser(
+    ...     qbits=qbits,
     ...     amplitude=qse.Signal(np.ones(6) * 1.01, duration),
     ...     detuning=qse.Signal(np.ones(6) * 0.12, duration),
-    ...     qbits=qbits,
     ... )
     >>> pulser_calc.build_sequence()
     >>> pulser_calc.calculate()
@@ -105,7 +104,10 @@ class Pulser(Calculator):
         )
 
         super().__init__(
-            CALCULATOR_AVAILABLE, installation_message, label=label, qbits=qbits
+            qbits=qbits,
+            label=label,
+            is_calculator_available=CALCULATOR_AVAILABLE,
+            installation_message=installation_message,
         )
         self.device = pulser.devices.MockDevice if device is None else device
         self.emulator = QutipEmulator if emulator is None else emulator
@@ -125,8 +127,6 @@ class Pulser(Calculator):
         self._sequence = None
         self._sim = None
         self.statevector = None
-        self.spins = None
-        self.sij = None
 
     @property
     def amplitude(self):
@@ -194,8 +194,13 @@ class Pulser(Calculator):
         self.results = self.sim.run(progress_bar=progress)
 
         final_state = self.results.get_final_state()
-        self.statevector = qutip.core.dimensions.to_tensor_rep(final_state).flatten()
 
+        # In the qutip backend pulser uses the convention of 0 (1) being
+        # the excited (ground) state. Hence we must reverse the state vector.
+        self.statevector = final_state.full().flatten()
+        if self.channel == "rydberg_global":
+            self.statevector = self.statevector[::-1]
+        # at the moment there does not seem an effective or better alternative than
         self.spins = self.get_spins()
 
         if self.wtimes:
@@ -207,6 +212,13 @@ def _format_pulse(pulse):
     if pulse is None or isinstance(pulse, pulser.waveforms.Waveform):
         return pulse
     if isinstance(pulse, Signal):
+        # pulser.waveforms.InterpolatedWaveform needs minimum 2
+        # values. In the case where we have a single value,
+        # we use pulser.waveforms.ConstantWaveform.
+        if len(pulse.values) == 1:
+            return pulser.waveforms.ConstantWaveform(
+                duration=pulse.duration, value=pulse.values
+            )
         return pulser.waveforms.InterpolatedWaveform(
             duration=pulse.duration, values=pulse.values
         )
