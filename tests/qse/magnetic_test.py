@@ -9,6 +9,7 @@ pauli_z = np.array([[1.0, 0.0], [0.0, -1.0]])
 
 
 def random_state(hdim):
+    "Outputs a random normalised state"
     statevector = np.random.rand(hdim) + 1j * np.random.rand(hdim)
     statevector /= np.linalg.norm(statevector)
     return statevector
@@ -27,21 +28,21 @@ def expval(op, state):
     return (np.conj(state) @ (op @ state[:, None])).item()
 
 
-def compute_sisj_2dim_algebraic(psi):
-    "Computes the elements s12 = s21 for a two qubit system"
-    a = psi[0]
-    b = psi[1]
-    c = psi[2]
-    d = psi[3]
-    r = (
-        2 * np.conj(b) * c
-        + 2 * np.conj(c) * b
-        + np.abs(a) ** 2
-        - np.abs(b) ** 2
-        - np.abs(c) ** 2
-        + np.abs(d) ** 2
-    )
-    return r
+def ij_operator(n, i, j, op_i, op_j):
+    ops = [np.eye(2) for _ in range(n)]
+    ops[i] = op_i
+    ops[j] = op_j
+    return kron_list(ops)
+
+
+def get_sisj_algebraic(i, j, statevector):
+    n = int(np.log2(len(statevector)))
+    term_1 = expval(ij_operator(n, i, j, pauli_x, pauli_x), statevector)
+    term_2 = expval(ij_operator(n, i, j, pauli_y, pauli_y), statevector)
+    term_3 = expval(ij_operator(n, i, j, pauli_z, pauli_z), statevector)
+    return (1 / 3) * (
+        term_1 + term_2 + term_3
+    ).real  # Normalise it to 1 for structure factor
 
 
 @pytest.mark.parametrize("n_qubits, hsize", [(4, 2**4), (3, 2**3 - 1)])
@@ -98,3 +99,16 @@ def test_number_operator_random(n):
 
     n_op = qse.magnetic.get_number_operator(psi, n)
     assert np.allclose(n_op, np_n_op)
+
+
+@pytest.mark.parametrize("n", [2, 3, 4])
+def test_get_sisj(n):
+    """Tests the get_sisj function."""
+    psi = random_state(2**n)
+    sisj = qse.magnetic.get_sisj(psi, n, qse.magnetic.get_basis(n, 2**n))
+    sisj_algebraic = np.eye(n)
+    for i in range(n):
+        for j in range(i + 1, n):
+            sisj_algebraic[i][j] = get_sisj_algebraic(i, j, psi)
+            sisj_algebraic[j][i] = sisj_algebraic[i][j]
+    assert np.allclose(sisj, sisj_algebraic)
