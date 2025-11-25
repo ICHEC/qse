@@ -198,10 +198,11 @@ class Qbits:
             calc.set_qbits(self)
 
     def set_cell(self, cell, scale_qbits=False):
-        """Set unit cell vectors.
+        """
+        Set unit cell vectors.
 
-        Parameters:
-
+        Parameters
+        ----------
         cell: 3x3 matrix or length 3 or 6 vector
             Unit cell.  A 3x3 matrix (the three unit cell vectors) or
             just three numbers for an orthorhombic cell. Another option is
@@ -214,8 +215,8 @@ class Qbits:
             Fix qbit positions or move qbits with the unit cell?
             Default behavior is to *not* move the qbits (scale_qbits=False).
 
-        Examples:
-
+        Examples
+        --------
         Two equivalent ways to define an orthorhombic cell:
 
         >>> qbits = Qbits('He')
@@ -338,7 +339,8 @@ class Qbits:
             return self.arrays[name]
 
     def set_array(self, name, a, dtype=None, shape=None):
-        """Update array.
+        """
+        Update array.
 
         If *shape* is not *None*, the shape of *a* will be checked.
         If *a* is *None*, then the array is deleted."""
