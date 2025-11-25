@@ -41,7 +41,7 @@ dev = [
 pulser = ["pulser == 1.4.0"]
 myqlm = ["numpy == 1.26.4", "myqlm == 1.11.3"]
 docs = [
-    "sphinx",
+    "sphinx=7.4.7",
     "sphinx-autoapi",
     "jupyter_book",
     "tomli",
