@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
@@ -328,32 +328,32 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for qse.calc.calculator</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pathlib</span>
 
-<span class="kn">import</span> <span class="nn">qse.magnetic</span> <span class="k">as</span> <span class="nn">magnetic</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">qse.magnetic</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">magnetic</span>
 
 
-<span class="k">class</span> <span class="nc">Parameters</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Parameters</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Dictionary for parameters.</span>
 <span class="sd">    Special feature: If param is a Parameters instance, then param.xc</span>
 <span class="sd">    is a shorthand for param[&#39;xc&#39;].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Read parameters from file.&quot;&quot;&quot;</span>
         <span class="c1"># We use ast to evaluate literals, avoiding eval()</span>
         <span class="c1"># for security reasons.</span>
-        <span class="kn">import</span> <span class="nn">ast</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
             <span class="n">txt</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
@@ -376,7 +376,7 @@ document.write(`
         <span class="n">parameters</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">dct</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">parameters</span>
 
-    <span class="k">def</span> <span class="nf">tostring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tostring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="s2">&quot;dict(&quot;</span>
@@ -384,22 +384,22 @@ document.write(`
             <span class="o">+</span> <span class="s2">&quot;)</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tostring</span><span class="p">())</span>
 
 
-<span class="k">def</span> <span class="nf">get_calculator_class</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_calculator_class</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return calculator class.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;pulser&quot;</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">qse.calc.pulser</span> <span class="kn">import</span> <span class="n">Pulser</span> <span class="k">as</span> <span class="n">Calculator</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">qse.calc.pulser</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pulser</span> <span class="k">as</span> <span class="n">Calculator</span>
     <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;myqlm&quot;</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">qse.calc.myqlm</span> <span class="kn">import</span> <span class="n">MyQLM</span> <span class="k">as</span> <span class="n">Calculator</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">qse.calc.myqlm</span><span class="w"> </span><span class="kn">import</span> <span class="n">MyQLM</span> <span class="k">as</span> <span class="n">Calculator</span>
     <span class="k">return</span> <span class="n">Calculator</span>
 
 
 <div class="viewcode-block" id="Calculator">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator">[docs]</a>
-<span class="k">class</span> <span class="nc">Calculator</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Calculator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base-class for all QSE calculators.</span>
 
@@ -415,7 +415,7 @@ document.write(`
 <span class="sd">        unit-cell updated from file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">qbits</span><span class="p">,</span>
         <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -433,24 +433,24 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">sij</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label</span>
 
     <span class="nd">@label</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="n">label</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span>
 
     <span class="nd">@qbits</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbits</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span> <span class="o">=</span> <span class="n">qbits</span>
 
 <div class="viewcode-block" id="Calculator.calculate">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.calculate">[docs]</a>
-    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Do the calculation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -459,7 +459,7 @@ document.write(`
 
 <div class="viewcode-block" id="Calculator.get_spins">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.get_spins">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_spins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_spins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get spin expectation values.</span>
 <span class="sd">        If the hamiltonian isn&#39;t simulated, it triggers simulation first.</span>
@@ -481,7 +481,7 @@ document.write(`
 
 <div class="viewcode-block" id="Calculator.get_sij">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.get_sij">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_sij</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_sij</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get spin correlation s_ij.</span>
 <span class="sd">        If the hamiltonian isn&#39;t simulated, it triggers simulation first.</span>
@@ -505,7 +505,7 @@ document.write(`
 
 <div class="viewcode-block" id="Calculator.structure_factor_from_sij">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Calculator.structure_factor_from_sij">[docs]</a>
-    <span class="k">def</span> <span class="nf">structure_factor_from_sij</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L3</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">structure_factor_from_sij</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L3</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the structure factor.</span>
 

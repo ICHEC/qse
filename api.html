@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
@@ -678,7 +678,7 @@ to the qbits object.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbits.draw">
-<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.draw" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equal_aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.draw" title="Link to this definition">#</a></dt>
 <dd><p>Visualize the positions of a set of qubits.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -693,6 +693,8 @@ Defaults to False.</p></li>
 This can be used to view different magnetic orderings.
 Must have the same length as the number of Qubits.</p></li>
 <li><p><strong>units</strong> (<em>str, optional</em>) – The units of distance.</p></li>
+<li><p><strong>equal_aspect</strong> (<em>bool, optional</em>) – Whether to have the same scaling for the axes.
+Defaults to True.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1020,21 +1022,22 @@ If <em>a</em> is <em>None</em>, then the array is deleted.</p>
 <dt class="sig sig-object py" id="qse.Qbits.set_cell">
 <span class="sig-name descname"><span class="pre">set_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_cell" title="Link to this definition">#</a></dt>
 <dd><p>Set unit cell vectors.</p>
-<p>Parameters:</p>
-<dl class="simple">
-<dt>cell: 3x3 matrix or length 3 or 6 vector</dt><dd><p>Unit cell.  A 3x3 matrix (the three unit cell vectors) or
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell</strong> (<em>3x3 matrix or length 3 or 6 vector</em>) – Unit cell.  A 3x3 matrix (the three unit cell vectors) or
 just three numbers for an orthorhombic cell. Another option is
 6 numbers, which describes unit cell with lengths of unit cell
 vectors and with angles between them (in degrees), in following
 order: [len(a), len(b), len(c), angle(b,c), angle(a,c),
 angle(a,b)].  First vector will lie in x-direction, second in
-xy-plane, and the third one in z-positive subspace.</p>
-</dd>
-<dt>scale_qbits: bool</dt><dd><p>Fix qbit positions or move qbits with the unit cell?
-Default behavior is to <em>not</em> move the qbits (scale_qbits=False).</p>
+xy-plane, and the third one in z-positive subspace.</p></li>
+<li><p><strong>scale_qbits</strong> (<em>bool</em>) – Fix qbit positions or move qbits with the unit cell?
+Default behavior is to <em>not</em> move the qbits (scale_qbits=False).</p></li>
+</ul>
 </dd>
 </dl>
-<p>Examples:</p>
+<p class="rubric">Examples</p>
 <p>Two equivalent ways to define an orthorhombic cell:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span> <span class="o">=</span> <span class="n">Qbits</span><span class="p">(</span><span class="s1">&#39;He&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">,</span> <span class="mi">8</span>
@@ -1199,7 +1202,7 @@ or consistent for multi-dim usage.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.draw">
-<span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/visualise.html#draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.draw" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equal_aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/visualise.html#draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.draw" title="Link to this definition">#</a></dt>
 <dd><p>Visualize the positions of a set of qubits.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1215,6 +1218,8 @@ Defaults to False.</p></li>
 This can be used to view different magnetic orderings.
 Must have the same length as the number of Qubits.</p></li>
 <li><p><strong>units</strong> (<em>str, optional</em>) – The units of distance.</p></li>
+<li><p><strong>equal_aspect</strong> (<em>bool, optional</em>) – Whether to have the same scaling for the axes.
+Defaults to True.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1726,7 +1731,7 @@ at each of these lattice sites.</p>
 <span id="qse-visualise"></span><h2>qse.visualise<a class="headerlink" href="#module-qse.visualise" title="Link to this heading">#</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="qse.visualise.draw">
-<span class="sig-prename descclassname"><span class="pre">qse.visualise.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/visualise.html#draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.visualise.draw" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">qse.visualise.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equal_aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/visualise.html#draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.visualise.draw" title="Link to this definition">#</a></dt>
 <dd><p>Visualize the positions of a set of qubits.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1742,6 +1747,8 @@ Defaults to False.</p></li>
 This can be used to view different magnetic orderings.
 Must have the same length as the number of Qubits.</p></li>
 <li><p><strong>units</strong> (<em>str, optional</em>) – The units of distance.</p></li>
+<li><p><strong>equal_aspect</strong> (<em>bool, optional</em>) – Whether to have the same scaling for the axes.
+Defaults to True.</p></li>
 </ul>
 </dd>
 </dl>

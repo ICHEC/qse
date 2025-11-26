@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
@@ -335,15 +335,15 @@ document.write(`
 <span class="sd">https://pulser.readthedocs.io/en/stable/</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
 
-<span class="kn">from</span> <span class="nn">qse</span> <span class="kn">import</span> <span class="n">Signal</span>
-<span class="kn">from</span> <span class="nn">qse.calc.calculator</span> <span class="kn">import</span> <span class="n">Calculator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qse</span><span class="w"> </span><span class="kn">import</span> <span class="n">Signal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qse.calc.calculator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Calculator</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">pulser</span>
-    <span class="kn">import</span> <span class="nn">pulser.waveforms</span>
-    <span class="kn">from</span> <span class="nn">pulser_simulation</span> <span class="kn">import</span> <span class="n">QutipEmulator</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pulser</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pulser.waveforms</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pulser_simulation</span><span class="w"> </span><span class="kn">import</span> <span class="n">QutipEmulator</span>
 
     <span class="n">CALCULATOR_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
@@ -352,7 +352,7 @@ document.write(`
 
 <div class="viewcode-block" id="Pulser">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Pulser">[docs]</a>
-<span class="k">class</span> <span class="nc">Pulser</span><span class="p">(</span><span class="n">Calculator</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Pulser</span><span class="p">(</span><span class="n">Calculator</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    QSE-Calculator for pulser.</span>
 
@@ -418,7 +418,7 @@ document.write(`
 
     <span class="n">implemented_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">,</span> <span class="s2">&quot;fidality&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">amplitude</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -461,38 +461,38 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">statevector</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">amplitude</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">amplitude</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_amplitude</span>
 
     <span class="nd">@amplitude</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">amplitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">amplitude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_amplitude</span> <span class="o">=</span> <span class="n">_format_pulse</span><span class="p">(</span><span class="n">amplitude</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">detuning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">detuning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detuning</span>
 
     <span class="nd">@detuning</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">detuning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">detuning</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">detuning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">detuning</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_detuning</span> <span class="o">=</span> <span class="n">_format_pulse</span><span class="p">(</span><span class="n">detuning</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">pulser</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">from_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence</span>
 
 <div class="viewcode-block" id="Pulser.build_sequence">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Pulser.build_sequence">[docs]</a>
-    <span class="k">def</span> <span class="nf">build_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build the sequence of operations involving the qubit coordinates,</span>
 <span class="sd">        amplitude pulse and detuning pulse.</span>
@@ -514,12 +514,12 @@ document.write(`
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">sim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sim</span>
 
 <div class="viewcode-block" id="Pulser.calculate">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Pulser.calculate">[docs]</a>
-    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run the calculation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -547,7 +547,7 @@ document.write(`
 
 
 
-<span class="k">def</span> <span class="nf">_format_pulse</span><span class="p">(</span><span class="n">pulse</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_format_pulse</span><span class="p">(</span><span class="n">pulse</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">pulse</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pulse</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">pulse</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pulse</span><span class="p">,</span> <span class="n">Signal</span><span class="p">):</span>

@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
@@ -328,12 +328,12 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for qse.lattices.lattices</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">import</span> <span class="nn">qse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
 
 
-<span class="k">def</span> <span class="nf">_check_repeats</span><span class="p">(</span><span class="n">repeats</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_repeats</span><span class="p">(</span><span class="n">repeats</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate the repeats parameter.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">repeats</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">repeats</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
@@ -342,7 +342,7 @@ document.write(`
         <span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_lattice_creator</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_lattice_creator</span><span class="p">(</span>
     <span class="n">unit_cell_2d</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
     <span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">repeats</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
@@ -377,7 +377,7 @@ document.write(`
 
 <div class="viewcode-block" id="chain">
 <a class="viewcode-back" href="../../../api.html#qse.lattices.chain">[docs]</a>
-<span class="k">def</span> <span class="nf">chain</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">chain</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a Qbits object in linear chain geometry.</span>
 
@@ -401,7 +401,7 @@ document.write(`
 
 <div class="viewcode-block" id="square">
 <a class="viewcode-back" href="../../../api.html#qse.lattices.square">[docs]</a>
-<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">square</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a Qbits object in square lattice geometry.</span>
 
@@ -431,7 +431,7 @@ document.write(`
 
 <div class="viewcode-block" id="triangular">
 <a class="viewcode-back" href="../../../api.html#qse.lattices.triangular">[docs]</a>
-<span class="k">def</span> <span class="nf">triangular</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">triangular</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a Qbits object in triangular lattice geometry.</span>
 
@@ -461,7 +461,7 @@ document.write(`
 
 <div class="viewcode-block" id="hexagonal">
 <a class="viewcode-back" href="../../../api.html#qse.lattices.hexagonal">[docs]</a>
-<span class="k">def</span> <span class="nf">hexagonal</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">hexagonal</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a Qbits object in hexagonal lattice geometry.</span>
 
@@ -497,7 +497,7 @@ document.write(`
 
 <div class="viewcode-block" id="kagome">
 <a class="viewcode-back" href="../../../api.html#qse.lattices.kagome">[docs]</a>
-<span class="k">def</span> <span class="nf">kagome</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">kagome</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a Qbits object in kagome lattice geometry.</span>
 
@@ -534,7 +534,7 @@ document.write(`
 
 <div class="viewcode-block" id="ring">
 <a class="viewcode-back" href="../../../api.html#qse.lattices.ring">[docs]</a>
-<span class="k">def</span> <span class="nf">ring</span><span class="p">(</span><span class="n">spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ring</span><span class="p">(</span><span class="n">spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a Qbits object in a ring geometry.</span>
 
@@ -562,7 +562,7 @@ document.write(`
 
 <div class="viewcode-block" id="torus">
 <a class="viewcode-back" href="../../../api.html#qse.lattices.torus">[docs]</a>
-<span class="k">def</span> <span class="nf">torus</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">torus</span><span class="p">(</span>
     <span class="n">n_outer</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_inner</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">inner_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">outer_radius</span><span class="p">:</span> <span class="nb">float</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>

@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
@@ -374,7 +374,19 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version">Version</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-qbits">1. Create Qbits.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specify-the-qubits-positions">1.1. Specify the qubits positions.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specify-the-cell-positions">1.2. Specify the cell positions.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specify-the-structure-vectors-and-angles">1.3. Specify the structure vectors and angles.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-single-qbit-objects">1.4. Add single <code class="docutils literal notranslate"><span class="pre">Qbit</span></code> objects.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qbits-methods">2. Qbits methods.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#draw-qbits">2.1. Draw qbits.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#translate-repeated-structure">2.2. Translate repeated structure.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rotate-structures">2.3. Rotate structures.</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -388,82 +400,211 @@ document.write(`
                   
   <section id="creating-and-manipulating-qbits">
 <h1>Creating and manipulating Qbits<a class="headerlink" href="#creating-and-manipulating-qbits" title="Link to this heading">#</a></h1>
-<p>We should show how to:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="create-qbits">
+<h2>1. Create Qbits.<a class="headerlink" href="#create-qbits" title="Link to this heading">#</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">Qbits</span></code> object can represent :</p>
 <ul class="simple">
-<li><p>Create Qbits</p></li>
-<li><p>How Qbits can be added</p></li>
-<li><p>Rotate</p></li>
-<li><p>Center</p></li>
-<li><p>Translate</p></li>
+<li><p>An arbitrary qubit layout.</p></li>
+<li><p>A repeated structure.</p></li>
 </ul>
+<p><code class="docutils literal notranslate"><span class="pre">Qbits</span></code> objects can be created in different ways. Let’s see how it is done by performing providing some examples.</p>
+<section id="specify-the-qubits-positions">
+<h3>1.1. Specify the qubits positions.<a class="headerlink" href="#specify-the-qubits-positions" title="Link to this heading">#</a></h3>
+<p>The first way of creating a Qbits object is by specifying the <code class="docutils literal notranslate"><span class="pre">positions</span></code> of their qubits in the <em>cartesian coordinate system</em>. With the <code class="docutils literal notranslate"><span class="pre">labels</span></code> parameter we are assigning a label to each qubit.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qse</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coords_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.76</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">]])</span>
+<span class="n">coords_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.76</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">]])</span>
+<span class="n">coords_3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">coords_1</span><span class="p">,</span> <span class="n">coords_2</span><span class="p">,</span> <span class="n">coords_3</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qbits_1</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;qbit1&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit2&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit3&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="specify-the-cell-positions">
+<h3>1.2. Specify the cell positions.<a class="headerlink" href="#specify-the-cell-positions" title="Link to this heading">#</a></h3>
+<p>We can also create a qbits object by inputting the unit cell coordinates into the <code class="docutils literal notranslate"><span class="pre">cell</span></code> argument. Let’s see an example for a cubic cell type. The <code class="docutils literal notranslate"><span class="pre">scaled_positions</span></code> argument is the position of the qubits, given in units of the unit cell.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span>
-    <span class="n">positions</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-            <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-            <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-        <span class="p">]</span>
-    <span class="p">),</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[[</span><span class="mf">4.994</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">4.994</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">4.994</span><span class="p">]]</span>
+<span class="p">)</span>  <span class="c1"># cell is defined using coordinates.</span>
+<span class="n">scaled_positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<span class="n">qbits_2</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="n">cell</span><span class="p">,</span> <span class="n">scaled_positions</span><span class="o">=</span><span class="n">scaled_positions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="specify-the-structure-vectors-and-angles">
+<h3>1.3. Specify the structure vectors and angles.<a class="headerlink" href="#specify-the-structure-vectors-and-angles" title="Link to this heading">#</a></h3>
+<p>We can use the lattice vectors $a_1$, $a_2$, $a_3$ and the angles  $\alpha\angle a_2a_3$ ,  $\beta\angle a_1a_3$ , $\gamma\angle a_1a_2$, to define our cell instead of using its coordinates as we did before. Let’s see an example where:</p>
+<p>$\alpha = \gamma = 90°, \beta = 112.48$, $a_1 = 5.87A$, $a_2 = 8.12A$, $a_3 = 7.45A$</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="mf">4.13</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="mf">4.13</span>
+<span class="n">a3</span> <span class="o">=</span> <span class="mf">6.91</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">90.00</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">90.00</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">120.00</span>
+<span class="n">cell</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">a1</span><span class="p">,</span>
+    <span class="n">a2</span><span class="p">,</span>
+    <span class="n">a3</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">,</span>
+    <span class="n">beta</span><span class="p">,</span>
+    <span class="n">gamma</span><span class="p">,</span>
+<span class="p">]</span>  <span class="c1"># cell is defined using lattice vectors and angles</span>
+<span class="n">scaled_positions_1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">scaled_positions_2</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.33</span><span class="p">,</span> <span class="mf">0.66</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]</span>
+<span class="n">scaled_positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">scaled_positions_1</span><span class="p">,</span> <span class="n">scaled_positions_2</span><span class="p">])</span>
+<span class="n">qbits_3</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="n">cell</span><span class="p">,</span> <span class="n">scaled_positions</span><span class="o">=</span><span class="n">scaled_positions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="add-single-qbit-objects">
+<h3>1.4. Add single <code class="docutils literal notranslate"><span class="pre">Qbit</span></code> objects.<a class="headerlink" href="#add-single-qbit-objects" title="Link to this heading">#</a></h3>
+<p>Single <code class="docutils literal notranslate"><span class="pre">Qbit</span></code> objects can be added to form a <code class="docutils literal notranslate"><span class="pre">Qbits</span></code> object. Let’s build again the Qbits object we saw in section 1.1 this way.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qbit_1</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbit</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">coords_1</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="n">qbit_2</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbit</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">coords_2</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="n">qbit_3</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbit</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">coords_3</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+
+<span class="n">qbits_4</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">()</span>
+<span class="n">qbits_4</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">qbit_1</span><span class="p">)</span>
+<span class="n">qbits_4</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">qbit_2</span><span class="p">)</span>
+<span class="n">qbits_4</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">qbit_3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="qbits-methods">
+<h2>2. Qbits methods.<a class="headerlink" href="#qbits-methods" title="Link to this heading">#</a></h2>
+<section id="draw-qbits">
+<h3>2.1. Draw qbits.<a class="headerlink" href="#draw-qbits" title="Link to this heading">#</a></h3>
+<p>After the cells are created, we can use the <code class="docutils literal notranslate"><span class="pre">repeat</span></code> method to generate repeated structure. The argument of <code class="docutils literal notranslate"><span class="pre">repeat</span></code> can be a sequence of three integers indicating the number of repetitions on each direction or a simple integer indicating equal repetition on each direction. Once the repeated structure is created, we can use the <code class="docutils literal notranslate"><span class="pre">draw</span></code> method to visualise it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qbits_2</span> <span class="o">=</span> <span class="n">qbits_2</span><span class="o">.</span><span class="n">repeat</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">qbits_2</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8ec1285b6acd75efff758d64e39d35a03fee0d856700ac8e3de62de7202ff40c.png" src="../_images/8ec1285b6acd75efff758d64e39d35a03fee0d856700ac8e3de62de7202ff40c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qbits_3</span> <span class="o">=</span> <span class="n">qbits_3</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qbits_3</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/06a455d45b3dda305bc64c21d4b50ec06cf61e5b4bcd7b6d4808e90777b32abe.png" src="../_images/06a455d45b3dda305bc64c21d4b50ec06cf61e5b4bcd7b6d4808e90777b32abe.png" />
+</div>
+</div>
+<p>Our drawing function is also able to draw 2d structures. We can see an example of this in the cell below, that creates and draws a 2d Qbits object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+    <span class="p">]</span>
 <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qbits</span><span class="o">.</span><span class="n">get_angle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(90.0)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qbits</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">qbits</span><span class="p">)</span>
+
+<span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">qbits_5</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="n">cell</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">)</span>
+<span class="n">qbits_5</span> <span class="o">=</span> <span class="n">qbits_5</span><span class="o">.</span><span class="n">repeat</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">qbits_5</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Qbits(
- Qbit(label=&#39;0&#39;, position=[6.123233995736766e-17, 1.0, 0.0], state=[(1+0j), 0j], index=0),
- Qbit(label=&#39;1&#39;, position=[0.0, 0.0, 0.0], state=[(1+0j), 0j], index=1),
- Qbit(label=&#39;2&#39;, position=[-1.0, 6.123233995736766e-17, 0.0], state=[(1+0j), 0j], index=2),
- pbc=False,
-...)
-</pre></div>
+<img alt="../_images/77d5a2990cdcfeed5b02f85c85468335787acb31acc1a65a177224eccc6a4ea8.png" src="../_images/77d5a2990cdcfeed5b02f85c85468335787acb31acc1a65a177224eccc6a4ea8.png" />
 </div>
 </div>
-</div>
-<section id="version">
-<h2>Version<a class="headerlink" href="#version" title="Link to this heading">#</a></h2>
+</section>
+<section id="translate-repeated-structure">
+<h3>2.2. Translate repeated structure.<a class="headerlink" href="#translate-repeated-structure" title="Link to this heading">#</a></h3>
+<p>We can translate our repeated structures using the <code class="docutils literal notranslate"><span class="pre">translate</span></code> method, to which we can input an xyz vector that dictates how much the structure is translated in each direction.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qse</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">print_environment</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qbits_2</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">qbits_2</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python version: 3.12.3
-qse version: 1.0.3
+<img alt="../_images/109b7791aa5d6573a1528819ba0de901d14804ca86217ce3c63349154914a1e5.png" src="../_images/109b7791aa5d6573a1528819ba0de901d14804ca86217ce3c63349154914a1e5.png" />
+</div>
+</div>
+<p>Translations of the structure can also be made using the <code class="docutils literal notranslate"><span class="pre">set_centroid</span></code> method, as we can see below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qbits_2</span><span class="o">.</span><span class="n">set_centroid</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="n">qbits_2</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/7ccb993ee66e917a8a14ffbac374fa78013681fb12f8ebb87de33c7a44c3d40c.png" src="../_images/7ccb993ee66e917a8a14ffbac374fa78013681fb12f8ebb87de33c7a44c3d40c.png" />
 </div>
+</div>
+</section>
+<section id="rotate-structures">
+<h3>2.3. Rotate structures.<a class="headerlink" href="#rotate-structures" title="Link to this heading">#</a></h3>
+<p>One can use the method <code class="docutils literal notranslate"><span class="pre">rotate</span></code> to perform lattice rotations, specifying the angle and the axis along which the rotation will be performed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qbits_3</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">rotate_cell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">qbits_3</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/da7a13628169492b116772fb016a1159363595532e721661067b5c11692749a6.png" src="../_images/da7a13628169492b116772fb016a1159363595532e721661067b5c11692749a6.png" />
+</div>
+</div>
+<p>With the method <code class="docutils literal notranslate"><span class="pre">euler_rotate</span></code> we can rotate a lattice by inputting the angles $\phi$, $\theta$, $\psi$ in degrees, as shown below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qbits_3</span><span class="o">.</span><span class="n">euler_rotate</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">70</span><span class="p">)</span>
+<span class="n">qbits_3</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c0e51475539c030a4709a24f8628b5fe2e720a1ae14156541944469f5877f42a.png" src="../_images/c0e51475539c030a4709a24f8628b5fe2e720a1ae14156541944469f5877f42a.png" />
+</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -512,7 +653,19 @@ qse version: 1.0.3
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version">Version</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-qbits">1. Create Qbits.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specify-the-qubits-positions">1.1. Specify the qubits positions.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specify-the-cell-positions">1.2. Specify the cell positions.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specify-the-structure-vectors-and-angles">1.3. Specify the structure vectors and angles.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-single-qbit-objects">1.4. Add single <code class="docutils literal notranslate"><span class="pre">Qbit</span></code> objects.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qbits-methods">2. Qbits methods.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#draw-qbits">2.1. Draw qbits.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#translate-repeated-structure">2.2. Translate repeated structure.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rotate-structures">2.3. Rotate structures.</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

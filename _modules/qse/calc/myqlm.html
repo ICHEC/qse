@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
@@ -335,17 +335,17 @@ document.write(`
 <span class="sd">https://myqlm.github.io/</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">qse.calc.calculator</span> <span class="kn">import</span> <span class="n">Calculator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qse.calc.calculator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Calculator</span>
 
 <span class="n">qat_available</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">qlmaas_available</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">qat.qpus</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">qat.qpus</span>
 
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">qat</span><span class="o">.</span><span class="n">qpus</span><span class="p">,</span> <span class="s2">&quot;AnalogQPU&quot;</span><span class="p">):</span>
         <span class="n">AQPU_local</span> <span class="o">=</span> <span class="n">qat</span><span class="o">.</span><span class="n">qpus</span><span class="o">.</span><span class="n">AnalogQPU</span>
@@ -356,7 +356,7 @@ document.write(`
     <span class="n">qat_available</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">qlmaas.qpus</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">qlmaas.qpus</span>
 
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">qlmaas</span><span class="o">.</span><span class="n">qpus</span><span class="p">,</span> <span class="s2">&quot;AnalogQPU&quot;</span><span class="p">):</span>
         <span class="n">AQPU_remote</span> <span class="o">=</span> <span class="n">qlmaas</span><span class="o">.</span><span class="n">qpus</span><span class="o">.</span><span class="n">AnalogQPU</span>
@@ -375,7 +375,7 @@ document.write(`
         <span class="n">AQPU</span> <span class="o">=</span> <span class="kc">None</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">qat</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">qat</span>
 
     <span class="n">CALCULATOR_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
@@ -399,7 +399,7 @@ document.write(`
 
 <div class="viewcode-block" id="Myqlm">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Myqlm">[docs]</a>
-<span class="k">class</span> <span class="nc">Myqlm</span><span class="p">(</span><span class="n">Calculator</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Myqlm</span><span class="p">(</span><span class="n">Calculator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    QSE-Calculator for MyQLM.</span>
 
@@ -421,7 +421,7 @@ document.write(`
 <span class="sd">        Defaults to True.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">qbits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">amplitude</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -456,17 +456,17 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">C6</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;C6&quot;</span><span class="p">]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">Hamiltonian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Hamiltonian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_hamiltonian</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_get_hamiltonian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_hamiltonian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;rydberg&quot;</span><span class="p">:</span>
             <span class="n">ham</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_rydberg_hamiltonian</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ham</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">ham</span>
 
-    <span class="k">def</span> <span class="nf">_generate_rydberg_hamiltonian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_rydberg_hamiltonian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">nqbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qbits</span><span class="o">.</span><span class="n">nqbits</span>
         <span class="c1"># &gt; add checks for ensuring whether amplitudes/detunings etc</span>
         <span class="c1"># &gt; are within allowed limits compatible with pulser virtual device</span>
@@ -496,7 +496,7 @@ document.write(`
 
 <div class="viewcode-block" id="Myqlm.calculate">
 <a class="viewcode-back" href="../../../api.html#qse.calc.Myqlm.calculate">[docs]</a>
-    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run the calculation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -537,7 +537,7 @@ document.write(`
 
 
 
-<span class="k">def</span> <span class="nf">_waveform</span><span class="p">(</span><span class="n">pulse</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_waveform</span><span class="p">(</span><span class="n">pulse</span><span class="p">):</span>
     <span class="n">vi</span> <span class="o">=</span> <span class="n">pulse</span><span class="o">.</span><span class="n">values</span>
     <span class="n">tmax</span> <span class="o">=</span> <span class="n">pulse</span><span class="o">.</span><span class="n">duration</span> <span class="o">/</span> <span class="mi">1000</span>  <span class="c1"># convert to microseconds.</span>
     <span class="n">ti</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tmax</span><span class="p">,</span> <span class="n">vi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -558,7 +558,7 @@ document.write(`
     <span class="k">return</span> <span class="n">arith_expr</span>
 
 
-<span class="k">def</span> <span class="nf">_occ_op</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">qi</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_occ_op</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">qi</span><span class="p">):</span>
     <span class="n">ti</span> <span class="o">=</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Term</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">qi</span><span class="p">])</span>
     <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">qat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Observable</span><span class="p">(</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">pauli_terms</span><span class="o">=</span><span class="p">[</span><span class="n">ti</span><span class="p">]))</span> <span class="o">/</span> <span class="mi">2</span>
 </pre></div>

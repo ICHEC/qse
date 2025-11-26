@@ -27,7 +27,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
@@ -332,22 +332,22 @@ document.write(`
 <span class="sd">This module defines the central object in the QSE package: the Qbits object.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">numbers</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">ase.cell</span> <span class="kn">import</span> <span class="n">Cell</span>
-<span class="kn">from</span> <span class="nn">ase.geometry</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ase.cell</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cell</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ase.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">find_mic</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">qse.qbit</span> <span class="kn">import</span> <span class="n">Qbit</span>
-<span class="kn">from</span> <span class="nn">qse.visualise</span> <span class="kn">import</span> <span class="n">draw</span> <span class="k">as</span> <span class="n">_draw</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qse.qbit</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qbit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qse.visualise</span><span class="w"> </span><span class="kn">import</span> <span class="n">draw</span> <span class="k">as</span> <span class="n">_draw</span>
 
 
 <div class="viewcode-block" id="Qbits">
 <a class="viewcode-back" href="../../api.html#qse.Qbits">[docs]</a>
-<span class="k">class</span> <span class="nc">Qbits</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Qbits</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Qbits object can represent an isolated molecule, or a</span>
 <span class="sd">    periodically repeated structure.  It has a unit cell and</span>
@@ -416,7 +416,7 @@ document.write(`
 <span class="sd">    to the qbits object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">states</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -498,7 +498,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">calculator</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_qbit_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbit_list</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_qbit_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbit_list</span><span class="p">):</span>
         <span class="c1"># Get data from a list or tuple of Qbit objects:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">qbit</span><span class="o">.</span><span class="n">get_raw</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">qbit</span> <span class="ow">in</span> <span class="n">qbit_list</span><span class="p">]</span>
@@ -507,35 +507,36 @@ document.write(`
         <span class="k">return</span> <span class="n">Qbits</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The shape of the qbits&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span>
 
     <span class="nd">@shape</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_shape</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_shape</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the shape to new shape&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nqbits</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">new_shape</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;no. of qubits= </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nqbits</span><span class="si">}</span><span class="s2">, yet shape </span><span class="si">{</span><span class="n">new_shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span> <span class="o">=</span> <span class="n">new_shape</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">calc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculator object.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc</span>
 
     <span class="nd">@calc</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">calc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calc</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calc</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_calc</span> <span class="o">=</span> <span class="n">calc</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">calc</span><span class="p">,</span> <span class="s2">&quot;set_qbits&quot;</span><span class="p">):</span>
             <span class="n">calc</span><span class="o">.</span><span class="n">set_qbits</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Qbits.set_cell">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.set_cell">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">scale_qbits</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set unit cell vectors.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">scale_qbits</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set unit cell vectors.</span>
 
-<span class="sd">        Parameters:</span>
-
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
 <span class="sd">        cell: 3x3 matrix or length 3 or 6 vector</span>
 <span class="sd">            Unit cell.  A 3x3 matrix (the three unit cell vectors) or</span>
 <span class="sd">            just three numbers for an orthorhombic cell. Another option is</span>
@@ -548,8 +549,8 @@ document.write(`
 <span class="sd">            Fix qbit positions or move qbits with the unit cell?</span>
 <span class="sd">            Default behavior is to *not* move the qbits (scale_qbits=False).</span>
 
-<span class="sd">        Examples:</span>
-
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
 <span class="sd">        Two equivalent ways to define an orthorhombic cell:</span>
 
 <span class="sd">        &gt;&gt;&gt; qbits = Qbits(&#39;He&#39;)</span>
@@ -584,7 +585,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.get_cell">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.get_cell">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">complete</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">complete</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the three unit cell vectors as a `class`:ase.cell.Cell` object.</span>
 
 <span class="sd">        The Cell object resembles a 3x3 ndarray, and cell[i, j]</span>
@@ -596,7 +597,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.get_reciprocal_cell">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.get_reciprocal_cell">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_reciprocal_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_reciprocal_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the three reciprocal lattice vectors as a 3x3 ndarray.</span>
 
@@ -615,35 +616,35 @@ document.write(`
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">nqbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nqbits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pbc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pbc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Reference to pbc-flags for in-place manipulations.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pbc</span>
 
     <span class="nd">@pbc</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">pbc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pbc</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pbc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pbc</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pbc</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">pbc</span>
 
 <div class="viewcode-block" id="Qbits.set_pbc">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.set_pbc">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_pbc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pbc</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_pbc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pbc</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set periodic boundary condition flags.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbc</span> <span class="o">=</span> <span class="n">pbc</span></div>
 
 
 <div class="viewcode-block" id="Qbits.get_pbc">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.get_pbc">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_pbc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_pbc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get periodic boundary condition flags.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbc</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Qbits.new_array">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.new_array">[docs]</a>
-    <span class="k">def</span> <span class="nf">new_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">new_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add new array.</span>
 
 <span class="sd">        If *shape* is not *None*, the shape of *a* will be checked.&quot;&quot;&quot;</span>
@@ -679,7 +680,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.get_array">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.get_array">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get an array.</span>
 
 <span class="sd">        Returns a copy unless the optional argument copy is false.</span>
@@ -692,8 +693,9 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.set_array">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.set_array">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update array.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update array.</span>
 
 <span class="sd">        If *shape* is not *None*, the shape of *a* will be checked.</span>
 <span class="sd">        If *a* is *None*, then the array is deleted.&quot;&quot;&quot;</span>
@@ -717,7 +719,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.copy">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.copy">[docs]</a>
-    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a copy.&quot;&quot;&quot;</span>
         <span class="n">qbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="n">pbc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pbc</span><span class="p">)</span>
 
@@ -732,7 +734,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.todict">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.todict">[docs]</a>
-    <span class="k">def</span> <span class="nf">todict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">todict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;For basic JSON (non-database) support.&quot;&quot;&quot;</span>
         <span class="c1"># d = dict(self.arrays)</span>
         <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
@@ -748,7 +750,7 @@ document.write(`
 <div class="viewcode-block" id="Qbits.fromdict">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.fromdict">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">fromdict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fromdict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Rebuild qbits object from dictionary representation (todict).&quot;&quot;&quot;</span>
         <span class="n">dct</span> <span class="o">=</span> <span class="n">dct</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">kw</span> <span class="o">=</span> <span class="p">{}</span>
@@ -767,10 +769,10 @@ document.write(`
         <span class="k">return</span> <span class="n">qbits</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">&quot;positions&quot;</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;We use pymatgen type of style to print Qbits class&quot;&quot;&quot;</span>
         <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">insep</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span>
@@ -805,14 +807,14 @@ document.write(`
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">txt</span>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="n">qbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">qbits</span> <span class="o">+=</span> <span class="n">other</span>
         <span class="k">return</span> <span class="n">qbits</span>
 
 <div class="viewcode-block" id="Qbits.extend">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.extend">[docs]</a>
-    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Extend qbits object by appending qbits from *other*.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Qbit</span><span class="p">):</span>
             <span class="n">other</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_qbit_list</span><span class="p">([</span><span class="n">other</span><span class="p">])</span>
@@ -844,22 +846,22 @@ document.write(`
             <span class="bp">self</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
 
 <div class="viewcode-block" id="Qbits.append">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.append">[docs]</a>
-    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbit</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbit</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Append qbit to end.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">([</span><span class="n">qbit</span><span class="p">]))</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
             <span class="k">yield</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a subset of the qbits.</span>
 
@@ -901,7 +903,7 @@ document.write(`
 
         <span class="k">return</span> <span class="n">qbits</span>
 
-    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete a subset of the qbits.</span>
 
@@ -922,7 +924,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.pop">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.pop">[docs]</a>
-    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove and return qbit at index *i* (default last).&quot;&quot;&quot;</span>
         <span class="n">qbit</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">qbit</span><span class="o">.</span><span class="n">cut_reference_to_qbits</span><span class="p">()</span>
@@ -930,7 +932,7 @@ document.write(`
         <span class="k">return</span> <span class="n">qbit</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__imul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__imul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;In-place repeat of qbits.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
@@ -962,7 +964,14 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.draw">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.draw">[docs]</a>
-    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">colouring</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">show_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">colouring</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">units</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">equal_aspect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Visualize the positions of a set of qubits.</span>
 
@@ -982,6 +991,9 @@ document.write(`
 <span class="sd">            Must have the same length as the number of Qubits.</span>
 <span class="sd">        units : str, optional</span>
 <span class="sd">            The units of distance.</span>
+<span class="sd">        equal_aspect : bool, optional</span>
+<span class="sd">            Whether to have the same scaling for the axes.</span>
+<span class="sd">            Defaults to True.</span>
 
 <span class="sd">        See Also</span>
 <span class="sd">        --------</span>
@@ -993,12 +1005,13 @@ document.write(`
             <span class="n">show_labels</span><span class="o">=</span><span class="n">show_labels</span><span class="p">,</span>
             <span class="n">colouring</span><span class="o">=</span><span class="n">colouring</span><span class="p">,</span>
             <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
+            <span class="n">equal_aspect</span><span class="o">=</span><span class="n">equal_aspect</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Qbits.repeat">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.repeat">[docs]</a>
-    <span class="k">def</span> <span class="nf">repeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rep</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">repeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rep</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create new repeated qbits object.</span>
 
 <span class="sd">        The *rep* argument should be a sequence of three positive</span>
@@ -1010,12 +1023,12 @@ document.write(`
         <span class="k">return</span> <span class="n">qbits</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rep</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rep</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">rep</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Qbits.translate">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.translate">[docs]</a>
-    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">displacement</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">displacement</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Translate qbit positions.</span>
 
@@ -1030,7 +1043,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.get_centroid">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.get_centroid">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_centroid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_centroid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the centroid of the positions.</span>
 
@@ -1054,7 +1067,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.set_centroid">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.set_centroid">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_centroid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">centroid</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_centroid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">centroid</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the centroid of the positions.</span>
 
@@ -1078,7 +1091,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.rotate">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.rotate">[docs]</a>
-    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">rotate_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">rotate_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotate qbits based on a vector and an angle, or two vectors.</span>
 
@@ -1173,7 +1186,7 @@ document.write(`
             <span class="bp">self</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="n">rotcell</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_centering_as_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_centering_as_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">center</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;cop&quot;</span><span class="p">:</span>
                 <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_centroid</span><span class="p">()</span>
@@ -1187,7 +1200,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.euler_rotate">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.euler_rotate">[docs]</a>
-    <span class="k">def</span> <span class="nf">euler_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">psi</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">euler_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">psi</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotate qbits via Euler angles (in degrees).</span>
 
@@ -1236,7 +1249,7 @@ document.write(`
 <span class="sd">            \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">def</span> <span class="nf">rotation_mat</span><span class="p">(</span><span class="n">angle</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">rotation_mat</span><span class="p">(</span><span class="n">angle</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
                 <span class="p">[</span>
                     <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)],</span>
@@ -1269,7 +1282,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">rcoords</span><span class="p">)</span> <span class="o">+</span> <span class="n">center</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_masked_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_masked_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">diff</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
         <span class="c1"># do rotation of subgroup by copying it to temporary qbits object</span>
         <span class="c1"># and then rotating that</span>
         <span class="c1">#</span>
@@ -1291,7 +1304,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.get_angle">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.get_angle">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the angle in degress formed by three qubits.</span>
 
@@ -1328,7 +1341,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.get_angles">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.get_angles">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the angle in degress formed by three qubits for multiple groupings.</span>
 
@@ -1357,7 +1370,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.set_angle">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.set_angle">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_angle</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_angle</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1403,7 +1416,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.rattle">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.rattle">[docs]</a>
-    <span class="k">def</span> <span class="nf">rattle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stdev</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rattle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stdev</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Randomly displace qbits.</span>
 
@@ -1427,7 +1440,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.get_distance">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.get_distance">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the distance between two qbits.</span>
 
@@ -1448,7 +1461,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.get_distances">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.get_distances">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return distances of the ith qubit with a list of qubits.</span>
 
@@ -1469,7 +1482,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.get_all_distances">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.get_all_distances">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_all_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_all_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the distances of all of the qubits with all of the other qubits.</span>
 
@@ -1488,7 +1501,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.set_distance">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.set_distance">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_distance</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_distance</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">a0</span><span class="p">,</span>
         <span class="n">a1</span><span class="p">,</span>
@@ -1500,7 +1513,8 @@ document.write(`
         <span class="n">add</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">factor</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the distance between two qbits.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the distance between two qbits.</span>
 
 <span class="sd">        Set the distance between qbits *a0* and *a1* to *distance*.</span>
 <span class="sd">        By default, the center of the two qbits will be fixed.  Use</span>
@@ -1563,7 +1577,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.wrap">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.wrap">[docs]</a>
-    <span class="k">def</span> <span class="nf">wrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">wrap_kw</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">wrap_kw</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrap positions to unit cell.</span>
 
 <span class="sd">        Parameters:</span>
@@ -1579,7 +1593,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_positions</span><span class="p">(</span><span class="n">wrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">wrap_kw</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check for identity of two qbits objects.</span>
 
 <span class="sd">        Identity means: same positions, states, unit cell and</span>
@@ -1596,7 +1610,7 @@ document.write(`
             <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pbc</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">pbc</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if two qbits objects are not equal.</span>
 
 <span class="sd">        Any differences in positions, states, unit cell or</span>
@@ -1610,7 +1624,7 @@ document.write(`
 
 <div class="viewcode-block" id="Qbits.get_volume">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.get_volume">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get volume of unit cell.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">rank</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -1621,11 +1635,11 @@ document.write(`
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">volume</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_get_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return reference to positions-array for in-place manipulations.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">&quot;positions&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_set_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set positions directly, bypassing constraints.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">&quot;positions&quot;</span><span class="p">][:]</span> <span class="o">=</span> <span class="n">pos</span>
 
@@ -1636,11 +1650,11 @@ document.write(`
     <span class="p">)</span>
 
     <span class="c1"># Rajarshi: Below these three written to add attribute of states</span>
-    <span class="k">def</span> <span class="nf">_get_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return reference to states-array for in-place manipulations.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">&quot;states&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_set_states</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sts</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_states</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sts</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set states directly, bypassing constraints.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">&quot;states&quot;</span><span class="p">][</span>
             <span class="p">:</span>
@@ -1654,11 +1668,11 @@ document.write(`
     <span class="p">)</span>
 
     <span class="c1"># Rajarshi: Write method to get labels</span>
-    <span class="k">def</span> <span class="nf">_get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return array of labels&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_set_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lbs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lbs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the labels directly.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">][:]</span> <span class="o">=</span> <span class="n">lbs</span>
 
@@ -1667,39 +1681,39 @@ document.write(`
     <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">cell</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cell</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;The :class:`ase.cell.Cell` for direct manipulation.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cellobj</span>
 
     <span class="nd">@cell</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">):</span>
         <span class="n">cell</span> <span class="o">=</span> <span class="n">Cell</span><span class="o">.</span><span class="n">ascell</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cellobj</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">cell</span>
 
 <div class="viewcode-block" id="Qbits.write">
 <a class="viewcode-back" href="../../api.html#qse.Qbits.write">[docs]</a>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Write qbits object to a file.</span>
 
 <span class="sd">        see ase.io.write for formats.</span>
 <span class="sd">        kwargs are passed to ase.io.write.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">pickle</span> <span class="kn">import</span> <span class="n">dump</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">pickle</span><span class="w"> </span><span class="kn">import</span> <span class="n">dump</span>
 
         <span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">todict</span><span class="p">(),</span> <span class="n">file</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">iterimages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">iterimages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">yield</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">to_pulser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">pulser</span> <span class="kn">import</span> <span class="n">Register</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_pulser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">pulser</span><span class="w"> </span><span class="kn">import</span> <span class="n">Register</span>
 
         <span class="k">return</span> <span class="n">Register</span><span class="o">.</span><span class="n">from_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">)</span></div>
 
 
 
-<span class="k">def</span> <span class="nf">_norm_vector</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_norm_vector</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
     <span class="n">normv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">normv</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
@@ -1707,15 +1721,15 @@ document.write(`
     <span class="k">return</span> <span class="n">v</span> <span class="o">/</span> <span class="n">normv</span>
 
 
-<span class="k">def</span> <span class="nf">_to_rads</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_to_rads</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
 
 
-<span class="k">def</span> <span class="nf">_to_degrees</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_to_degrees</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">180</span> <span class="o">*</span> <span class="n">a</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
 
 
-<span class="k">def</span> <span class="nf">_string2vector</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_string2vector</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Used in rotate method to rotate qbit location&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
@@ -1726,7 +1740,7 @@ document.write(`
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dflt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dflt</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper function for setting default values.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
