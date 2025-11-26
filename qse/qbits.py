@@ -1095,7 +1095,8 @@ class Qbits:
         add=False,
         factor=False,
     ):
-        """Set the distance between two qbits.
+        """
+        Set the distance between two qbits.
 
         Set the distance between qbits *a0* and *a1* to *distance*.
         By default, the center of the two qbits will be fixed.  Use
