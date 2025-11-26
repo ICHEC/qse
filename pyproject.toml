@@ -44,6 +44,11 @@ docs = [
     "sphinx == 7.4.7",
     "sphinx-autoapi",
     "jupyter_book",
+    "myst_nb",
+    "sphinx-book-theme",
+    "sphinx_jupyterbook_latex",
+    "sphinx-togglebutton",
+    "sphinx-copybutton",
     "tomli",
     "pulser == 1.4.0",  # required for creating the docs
 ]
