@@ -35,7 +35,7 @@ extensions = [
     "sphinx_togglebutton",
     "sphinx_copybutton",
 ]
-nbsphinx_execute = 'never'
+nbsphinx_execute = "never"
 templates_path = ["_templates"]
 exclude_patterns = []
 
