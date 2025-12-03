@@ -25,7 +25,7 @@ release = toml_dict["project"]["version"]
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "myst_nb",
+    "nbsphinx",
     "sphinx.ext.autodoc",
     "sphinx.ext.coverage",
     "sphinx.ext.napoleon",
@@ -35,6 +35,7 @@ extensions = [
     "sphinx_togglebutton",
     "sphinx_copybutton",
 ]
+nbsphinx_execute = 'never'
 templates_path = ["_templates"]
 exclude_patterns = []
 
