@@ -44,7 +44,7 @@ docs = [
     "sphinx == 7.4.7",
     "sphinx-autoapi",
     "jupyter_book",
-    "myst_nb",
+    "nbsphinx",
     "sphinx-book-theme",
     "sphinx_jupyterbook_latex",
     "sphinx-togglebutton",
