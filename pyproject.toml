@@ -36,10 +36,10 @@ dev = [
     "black[jupyter]",
     "isort",
     "Flake8-pyproject",
-    "pulser == 1.4.0",  # required for tests
+    "pulser",  # required for tests
 ]
-pulser = ["pulser == 1.4.0"]
-myqlm = ["numpy == 1.26.4", "myqlm == 1.11.3"]
+pulser = ["pulser"]
+myqlm = ["myqlm"]
 docs = [
     "sphinx == 7.4.7",
     "sphinx-autoapi",
@@ -50,7 +50,7 @@ docs = [
     "sphinx-togglebutton",
     "sphinx-copybutton",
     "tomli",
-    "pulser == 1.4.0",  # required for creating the docs
+    "pulser",  # required for creating the docs
 ]
 
 [tool.black]
