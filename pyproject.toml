@@ -39,7 +39,7 @@ dev = [
     "pulser",  # required for tests
 ]
 pulser = ["pulser"]
-myqlm = ["numpy == 1.26.4", "myqlm == 1.11.3"]
+myqlm = ["myqlm"]
 docs = [
     "sphinx == 7.4.7",
     "sphinx-autoapi",
