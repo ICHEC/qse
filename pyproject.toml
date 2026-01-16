@@ -50,7 +50,7 @@ docs = [
     "sphinx-togglebutton",
     "sphinx-copybutton",
     "tomli",
-    "pulser == 1.4.0",  # required for creating the docs
+    "pulser",  # required for creating the docs
 ]
 
 [tool.black]
