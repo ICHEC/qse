@@ -7,9 +7,6 @@ from math import cos, sin
 
 import numpy as np
 from ase.cell import Cell
-from ase.geometry import (
-    find_mic,
-)
 
 from qse.qbit import Qbit
 from qse.visualise import draw as _draw
@@ -1085,76 +1082,67 @@ class Qbits:
 
     def set_distance(
         self,
-        a0,
-        a1,
+        i,
+        j,
         distance,
         fix=0.5,
-        mic=False,
         mask=None,
         indices=None,
         add=False,
         factor=False,
     ):
         """
-        Set the distance between two qbits.
+        Set the distance between qubits i and j.
 
-        Set the distance between qbits *a0* and *a1* to *distance*.
-        By default, the center of the two qbits will be fixed.  Use
-        *fix=0* to fix the first qbit, *fix=1* to fix the second
-        qbit and *fix=0.5* (default) to fix the center of the bond.
+        Parameters
+        ----------
+        i : int
+            The index of the ith qubit.
+        j : int
+            The index of the jth qubit.
+        distance : float
+            The new distance to be set.
+        fix : float
+            By default, the center of the two qbits will be fixed.  Use
+            fix=0 to fix the first qbit, fix=1 to fix the second
+            qbit and fix=0.5 (default) to fix the center of the bond.
+        mask: np.ndarray
+            If mask or indices are set (mask overwrites indices),
+            only the qbits defined there are moved. It is assumed that the
+            qbits in mask/indices move together with the jth qubit.
+            If fix=1, only the ith qubit will therefore be moved.
+        indices: np.ndarray
+            If mask or indices are set (mask overwrites indices),
+            only the qbits defined there are moved. It is assumed that the
+            qbits in mask/indices move together with the jth qubit.
+            If fix=1, only the ith qubit will therefore be moved.
+        add:
+            When add is true, the distance is changed by the value given.
+        factor:
+            When factor is true, the value given is a factor scaling the distance.
+        """
 
-        If *mask* or *indices* are set (*mask* overwrites *indices*),
-        only the qbits defined there are moved
-        (see :meth:`ase.Qbits.set_dihedral`).
-
-        When *add* is true, the distance is changed by the value given.
-        In combination
-        with *factor* True, the value given is a factor scaling the distance.
-
-        It is assumed that the qbits in *mask*/*indices* move together
-        with *a1*. If *fix=1*, only *a0* will therefore be moved."""
-
-        if a0 % len(self) == a1 % len(self):
-            raise ValueError("a0 and a1 must not be the same")
+        if i % len(self) == j % len(self):
+            raise ValueError("i and j must not be the same")
 
         if add:
-            oldDist = self.get_distance(a0, a1, mic=mic)
-            if factor:
-                newDist = oldDist * distance
-            else:
-                newDist = oldDist + distance
-            self.set_distance(
-                a0,
-                a1,
-                newDist,
-                fix=fix,
-                mic=mic,
-                mask=mask,
-                indices=indices,
-                add=False,
-                factor=False,
-            )
-            return
-
-        R = self.arrays["positions"]
-        D = np.array([R[a1] - R[a0]])
-
-        if mic:
-            D, D_len = find_mic(D, self.cell, self.pbc)
-        else:
-            D_len = np.array([np.sqrt((D**2).sum())])
-        x = 1.0 - distance / D_len[0]
+            distance += self.get_distance(i, j)
+        elif factor:
+            distance *= self.get_distance(i, j)
 
         if mask is None and indices is None:
-            indices = [a0, a1]
+            indices = [i, j]
         elif mask:
-            indices = [i for i in range(len(self)) if mask[i]]
+            indices = [ind for ind in range(len(self)) if mask[ind]]
 
-        for i in indices:
-            if i == a0:
-                R[a0] += (x * fix) * D[0]
+        distance_vec = self.positions[j] - self.positions[i]
+        x = 1.0 - distance / np.linalg.norm(distance_vec)
+
+        for ind in indices:
+            if ind == i:
+                self.arrays["positions"][ind] += (x * fix) * distance_vec
             else:
-                R[i] -= (x * (1.0 - fix)) * D[0]
+                self.arrays["positions"][ind] -= (x * (1.0 - fix)) * distance_vec
 
     def wrap(self, **wrap_kw):
         """Wrap positions to unit cell.
