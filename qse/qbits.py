@@ -1106,12 +1106,12 @@ class Qbits:
             By default, the center of the two qbits will be fixed.  Use
             fix=0 to fix the first qbit, fix=1 to fix the second
             qbit and fix=0.5 (default) to fix the center of the bond.
-        mask: np.ndarray
+        mask: np.ndarray | list
             If mask or indices are set (mask overwrites indices),
             only the qbits defined there are moved. It is assumed that the
             qbits in mask/indices move together with the jth qubit.
             If fix=1, only the ith qubit will therefore be moved.
-        indices: np.ndarray
+        indices: np.ndarray | list
             If mask or indices are set (mask overwrites indices),
             only the qbits defined there are moved. It is assumed that the
             qbits in mask/indices move together with the jth qubit.
