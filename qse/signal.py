@@ -10,7 +10,7 @@ class Signal:
     Parameters
     ----------
     values : list | np.ndarray
-        The values of the signal.
+        The values of the signal.test edit
     duration : int
         Duration of the signal.
         Defaults to the length of the passed values.
