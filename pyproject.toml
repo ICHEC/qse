@@ -55,7 +55,6 @@ docs = [
 
 [tool.black]
 line-length = 88
-exclude = 'examples'
 
 [tool.mypy]
 ignore_missing_imports = true
