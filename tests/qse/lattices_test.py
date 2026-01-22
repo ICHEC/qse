@@ -15,26 +15,35 @@ _lattice_spacings = [0.5, 3.1]
 _repeats = [2, 3]
 
 
-def _lattice_checker(qbits, expected_qbits, lattice_spacing, expected_cellpar):
+def _lattice_checker(
+    qbits, expected_qbits, lattice_spacing, expected_cell, expected_positions
+):
     assert isinstance(qbits, qse.Qbits)
     assert qbits.nqbits == expected_qbits
+    assert qbits.positions.shape == (expected_qbits, 3)
+
+    # Check the labels
+    assert all(qbits.labels[i] == str(i) for i in range(qbits.nqbits))
 
     # Check the distance between the first qubit and it's nearest neighbour
     # is the lattice spacing.
     assert np.isclose(qbits.get_all_distances()[0][1:].min(), lattice_spacing)
 
-    # Check the cellpar corresponds to what we expect.
-    assert np.allclose(qbits.cell.cellpar(), expected_cellpar)
+    # Check the cell
+    assert np.allclose(qbits.cell, expected_cell)
 
-    # Check the labels
-    assert all(qbits.labels[i] == str(i) for i in range(qbits.nqbits))
+    # Check the positions
+    assert np.allclose(qbits.positions, expected_positions)
 
 
 @pytest.mark.parametrize("lattice_spacing", _lattice_spacings)
 @pytest.mark.parametrize("N", _repeats)
 def test_linear(lattice_spacing, N):
     qbits = chain(lattice_spacing, N)
-    _lattice_checker(qbits, N, lattice_spacing, [lattice_spacing * N, 0, 0, 90, 90, 90])
+    expected_cell = np.zeros((3, 3))
+    expected_cell[0, 0] = lattice_spacing * N
+    expected_positions = lattice_spacing * np.array([[i, 0, 0] for i in range(N)])
+    _lattice_checker(qbits, N, lattice_spacing, expected_cell, expected_positions)
 
 
 def test_linear_fail():
@@ -47,20 +56,50 @@ def test_linear_fail():
 @pytest.mark.parametrize("lattice_spacing", _lattice_spacings)
 @pytest.mark.parametrize("N1", _repeats)
 @pytest.mark.parametrize("N2", _repeats)
-@pytest.mark.parametrize(
-    "lattice_func, angles",
-    [
-        (square, [90, 90, 90]),
-        (triangular, [90, 90, 60]),
-    ],
-)
-def test_square_and_triangular(lattice_func, lattice_spacing, N1, N2, angles):
-    qbits = lattice_func(lattice_spacing, N1, N2)
+def test_square(lattice_spacing, N1, N2):
+    qbits = square(lattice_spacing, N1, N2)
+    expected_cell = np.zeros((3, 3))
+    expected_cell[0, 0] = lattice_spacing * N1
+    expected_cell[1, 1] = lattice_spacing * N2
+    expected_positions = lattice_spacing * np.array(
+        [[i, j, 0.0] for i in range(N1) for j in range(N2)]
+    )
     _lattice_checker(
         qbits,
         N1 * N2,
         lattice_spacing,
-        [lattice_spacing * N1, lattice_spacing * N2, 0] + angles,
+        expected_cell,
+        expected_positions,
+    )
+
+
+@pytest.mark.parametrize("lattice_spacing", _lattice_spacings)
+@pytest.mark.parametrize("N1", _repeats)
+@pytest.mark.parametrize("N2", _repeats)
+def test_triangular(lattice_spacing, N1, N2):
+    qbits = triangular(lattice_spacing, N1, N2)
+
+    expected_cell = lattice_spacing * np.array(
+        [
+            [N1, 0.0, 0.0],
+            [N2 * np.cos(np.pi / 3), N2 * np.sin(np.pi / 3), 0.0],
+            [0.0, 0.0, 0.0],
+        ]
+    )
+
+    expected_positions = lattice_spacing * np.array(
+        [
+            [(i + j * 0.5), j * np.sqrt(3) * 0.5, 0.0]
+            for i in range(N1)
+            for j in range(N2)
+        ]
+    )
+    _lattice_checker(
+        qbits,
+        N1 * N2,
+        lattice_spacing,
+        expected_cell,
+        expected_positions,
     )
 
 
@@ -69,12 +108,38 @@ def test_square_and_triangular(lattice_func, lattice_spacing, N1, N2, angles):
 @pytest.mark.parametrize("N2", _repeats)
 def test_hexagonal(lattice_spacing, N1, N2):
     qbits = hexagonal(lattice_spacing, N1, N2)
+
+    expected_cell = (
+        lattice_spacing
+        * np.sqrt(3)
+        * 0.5
+        * np.array(
+            [
+                [N1 * np.sqrt(3), N1, 0.0],
+                [N2 * np.sqrt(3), -N2, 0.0],
+                [0.0, 0.0, 0.0],
+            ]
+        )
+    )
+
+    arr1 = lattice_spacing * np.array(
+        [
+            [(i + j) * 1.5, (i - j) * np.sqrt(3) * 0.5, 0.0]
+            for i in range(N1)
+            for j in range(N2)
+        ]
+    )
+    arr2 = arr1.copy()
+    arr2[:, 0] += lattice_spacing
+    expected_positions = np.zeros((len(arr1) + len(arr2), 3))
+    expected_positions[0::2] = arr1
+    expected_positions[1::2] = arr2
     _lattice_checker(
         qbits,
         N1 * N2 * 2,
         lattice_spacing,
-        [lattice_spacing * N1 * np.sqrt(3), lattice_spacing * N2 * np.sqrt(3), 0]
-        + [90, 90, 60],
+        expected_cell,
+        expected_positions,
     )
 
 
@@ -83,11 +148,34 @@ def test_hexagonal(lattice_spacing, N1, N2):
 @pytest.mark.parametrize("N2", _repeats)
 def test_kagome(lattice_spacing, N1, N2):
     qbits = kagome(lattice_spacing, N1, N2)
+
+    expected_cell = lattice_spacing * np.array(
+        [
+            [N1 * 2, 0.0, 0.0],
+            [N2, N2 * np.sqrt(3), 0.0],
+            [0.0, 0.0, 0.0],
+        ]
+    )
+
+    arr1 = lattice_spacing * np.array(
+        [[(2 * i + j), j * np.sqrt(3), 0.0] for i in range(N1) for j in range(N2)]
+    )
+    arr2 = arr1.copy()
+    arr2[:, 0] += lattice_spacing
+    arr3 = arr1.copy()
+    arr3[:, 0] += lattice_spacing * 0.5
+    arr3[:, 1] += np.sqrt(3) * lattice_spacing / 2
+    expected_positions = np.zeros((len(arr1) + len(arr2) + len(arr3), 3))
+    expected_positions[0::3] = arr1
+    expected_positions[1::3] = arr2
+    expected_positions[2::3] = arr3
+
     _lattice_checker(
         qbits,
         N1 * N2 * 3,
         lattice_spacing,
-        [lattice_spacing * N1 * 2, lattice_spacing * N2 * 2, 0] + [90, 90, 60],
+        expected_cell,
+        expected_positions,
     )
 
 
