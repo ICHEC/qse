@@ -13,7 +13,7 @@ from ase.geometry import (
 
 from qse.qbit import Qbit
 from qse.visualise import draw as _draw
-from qse.gate_based import InteractionTerm
+from qse.gate_based import Operator
 
 class Qbits:
     """
@@ -1318,7 +1318,7 @@ class Qbits:
             for j in range(i+1, self.nqbits):
                 coef = distance_func(self.get_distance(i, j))
                 if np.abs(coef) > tol:
-                    ops.append(InteractionTerm(interaction, (i,j), coef, self.nqbits))
+                    ops.append(Operator(interaction, (i,j), coef, self.nqbits))
 
         return ops
 
