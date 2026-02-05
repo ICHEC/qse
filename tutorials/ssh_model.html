@@ -51,7 +51,6 @@
     <script src="../_static/togglebutton.js?v=1ae7504c"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/ssh_model';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -392,16 +391,19 @@ document.write(`
 <p>Here we simulate the SSH model using the Pulser backend.
 We follow the work of De Léséleuc et al. in <a class="reference external" href="https://www.science.org/doi/10.1126/science.aav9105">“Observation of a symmetry-protected topological phase of interacting bosons with Rydberg atoms”</a> (available also on <a class="reference external" href="https://arxiv.org/abs/1810.13286">arxiv</a>).</p>
 <p>Using a Microwave channel, the interaction Hamiltonian is given by</p>
-<div class="math notranslate nohighlight">
-\[H = \sum_{i=1}^N \sum_{j&lt;i} C_{ij} (\sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+)\]</div>
-<p>where
-<span class="math notranslate nohighlight">\(C_{ij} = \frac{C_3(1-3\cos^2\theta_{ij})}{R_{ij}^3}\)</span>.
-Here <span class="math notranslate nohighlight">\(R_{ij}\)</span> is the distance between qubits <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>, <span class="math notranslate nohighlight">\(R_{ij}=|\textbf{x}_i-\textbf{x}_j|\)</span>, and <span class="math notranslate nohighlight">\(\theta_{ij}\)</span> is the angle between <span class="math notranslate nohighlight">\(\textbf{x}_i-\textbf{x}_j\)</span> and the magnetic field.
+<p>$$
+H = \sum_{i=1}^N \sum_{j&lt;i} C_{ij} (\sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+)
+$$
+where
+$$
+C_{ij} = \frac{C_3(1-3\cos^2\theta_{ij})}{R_{ij}^3}
+$$</p>
+<p>Here $R_{ij}$ is the distance between qubits $i$ and $j$, $R_{ij}=|\textbf{x}_i-\textbf{x}<em>j|$, and $\theta</em>{ij}$ is the angle between $\textbf{x}_i-\textbf{x}_j$ and the magnetic field.
 See the <a class="reference external" href="https://pulser.readthedocs.io/en/stable/tutorials/xy_spin_chain.html">Pulser docs</a> for more information.</p>
 <p>By appropriate choice of the qubit geometry we can approximate the <a class="reference external" href="https://en.wikipedia.org/wiki/Su%E2%80%93Schrieffer%E2%80%93Heeger_model">SSH model</a> for hard bosons.
 For example, when
 $$ \theta_{ij} = \cos^{-1}\sqrt{1/3}$$
-there will be no interaction between qubits <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>. We use this to model the SSH model below.</p>
+there will be no interaction between qubits $i$ and $j$. We use this to model the SSH model below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
@@ -555,11 +557,11 @@ Finally we can visualize the Hamiltonian.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>90.0%. Run time:   0.00s. Est. time left: 00:00:00:00
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100.0%. Run time:   0.00s. Est. time left: 00:00:00:00
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100.0%. Run time:   0.01s. Est. time left: 00:00:00:00
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total run time:   0.00s
-time in compute and simulation = 0.06646347045898438 s.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total run time:   0.01s
+time in compute and simulation = 0.06782221794128418 s.
 </pre></div>
 </div>
 </div>
