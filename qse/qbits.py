@@ -7,13 +7,12 @@ from math import cos, sin
 
 import numpy as np
 from ase.cell import Cell
-from ase.geometry import (
-    find_mic,
-)
+from ase.geometry import find_mic
 
+from qse.operator import Operator
 from qse.qbit import Qbit
 from qse.visualise import draw as _draw
-from qse.gate_based import Operator
+
 
 class Qbits:
     """
@@ -1284,11 +1283,11 @@ class Qbits:
         return Register.from_coordinates(self.positions[:, :2], prefix="q")
 
     def compute_interaction_hamiltonian(
-            self,
-            distance_func,
-            interaction,
-            tol = 1e-8,
-            ):
+        self,
+        distance_func,
+        interaction,
+        tol=1e-8,
+    ):
         """
         Compute the interaction Hamiltonian the system of qubits.
 
@@ -1314,11 +1313,11 @@ class Qbits:
         """
         ops = []
 
-        for i in range(self.nqbits-1):
-            for j in range(i+1, self.nqbits):
+        for i in range(self.nqbits - 1):
+            for j in range(i + 1, self.nqbits):
                 coef = distance_func(self.get_distance(i, j))
                 if np.abs(coef) > tol:
-                    ops.append(Operator(interaction, (i,j), coef, self.nqbits))
+                    ops.append(Operator(interaction, (i, j), coef, self.nqbits))
 
         return ops
 
