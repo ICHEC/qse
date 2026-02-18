@@ -10,12 +10,4 @@ __all__ = [
     "triangular",
 ]
 
-from .lattices import (
-    chain,
-    hexagonal,
-    kagome,
-    ring,
-    square,
-    torus,
-    triangular,
-)
+from .lattices import chain, hexagonal, kagome, ring, square, torus, triangular

@@ -13,6 +13,8 @@ __all__ = [
     "magnetic",
     "Qbit",
     "Qbits",
+    "Operator",
+    "operators_to_qutip",
     "Signal",
     "utils",
     "visualise",
@@ -21,6 +23,7 @@ import importlib.metadata
 
 __version__ = importlib.metadata.version("qse")
 
+from qse.operator import Operator, operators_to_qutip
 from qse.qbit import Qbit
 from qse.qbits import Qbits
 from qse.signal import Signal

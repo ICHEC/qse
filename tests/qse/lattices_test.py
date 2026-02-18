@@ -2,14 +2,7 @@ import numpy as np
 import pytest
 
 import qse
-from qse.lattices import (
-    chain,
-    hexagonal,
-    kagome,
-    ring,
-    square,
-    triangular,
-)
+from qse.lattices import chain, hexagonal, kagome, ring, square, triangular
 
 _lattice_spacings = [0.5, 3.1]
 _repeats = [2, 3]
