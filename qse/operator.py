@@ -9,8 +9,8 @@ class Operator:
     ----------
     operator: str | list[str]
         The type of qubit operator.
-        Currently only "X", "Y", "Z" are supported. "N" the number operator is supported for QuTiP.
-        If a list, must be equal in length to the size of
+        Currently only "X", "Y", "Z" are supported. "N" the number operator is
+        supported for QuTiP. If a list, must be equal in length to the size of
         the qubits tuple.
     qubits: int | list[int]
         A single integer or list of integers representing the qubits
@@ -44,8 +44,8 @@ class Operator:
         Returns
         -------
         str
-            A string of length `nqubits`, with "I" at all positions except for the qubits in `qubits`,
-            which are replaced by the operator.
+            A string of length `nqubits`, with "I" at all positions except for the
+            qubits in `qubits`, which are replaced by the operator.
         """
         op = ["I"] * self.nqubits
         for qi, op_str in zip(self.qubits, self.operator):
@@ -54,21 +54,17 @@ class Operator:
 
     def to_qutip(self):
         """
-        Generates a qutip representation of the operator.
-
-        The string is constructed as a tensor product of identity (I) and operator,
-        where the operator is placed at the positions specified by `qubits`.
+        Generates a QuTiP representation of the operator.
 
         Returns
         -------
-        str
-            A string of length `nqubits`, with "I" at all positions except for the qubits in `qubits`,
-            which are replaced by the operator.
+        qutip.Qobj
+            The QuTiP operator.
         """
         op = [qp.qeye(2)] * self.nqubits
         for qi, op_str in zip(self.qubits, self.operator):
             op[qi] = _qutip_converter(op_str)
-        return qp.tensor(op)
+        return self.coef * qp.tensor(op)
 
     def __repr__(self):
         return f"{self.coef:.2f} " + " ".join(

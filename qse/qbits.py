@@ -1298,18 +1298,19 @@ class Qbits:
         Parameters
         ----------
         distance_func : callable
-            A function that takes a distance (float) and returns the interaction coefficient (float).
+            A function that takes a distance (float) and returns the interaction
+            coefficient (float).
         interaction : str
             The type of interaction (e.g., "X", "Y", "Z") for the Hamiltonian terms.
         tol : float, optional
-            Tolerance threshold for including interaction terms. Terms with absolute coefficients
-            less than `tol` are discarded. Default is 1e-8.
+            Tolerance threshold for including interaction terms. Terms with absolute
+            coefficients less than `tol` are discarded. Default is 1e-8.
 
         Returns
         -------
         list of InteractionTerm
-            A list of `InteractionTerm` objects, each representing a non-negligible interaction
-            between a pair of qubits.
+            A list of `InteractionTerm` objects, each representing a non-negligible
+            interaction between a pair of qubits.
         """
         ops = []
 
