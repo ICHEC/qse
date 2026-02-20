@@ -1140,9 +1140,9 @@ class Qbits:
 
         for ind in indices:
             if ind == i:
-                self.arrays["positions"][ind] += (x * fix) * distance_vec
+                self.positions[ind] += (x * fix) * distance_vec
             else:
-                self.arrays["positions"][ind] -= (x * (1.0 - fix)) * distance_vec
+                self.positions[ind] -= (x * (1.0 - fix)) * distance_vec
 
     def wrap(self, **wrap_kw):
         """Wrap positions to unit cell.
