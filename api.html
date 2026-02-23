@@ -1079,20 +1079,30 @@ the centroid is given by</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbits.set_distance">
-<span class="sig-name descname"><span class="pre">set_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_distance" title="Link to this definition">#</a></dt>
-<dd><p>Set the distance between two qbits.</p>
-<p>Set the distance between qbits <em>a0</em> and <em>a1</em> to <em>distance</em>.
-By default, the center of the two qbits will be fixed.  Use
-<em>fix=0</em> to fix the first qbit, <em>fix=1</em> to fix the second
-qbit and <em>fix=0.5</em> (default) to fix the center of the bond.</p>
-<p>If <em>mask</em> or <em>indices</em> are set (<em>mask</em> overwrites <em>indices</em>),
-only the qbits defined there are moved
-(see <code class="xref py py-meth docutils literal notranslate"><span class="pre">ase.Qbits.set_dihedral()</span></code>).</p>
-<p>When <em>add</em> is true, the distance is changed by the value given.
-In combination
-with <em>factor</em> True, the value given is a factor scaling the distance.</p>
-<p>It is assumed that the qbits in <em>mask</em>/<em>indices</em> move together
-with <em>a1</em>. If <em>fix=1</em>, only <em>a0</em> will therefore be moved.</p>
+<span class="sig-name descname"><span class="pre">set_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.set_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.set_distance" title="Link to this definition">#</a></dt>
+<dd><p>Set the distance between qubits i and j.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>int</em>) – The index of the ith qubit.</p></li>
+<li><p><strong>j</strong> (<em>int</em>) – The index of the jth qubit.</p></li>
+<li><p><strong>distance</strong> (<em>float</em>) – The new distance to be set.</p></li>
+<li><p><strong>fix</strong> (<em>float</em>) – By default, the center of the two qbits will be fixed.  Use
+fix=0 to fix the first qbit, fix=1 to fix the second
+qbit and fix=0.5 (default) to fix the center of the bond.</p></li>
+<li><p><strong>mask</strong> (<em>np.ndarray | list</em>) – If mask or indices are set (mask overwrites indices),
+only the qbits defined there are moved. It is assumed that the
+qbits in mask/indices move together with the jth qubit.
+If fix=1, only the ith qubit will therefore be moved.</p></li>
+<li><p><strong>indices</strong> (<em>np.ndarray | list</em>) – If mask or indices are set (mask overwrites indices),
+only the qbits defined there are moved. It is assumed that the
+qbits in mask/indices move together with the jth qubit.
+If fix=1, only the ith qubit will therefore be moved.</p></li>
+<li><p><strong>add</strong> – When add is true, the distance is changed by the value given.</p></li>
+<li><p><strong>factor</strong> – When factor is true, the value given is a factor scaling the distance.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
