@@ -28,7 +28,8 @@ class Cell:
     @lattice_vectors.setter
     def lattice_vectors(self, value):
         value = np.array(value)
-        assert value.shape == (3, 3)
+        if value.shape != (3, 3):
+            raise Exception("The lattice vectors must be a 3x3 matrix.")
         self._lattice_vectors = value
 
     def rank(self):
