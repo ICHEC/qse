@@ -9,9 +9,10 @@ class Operator:
     ----------
     operator: str | list[str]
         The type of qubit operator.
-        Currently only "X", "Y", "Z" are supported. "N" the number operator is
-        supported for QuTiP. If a list, must be equal in length to the size of
-        the qubits tuple.
+        Currently only a string or list containing "X", "Y", "Z", "N" are supported.
+        "N" the number operator is defined as 0.5*(1-Z).
+        If a list is passed, it must be equal in length to the size of
+        the qubits list.
     qubits: int | list[int]
         A single integer or list of integers representing the qubits
         the operator acts on.
@@ -63,7 +64,7 @@ class Operator:
         -------
         str
             A string of length `nqubits`, with "I" at all positions except for the
-            qubits in `qubits`, which are replaced by the operator.
+            qubits in `qubits`, which are replaced by the associated operator.
         """
         op = ["I"] * self.nqubits
         for qi, op_str in zip(self.qubits, self.operator):
