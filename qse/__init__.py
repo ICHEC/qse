@@ -11,6 +11,7 @@ __all__ = [
     "draw",
     "lattices",
     "magnetic",
+    "Operator",
     "Qbit",
     "Qbits",
     "Signal",
@@ -21,6 +22,7 @@ import importlib.metadata
 
 __version__ = importlib.metadata.version("qse")
 
+from qse.operator import Operator
 from qse.qbit import Qbit
 from qse.qbits import Qbits
 from qse.signal import Signal
