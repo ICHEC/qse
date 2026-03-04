@@ -30,7 +30,7 @@ def _lattice_checker(
     assert np.isclose(qbits.get_all_distances()[0][1:].min(), lattice_spacing)
 
     # Check the cell
-    assert np.allclose(qbits.cell, expected_cell)
+    assert np.allclose(qbits.cell.lattice_vectors, expected_cell)
 
     # Check the positions
     assert np.allclose(qbits.positions, expected_positions)
