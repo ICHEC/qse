@@ -52,7 +52,7 @@ class Cell:
         float
             The cell volume.
         """
-        return np.linalg.det(self.lattice_vectors)
+        return np.abs(np.linalg.det(self.lattice_vectors))
 
     def reciprocal(self):
         """
@@ -67,6 +67,7 @@ class Cell:
         return 2 * np.pi * np.linalg.inv(self.lattice_vectors.T)
 
     def to_str(self):
+        """Convert to string representation."""
         return "\n".join(
             [
                 " ".join(["{:10.5f}".format(val) for val in row])

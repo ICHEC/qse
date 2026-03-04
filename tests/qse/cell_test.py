@@ -71,6 +71,28 @@ def test_reciprocal_cell(cell, expected):
 
 @pytest.mark.parametrize("lattice_size", [1.0, 2.2, 3.11, 10.333])
 def test_volume(lattice_size):
-    """Test the volume method."""
+    """Test the volume method on square lattice."""
     cell = qse.Cell(np.eye(3) * lattice_size)
     assert np.isclose(cell.volume(), lattice_size**3)
+
+
+@pytest.mark.parametrize(
+    "x, y1, y2, z",
+    [(2.2, 0.4, 2.1, 1.0), (2.3, -0.4, 2.1, 1.0), (-2.2, -0.4, 2.1, 1.0)],
+)
+def test_volume_arb(x, y1, y2, z):
+    """
+    Test the volume method on arbitrary 2d lattice.
+    The volume of a cell described by vectors (x, 0, 0),
+    (y1, y2, 0) and (0, 0, z) can be easily worked out
+    to be x*y2*z.
+    """
+    cell_np = np.array(
+        [
+            [x, 0.0, 0.0],
+            [y1, y2, 0.0],
+            [0, 0.0, z],
+        ]
+    )
+    cell = qse.Cell(cell_np)
+    assert np.isclose(cell.volume(), abs(x * y2 * z))
