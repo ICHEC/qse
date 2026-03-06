@@ -9,30 +9,49 @@ class Operator:
     ----------
     operator: str | list[str]
         The type of qubit operator.
-        Currently only "X", "Y", "Z" are supported. "N" the number operator is
-        supported for QuTiP. If a list, must be equal in length to the size of
-        the qubits tuple.
+        Currently only a string or list containing "X", "Y", "Z", "N" are supported.
+        "N" the number operator is defined as 0.5*(1-Z).
+        If a list is passed, it must be equal in length to the size of
+        the qubits list.
     qubits: int | list[int]
         A single integer or list of integers representing the qubits
         the operator acts on.
-    coef: float
-        The coefficient associated with the term.
     nqubits: int
         The total number of qubits in the system.
+    coef: float
+        The coefficient associated with the term.
+        Defaults to 1.
+
+    Examples
+    --------
+    Create operator "XII"
+
+    >>> qse.Operator("X", 0, 3)
+    ... 1.00 X0
+
+    Create operator "IIYIZ"
+
+    >>> qse.Operator(["Y", "Z"], [2, 4], 5)
+    ... 1.00 Y2 Z4
     """
 
-    def __init__(self, operator, qubits, coef, nqubits):
+    def __init__(self, operator, qubits, nqubits, coef=1.0):
         if isinstance(qubits, int):
             qubits = [qubits]
         if isinstance(operator, str):
             operator = [operator] * len(qubits)
 
-        assert len(qubits) == len(operator)
+        _check_operator(operator)
+
+        if len(qubits) != len(operator):
+            raise Exception(
+                "The number of passed qubits must equal the number of passed operators."
+            )
 
         self.operator = operator
         self.qubits = qubits
-        self.coef = coef
         self.nqubits = nqubits
+        self.coef = coef
 
     def to_str(self):
         """
@@ -45,7 +64,7 @@ class Operator:
         -------
         str
             A string of length `nqubits`, with "I" at all positions except for the
-            qubits in `qubits`, which are replaced by the operator.
+            qubits in `qubits`, which are replaced by the associated operator.
         """
         op = ["I"] * self.nqubits
         for qi, op_str in zip(self.qubits, self.operator):
@@ -70,6 +89,12 @@ class Operator:
         return f"{self.coef:.2f} " + " ".join(
             [f"{op}{q}" for op, q in zip(self.operator, self.qubits)]
         )
+
+
+def _check_operator(op_list):
+    for op in op_list:
+        if op not in ["X", "Y", "Z", "N"]:
+            raise Exception("An operator must be one of 'X', 'Y', 'Z' or 'N'.")
 
 
 def _qutip_converter(op):

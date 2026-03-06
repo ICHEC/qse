@@ -7,10 +7,10 @@ This package is adapted from Atomic Simulation Environment (ASE).
 
 __all__ = [
     "calc",
-    "cell",
     "draw",
     "lattices",
     "magnetic",
+    "Operator",
     "Qbit",
     "Qbits",
     "Operator",
