@@ -102,5 +102,5 @@ def operators_to_qutip(operator_list):
     """
     operator = 0
     for op in operator_list:
-        operator += op.coef * op.to_qutip()
+        operator += op.to_qutip()
     return operator
