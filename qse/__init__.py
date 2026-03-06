@@ -7,13 +7,14 @@ This package is adapted from Atomic Simulation Environment (ASE).
 
 __all__ = [
     "calc",
-    "cell",
     "draw",
     "lattices",
     "magnetic",
     "Operator",
     "Qbit",
     "Qbits",
+    "Operator",
+    "operators_to_qutip",
     "Signal",
     "utils",
     "visualise",
@@ -22,7 +23,7 @@ import importlib.metadata
 
 __version__ = importlib.metadata.version("qse")
 
-from qse.operator import Operator
+from qse.operator import Operator, operators_to_qutip
 from qse.qbit import Qbit
 from qse.qbits import Qbits
 from qse.signal import Signal

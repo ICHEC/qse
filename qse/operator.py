@@ -109,3 +109,23 @@ def _qutip_converter(op):
 
     if op == "N":
         return 0.5 * (1 - qp.sigmaz())
+
+
+def operators_to_qutip(operator_list):
+    """
+    Sum together a list of Operators into a single QuTiP Qobj.
+
+    Parameters
+    ----------
+    operator_list : list[Operator]
+        A list of Operators.
+
+    Returns
+    -------
+    qutip.Qobj
+            The QuTiP operator.
+    """
+    operator = 0
+    for op in operator_list:
+        operator += op.to_qutip()
+    return operator
