@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
   
@@ -375,6 +375,11 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse">qse</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Operator"><code class="docutils literal notranslate"><span class="pre">Operator</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Operator.to_qutip"><code class="docutils literal notranslate"><span class="pre">Operator.to_qutip()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Operator.to_str"><code class="docutils literal notranslate"><span class="pre">Operator.to_str()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit"><code class="docutils literal notranslate"><span class="pre">Qbit</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.cut_reference_to_qbits"><code class="docutils literal notranslate"><span class="pre">Qbit.cut_reference_to_qbits()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.delete"><code class="docutils literal notranslate"><span class="pre">Qbit.delete()</span></code></a></li>
@@ -501,6 +506,64 @@ document.write(`
 <span id="qse"></span><h2>qse<a class="headerlink" href="#module-qse" title="Link to this heading">#</a></h2>
 <p>Quantum Simulation Environment.</p>
 <p>This package is adapted from Atomic Simulation Environment (ASE).</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="qse.Operator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">Operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qubits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nqubits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coef</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/operator.html#Operator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Operator" title="Link to this definition">#</a></dt>
+<dd><p>Represents an operator in a quantum system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>operator</strong> (<em>str | list[str]</em>) – The type of qubit operator.
+Currently only a string or list containing “X”, “Y”, “Z”, “N” are supported.
+“N” the number operator is defined as 0.5*(1-Z).
+If a list is passed, it must be equal in length to the size of
+the qubits list.</p></li>
+<li><p><strong>qubits</strong> (<em>int | list[int]</em>) – A single integer or list of integers representing the qubits
+the operator acts on.</p></li>
+<li><p><strong>nqubits</strong> (<em>int</em>) – The total number of qubits in the system.</p></li>
+<li><p><strong>coef</strong> (<em>float</em>) – The coefficient associated with the term.
+Defaults to 1.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Create operator “XII”</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qse</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">... </span><span class="mf">1.00</span> <span class="n">X0</span>
+</pre></div>
+</div>
+<p>Create operator “IIYIZ”</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qse</span><span class="o">.</span><span class="n">Operator</span><span class="p">([</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">... </span><span class="mf">1.00</span> <span class="n">Y2</span> <span class="n">Z4</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="qse.Operator.to_qutip">
+<span class="sig-name descname"><span class="pre">to_qutip</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/operator.html#Operator.to_qutip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Operator.to_qutip" title="Link to this definition">#</a></dt>
+<dd><p>Generates a QuTiP representation of the operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>qutip.Qobj</em> – The QuTiP operator.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qse.Operator.to_str">
+<span class="sig-name descname"><span class="pre">to_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/operator.html#Operator.to_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Operator.to_str" title="Link to this definition">#</a></dt>
+<dd><p>Generates a string representation of the operator.</p>
+<p>The string is constructed as a tensor product of identity (I) and operator,
+where the operator is placed at the positions specified by <cite>qubits</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>str</em> – A string of length <cite>nqubits</cite>, with “I” at all positions except for the
+qubits in <cite>qubits</cite>, which are replaced by the associated operator.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="qse.Qbit">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">Qbit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbit.html#Qbit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbit" title="Link to this definition">#</a></dt>
@@ -1827,6 +1890,11 @@ Defaults to True.</p></li>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse">qse</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Operator"><code class="docutils literal notranslate"><span class="pre">Operator</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Operator.to_qutip"><code class="docutils literal notranslate"><span class="pre">Operator.to_qutip()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Operator.to_str"><code class="docutils literal notranslate"><span class="pre">Operator.to_str()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit"><code class="docutils literal notranslate"><span class="pre">Qbit</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.cut_reference_to_qbits"><code class="docutils literal notranslate"><span class="pre">Qbit.cut_reference_to_qbits()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbit.delete"><code class="docutils literal notranslate"><span class="pre">Qbit.delete()</span></code></a></li>
