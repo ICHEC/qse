@@ -10,14 +10,16 @@ authors = [
     {name = "Rajarshi Tiwari", email = "rajarshi.tiwari@ichec.ie"},
     {name = "Karthik Krishnakumar", email = "karthik.krishnakumar@ichec.ie"},
     {name = "James Nelson", email = "james.nelson@ichec.ie"},
-    {name = "Sherry Blair", email = "sherry.blair@ichec.ie"}
+    {name = "Sherry Blair", email = "sherry.blair@ichec.ie"},
+    {name = "Pablo Suárez Vieites", email = "pablo.suarez@ichec.ie"},
     ]
 version = "1.0.3"
 requires-python = ">=3.10"
 dependencies = [
     "ase",
     "numpy",
-    "matplotlib"
+    "matplotlib",
+    "qutip",
 ]
 
 [tool.setuptools.package-dir]
