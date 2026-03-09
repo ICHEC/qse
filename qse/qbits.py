@@ -8,6 +8,7 @@ from math import cos, sin
 import numpy as np
 from ase.cell import Cell
 
+from qse.operator import Operator, SumOfOperators
 from qse.qbit import Qbit
 from qse.visualise import draw as _draw
 
@@ -1270,6 +1271,45 @@ class Qbits:
         from pulser import Register
 
         return Register.from_coordinates(self.positions[:, :2], prefix="q")
+
+    def compute_interaction_hamiltonian(
+        self,
+        distance_func,
+        interaction,
+        tol=1e-8,
+    ):
+        """
+        Compute the interaction Hamiltonian for a system of qubits.
+
+        This function constructs a list of interaction terms between pairs of qubits,
+        based on their distances and a specified interaction type. Only terms with
+        coefficients above a given tolerance are included.
+
+        Parameters
+        ----------
+        distance_func : callable
+            A function that takes a distance (float) and returns the interaction
+            coefficient (float).
+        interaction : str
+            The type of interaction (e.g., "X", "Y", "Z") for the Hamiltonian terms.
+        tol : float, optional
+            Tolerance threshold for including interaction terms. Terms with absolute
+            coefficients less than `tol` are discarded. Default is 1e-8.
+
+        Returns
+        -------
+        SumOfOperators
+            The interaction operators.
+        """
+        ops = []
+
+        for i in range(self.nqbits - 1):
+            for j in range(i + 1, self.nqbits):
+                coef = distance_func(self.get_distance(i, j))
+                if np.abs(coef) > tol:
+                    ops.append(Operator(interaction, (i, j), self.nqbits, coef))
+
+        return SumOfOperators(ops)
 
 
 def _norm_vector(v):
