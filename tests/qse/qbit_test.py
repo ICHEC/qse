@@ -10,26 +10,17 @@ def test_default():
     assert isinstance(qbit, qse.Qbit)
     assert qbit.label == "X"
     assert np.allclose(qbit.position, np.zeros(3))
-    assert np.allclose(qbit.state, np.array([1, 0]))
 
 
 @pytest.mark.parametrize("label", ["a" * 3, "123a", None, 14])
 def test_label(label):
     """Check label is assigned correctly."""
     qbit = qse.Qbit(label=label)
-    if not isinstance(label, str):
-        # default behaviour
+
+    if label is None:
         assert qbit.label == "X"
     else:
-        assert qbit.label == label
-
-
-@pytest.mark.parametrize("state", [np.ones(2) * 3, [1.0j, -4]])
-def test_state(state):
-    """Check state is normalized."""
-    qbit = qse.Qbit(label="123", state=state)
-    assert isinstance(qbit, qse.Qbit)
-    assert np.isclose(np.linalg.norm(qbit.state), 1.0)
+        assert qbit.label == str(label)
 
 
 def test_from_qbits():
@@ -39,7 +30,6 @@ def test_from_qbits():
 
     for i in range(nqbit):
         qbit = qse.Qbit(qbits=qbits, index=i)
-        assert np.allclose(qbit.state, np.array([1, 0]))
         assert qbit.label == str(i)
         assert np.allclose(qbit.position, np.array([3 * i, 3 * i + 1, 3 * i + 2]))
 
@@ -47,8 +37,6 @@ def test_from_qbits():
 def test_set():
     """Check the set method"""
     qbit = qse.Qbit()
-    qbit.set("state", np.array([1.0, 1.0j]) / np.sqrt(2))
-    assert np.allclose(qbit.state, np.array([1.0, 1.0j]) / np.sqrt(2))
 
     qbit.set("label", "test_qubit")
     assert qbit.label == "test_qubit"
@@ -64,11 +52,6 @@ def test_set_with_qbits():
     index = 1
 
     qbit = qse.Qbit(qbits=qbits, index=index)
-
-    state = np.array([1.0, 1.0j]) / np.sqrt(2)
-    qbit.set("state", state)
-    assert np.allclose(qbit.state, state)
-    assert np.allclose(qbits.states[index], state)
 
     label = "test_qubit"
     qbit.set("label", label)
