@@ -8,7 +8,7 @@ from math import cos, sin
 import numpy as np
 from ase.cell import Cell
 
-from qse.operator import Operator, SumOfOperators
+from qse.operator import Operator, Operators
 from qse.qbit import Qbit
 from qse.visualise import draw as _draw
 
@@ -1298,7 +1298,7 @@ class Qbits:
 
         Returns
         -------
-        SumOfOperators
+        Operators
             The interaction operators.
         """
         ops = []
@@ -1309,7 +1309,7 @@ class Qbits:
                 if np.abs(coef) > tol:
                     ops.append(Operator(interaction, (i, j), self.nqbits, coef))
 
-        return SumOfOperators(ops)
+        return Operators(ops)
 
 
 def _norm_vector(v):

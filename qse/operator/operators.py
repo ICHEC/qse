@@ -7,20 +7,25 @@ class Operators:
 
     Parameters
     ----------
-    operator_list: list[Operator]
+    operator_list: list[Operator] , optional
         The operators to be summed.
+        Defaults to empty list.
     """
 
-    def __init__(self, operator_list):
-        if not isinstance(operator_list, list) and not isinstance(
-            operator_list[0], Operator
-        ):
-            raise Exception("The operator_list must be a list of qse.Operators.")
+    def __init__(self, operator_list=None):
+        if operator_list is None:
+            operator_list = []
+        else:
+            if not isinstance(operator_list, list) and not isinstance(
+                operator_list[0], Operator
+            ):
+                raise Exception("The operator_list must be a list of qse.Operators.")
 
-        if not all([op.nqbits == operator_list[0].nqbits for op in operator_list]):
-            raise Exception(
-                "All operators in operator_list must act on the same number of qubits."
-            )
+            if not all([op.nqbits == operator_list[0].nqbits for op in operator_list]):
+                raise Exception(
+                    "All operators in operator_list must act on the same number"
+                    "of qubits."
+                )
 
         self.operator_list = operator_list
 
@@ -56,12 +61,12 @@ class Operators:
 
     def extend(self, other):
         """
-        Extend SumOfOperators object by appending terms from other SumOfOperators
+        Extend Operators object by appending terms from other Operators
         object or Operator object.
 
         Parameters
         ----------
-        other: SumOfOperators or Operator
+        other: Operators or Operator
             The operators to be added to the current object.
         """
         if other.nqbits != self.nqbits:
@@ -69,10 +74,10 @@ class Operators:
 
         if isinstance(other, Operator):
             self.operator_list += [other]
-        elif isinstance(other, SumOfOperators):
+        elif isinstance(other, Operators):
             self.operator_list += other.operator_list
         else:
-            raise Exception("other must be SumOfOperators or Operator.")
+            raise Exception("other must be Operators or Operator.")
 
     def __add__(self, other):
         op = self.copy()
@@ -98,5 +103,5 @@ class Operators:
         return self[0].nqbits
 
     @property
-    def size(self):
+    def nterms(self):
         return len(self.operator_list)

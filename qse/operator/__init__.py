@@ -1,6 +1,6 @@
 __all__ = [
     "Operator",
-    "SumOfOperators",
+    "Operators",
 ]
 from .operator import Operator
-from .sum_of_operators import SumOfOperators
+from .operators import Operators

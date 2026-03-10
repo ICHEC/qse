@@ -85,35 +85,6 @@ class Operator:
             op[qi] = _qutip_converter(op_str)
         return self.coef * qp.tensor(op)
 
-    def extend(self, other):
-        """
-        Extend Operator object by appending terms from other SumOfOperators
-        object or Operator object.
-
-        Parameters
-        ----------
-        other: Operators
-            The operators to be added to the current object.
-        """
-        if other.nqbits != self.nqbits:
-            raise Exception("other must have the same number of qubits.")
-
-        if isinstance(other, Operator):
-            self.operator_list += [other]
-        elif isinstance(other, SumOfOperators):
-            self.operator_list += other.operator_list
-        else:
-            raise Exception("other must be SumOfOperators or Operator.")
-
-    def __add__(self, other):
-        op = self.copy()
-        op += other
-        return op
-
-    def __iadd__(self, other):
-        self.extend(other)
-        return self
-
     def __repr__(self):
         return f"{self.coef:.2f} " + " ".join(
             [f"{op}{q}" for op, q in zip(self.operator, self.qubits)]
