@@ -1308,7 +1308,9 @@ class Qbits:
         >>> spacing = 1.0
         >>> qbits = qse.lattices.chain(spacing, 4)
         >>> coupling = -2.
-        >>> qbits.compute_interaction_hamiltonian(lambda x: coupling*np.isclose(x, spacing), "Z")
+        >>> qbits.compute_interaction_hamiltonian(
+        ...     lambda x: coupling*np.isclose(x, spacing), "Z"
+        ... )
         ... Number of qubits: 4
         ... Number of terms: 3
         ...
@@ -1321,8 +1323,12 @@ class Qbits:
         >>> spacing = 1.0
         >>> qbits = qse.lattices.chain(spacing, 2)
         >>> coupling = 1.
-        >>> hamiltonian = qbits.compute_interaction_hamiltonian(lambda x: coupling / x**3, ["X", "Y"])
-        >>> hamiltonian += qbits.compute_interaction_hamiltonian(lambda x: coupling / x**3, ["Y", "X"])
+        >>> hamiltonian = qbits.compute_interaction_hamiltonian(
+        ...     lambda x: coupling / x**3, ["X", "Y"]
+        ... )
+        >>> hamiltonian += qbits.compute_interaction_hamiltonian(
+        ...     lambda x: coupling / x**3, ["Y", "X"]
+        ... )
         ... Number of qubits: 2
         ... Number of terms: 2
         ...
