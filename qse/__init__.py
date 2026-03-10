@@ -14,8 +14,8 @@ __all__ = [
     "Qbit",
     "Qbits",
     "Operator",
+    "Operators",
     "Signal",
-    "SumOfOperators",
     "utils",
     "visualise",
 ]
@@ -23,7 +23,7 @@ import importlib.metadata
 
 __version__ = importlib.metadata.version("qse")
 
-from qse.operator import Operator, SumOfOperators
+from qse.operator import Operator, Operators
 from qse.qbit import Qbit
 from qse.qbits import Qbits
 from qse.signal import Signal

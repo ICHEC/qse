@@ -24,7 +24,7 @@ pauli_dict = {
 )
 def test_operator_2qubits(qubits, operator, expected_str):
     """Test creating an Operator with 2 qubits."""
-    op = qse.Operator(operator, qubits, nqubits=2)
+    op = qse.Operator(operator, qubits, nqbits=2)
 
     assert isinstance(op, qse.Operator)
     assert op.to_str() == expected_str
@@ -47,7 +47,7 @@ def test_operator_2qubits(qubits, operator, expected_str):
 )
 def test_operator_4qubits(qubits, operator, expected_str):
     """Test creating an Operator with 4 qubits."""
-    op = qse.Operator(operator, qubits, nqubits=4)
+    op = qse.Operator(operator, qubits, nqbits=4)
 
     assert isinstance(op, qse.Operator)
     assert op.to_str() == expected_str
@@ -59,7 +59,7 @@ def test_operator_4qubits(qubits, operator, expected_str):
 @pytest.mark.parametrize("coef", [0.1, -0.45, 1j + 53])
 def test_operator_4qubits_coef(op1, op2, coef):
     """Test creating an Operator with 4 qubits and a coefficient."""
-    op = qse.Operator(operator=[op1, op2], qubits=[1, 2], nqubits=4, coef=coef)
+    op = qse.Operator(operator=[op1, op2], qubits=[1, 2], nqbits=4, coef=coef)
 
     assert isinstance(op, qse.Operator)
     assert op.to_str() == "I" + op1 + op2 + "I"
@@ -84,3 +84,42 @@ def test_operator_fail(qubits, operator):
     """Test creating an Operator with 4 qubits."""
     with pytest.raises(Exception):
         qse.Operator(operator, qubits, nqubits=4)
+
+
+def test_operators_init():
+    """Test initializing empty Operators."""
+    ops = qse.Operators()
+
+    assert isinstance(ops, qse.Operators)
+    assert ops.nterms == 0
+
+
+def test_operators_creation_addition():
+    """Test creating and adding Operators."""
+    nqbits = 4
+    ops = qse.Operators([qse.Operator("X", i, nqbits) for i in range(nqbits)])
+    assert isinstance(ops, qse.Operators)
+    assert ops.nterms == nqbits
+    assert ops.nqbits == nqbits
+
+    ops += qse.Operators([qse.Operator("Y", i, nqbits) for i in range(nqbits)])
+    assert isinstance(ops, qse.Operators)
+    assert ops.nterms == nqbits * 2
+    assert ops.nqbits == nqbits
+
+    for i in range(2):
+        ops += qse.Operator("Z", i, nqbits)
+        assert isinstance(ops, qse.Operators)
+        assert ops.nterms == nqbits * 2 + i + 1
+        assert ops.nqbits == nqbits
+
+
+def test_operators_qutip():
+    """Test to_qutip method."""
+    nqbits = 3
+    op1 = qse.Operator("X", 0, nqbits, 9.242)
+    op2 = qse.Operator(["X", "Y"], [1, 2], nqbits, 1.0)
+    ops = qse.Operators([op1, op2])
+
+    op_sum = op1.to_qutip() + op2.to_qutip()
+    assert np.allclose(op_sum.full(), ops.to_qutip().full())
