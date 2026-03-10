@@ -16,7 +16,7 @@ class Operator:
     qubits: int | list[int]
         A single integer or list of integers representing the qubits
         the operator acts on.
-    nqubits: int
+    nqbits: int
         The total number of qubits in the system.
     coef: float
         The coefficient associated with the term.
@@ -35,7 +35,7 @@ class Operator:
     ... 1.00 Y2 Z4
     """
 
-    def __init__(self, operator, qubits, nqubits, coef=1.0):
+    def __init__(self, operator, qubits, nqbits, coef=1.0):
         if isinstance(qubits, int):
             qubits = [qubits]
         if isinstance(operator, str):
@@ -50,7 +50,7 @@ class Operator:
 
         self.operator = operator
         self.qubits = qubits
-        self.nqubits = nqubits
+        self.nqbits = nqbits
         self.coef = coef
 
     def to_str(self):
@@ -63,10 +63,10 @@ class Operator:
         Returns
         -------
         str
-            A string of length `nqubits`, with "I" at all positions except for the
+            A string of length `nqbits`, with "I" at all positions except for the
             qubits in `qubits`, which are replaced by the associated operator.
         """
-        op = ["I"] * self.nqubits
+        op = ["I"] * self.nqbits
         for qi, op_str in zip(self.qubits, self.operator):
             op[qi] = op_str
         return "".join(op)
@@ -80,7 +80,7 @@ class Operator:
         qutip.Qobj
             The QuTiP operator.
         """
-        op = [qp.qeye(2)] * self.nqubits
+        op = [qp.qeye(2)] * self.nqbits
         for qi, op_str in zip(self.qubits, self.operator):
             op[qi] = _qutip_converter(op_str)
         return self.coef * qp.tensor(op)
