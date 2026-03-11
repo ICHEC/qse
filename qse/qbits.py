@@ -59,8 +59,8 @@ class Qbits:
     These are equivalent:
 
     >>> a = qse.Qbits(
-    ...     labels=['qb1', 'qb2'],
     ...     positions=np.array([(0, 0, 0), (0, 0, 2)])
+    ...     labels=['qb1', 'qb2'],
     ... )
     >>> a = qse.Qbits.from_qbit_list(
     ...     [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))]
@@ -68,7 +68,8 @@ class Qbits:
 
     >>> xd = np.array(
     ...    [[0, 0, 0],
-    ...     [0.5, 0.5, 0.5]])
+    ...     [0.5, 0.5, 0.5]]
+    ... )
     >>> qdim = qse.Qbits(xd)
     >>> qdim.cell = [1,1,1]
     >>> qdim.pbc = True
