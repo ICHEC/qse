@@ -40,7 +40,7 @@ class Qbits:
         and the third one in z-positive subspace.
         Default value: [0, 0, 0].
     scaled_positions: bool
-        If True then positions will be interpretted as beging
+        If True then positions will be interpreted as being
         given in units of the unit cell.
         Defaults to False.
     pbc: one or three bool
