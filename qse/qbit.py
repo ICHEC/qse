@@ -6,7 +6,6 @@ import numpy as np
 
 default_values = {
     "label": "X",
-    "state": np.array([1, 0], dtype=complex),
     "position": np.zeros(3),
 }
 
@@ -44,12 +43,12 @@ class Qbit:
 
     Parameters
     ----------
-    label: str or int
-        Can be a str or an int label.
-    state: list or tuple or np.ndarray
-        Quantum state of the qubit
+    label: str
+        A string to label the Qubit.
+        Deafults to X.
     position: list or np.ndarray
         Sequence of 3 floats qubit position.
+        Defaults to (0, 0, 0).
     qbits: qse.Qbits
         The Qbits object that the Qbit is attached
         to. Defaults to None.
@@ -68,9 +67,8 @@ class Qbit:
 
     def __init__(
         self,
-        label="X",
-        state=(1, 0),
-        position=(0, 0, 0),
+        label=None,
+        position=None,
         qbits=None,
         index=None,
     ):
@@ -78,13 +76,14 @@ class Qbit:
 
         if qbits is None:
             # This qbit is not part of any Qbits object:
-            if isinstance(label, str):
-                self.data["label"] = label
-            else:
-                self.data["label"] = "X"
+            if label is None:
+                label = "X"
+            self.data["label"] = str(label)
 
-            self.data["state"] = _normalize_state(state)
+            if position is None:
+                position = (0, 0, 0)
             self.data["position"] = np.array(position, float)
+
         self.index = index
         self.qbits = qbits
 
@@ -100,9 +99,8 @@ class Qbit:
         self.position = pos
 
     def __repr__(self):
-        # s = "Qbit('%s', %s, %s" % (self.label, list(self.position), list(self.state))
         s = "Qbit(label='%s'" % (self.label)
-        for name in ["position", "state"]:
+        for name in ["position"]:
             value = self.get_raw(name)
             if value is not None:
                 if isinstance(value, np.ndarray):
@@ -143,14 +141,10 @@ class Qbit:
         """Set name attribute to value."""
         if self.qbits is None:
             assert name in default_values
-            if name == "state":
-                value = _normalize_state(value)
             self.data[name] = value
         else:
             plural = name + "s"
             if plural in self.qbits.arrays:
-                if plural == "states":
-                    value = _normalize_state(value)
                 self.qbits.arrays[plural][self.index] = value
             else:
                 default = np.asarray(default_values[name])
@@ -161,16 +155,11 @@ class Qbit:
     def delete(self, name):
         """Delete name attribute."""
         assert self.atoms is None
-        assert name not in ["label", "position", "state"]
+        assert name not in ["label", "position"]
         self.data[name] = None
 
-    state = qbitproperty("state", "Quantum state of qubit as 2-column")
     label = qbitproperty("label", "Integer label asigned to qubit")
     position = qbitproperty("position", "XYZ-coordinates")
     x = xyzproperty(0)
     y = xyzproperty(1)
     z = xyzproperty(2)
-
-
-def _normalize_state(state):
-    return np.array(state, complex) / np.linalg.norm(state)

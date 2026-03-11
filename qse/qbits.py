@@ -17,15 +17,12 @@ class Qbits:
     The Qbits object can represent an isolated molecule, or a
     periodically repeated structure.  It has a unit cell and
     there may be periodic boundary conditions along any of the three
-    unit cell axes. Information about the qbits (qubit state and
-    position) is stored in ndarrays.
+    unit cell axes. Information about the qbits is stored in ndarrays.
 
     Parameters
     ----------
     labels: list of str
         A list of strings corresponding to a label for each qubit.
-    states: list of 2-length arrays.
-        State of each qubit.
     positions: list of xyz-positions
         Qubit positions.  Anything that can be converted to an
         ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),
@@ -84,7 +81,6 @@ class Qbits:
     def __init__(
         self,
         labels=None,
-        states=None,
         positions=None,
         scaled_positions=None,
         cell=None,
@@ -144,12 +140,6 @@ class Qbits:
                 positions = np.dot(scaled_positions, self.cell)
         self.new_array("positions", positions, float, (3,))
 
-        # states
-        if states is None:
-            states = np.zeros((positions.shape[0], 2), dtype=complex)
-            states[:, 0] = 1
-        self.new_array("states", states, complex, (2,))
-
         # shape
         self._shape = (self.nqbits, 1, 1)
 
@@ -167,7 +157,7 @@ class Qbits:
         # Get data from a list or tuple of Qbit objects:
         data = {
             f"{name}s": [qbit.get_raw(name) for qbit in qbit_list]
-            for name in ["label", "state", "position"]
+            for name in ["label", "position"]
         }
         return Qbits(**data)
 
@@ -376,7 +366,6 @@ class Qbits:
         d = {}
         d["labels"] = self.arrays["labels"]
         d["positions"] = self.arrays["positions"]
-        d["states"] = self.arrays["states"]
         d["cell"] = self.cell  # np.asarray(self.cell)
         d["pbc"] = self.pbc
 
@@ -387,7 +376,7 @@ class Qbits:
         """Rebuild qbits object from dictionary representation (todict)."""
         dct = dct.copy()
         kw = {}
-        for name in ["labels", "positions", "states", "cell", "pbc"]:
+        for name in ["labels", "positions", "cell", "pbc"]:
             kw[name] = dct.pop(name)
 
         qbits = cls(**kw)
@@ -1162,7 +1151,7 @@ class Qbits:
     def __eq__(self, other):
         """Check for identity of two qbits objects.
 
-        Identity means: same positions, states, unit cell and
+        Identity means: same positions, unit cell and
         periodic boundary conditions."""
         if not isinstance(other, Qbits):
             return False
@@ -1171,7 +1160,6 @@ class Qbits:
         return (
             len(self) == len(other)
             and (a["positions"] == b["positions"]).all()
-            and (a["states"] == b["states"]).all()
             and (self.cell == other.cell).all()
             and (self.pbc == other.pbc).all()
         )
@@ -1179,7 +1167,7 @@ class Qbits:
     def __ne__(self, other):
         """Check if two qbits objects are not equal.
 
-        Any differences in positions, states, unit cell or
+        Any differences in positions, unit cell or
         periodic boundary condtions make qbits objects not equal.
         """
         eq = self.__eq__(other)
@@ -1210,24 +1198,6 @@ class Qbits:
         _get_positions,
         _set_positions,
         doc="Attribute for direct " + "manipulation of the positions.",
-    )
-
-    # Rajarshi: Below these three written to add attribute of states
-    def _get_states(self):
-        """Return reference to states-array for in-place manipulations."""
-        return self.arrays["states"]
-
-    def _set_states(self, sts):
-        """Set states directly, bypassing constraints."""
-        self.arrays["states"][
-            :
-        ] = sts  # (sts.T / np.linalg.norm(sts, axis=1)).T # need to be normalized
-
-    # below is equivalent to defining @property states
-    states = property(
-        _get_states,
-        _set_states,
-        doc="Attribute for direct " + "manipulation of the states.",
     )
 
     # Rajarshi: Write method to get labels
