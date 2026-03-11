@@ -47,6 +47,11 @@ class Operator:
             raise Exception(
                 "The number of passed qubits must equal the number of passed operators."
             )
+        if max(qubits) >= nqbits:
+            raise Exception(
+                "One or more of the qubits indicies is out of range. "
+                "They must each be less than nqbits."
+            )
 
         self.operator = operator
         self.qubits = qubits
@@ -89,6 +94,21 @@ class Operator:
         return f"{self.coef:.2f} " + " ".join(
             [f"{op}{q}" for op, q in zip(self.operator, self.qubits)]
         )
+
+    def copy(self):
+        """
+        Return a copy.
+        """
+        return self.__class__(self.operator, self.qubits, self.nqbits, self.coef)
+
+    def __mul__(self, other):
+        op = self.copy()
+        op *= other
+        return op
+
+    def __imul__(self, other):
+        self.coef *= float(other)
+        return self
 
 
 def _check_operator(op_list):
