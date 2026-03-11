@@ -91,7 +91,7 @@ class Operators:
     def __repr__(self):
         return (
             f"Number of qubits: {self.nqbits}"
-            + f"\nNumber of terms: {self.size}\n\n"
+            + f"\nNumber of terms: {self.nterms}\n\n"
             + "\n".join([op.__repr__() for op in self.operator_list])
         )
 

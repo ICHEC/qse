@@ -469,3 +469,33 @@ def test_reciprocal_cell(cell, expected):
 
     # Check the two cells are orthonormal
     assert np.allclose(cell @ r_cell.T, np.eye(3))
+
+
+def test_compute_interaction_hamiltonian():
+    """Test compute_interaction_hamiltonian method."""
+    # To create a ZZ Hamiltonian for only nearest neighbour qubits
+    spacing = 1.0
+    qbits = qse.lattices.chain(spacing, 4)
+    coupling = -2.0
+    ham = qbits.compute_interaction_hamiltonian(
+        lambda x: coupling * np.isclose(x, spacing), "Z"
+    )
+    assert ham.nqbits == 4
+    assert ham.nterms == 3
+    for op in ham:
+        assert np.isclose(op.coef, coupling)
+        assert all([i == "Z" for i in op.operator])
+
+    # To create an XY Hamiltonian based on distance
+    qbits = qse.lattices.chain(spacing, 3)
+    coupling = 1.0
+
+    ham = qbits.compute_interaction_hamiltonian(lambda x: coupling / x**3, ["X", "Y"])
+    ham += qbits.compute_interaction_hamiltonian(lambda x: coupling / x**3, ["Y", "X"])
+    assert ham.nqbits == 3
+    assert ham.nterms == 6
+    for op in ham[:3]:
+        assert "".join(op.operator) == "XY"
+
+    for op in ham[3:]:
+        assert "".join(op.operator) == "YX"
