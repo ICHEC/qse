@@ -390,6 +390,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.append"><code class="docutils literal notranslate"><span class="pre">Qbits.append()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.calc"><code class="docutils literal notranslate"><span class="pre">Qbits.calc</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.cell"><code class="docutils literal notranslate"><span class="pre">Qbits.cell</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.compute_interaction_hamiltonian"><code class="docutils literal notranslate"><span class="pre">Qbits.compute_interaction_hamiltonian()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.copy"><code class="docutils literal notranslate"><span class="pre">Qbits.copy()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.draw"><code class="docutils literal notranslate"><span class="pre">Qbits.draw()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.euler_rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.euler_rotate()</span></code></a></li>
@@ -769,6 +770,62 @@ to the qbits object.</p>
 <dt class="sig sig-object py" id="qse.Qbits.cell">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cell</span></span><a class="headerlink" href="#qse.Qbits.cell" title="Link to this definition">#</a></dt>
 <dd><p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">ase.cell.Cell</span></code> for direct manipulation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qse.Qbits.compute_interaction_hamiltonian">
+<span class="sig-name descname"><span class="pre">compute_interaction_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distance_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interaction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/qbits.html#Qbits.compute_interaction_hamiltonian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Qbits.compute_interaction_hamiltonian" title="Link to this definition">#</a></dt>
+<dd><p>Compute the interaction Hamiltonian for a system of qubits.</p>
+<p>This function constructs an Operators object based on the distances between
+the qubits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distance_func</strong> (<em>callable</em>) – A function that takes a distance (float) and returns the interaction
+coefficient (float).</p></li>
+<li><p><strong>interaction</strong> (<em>str | list[str]</em>) – The type of interaction (e.g., “X”, “Y”, “Z”) for the Hamiltonian terms,
+or can be a list of strings.</p></li>
+<li><p><strong>tol</strong> (<em>float, optional</em>) – Tolerance threshold for including interaction terms. Terms with absolute
+coefficients less than <cite>tol</cite> are discarded. Default is 1e-8.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Operators</em> – The interaction operators.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>To create a ZZ Hamiltonian for only nearest neighbour qubits</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spacing</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coupling</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span><span class="o">.</span><span class="n">compute_interaction_hamiltonian</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">coupling</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">spacing</span><span class="p">),</span> <span class="s2">&quot;Z&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">... </span><span class="n">Number</span> <span class="n">of</span> <span class="n">qubits</span><span class="p">:</span> <span class="mi">4</span>
+<span class="gp">... </span><span class="n">Number</span> <span class="n">of</span> <span class="n">terms</span><span class="p">:</span> <span class="mi">3</span>
+<span class="gp">...</span>
+<span class="gp">... </span><span class="o">-</span><span class="mf">2.00</span> <span class="n">Z0</span> <span class="n">Z1</span>
+<span class="gp">... </span><span class="o">-</span><span class="mf">2.00</span> <span class="n">Z1</span> <span class="n">Z2</span>
+<span class="gp">... </span><span class="o">-</span><span class="mf">2.00</span> <span class="n">Z2</span> <span class="n">Z3</span>
+</pre></div>
+</div>
+<p>To create an XY Hamiltonian based on distance</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spacing</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coupling</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hamiltonian</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">compute_interaction_hamiltonian</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">coupling</span> <span class="o">/</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hamiltonian</span> <span class="o">+=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">compute_interaction_hamiltonian</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">coupling</span> <span class="o">/</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">... </span><span class="n">Number</span> <span class="n">of</span> <span class="n">qubits</span><span class="p">:</span> <span class="mi">2</span>
+<span class="gp">... </span><span class="n">Number</span> <span class="n">of</span> <span class="n">terms</span><span class="p">:</span> <span class="mi">2</span>
+<span class="gp">...</span>
+<span class="gp">... </span><span class="mf">1.00</span> <span class="n">X0</span> <span class="n">Y1</span>
+<span class="gp">... </span><span class="mf">1.00</span> <span class="n">Y0</span> <span class="n">X1</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -1959,6 +2016,7 @@ Defaults to True.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.append"><code class="docutils literal notranslate"><span class="pre">Qbits.append()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.calc"><code class="docutils literal notranslate"><span class="pre">Qbits.calc</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.cell"><code class="docutils literal notranslate"><span class="pre">Qbits.cell</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.compute_interaction_hamiltonian"><code class="docutils literal notranslate"><span class="pre">Qbits.compute_interaction_hamiltonian()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.copy"><code class="docutils literal notranslate"><span class="pre">Qbits.copy()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.draw"><code class="docutils literal notranslate"><span class="pre">Qbits.draw()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Qbits.euler_rotate"><code class="docutils literal notranslate"><span class="pre">Qbits.euler_rotate()</span></code></a></li>

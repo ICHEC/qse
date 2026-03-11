@@ -324,6 +324,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ase.cell</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cell</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">qse.operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Operator</span><span class="p">,</span> <span class="n">Operators</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qse.qbit</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qbit</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qse.visualise</span><span class="w"> </span><span class="kn">import</span> <span class="n">draw</span> <span class="k">as</span> <span class="n">_draw</span>
 
@@ -1683,7 +1684,83 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">to_pulser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">pulser</span><span class="w"> </span><span class="kn">import</span> <span class="n">Register</span>
 
-        <span class="k">return</span> <span class="n">Register</span><span class="o">.</span><span class="n">from_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Register</span><span class="o">.</span><span class="n">from_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Qbits.compute_interaction_hamiltonian">
+<a class="viewcode-back" href="../../api.html#qse.Qbits.compute_interaction_hamiltonian">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_interaction_hamiltonian</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">distance_func</span><span class="p">,</span>
+        <span class="n">interaction</span><span class="p">,</span>
+        <span class="n">tol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the interaction Hamiltonian for a system of qubits.</span>
+
+<span class="sd">        This function constructs an Operators object based on the distances between</span>
+<span class="sd">        the qubits.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        distance_func : callable</span>
+<span class="sd">            A function that takes a distance (float) and returns the interaction</span>
+<span class="sd">            coefficient (float).</span>
+<span class="sd">        interaction : str | list[str]</span>
+<span class="sd">            The type of interaction (e.g., &quot;X&quot;, &quot;Y&quot;, &quot;Z&quot;) for the Hamiltonian terms,</span>
+<span class="sd">            or can be a list of strings.</span>
+<span class="sd">        tol : float, optional</span>
+<span class="sd">            Tolerance threshold for including interaction terms. Terms with absolute</span>
+<span class="sd">            coefficients less than `tol` are discarded. Default is 1e-8.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Operators</span>
+<span class="sd">            The interaction operators.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        To create a ZZ Hamiltonian for only nearest neighbour qubits</span>
+
+<span class="sd">        &gt;&gt;&gt; spacing = 1.0</span>
+<span class="sd">        &gt;&gt;&gt; qbits = qse.lattices.chain(spacing, 4)</span>
+<span class="sd">        &gt;&gt;&gt; coupling = -2.</span>
+<span class="sd">        &gt;&gt;&gt; qbits.compute_interaction_hamiltonian(</span>
+<span class="sd">        ...     lambda x: coupling*np.isclose(x, spacing), &quot;Z&quot;</span>
+<span class="sd">        ... )</span>
+<span class="sd">        ... Number of qubits: 4</span>
+<span class="sd">        ... Number of terms: 3</span>
+<span class="sd">        ...</span>
+<span class="sd">        ... -2.00 Z0 Z1</span>
+<span class="sd">        ... -2.00 Z1 Z2</span>
+<span class="sd">        ... -2.00 Z2 Z3</span>
+
+<span class="sd">        To create an XY Hamiltonian based on distance</span>
+
+<span class="sd">        &gt;&gt;&gt; spacing = 1.0</span>
+<span class="sd">        &gt;&gt;&gt; qbits = qse.lattices.chain(spacing, 2)</span>
+<span class="sd">        &gt;&gt;&gt; coupling = 1.</span>
+<span class="sd">        &gt;&gt;&gt; hamiltonian = qbits.compute_interaction_hamiltonian(</span>
+<span class="sd">        ...     lambda x: coupling / x**3, [&quot;X&quot;, &quot;Y&quot;]</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; hamiltonian += qbits.compute_interaction_hamiltonian(</span>
+<span class="sd">        ...     lambda x: coupling / x**3, [&quot;Y&quot;, &quot;X&quot;]</span>
+<span class="sd">        ... )</span>
+<span class="sd">        ... Number of qubits: 2</span>
+<span class="sd">        ... Number of terms: 2</span>
+<span class="sd">        ...</span>
+<span class="sd">        ... 1.00 X0 Y1</span>
+<span class="sd">        ... 1.00 Y0 X1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ops</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nqbits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nqbits</span><span class="p">):</span>
+                <span class="n">coef</span> <span class="o">=</span> <span class="n">distance_func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_distance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">coef</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">:</span>
+                    <span class="n">ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Operator</span><span class="p">(</span><span class="n">interaction</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">coef</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">Operators</span><span class="p">(</span><span class="n">ops</span><span class="p">)</span></div>
+</div>
 
 
 
