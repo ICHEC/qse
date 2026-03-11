@@ -472,7 +472,7 @@ def test_reciprocal_cell(cell, expected):
 
 
 def test_compute_interaction_hamiltonian():
-    """Test ompute_interaction_hamiltonian method."""
+    """Test compute_interaction_hamiltonian method."""
     # To create a ZZ Hamiltonian for only nearest neighbour qubits
     spacing = 1.0
     qbits = qse.lattices.chain(spacing, 4)
