@@ -331,6 +331,13 @@ class Qbits:
                 )
             break
 
+        # We allow positions to be 1D, 2D or 3D
+        if name == "positions":
+            if len(a.shape) != 2 or a.shape[1] not in [1, 2, 3]:
+                raise ValueError("Positions must have shape (n_q, d) "
+                                 "where n_q is the number of qbits and the "
+                                 "dimnension d is 1, 2 or 3.")
+
         if shape is not None and a.shape[1:] != shape:
             raise ValueError(
                 'Array "%s" has wrong shape %s != %s.'
@@ -1345,6 +1352,35 @@ class Qbits:
                     ops.append(Operator(interaction, (i, j), self.nqbits, coef))
 
         return Operators(ops)
+    
+    def add_dimension(self):
+        """
+        Adds a spatial dimension to the positions. E.e. to go from 1D to 2D systems
+        or 2D to 3D systems.
+        """
+        if self.dimension == 3:
+            raise ValueError("Can't go above 3 dimensions.")
+        self.arrays["positions"] = np.column_stack([self.arrays["positions"],np.zeros(self.nqbits)])
+
+    def remove_dimension(self, dim):
+        """
+        Removes a spatial dimension to the positions. E.e. to go from 2D to 1D systems
+        or 3D to 2D systems.
+
+        Parameters
+        ----------
+        dim : str
+            The dimension to be removed.
+            Must be one of 'x', 'y' or 'z'.
+        """
+        if self.dimension == 1:
+            raise ValueError("Can't go below 1 dimension.")
+        axes = ['x', 'y', 'z']
+        if dim not in axes:
+            raise ValueError("dim must be one of 'x', 'y' or 'z'.")
+        keep_cols = [axes.index(i) for i in axes if i != dim]
+
+        self.arrays["positions"] = self.arrays["positions"][:, keep_cols]
 
 def _norm_vector(v):
     normv = np.linalg.norm(v)
