@@ -143,7 +143,8 @@ class Qbits:
             else:
                 assert self.cell.rank == 3
                 positions = np.dot(scaled_positions, self.cell)
-        self.new_array("positions", positions, float, (3,))
+
+        self.new_array("positions", positions, float)
 
         # states
         if states is None:
@@ -194,6 +195,22 @@ class Qbits:
         self._calc = calc
         if hasattr(calc, "set_qbits"):
             calc.set_qbits(self)
+
+    @property
+    def positions(self):
+        return self.arrays["positions"]
+
+    @positions.setter
+    def positions(self, pos):
+        self.arrays["positions"][:] = pos
+
+    @property
+    def dimension(self):
+        return self.positions.shape[1]
+
+    @property
+    def nqbits(self):
+        return len(self)
 
     def set_cell(self, cell, scale_qbits=False):
         """
@@ -271,10 +288,6 @@ class Qbits:
         """
 
         return self.cell.reciprocal()
-
-    @property
-    def nqbits(self):
-        return len(self)
 
     @property
     def pbc(self):
@@ -852,6 +865,8 @@ class Qbits:
 
             \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
+        if self.dimension != 3:
+            raise Exception("euler_rotate can only be performed on 3D systems.")
 
         def rotation_mat(angle):
             return np.array(
@@ -1199,20 +1214,6 @@ class Qbits:
             )
         return self.cell.volume
 
-    def _get_positions(self):
-        """Return reference to positions-array for in-place manipulations."""
-        return self.arrays["positions"]
-
-    def _set_positions(self, pos):
-        """Set positions directly, bypassing constraints."""
-        self.arrays["positions"][:] = pos
-
-    positions = property(
-        _get_positions,
-        _set_positions,
-        doc="Attribute for direct " + "manipulation of the positions.",
-    )
-
     # Rajarshi: Below these three written to add attribute of states
     def _get_states(self):
         """Return reference to states-array for in-place manipulations."""
@@ -1344,7 +1345,6 @@ class Qbits:
                     ops.append(Operator(interaction, (i, j), self.nqbits, coef))
 
         return Operators(ops)
-
 
 def _norm_vector(v):
     normv = np.linalg.norm(v)
