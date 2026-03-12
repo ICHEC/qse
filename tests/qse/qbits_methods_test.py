@@ -499,3 +499,44 @@ def test_compute_interaction_hamiltonian():
 
     for op in ham[3:]:
         assert "".join(op.operator) == "YX"
+
+
+@pytest.mark.parametrize("dimension", [1, 2, 3])
+def test_add_dimension(dimension):
+    """Tests the add_dimension method."""
+    positions = np.ones((4, dimension))
+    qbits = qse.Qbits(positions=positions)
+    assert qbits.dimension == dimension
+
+    if qbits.dimension == 3:
+        with pytest.raises(Exception):
+            qbits.add_dimension()
+
+    else:
+        qbits.add_dimension()
+        assert qbits.dimension == dimension + 1
+        assert np.allclose(
+            qbits.positions, np.column_stack([positions, np.zeros(positions.shape[0])])
+        )
+
+
+@pytest.mark.parametrize("dimension", [1, 2, 3])
+@pytest.mark.parametrize("dim_rm", ["x", "y", "z"])
+def test_remove_dimension(dimension, dim_rm):
+    """Tests the remove_dimension method."""
+    positions = np.ones((4, dimension))
+    qbits = qse.Qbits(positions=positions)
+    assert qbits.dimension == dimension
+
+    if qbits.dimension == 1:
+        with pytest.raises(Exception):
+            qbits.remove_dimension()
+
+    else:
+        qbits.remove_dimension(dim_rm)
+        if (dimension == 2) and (dim_rm == "z"):
+            assert qbits.dimension == dimension
+            assert np.allclose(qbits.positions, positions)
+        else:
+            assert qbits.dimension == dimension - 1
+            assert qbits.positions.shape == (4, dimension - 1)

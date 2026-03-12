@@ -27,7 +27,7 @@ def test_labels_fail(labels):
 @pytest.mark.parametrize("nqbits", [1, 2, 3, 4])
 @pytest.mark.parametrize("dimensions", [1, 2, 3])
 def test_positions(nqbits, dimensions):
-    positions = np.arange(nqbits*dimensions).reshape(-1, dimensions)
+    positions = np.arange(nqbits * dimensions).reshape(-1, dimensions)
     qbits = qse.Qbits(positions=positions)
     assert isinstance(qbits, qse.Qbits)
     assert qbits.nqbits == nqbits
