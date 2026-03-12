@@ -143,7 +143,8 @@ class Qbits:
             else:
                 assert self.cell.rank == 3
                 positions = np.dot(scaled_positions, self.cell)
-        self.new_array("positions", positions, float, (3,))
+
+        self.new_array("positions", positions, float)
 
         # states
         if states is None:
@@ -194,6 +195,22 @@ class Qbits:
         self._calc = calc
         if hasattr(calc, "set_qbits"):
             calc.set_qbits(self)
+
+    @property
+    def positions(self):
+        return self.arrays["positions"]
+
+    @positions.setter
+    def positions(self, pos):
+        self.arrays["positions"][:] = pos
+
+    @property
+    def dimension(self):
+        return self.positions.shape[1]
+
+    @property
+    def nqbits(self):
+        return len(self)
 
     def set_cell(self, cell, scale_qbits=False):
         """
@@ -273,10 +290,6 @@ class Qbits:
         return self.cell.reciprocal()
 
     @property
-    def nqbits(self):
-        return len(self)
-
-    @property
     def pbc(self):
         """Reference to pbc-flags for in-place manipulations."""
         return self._pbc
@@ -317,6 +330,15 @@ class Qbits:
                     'Array "%s" has wrong length: %d != %d.' % (name, len(a), len(b))
                 )
             break
+
+        # We allow positions to be 1D, 2D or 3D
+        if name == "positions":
+            if len(a.shape) != 2 or a.shape[1] not in [1, 2, 3]:
+                raise ValueError(
+                    "Positions must have shape (n_q, d) "
+                    "where n_q is the number of qbits and the "
+                    "dimnension d is 1, 2 or 3."
+                )
 
         if shape is not None and a.shape[1:] != shape:
             raise ValueError(
@@ -852,6 +874,8 @@ class Qbits:
 
             \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
+        if self.dimension != 3:
+            raise Exception("euler_rotate can only be performed on 3D systems.")
 
         def rotation_mat(angle):
             return np.array(
@@ -1199,20 +1223,6 @@ class Qbits:
             )
         return self.cell.volume
 
-    def _get_positions(self):
-        """Return reference to positions-array for in-place manipulations."""
-        return self.arrays["positions"]
-
-    def _set_positions(self, pos):
-        """Set positions directly, bypassing constraints."""
-        self.arrays["positions"][:] = pos
-
-    positions = property(
-        _get_positions,
-        _set_positions,
-        doc="Attribute for direct " + "manipulation of the positions.",
-    )
-
     # Rajarshi: Below these three written to add attribute of states
     def _get_states(self):
         """Return reference to states-array for in-place manipulations."""
@@ -1344,6 +1354,37 @@ class Qbits:
                     ops.append(Operator(interaction, (i, j), self.nqbits, coef))
 
         return Operators(ops)
+
+    def add_dimension(self):
+        """
+        Adds a spatial dimension to the positions. E.e. to go from 1D to 2D systems
+        or 2D to 3D systems.
+        """
+        if self.dimension == 3:
+            raise ValueError("Can't go above 3 dimensions.")
+        self.arrays["positions"] = np.column_stack(
+            [self.arrays["positions"], np.zeros(self.nqbits)]
+        )
+
+    def remove_dimension(self, dim):
+        """
+        Removes a spatial dimension to the positions. E.e. to go from 2D to 1D systems
+        or 3D to 2D systems.
+
+        Parameters
+        ----------
+        dim : str
+            The dimension to be removed.
+            Must be one of 'x', 'y' or 'z'.
+        """
+        if self.dimension == 1:
+            raise ValueError("Can't go below 1 dimension.")
+        axes = ["x", "y", "z"]
+        if dim not in axes:
+            raise ValueError("dim must be one of 'x', 'y' or 'z'.")
+        keep_cols = [i for i in range(self.dimension) if i != axes.index(dim)]
+
+        self.arrays["positions"] = self.arrays["positions"][:, keep_cols]
 
 
 def _norm_vector(v):
