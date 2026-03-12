@@ -31,6 +31,12 @@ def test_labels_fail(labels):
 def test_positions(positions):
     qbits = qse.Qbits(positions=positions)
     assert isinstance(qbits, qse.Qbits)
+    assert qbits.nqbits == positions.shape[0]
+
+    # try no keyword
+    qbits = qse.Qbits(positions)
+    assert isinstance(qbits, qse.Qbits)
+    assert qbits.nqbits == positions.shape[0]
 
 
 @pytest.mark.parametrize("positions", [np.zeros(3), [1, 2]])
