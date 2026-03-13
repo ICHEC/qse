@@ -31,6 +31,7 @@ See the `contributing page <https://github.com/ICHEC/qse/blob/main/CONTRIBUTIONS
 
    tutorials/creating_and_manipulating_qbits
    tutorials/generating_lattices
+   tutorials/working_with_operators
    tutorials/pulser-calc-example
    tutorials/ssh_model
 
