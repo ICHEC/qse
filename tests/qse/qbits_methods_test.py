@@ -10,10 +10,11 @@ def _qbits_checker(qbits, positions, total_qubits):
     assert qbits.nqbits == total_qubits
 
 
+@pytest.mark.parametrize("dim", [1, 2, 3])
 @pytest.mark.parametrize("nqbits", [1, 2, 3, 10])
-def test_basic_properties(nqbits):
+def test_basic_properties(nqbits, dim):
     """Test basic Qbits methods."""
-    positions = np.random.rand(nqbits, 3)
+    positions = np.random.rand(nqbits, dim)
     qbits = qse.Qbits(positions=positions)
     _qbits_checker(qbits, positions, nqbits)
     assert len(qbits) == nqbits
@@ -44,10 +45,11 @@ def test_add_qbit():
     assert all(qbits.labels == [1, 2, 3, "q"])
 
 
+@pytest.mark.parametrize("dim", [1, 2, 3])
 @pytest.mark.parametrize("nqbits", [2, 3, 4])
-def test_get_distance(nqbits):
+def test_get_distance(nqbits, dim):
     """Test get_distance on a set of qbits."""
-    positions = np.random.rand(nqbits, 3)
+    positions = np.random.rand(nqbits, dim)
     qbits = qse.Qbits(positions=positions)
 
     assert qbits.nqbits == positions.shape[0]
@@ -114,6 +116,7 @@ def test_set_distance(nqbits, distance, inds):
     assert np.isclose(qbits.get_distance(*inds), distance)
 
 
+@pytest.mark.parametrize("dim", [1, 2, 3])
 @pytest.mark.parametrize(
     "positions",
     [
@@ -122,10 +125,10 @@ def test_set_distance(nqbits, distance, inds):
     ],
 )
 @pytest.mark.parametrize("centroid", [0.0, 1.0, -1.0])
-def test_get_centroid(positions, centroid):
+def test_get_centroid(positions, centroid, dim):
     """Test get_centroid, note the positions parametrized all have zero centroid."""
-    qbits = qse.Qbits(positions=positions + centroid)
-    assert np.allclose(qbits.get_centroid(), [centroid] * 3)
+    qbits = qse.Qbits(positions=positions[:, :dim] + centroid)
+    assert np.allclose(qbits.get_centroid(), [centroid] * dim)
 
 
 @pytest.mark.parametrize(
@@ -221,37 +224,42 @@ def test_del_item(indices):
     )
 
 
-def test_rotate():
+@pytest.mark.parametrize("dim", [2, 3])
+def test_rotate(dim):
     """Simple checks for rotate."""
-    unit_square = np.array(
-        [[1.0, 0.0, 0.0], [1.0, 1.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]]
-    )
+    unit_square = np.array([[1.0, 0.0], [1.0, 1.0], [0.0, 1.0], [0.0, 0.0]])
+    if dim == 3:
+        unit_square = np.column_stack([unit_square, np.zeros(4)])
     qbits = qse.Qbits(positions=unit_square)
     qbits.rotate(90, "z")
 
     assert not np.allclose(qbits.positions, unit_square)
 
-    unit_square_rt = np.array(
-        [[0.0, 1.0, 0.0], [-1.0, 1.0, 0.0], [-1.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
-    )
+    unit_square_rt = np.array([[0.0, 1.0], [-1.0, 1.0], [-1.0, 0.0], [0.0, 0.0]])
+    if dim == 3:
+        unit_square_rt = np.column_stack([unit_square_rt, np.zeros(4)])
+
     assert np.allclose(qbits.positions, unit_square_rt)
 
     # Check that a centered square is invariant (with relabelling).
-    square_centered = np.array(
-        [[1.0, 1.0, 0.0], [1.0, -1.0, 0.0], [-1.0, 1.0, 0.0], [-1.0, -1.0, 0.0]]
-    )
+    square_centered = np.array([[1.0, 1.0], [1.0, -1.0], [-1.0, 1.0], [-1.0, -1.0]])
+    if dim == 3:
+        square_centered = np.column_stack([square_centered, np.zeros(4)])
+
     qbits = qse.Qbits(positions=square_centered)
     qbits.rotate(90, "z")
     assert np.allclose(qbits.positions, square_centered[[2, 0, 3, 1]])
 
 
+@pytest.mark.parametrize("dim", [2, 3])
 @pytest.mark.parametrize("angle", [10, 20, 30])
 @pytest.mark.parametrize("axis", [None, "z", (0, 0, 1)])
-def test_rotate_square_z(angle, axis):
+def test_rotate_square_z(dim, angle, axis):
     """Test rotating a square system about the z axis."""
-    positions = np.array(
-        [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0], [1.0, 0.0, 1.0]]
-    )
+    z_coords = [0.0, 0.0, 1.0, 1.0]
+    positions = np.array([[0.0, 0.0], [1.0, 0.0], [0.0, 0.0], [1.0, 0.0]])
+    if dim == 3:
+        positions = np.column_stack([positions, z_coords])
     qbits = qse.Qbits(positions=positions)
 
     if axis is None:
@@ -262,12 +270,14 @@ def test_rotate_square_z(angle, axis):
     angle_rads = np.pi * angle / 180
     new_positions = np.array(
         [
-            [0.0, 0.0, 0.0],
-            [np.cos(angle_rads), np.sin(angle_rads), 0.0],
-            [0.0, 0.0, 1.0],
-            [np.cos(angle_rads), np.sin(angle_rads), 1.0],
+            [0.0, 0.0],
+            [np.cos(angle_rads), np.sin(angle_rads)],
+            [0.0, 0.0],
+            [np.cos(angle_rads), np.sin(angle_rads)],
         ]
     )
+    if dim == 3:
+        new_positions = np.column_stack([new_positions, z_coords])
     assert np.allclose(qbits.positions, new_positions)
 
 

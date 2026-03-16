@@ -3,11 +3,10 @@ This module defines the central object in the QSE package: the Qbits object.
 """
 
 import numbers
+import warnings
 from math import cos, sin
 
 import numpy as np
-import warnings
-
 from ase.cell import Cell
 
 from qse.operator import Operator, Operators
@@ -749,6 +748,13 @@ class Qbits:
 
             \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
+        if self.dimension == 1:
+            raise Exception("rotate requires 2 or 3 dimensions.")
+
+        rm_dim = False
+        if self.dimension == 2:
+            self.add_dimension()
+            rm_dim = True
 
         if not isinstance(a, numbers.Real):
             a, v = v, a
@@ -782,6 +788,9 @@ class Qbits:
         self.arrays["positions"][:] = (
             c * p - np.cross(p, s * v) + np.outer(np.dot(p, v), (1.0 - c) * v) + center
         )
+        if rm_dim:
+            self.remove_dimension("z")
+
         if rotate_cell:
             rotcell = self.get_cell()
             rotcell[:] = (
