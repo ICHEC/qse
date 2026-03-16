@@ -89,19 +89,17 @@ class Qbits:
         pbc=None,
         calculator=None,
     ):
-        # get number of qubits
         if labels is None:
-            if positions is not None:
-                nqbits = len(positions)
-            else:
-                nqbits = 0
+            nqbits = 0 if positions is None else len(positions)
         else:
             if not isinstance(labels, list):
                 raise Exception("'labels' must be a list.")
             nqbits = len(labels)
 
-        if (positions is not None) and (len(positions) != nqbits):
-            raise Exception("Both 'positions' and 'labels' must have the same length.")
+            if (positions is not None) and (len(positions) != nqbits):
+                raise Exception(
+                    "Both 'positions' and 'labels' must have the same length."
+                )
 
         self.arrays = {}
 
