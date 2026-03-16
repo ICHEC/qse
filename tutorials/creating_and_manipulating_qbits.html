@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Creating and manipulating Qbits &#8212; qse 1.0.5 documentation</title>
+    <title>Creating and manipulating Qbits &#8212; qse 1.0.6 documentation</title>
   
   
   
@@ -42,7 +42,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=c05c4e54"></script>
+    <script src="../_static/documentation_options.js?v=d728ce32"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
@@ -140,8 +140,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.5 documentation - Home"/>
-    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.5 documentation - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.6 documentation - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.6 documentation - Home"/>
   
   
 </a></div>
@@ -430,6 +430,20 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="p">[[</span><span class="mf">4.994</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">4.994</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">4.994</span><span class="p">]]</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="p">)</span>  <span class="c1"># cell is defined using coordinates.</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">scaled_positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">qbits_2</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="n">cell</span><span class="p">,</span> <span class="n">scaled_positions</span><span class="o">=</span><span class="n">scaled_positions</span><span class="p">)</span>
+
+<span class="ne">TypeError</span>: Qbits.__init__() got an unexpected keyword argument &#39;scaled_positions&#39;
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="specify-the-structure-vectors-and-angles">
@@ -493,7 +507,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/11882681d1762efd80df1f460fda2bf1b016f47de16e61ed7e0245622297d7f9.png" src="../_images/11882681d1762efd80df1f460fda2bf1b016f47de16e61ed7e0245622297d7f9.png" />
+<img alt="../_images/b4ebb8ca2d9dd525b05a908e4c571a78707e23c55b607942c4fcc52a81be46ce.png" src="../_images/b4ebb8ca2d9dd525b05a908e4c571a78707e23c55b607942c4fcc52a81be46ce.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -504,7 +518,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b3c1a79a65776fbf752675f351fc37478ba6b934e63ff8bc05fbe1784d639737.png" src="../_images/b3c1a79a65776fbf752675f351fc37478ba6b934e63ff8bc05fbe1784d639737.png" />
+<img alt="../_images/3356678bb449e3bc025cc9560aa79b516cc57a2493fcede5bb493eddf8a096e4.png" src="../_images/3356678bb449e3bc025cc9560aa79b516cc57a2493fcede5bb493eddf8a096e4.png" />
 </div>
 </div>
 <p>Our drawing function is also able to draw 2d structures. We can see an example of this in the cell below, that creates and draws a 2d Qbits object.</p>
@@ -533,7 +547,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/44b981a703bc26f959d81930125b4141c0ea75fff60383f9ce888015feda527b.png" src="../_images/44b981a703bc26f959d81930125b4141c0ea75fff60383f9ce888015feda527b.png" />
+<img alt="../_images/c0bcdaef3669bf24e35ad992a2c7666fe920c844bdfd7b935b802fc90773d067.png" src="../_images/c0bcdaef3669bf24e35ad992a2c7666fe920c844bdfd7b935b802fc90773d067.png" />
 </div>
 </div>
 </section>
@@ -548,7 +562,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/79eed8745f30fe1caf86d83e93cf0e9d7524a57c9c73d1e401c7202437320e9f.png" src="../_images/79eed8745f30fe1caf86d83e93cf0e9d7524a57c9c73d1e401c7202437320e9f.png" />
+<img alt="../_images/348a872debf13d2309d3ddd9097c8257a557f2f51cd45d5c686d195c80890983.png" src="../_images/348a872debf13d2309d3ddd9097c8257a557f2f51cd45d5c686d195c80890983.png" />
 </div>
 </div>
 <p>Translations of the structure can also be made using the <code class="docutils literal notranslate"><span class="pre">set_centroid</span></code> method, as we can see below.</p>
@@ -560,7 +574,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e0498c24025a36ddc3128e43d934b9648d95877bdbbb9a55695ea9395278f76b.png" src="../_images/e0498c24025a36ddc3128e43d934b9648d95877bdbbb9a55695ea9395278f76b.png" />
+<img alt="../_images/e706c8f8e3a3231ba3d9b68b880f1ef3c5dd8eb78fcec266773d5ade8160d9b0.png" src="../_images/e706c8f8e3a3231ba3d9b68b880f1ef3c5dd8eb78fcec266773d5ade8160d9b0.png" />
 </div>
 </div>
 </section>
@@ -575,7 +589,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/88d9ca10bc579b5810a3e8f460d3a774cbb6bee8fd6bdfbfea1ed2dbc3ded254.png" src="../_images/88d9ca10bc579b5810a3e8f460d3a774cbb6bee8fd6bdfbfea1ed2dbc3ded254.png" />
+<img alt="../_images/5ee282f7d43e8ba124089de7a77667da24802739928f80eb55e63268dd404de1.png" src="../_images/5ee282f7d43e8ba124089de7a77667da24802739928f80eb55e63268dd404de1.png" />
 </div>
 </div>
 <p>With the method <code class="docutils literal notranslate"><span class="pre">euler_rotate</span></code> we can rotate a lattice by inputting the angles $\phi$, $\theta$, $\psi$ in degrees, as shown below.</p>
@@ -587,7 +601,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/16c197f70c137e092b583f43efe07f412af6ad10cc374882d343d752cdf6565b.png" src="../_images/16c197f70c137e092b583f43efe07f412af6ad10cc374882d343d752cdf6565b.png" />
+<img alt="../_images/c1b71e98bd14d33e285690f15a38327838b3192927c0fe87477cf1a5083334b2.png" src="../_images/c1b71e98bd14d33e285690f15a38327838b3192927c0fe87477cf1a5083334b2.png" />
 </div>
 </div>
 </section>

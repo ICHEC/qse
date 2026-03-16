@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.qbits &#8212; qse 1.0.5 documentation</title>
+    <title>qse.qbits &#8212; qse 1.0.6 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=c05c4e54"></script>
+    <script src="../../_static/documentation_options.js?v=d728ce32"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.5 documentation - Home"/>
-    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.5 documentation - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.6 documentation - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.6 documentation - Home"/>
   
   
 </a></div>
@@ -341,17 +341,14 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    labels: list of str</span>
-<span class="sd">        A list of strings corresponding to a label for each qubit.</span>
-<span class="sd">    states: list of 2-length arrays.</span>
-<span class="sd">        State of each qubit.</span>
 <span class="sd">    positions: list of xyz-positions</span>
 <span class="sd">        Qubit positions.  Anything that can be converted to an</span>
 <span class="sd">        ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),</span>
 <span class="sd">        ...].</span>
-<span class="sd">    scaled_positions: list of scaled-positions</span>
-<span class="sd">        Like positions, but given in units of the unit cell.</span>
-<span class="sd">        Can not be set at the same time as positions.</span>
+<span class="sd">    labels: list of str</span>
+<span class="sd">        A list of strings corresponding to a label for each qubit.</span>
+<span class="sd">    states: list of 2-length arrays.</span>
+<span class="sd">        State of each qubit.</span>
 <span class="sd">    cell: 3x3 matrix or length 3 or 6 vector</span>
 <span class="sd">        Unit cell vectors.  Can also be given as just three</span>
 <span class="sd">        numbers for orthorhombic cells, or 6 numbers, where</span>
@@ -377,8 +374,8 @@
 <span class="sd">    These are equivalent:</span>
 
 <span class="sd">    &gt;&gt;&gt; a = qse.Qbits(</span>
-<span class="sd">    ...     labels=[&#39;qb1&#39;, &#39;qb2&#39;],</span>
 <span class="sd">    ...     positions=np.array([(0, 0, 0), (0, 0, 2)])</span>
+<span class="sd">    ...     labels=[&#39;qb1&#39;, &#39;qb2&#39;],</span>
 <span class="sd">    ... )</span>
 <span class="sd">    &gt;&gt;&gt; a = qse.Qbits.from_qbit_list(</span>
 <span class="sd">    ...     [Qbit(&#39;qb1&#39;, position=(0, 0, 0)), Qbit(&#39;qb2&#39;, position=(0, 0, 2))]</span>
@@ -386,8 +383,9 @@
 
 <span class="sd">    &gt;&gt;&gt; xd = np.array(</span>
 <span class="sd">    ...    [[0, 0, 0],</span>
-<span class="sd">    ...     [0.5, 0.5, 0.5]])</span>
-<span class="sd">    &gt;&gt;&gt; qdim = qse.Qbits(positions=xd)</span>
+<span class="sd">    ...     [0.5, 0.5, 0.5]]</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; qdim = qse.Qbits(xd)</span>
 <span class="sd">    &gt;&gt;&gt; qdim.cell = [1,1,1]</span>
 <span class="sd">    &gt;&gt;&gt; qdim.pbc = True</span>
 <span class="sd">    &gt;&gt;&gt; qlat = qdim.repeat([3,3,3])</span>
@@ -402,43 +400,24 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
+        <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">states</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">positions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">scaled_positions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">pbc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">calculator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">scaled_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="s2">&quot;Both &#39;positions&#39; and &#39;scaled_positions&#39;&quot;</span>
-                <span class="s2">&quot; cannot be passed at the same time.&quot;</span>
-            <span class="p">)</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="n">scaled_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">cell</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;&#39;scaled_positions&#39; requires &#39;cell&#39; to not be None.&quot;</span><span class="p">)</span>
-
-        <span class="c1"># get number of qubits</span>
         <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">scaled_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">scaled_positions</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">nqbits</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">nqbits</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;&#39;labels&#39; must be a list.&quot;</span><span class="p">)</span>
             <span class="n">nqbits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span> <span class="o">!=</span> <span class="n">nqbits</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Both &#39;positions&#39; and &#39;labels&#39; must have the same length.&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="n">scaled_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scaled_positions</span><span class="p">)</span> <span class="o">!=</span> <span class="n">nqbits</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="s2">&quot;Both &#39;scaled_positions&#39; and &#39;labels&#39; must have the same length.&quot;</span>
-            <span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span> <span class="o">!=</span> <span class="n">nqbits</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="s2">&quot;Both &#39;positions&#39; and &#39;labels&#39; must have the same length.&quot;</span>
+                <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -456,11 +435,7 @@
 
         <span class="c1"># positions</span>
         <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">scaled_positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]),</span> <span class="mi">3</span><span class="p">))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">3</span>
-                <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">scaled_positions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">)</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]),</span> <span class="mi">3</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s2">&quot;positions&quot;</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
 
         <span class="c1"># states</span>
@@ -1760,6 +1735,20 @@
                     <span class="n">ops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Operator</span><span class="p">(</span><span class="n">interaction</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">coef</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">Operators</span><span class="p">(</span><span class="n">ops</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Qbits.get_scaled_positions">
+<a class="viewcode-back" href="../../api.html#qse.Qbits.get_scaled_positions">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_scaled_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the positions in units of the unit cell.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            The positions in units of the unit cell.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">))</span></div>
 </div>
 
 
