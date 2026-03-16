@@ -6,6 +6,8 @@ import numbers
 from math import cos, sin
 
 import numpy as np
+import warnings
+
 from ase.cell import Cell
 
 from qse.operator import Operator, Operators
@@ -1255,7 +1257,14 @@ class Qbits:
     def to_pulser(self):
         from pulser import Register
 
-        return Register.from_coordinates(self.positions[:, :2], prefix="q")
+        if self.dimension == 2:
+            return Register.from_coordinates(self.positions, prefix="q")
+
+        if self.dimension == 3:
+            warnings.warn("3D system passed, removing the z axis.")
+            return Register.from_coordinates(self.positions[:, :2], prefix="q")
+
+        return Exception("The qbits must be 2D or 3D for use in Pulser.")
 
     def compute_interaction_hamiltonian(
         self,
