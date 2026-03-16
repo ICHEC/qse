@@ -118,7 +118,7 @@ class Qbits:
 
         # positions
         if positions is None:
-            positions = np.zeros((len(self.arrays["labels"]), 3))
+            positions = np.zeros((nqbits, 3))
 
         self.new_array("positions", positions, float)
 
