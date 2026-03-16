@@ -23,17 +23,14 @@ class Qbits:
 
     Parameters
     ----------
-    labels: list of str
-        A list of strings corresponding to a label for each qubit.
-    states: list of 2-length arrays.
-        State of each qubit.
     positions: list of xyz-positions
         Qubit positions.  Anything that can be converted to an
         ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),
         ...].
-    scaled_positions: list of scaled-positions
-        Like positions, but given in units of the unit cell.
-        Can not be set at the same time as positions.
+    labels: list of str
+        A list of strings corresponding to a label for each qubit.
+    states: list of 2-length arrays.
+        State of each qubit.
     cell: 3x3 matrix or length 3 or 6 vector
         Unit cell vectors.  Can also be given as just three
         numbers for orthorhombic cells, or 6 numbers, where
@@ -59,8 +56,8 @@ class Qbits:
     These are equivalent:
 
     >>> a = qse.Qbits(
-    ...     labels=['qb1', 'qb2'],
     ...     positions=np.array([(0, 0, 0), (0, 0, 2)])
+    ...     labels=['qb1', 'qb2'],
     ... )
     >>> a = qse.Qbits.from_qbit_list(
     ...     [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))]
@@ -68,8 +65,9 @@ class Qbits:
 
     >>> xd = np.array(
     ...    [[0, 0, 0],
-    ...     [0.5, 0.5, 0.5]])
-    >>> qdim = qse.Qbits(positions=xd)
+    ...     [0.5, 0.5, 0.5]]
+    ... )
+    >>> qdim = qse.Qbits(xd)
     >>> qdim.cell = [1,1,1]
     >>> qdim.pbc = True
     >>> qlat = qdim.repeat([3,3,3])
@@ -84,43 +82,24 @@ class Qbits:
 
     def __init__(
         self,
+        positions=None,
         labels=None,
         states=None,
-        positions=None,
-        scaled_positions=None,
         cell=None,
         pbc=None,
         calculator=None,
     ):
-        if (positions is not None) and (scaled_positions is not None):
-            raise Exception(
-                "Both 'positions' and 'scaled_positions'"
-                " cannot be passed at the same time."
-            )
-
-        if (scaled_positions is not None) and (cell is None):
-            raise Exception("'scaled_positions' requires 'cell' to not be None.")
-
-        # get number of qubits
         if labels is None:
-            if positions is not None:
-                nqbits = len(positions)
-            elif scaled_positions is not None:
-                nqbits = len(scaled_positions)
-            else:
-                nqbits = 0
+            nqbits = 0 if positions is None else len(positions)
         else:
             if not isinstance(labels, list):
                 raise Exception("'labels' must be a list.")
             nqbits = len(labels)
 
-        if (positions is not None) and (len(positions) != nqbits):
-            raise Exception("Both 'positions' and 'labels' must have the same length.")
-
-        if (scaled_positions is not None) and (len(scaled_positions) != nqbits):
-            raise Exception(
-                "Both 'scaled_positions' and 'labels' must have the same length."
-            )
+            if (positions is not None) and (len(positions) != nqbits):
+                raise Exception(
+                    "Both 'positions' and 'labels' must have the same length."
+                )
 
         self.arrays = {}
 
@@ -138,11 +117,7 @@ class Qbits:
 
         # positions
         if positions is None:
-            if scaled_positions is None:
-                positions = np.zeros((len(self.arrays["labels"]), 3))
-            else:
-                assert self.cell.rank == 3
-                positions = np.dot(scaled_positions, self.cell)
+            positions = np.zeros((len(self.arrays["labels"]), 3))
 
         self.new_array("positions", positions, float)
 
@@ -1385,6 +1360,17 @@ class Qbits:
         keep_cols = [i for i in range(self.dimension) if i != axes.index(dim)]
 
         self.arrays["positions"] = self.arrays["positions"][:, keep_cols]
+
+    def get_scaled_positions(self):
+        """
+        Get the positions in units of the unit cell.
+
+        Returns
+        -------
+        np.ndarray
+            The positions in units of the unit cell.
+        """
+        return np.dot(self.positions, np.linalg.inv(self.cell))
 
 
 def _norm_vector(v):

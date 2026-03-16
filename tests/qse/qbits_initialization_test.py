@@ -32,34 +32,18 @@ def test_positions(nqbits, dimensions):
     assert isinstance(qbits, qse.Qbits)
     assert qbits.nqbits == nqbits
     assert qbits.dimension == dimensions
+    assert qbits.nqbits == positions.shape[0]
+
+    # try no keyword
+    qbits = qse.Qbits(positions)
+    assert isinstance(qbits, qse.Qbits)
+    assert qbits.nqbits == positions.shape[0]
 
 
 @pytest.mark.parametrize("positions", [np.zeros(3), [1, 2], np.zeros((1, 4))])
 def test_positions_fail(positions):
     with pytest.raises(Exception):
         qse.Qbits(positions=positions)
-
-
-def test_positions_and_scaled_fail():
-    with pytest.raises(
-        Exception,
-        match="Both 'positions' and 'scaled_positions'"
-        " cannot be passed at the same time.",
-    ):
-        qse.Qbits(
-            positions=np.arange(9).reshape(-1, 3),
-            scaled_positions=np.arange(9).reshape(-1, 3),
-        )
-
-
-def test_scaled_positions_fail():
-    with pytest.raises(
-        Exception,
-        match="'scaled_positions' requires 'cell' to not be None.",
-    ):
-        qse.Qbits(
-            scaled_positions=np.arange(9).reshape(-1, 3),
-        )
 
 
 def test_labels_positions_fail():

@@ -540,3 +540,28 @@ def test_remove_dimension(dimension, dim_rm):
         else:
             assert qbits.dimension == dimension - 1
             assert qbits.positions.shape == (4, dimension - 1)
+
+
+@pytest.mark.parametrize(
+    "scaled_positions",
+    [
+        np.array([[1.0, 0.0, 3.0], [0.2, 0.42, 1]]),
+        np.array([[0.0, 0.0, 1.0]]),
+        np.ones((7, 3)),
+    ],
+)
+@pytest.mark.parametrize(
+    "cell",
+    [
+        np.array([[1.0, 1.0, 2.0], [-0.2, 0.0, 0.0], [3.0, 0.0, 10.0]]),
+        np.eye(3),
+        np.array([[1.2, -1.0, -2.0], [3.2, 3.2, 3.2], [3.0, -1.0, 10.0]]),
+    ],
+)
+def test_get_scaled_positions(scaled_positions, cell):
+    """Test the get_scaled_positions method."""
+    positions = np.dot(scaled_positions, cell)
+
+    qbits = qse.Qbits(positions=positions, cell=cell)
+    assert np.allclose(scaled_positions, qbits.get_scaled_positions())
+    assert qbits.positions.shape == scaled_positions.shape
