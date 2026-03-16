@@ -3,8 +3,8 @@ QSE
 
 The Quantum Simulation Environment (QSE) package is adapted from Atomic Simulation Environment (ASE) to suit the needs for an abstract representation for
 
-* `i. defining quantum computing systems`
-* `ii. computing operations/simulations`
+#. `defining quantum computing systems`
+#. `computing operations/simulations`
 
 in a vendor agnostic way. ASE's modular nature, and extensability make it very useful for a similar quantum computing application.
 
