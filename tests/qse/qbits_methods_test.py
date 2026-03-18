@@ -404,3 +404,58 @@ def test_repeat(nqbits, repeats):
 
     ps = np.array(ps)
     assert np.allclose(ps, qbits.positions)
+
+
+def test_compute_interaction_hamiltonian():
+    """Test compute_interaction_hamiltonian method."""
+    # To create a ZZ Hamiltonian for only nearest neighbour qubits
+    spacing = 1.0
+    qbits = qse.lattices.chain(spacing, 4)
+    coupling = -2.0
+    ham = qbits.compute_interaction_hamiltonian(
+        lambda x: coupling * np.isclose(x, spacing), "Z"
+    )
+    assert ham.nqbits == 4
+    assert ham.nterms == 3
+    for op in ham:
+        assert np.isclose(op.coef, coupling)
+        assert all([i == "Z" for i in op.operator])
+
+    # To create an XY Hamiltonian based on distance
+    qbits = qse.lattices.chain(spacing, 3)
+    coupling = 1.0
+
+    ham = qbits.compute_interaction_hamiltonian(lambda x: coupling / x**3, ["X", "Y"])
+    ham += qbits.compute_interaction_hamiltonian(lambda x: coupling / x**3, ["Y", "X"])
+    assert ham.nqbits == 3
+    assert ham.nterms == 6
+    for op in ham[:3]:
+        assert "".join(op.operator) == "XY"
+
+    for op in ham[3:]:
+        assert "".join(op.operator) == "YX"
+
+
+@pytest.mark.parametrize(
+    "scaled_positions",
+    [
+        np.array([[1.0, 0.0, 3.0], [0.2, 0.42, 1]]),
+        np.array([[0.0, 0.0, 1.0]]),
+        np.ones((7, 3)),
+    ],
+)
+@pytest.mark.parametrize(
+    "cell",
+    [
+        np.array([[1.0, 1.0, 2.0], [-0.2, 0.0, 0.0], [3.0, 0.0, 10.0]]),
+        np.eye(3),
+        np.array([[1.2, -1.0, -2.0], [3.2, 3.2, 3.2], [3.0, -1.0, 10.0]]),
+    ],
+)
+def test_get_scaled_positions(scaled_positions, cell):
+    """Test the get_scaled_positions method."""
+    positions = np.dot(scaled_positions, cell)
+
+    qbits = qse.Qbits(positions=positions, cell=cell)
+    assert np.allclose(scaled_positions, qbits.get_scaled_positions())
+    assert qbits.positions.shape == scaled_positions.shape

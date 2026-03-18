@@ -8,6 +8,7 @@ from math import cos, sin
 import numpy as np
 
 from qse.cell import Cell
+from qse.operator import Operator, Operators
 from qse.qbit import Qbit
 from qse.visualise import draw as _draw
 
@@ -22,17 +23,14 @@ class Qbits:
 
     Parameters
     ----------
-    labels: list of str
-        A list of strings corresponding to a label for each qubit.
-    states: list of 2-length arrays.
-        State of each qubit.
     positions: list of xyz-positions
         Qubit positions.  Anything that can be converted to an
         ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),
         ...].
-    scaled_positions: list of scaled-positions
-        Like positions, but given in units of the unit cell.
-        Can not be set at the same time as positions.
+    labels: list of str
+        A list of strings corresponding to a label for each qubit.
+    states: list of 2-length arrays.
+        State of each qubit.
     cell: qse.Cell | 3x3 matrix
         Unit cell vectors.
         Either pass a matrix where each row corresponds to a lattice vector
@@ -54,8 +52,8 @@ class Qbits:
     These are equivalent:
 
     >>> a = qse.Qbits(
-    ...     labels=['qb1', 'qb2'],
     ...     positions=np.array([(0, 0, 0), (0, 0, 2)])
+    ...     labels=['qb1', 'qb2'],
     ... )
     >>> a = qse.Qbits.from_qbit_list(
     ...     [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))]
@@ -63,7 +61,8 @@ class Qbits:
 
     >>> xd = np.array(
     ...    [[0, 0, 0],
-    ...     [0.5, 0.5, 0.5]])
+    ...     [0.5, 0.5, 0.5]]
+    ... )
     >>> qdim = qse.Qbits(positions=xd, cell=np.eye(3))
     >>> qdim.pbc = True
     >>> qlat = qdim.repeat([3,3,3])
@@ -78,43 +77,24 @@ class Qbits:
 
     def __init__(
         self,
+        positions=None,
         labels=None,
         states=None,
-        positions=None,
-        scaled_positions=None,
         cell=None,
         pbc=None,
         calculator=None,
     ):
-        if (positions is not None) and (scaled_positions is not None):
-            raise Exception(
-                "Both 'positions' and 'scaled_positions'"
-                " cannot be passed at the same time."
-            )
-
-        if (scaled_positions is not None) and (cell is None):
-            raise Exception("'scaled_positions' requires 'cell' to not be None.")
-
-        # get number of qubits
         if labels is None:
-            if positions is not None:
-                nqbits = len(positions)
-            elif scaled_positions is not None:
-                nqbits = len(scaled_positions)
-            else:
-                nqbits = 0
+            nqbits = 0 if positions is None else len(positions)
         else:
             if not isinstance(labels, list):
                 raise Exception("'labels' must be a list.")
             nqbits = len(labels)
 
-        if (positions is not None) and (len(positions) != nqbits):
-            raise Exception("Both 'positions' and 'labels' must have the same length.")
-
-        if (scaled_positions is not None) and (len(scaled_positions) != nqbits):
-            raise Exception(
-                "Both 'scaled_positions' and 'labels' must have the same length."
-            )
+            if (positions is not None) and (len(positions) != nqbits):
+                raise Exception(
+                    "Both 'positions' and 'labels' must have the same length."
+                )
 
         self.arrays = {}
 
@@ -131,11 +111,8 @@ class Qbits:
 
         # positions
         if positions is None:
-            if scaled_positions is None:
-                positions = np.zeros((len(self.arrays["labels"]), 3))
-            else:
-                assert self.cell.rank() == 3
-                positions = np.dot(scaled_positions, self.cell.lattice_vectors)
+            positions = np.zeros((nqbits, 3))
+
         self.new_array("positions", positions, float, (3,))
 
         # states
@@ -1161,6 +1138,90 @@ class Qbits:
         from pulser import Register
 
         return Register.from_coordinates(self.positions[:, :2], prefix="q")
+
+    def compute_interaction_hamiltonian(
+        self,
+        distance_func,
+        interaction,
+        tol=1e-8,
+    ):
+        """
+        Compute the interaction Hamiltonian for a system of qubits.
+
+        This function constructs an Operators object based on the distances between
+        the qubits.
+
+        Parameters
+        ----------
+        distance_func : callable
+            A function that takes a distance (float) and returns the interaction
+            coefficient (float).
+        interaction : str | list[str]
+            The type of interaction (e.g., "X", "Y", "Z") for the Hamiltonian terms,
+            or can be a list of strings.
+        tol : float, optional
+            Tolerance threshold for including interaction terms. Terms with absolute
+            coefficients less than `tol` are discarded. Default is 1e-8.
+
+        Returns
+        -------
+        Operators
+            The interaction operators.
+
+        Examples
+        --------
+        To create a ZZ Hamiltonian for only nearest neighbour qubits
+
+        >>> spacing = 1.0
+        >>> qbits = qse.lattices.chain(spacing, 4)
+        >>> coupling = -2.
+        >>> qbits.compute_interaction_hamiltonian(
+        ...     lambda x: coupling*np.isclose(x, spacing), "Z"
+        ... )
+        ... Number of qubits: 4
+        ... Number of terms: 3
+        ...
+        ... -2.00 Z0 Z1
+        ... -2.00 Z1 Z2
+        ... -2.00 Z2 Z3
+
+        To create an XY Hamiltonian based on distance
+
+        >>> spacing = 1.0
+        >>> qbits = qse.lattices.chain(spacing, 2)
+        >>> coupling = 1.
+        >>> hamiltonian = qbits.compute_interaction_hamiltonian(
+        ...     lambda x: coupling / x**3, ["X", "Y"]
+        ... )
+        >>> hamiltonian += qbits.compute_interaction_hamiltonian(
+        ...     lambda x: coupling / x**3, ["Y", "X"]
+        ... )
+        ... Number of qubits: 2
+        ... Number of terms: 2
+        ...
+        ... 1.00 X0 Y1
+        ... 1.00 Y0 X1
+        """
+        ops = []
+
+        for i in range(self.nqbits - 1):
+            for j in range(i + 1, self.nqbits):
+                coef = distance_func(self.get_distance(i, j))
+                if np.abs(coef) > tol:
+                    ops.append(Operator(interaction, (i, j), self.nqbits, coef))
+
+        return Operators(ops)
+
+    def get_scaled_positions(self):
+        """
+        Get the positions in units of the unit cell.
+
+        Returns
+        -------
+        np.ndarray
+            The positions in units of the unit cell.
+        """
+        return np.dot(self.positions, np.linalg.inv(self.cell.lattice_vectors))
 
 
 def _norm_vector(v):
