@@ -8,14 +8,11 @@ class Cell:
     Attributes
     ----------
     lattice_vectors : numpy.ndarray
-        A 3x3 matrix representing the lattice vectors.
+        A 1x1, 2x2 or 3x3 matrix representing the lattice vectors.
         Each row is a lattice vector.
-        Defaults to all zeros.
     """
 
-    def __init__(self, lattice_vectors=None):
-        if lattice_vectors is None:
-            lattice_vectors = np.zeros((3, 3))
+    def __init__(self, lattice_vectors):
         self.lattice_vectors = lattice_vectors
 
     def __repr__(self):
@@ -28,8 +25,8 @@ class Cell:
     @lattice_vectors.setter
     def lattice_vectors(self, value):
         value = np.array(value)
-        if value.shape != (3, 3):
-            raise Exception("The lattice vectors must be a 3x3 matrix.")
+        if value.shape not in  [(1, 1), (2, 2), (3, 3)]:
+            raise Exception("The lattice vectors must be a 1x1, 2x2 or 3x3 matrix.")
         self._lattice_vectors = value
 
     def rank(self):
