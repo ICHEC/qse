@@ -181,7 +181,7 @@ class Qbits:
         self.arrays["positions"][:] = pos
 
     @property
-    def dimension(self):
+    def dim(self):
         return self.positions.shape[1]
 
     @property
@@ -748,12 +748,12 @@ class Qbits:
 
             \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
-        if self.dimension == 1:
+        if self.dim == 1:
             raise Exception("rotate requires 2 or 3 dimensions.")
 
         rm_dim = False
-        if self.dimension == 2:
-            self.add_dimension()
+        if self.dim == 2:
+            self.add_dim()
             rm_dim = True
 
         if not isinstance(a, numbers.Real):
@@ -789,7 +789,7 @@ class Qbits:
             c * p - np.cross(p, s * v) + np.outer(np.dot(p, v), (1.0 - c) * v) + center
         )
         if rm_dim:
-            self.remove_dimension("z")
+            self.remove_dim("z")
 
         if rotate_cell:
             rotcell = self.get_cell()
@@ -860,7 +860,7 @@ class Qbits:
 
             \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
-        if self.dimension != 3:
+        if self.dim != 3:
             raise Exception("euler_rotate can only be performed on 3D systems.")
 
         def rotation_mat(angle):
@@ -1266,10 +1266,10 @@ class Qbits:
     def to_pulser(self):
         from pulser import Register
 
-        if self.dimension == 2:
+        if self.dim == 2:
             return Register.from_coordinates(self.positions, prefix="q")
 
-        if self.dimension == 3:
+        if self.dim == 3:
             warnings.warn("3D system passed, removing the z axis.")
             return Register.from_coordinates(self.positions[:, :2], prefix="q")
 
@@ -1348,18 +1348,18 @@ class Qbits:
 
         return Operators(ops)
 
-    def add_dimension(self):
+    def add_dim(self):
         """
         Adds a spatial dimension to the positions. E.e. to go from 1D to 2D systems
         or 2D to 3D systems.
         """
-        if self.dimension == 3:
+        if self.dim == 3:
             raise ValueError("Can't go above 3 dimensions.")
         self.arrays["positions"] = np.column_stack(
             [self.arrays["positions"], np.zeros(self.nqbits)]
         )
 
-    def remove_dimension(self, dim):
+    def remove_dim(self, dim):
         """
         Removes a spatial dimension to the positions. E.e. to go from 2D to 1D systems
         or 3D to 2D systems.
@@ -1370,12 +1370,12 @@ class Qbits:
             The dimension to be removed.
             Must be one of 'x', 'y' or 'z'.
         """
-        if self.dimension == 1:
+        if self.dim == 1:
             raise ValueError("Can't go below 1 dimension.")
         axes = ["x", "y", "z"]
         if dim not in axes:
             raise ValueError("dim must be one of 'x', 'y' or 'z'.")
-        keep_cols = [i for i in range(self.dimension) if i != axes.index(dim)]
+        keep_cols = [i for i in range(self.dim) if i != axes.index(dim)]
 
         self.arrays["positions"] = self.arrays["positions"][:, keep_cols]
 

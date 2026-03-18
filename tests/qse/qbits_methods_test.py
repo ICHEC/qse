@@ -512,19 +512,19 @@ def test_compute_interaction_hamiltonian():
 
 
 @pytest.mark.parametrize("dimension", [1, 2, 3])
-def test_add_dimension(dimension):
-    """Tests the add_dimension method."""
+def test_add_dim(dimension):
+    """Tests the add_dim method."""
     positions = np.ones((4, dimension))
     qbits = qse.Qbits(positions=positions)
-    assert qbits.dimension == dimension
+    assert qbits.dim == dimension
 
-    if qbits.dimension == 3:
+    if qbits.dim == 3:
         with pytest.raises(Exception):
-            qbits.add_dimension()
+            qbits.add_dim()
 
     else:
-        qbits.add_dimension()
-        assert qbits.dimension == dimension + 1
+        qbits.add_dim()
+        assert qbits.dim == dimension + 1
         assert np.allclose(
             qbits.positions, np.column_stack([positions, np.zeros(positions.shape[0])])
         )
@@ -532,23 +532,23 @@ def test_add_dimension(dimension):
 
 @pytest.mark.parametrize("dimension", [1, 2, 3])
 @pytest.mark.parametrize("dim_rm", ["x", "y", "z"])
-def test_remove_dimension(dimension, dim_rm):
-    """Tests the remove_dimension method."""
+def test_remove_dim(dimension, dim_rm):
+    """Tests the remove_dim method."""
     positions = np.ones((4, dimension))
     qbits = qse.Qbits(positions=positions)
-    assert qbits.dimension == dimension
+    assert qbits.dim == dimension
 
-    if qbits.dimension == 1:
+    if qbits.dim == 1:
         with pytest.raises(Exception):
-            qbits.remove_dimension()
+            qbits.remove_dim()
 
     else:
-        qbits.remove_dimension(dim_rm)
+        qbits.remove_dim(dim_rm)
         if (dimension == 2) and (dim_rm == "z"):
-            assert qbits.dimension == dimension
+            assert qbits.dim == dimension
             assert np.allclose(qbits.positions, positions)
         else:
-            assert qbits.dimension == dimension - 1
+            assert qbits.dim == dimension - 1
             assert qbits.positions.shape == (4, dimension - 1)
 
 
