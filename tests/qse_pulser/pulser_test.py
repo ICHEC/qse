@@ -1,7 +1,30 @@
 import numpy as np
+import pulser
 import pytest
 
 import qse
+
+
+@pytest.mark.parametrize("dim", [1, 2, 3])
+@pytest.mark.parametrize("nqbits", [2, 3, 4])
+def test_qbits_to_pulser(dim, nqbits):
+    """Check the to_pulser method in qbits"""
+    positions = np.random.rand(nqbits, dim)
+    positions -= positions.mean(0)  # pulser uses centered coords.
+
+    qbits = qse.Qbits(positions)
+    reg = qbits.to_pulser()
+
+    assert isinstance(reg, pulser.Register)
+    pulser_coords = np.array([i for i in reg.qubits.values()])
+    if dim == 1:
+        assert np.allclose(
+            pulser_coords, np.column_stack([positions, np.zeros(nqbits)])
+        )
+    elif dim == 2:
+        assert np.allclose(pulser_coords, positions)
+    else:  # dim == 3
+        assert np.allclose(pulser_coords, positions[:, :2])
 
 
 @pytest.mark.parametrize("duration", [2, 17])

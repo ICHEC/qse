@@ -24,13 +24,14 @@ def test_labels_fail(labels):
         qse.Qbits(labels=labels)
 
 
-@pytest.mark.parametrize(
-    "positions",
-    [np.arange(9).reshape(-1, 3), np.zeros((1, 3))],
-)
-def test_positions(positions):
+@pytest.mark.parametrize("nqbits", [1, 2, 3, 4])
+@pytest.mark.parametrize("dimensions", [1, 2, 3])
+def test_positions(nqbits, dimensions):
+    positions = np.arange(nqbits * dimensions).reshape(-1, dimensions)
     qbits = qse.Qbits(positions=positions)
     assert isinstance(qbits, qse.Qbits)
+    assert qbits.nqbits == nqbits
+    assert qbits.dim == dimensions
     assert qbits.nqbits == positions.shape[0]
 
     # try no keyword
@@ -39,7 +40,7 @@ def test_positions(positions):
     assert qbits.nqbits == positions.shape[0]
 
 
-@pytest.mark.parametrize("positions", [np.zeros(3), [1, 2]])
+@pytest.mark.parametrize("positions", [np.zeros(3), [1, 2], np.zeros((1, 4))])
 def test_positions_fail(positions):
     with pytest.raises(Exception):
         qse.Qbits(positions=positions)

@@ -152,7 +152,7 @@ class Pulser(Calculator):
 
     @property
     def register(self):
-        return pulser.Register.from_coordinates(self.coords, prefix="q")
+        return self._qbits.to_pulser()
 
     @property
     def sequence(self):
