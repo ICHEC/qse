@@ -1266,6 +1266,12 @@ class Qbits:
     def to_pulser(self):
         from pulser import Register
 
+        if self.dim == 1:
+            warnings.warn("1D system passed, adding a y axis.")
+            return Register.from_coordinates(
+                np.column_stack([self.positions, np.zeros(self.nqbits)]), prefix="q"
+            )
+
         if self.dim == 2:
             return Register.from_coordinates(self.positions, prefix="q")
 
