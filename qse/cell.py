@@ -25,9 +25,13 @@ class Cell:
     @lattice_vectors.setter
     def lattice_vectors(self, value):
         value = np.array(value)
-        if value.shape not in  [(1, 1), (2, 2), (3, 3)]:
+        if value.shape not in [(1, 1), (2, 2), (3, 3)]:
             raise Exception("The lattice vectors must be a 1x1, 2x2 or 3x3 matrix.")
         self._lattice_vectors = value
+
+    @property
+    def dim(self):
+        return self.lattice_vectors.shape[0]
 
     def rank(self):
         """

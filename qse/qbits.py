@@ -3,6 +3,7 @@ This module defines the central object in the QSE package: the Qbits object.
 """
 
 import numbers
+import warnings
 from math import cos, sin
 
 import numpy as np
@@ -105,15 +106,16 @@ class Qbits:
         self.new_array("labels", labels, "<U12")
 
         # cell
-        if not isinstance(cell, Cell):
-            cell = Cell(cell)
-        self.cell = cell
+        if cell is None:
+            self._cell = None
+        else:
+            self.cell = cell
 
         # positions
         if positions is None:
             positions = np.zeros((nqbits, 3))
 
-        self.new_array("positions", positions, float, (3,))
+        self.new_array("positions", positions, float)
 
         # states
         if states is None:
@@ -166,8 +168,36 @@ class Qbits:
             calc.set_qbits(self)
 
     @property
+    def positions(self):
+        return self.arrays["positions"]
+
+    @positions.setter
+    def positions(self, pos):
+        self.arrays["positions"][:] = pos
+
+    @property
+    def dim(self):
+        return self.positions.shape[1]
+
+    @property
     def nqbits(self):
         return len(self)
+
+    @property
+    def cell(self):
+        return self._cell
+
+    @cell.setter
+    def cell(self, new_cell):
+        if not isinstance(new_cell, Cell):
+            new_cell = Cell(new_cell)
+
+        if new_cell.dim != self.dim:
+            raise Exception(
+                "The dimension of the cell must match the dimension of the qubits."
+            )
+
+        self._cell = new_cell
 
     @property
     def pbc(self):
@@ -210,6 +240,15 @@ class Qbits:
                     'Array "%s" has wrong length: %d != %d.' % (name, len(a), len(b))
                 )
             break
+
+        # We allow positions to be 1D, 2D or 3D
+        if name == "positions":
+            if len(a.shape) != 2 or a.shape[1] not in [1, 2, 3]:
+                raise ValueError(
+                    "Positions must have shape (n_q, d) "
+                    "where n_q is the number of qbits and the "
+                    "dimnension d is 1, 2 or 3."
+                )
 
         if shape is not None and a.shape[1:] != shape:
             raise ValueError(
@@ -318,7 +357,8 @@ class Qbits:
             txt = "pbc={0}".format(self.pbc[0])
         tokens.append(txt + ",\n")
 
-        tokens.append("cell=\n{0}".format(self.cell.to_str()) + ",\n")
+        if self.cell is not None:
+            tokens.append("cell=\n{0}".format(self.cell.to_str()) + ",\n")
 
         if self._calc is not None:
             tokens.append("calculator={0}".format(self._calc.__class__.__name__))
@@ -639,6 +679,13 @@ class Qbits:
 
             \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
+        if self.dim == 1:
+            raise Exception("rotate requires 2 or 3 dimensions.")
+
+        rm_dim = False
+        if self.dim == 2:
+            self.add_dim()
+            rm_dim = True
 
         if not isinstance(a, numbers.Real):
             a, v = v, a
@@ -672,6 +719,9 @@ class Qbits:
         self.arrays["positions"][:] = (
             c * p - np.cross(p, s * v) + np.outer(np.dot(p, v), (1.0 - c) * v) + center
         )
+        if rm_dim:
+            self.remove_dim("z")
+
         if rotate_cell:
             self.cell.lattice_vectors = (
                 c * self.cell.lattice_vectors
@@ -739,6 +789,8 @@ class Qbits:
 
             \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
+        if self.dim != 3:
+            raise Exception("euler_rotate can only be performed on 3D systems.")
 
         def rotation_mat(angle):
             return np.array(
@@ -1076,20 +1128,6 @@ class Qbits:
         else:
             return not eq
 
-    def _get_positions(self):
-        """Return reference to positions-array for in-place manipulations."""
-        return self.arrays["positions"]
-
-    def _set_positions(self, pos):
-        """Set positions directly, bypassing constraints."""
-        self.arrays["positions"][:] = pos
-
-    positions = property(
-        _get_positions,
-        _set_positions,
-        doc="Attribute for direct " + "manipulation of the positions.",
-    )
-
     # Rajarshi: Below these three written to add attribute of states
     def _get_states(self):
         """Return reference to states-array for in-place manipulations."""
@@ -1137,7 +1175,14 @@ class Qbits:
     def to_pulser(self):
         from pulser import Register
 
-        return Register.from_coordinates(self.positions[:, :2], prefix="q")
+        if self.dim == 2:
+            return Register.from_coordinates(self.positions, prefix="q")
+
+        if self.dim == 3:
+            warnings.warn("3D system passed, removing the z axis.")
+            return Register.from_coordinates(self.positions[:, :2], prefix="q")
+
+        return Exception("The qbits must be 2D or 3D for use in Pulser.")
 
     def compute_interaction_hamiltonian(
         self,
@@ -1211,6 +1256,37 @@ class Qbits:
                     ops.append(Operator(interaction, (i, j), self.nqbits, coef))
 
         return Operators(ops)
+
+    def add_dim(self):
+        """
+        Adds a spatial dimension to the positions. E.e. to go from 1D to 2D systems
+        or 2D to 3D systems.
+        """
+        if self.dim == 3:
+            raise ValueError("Can't go above 3 dimensions.")
+        self.arrays["positions"] = np.column_stack(
+            [self.arrays["positions"], np.zeros(self.nqbits)]
+        )
+
+    def remove_dim(self, dim):
+        """
+        Removes a spatial dimension to the positions. E.e. to go from 2D to 1D systems
+        or 3D to 2D systems.
+
+        Parameters
+        ----------
+        dim : str
+            The dimension to be removed.
+            Must be one of 'x', 'y' or 'z'.
+        """
+        if self.dim == 1:
+            raise ValueError("Can't go below 1 dimension.")
+        axes = ["x", "y", "z"]
+        if dim not in axes:
+            raise ValueError("dim must be one of 'x', 'y' or 'z'.")
+        keep_cols = [i for i in range(self.dim) if i != axes.index(dim)]
+
+        self.arrays["positions"] = self.arrays["positions"][:, keep_cols]
 
     def get_scaled_positions(self):
         """
