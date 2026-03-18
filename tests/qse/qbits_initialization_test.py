@@ -31,7 +31,7 @@ def test_positions(nqbits, dimensions):
     qbits = qse.Qbits(positions=positions)
     assert isinstance(qbits, qse.Qbits)
     assert qbits.nqbits == nqbits
-    assert qbits.dimension == dimensions
+    assert qbits.dim == dimensions
     assert qbits.nqbits == positions.shape[0]
 
     # try no keyword
