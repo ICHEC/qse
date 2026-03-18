@@ -32,7 +32,7 @@ class Qbits:
         A list of strings corresponding to a label for each qubit.
     states: list of 2-length arrays.
         State of each qubit.
-    cell: qse.Cell | 3x3 matrix
+    cell: qse.Cell | np.ndarray
         Unit cell vectors.
         Either pass a matrix where each row corresponds to a lattice vector
         or a qse.Cell object.
@@ -64,7 +64,8 @@ class Qbits:
     ...    [[0, 0, 0],
     ...     [0.5, 0.5, 0.5]]
     ... )
-    >>> qdim = qse.Qbits(positions=xd, cell=np.eye(3))
+    >>> qdim = qse.Qbits(xd)
+    >>> qdim.cell = np.eye(3)
     >>> qdim.pbc = True
     >>> qlat = qdim.repeat([3,3,3])
 
@@ -105,17 +106,17 @@ class Qbits:
         # We allow for labels up to length 12.
         self.new_array("labels", labels, "<U12")
 
-        # cell
-        if cell is None:
-            self._cell = None
-        else:
-            self.cell = cell
-
         # positions
         if positions is None:
             positions = np.zeros((nqbits, 3))
 
         self.new_array("positions", positions, float)
+
+        # cell
+        if cell is None:
+            self._cell = None
+        else:
+            self.cell = cell
 
         # states
         if states is None:
