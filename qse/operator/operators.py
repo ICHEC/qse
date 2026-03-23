@@ -69,7 +69,8 @@ class Operators:
         other: Operators or Operator
             The operators to be added to the current object.
         """
-        if other.nqbits != self.nqbits:
+        # We only run this check when nterms > 0
+        if (other.nqbits != self.nqbits) and self.nterms:
             raise Exception("other must have the same number of qubits.")
 
         if isinstance(other, Operator):
@@ -78,6 +79,12 @@ class Operators:
             self.operator_list += other.operator_list
         else:
             raise Exception("other must be Operators or Operator.")
+
+    def copy(self):
+        """
+        Return a copy.
+        """
+        return self.__class__(self.operator_list)
 
     def __add__(self, other):
         op = self.copy()
@@ -100,6 +107,8 @@ class Operators:
 
     @property
     def nqbits(self):
+        if self.nterms == 0:
+            return 0
         return self[0].nqbits
 
     @property
