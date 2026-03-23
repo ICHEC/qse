@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.qbits &#8212; qse 1.0.8 documentation</title>
+    <title>qse.qbits &#8212; qse 1.0.9 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=2672cdd1"></script>
+    <script src="../../_static/documentation_options.js?v=9d8e4fcc"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.8 documentation - Home"/>
-    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.8 documentation - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.9 documentation - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.9 documentation - Home"/>
   
   
 </a></div>
@@ -801,16 +801,16 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Qbit</span><span class="p">):</span>
             <span class="n">other</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_qbit_list</span><span class="p">([</span><span class="n">other</span><span class="p">])</span>
 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">dim</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Cannot add systems of differing dimensions.&quot;</span><span class="p">)</span>
+
         <span class="n">n1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">n2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">a1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n1</span> <span class="o">+</span> <span class="n">n2</span><span class="p">,)</span> <span class="o">+</span> <span class="n">a1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">a1</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
             <span class="n">a</span><span class="p">[:</span><span class="n">n1</span><span class="p">]</span> <span class="o">=</span> <span class="n">a1</span>
-            <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;masses&quot;</span><span class="p">:</span>
-                <span class="n">a2</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">get_masses</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">a2</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">arrays</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">a2</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">arrays</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">a2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">a</span><span class="p">[</span><span class="n">n1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">a2</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
@@ -820,10 +820,7 @@
                 <span class="k">continue</span>
             <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n1</span> <span class="o">+</span> <span class="n">n2</span><span class="p">,)</span> <span class="o">+</span> <span class="n">a2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">a2</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
             <span class="n">a</span><span class="p">[</span><span class="n">n1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">a2</span>
-            <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;masses&quot;</span><span class="p">:</span>
-                <span class="n">a</span><span class="p">[:</span><span class="n">n1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_masses</span><span class="p">()[:</span><span class="n">n1</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">a</span><span class="p">[:</span><span class="n">n1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">a</span><span class="p">[:</span><span class="n">n1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span></div>
 
