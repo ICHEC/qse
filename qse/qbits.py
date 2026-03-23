@@ -287,15 +287,13 @@ class Qbits:
 
     def copy(self):
         """Return a copy."""
-        qbits = self.__class__()
+        qbits = self.__class__(cell=self.cell, pbc=self.pbc)
 
         qbits.arrays = {}
         for name, a in self.arrays.items():
             qbits.arrays[name] = a.copy()
 
         qbits._shape = self._shape  # this was necessary, and took long time to realise!
-        qbits.cell = self.cell
-        qbits.pbc = self.pbc
         return qbits
 
     def todict(self):
@@ -515,7 +513,9 @@ class Qbits:
                 for m1 in range(m[1]):
                     for m2 in range(m[2]):
                         i1 = i0 + n
-                        positions[i0:i1] += np.dot((m0, m1, m2), self.cell.lattice_vectors)
+                        positions[i0:i1] += np.dot(
+                            (m0, m1, m2), self.cell.lattice_vectors
+                        )
                         i0 = i1
 
         self.cell.lattice_vectors = np.array(
