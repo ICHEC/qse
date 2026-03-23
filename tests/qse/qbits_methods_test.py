@@ -10,30 +10,36 @@ def _qbits_checker(qbits, positions, total_qubits):
     assert qbits.nqbits == total_qubits
 
 
+@pytest.mark.parametrize("dim", [1, 2, 3])
 @pytest.mark.parametrize("nqbits", [1, 2, 3, 10])
-def test_basic_properties(nqbits):
+def test_basic_properties(nqbits, dim):
     """Test basic Qbits methods."""
-    positions = np.random.rand(nqbits, 3)
+    positions = np.random.rand(nqbits, dim)
     qbits = qse.Qbits(positions=positions)
     _qbits_checker(qbits, positions, nqbits)
     assert len(qbits) == nqbits
 
 
+@pytest.mark.parametrize("dim_1", [1, 2, 3])
+@pytest.mark.parametrize("dim_2", [1, 2, 3])
 @pytest.mark.parametrize("nqbits_1", [1, 2, 3])
 @pytest.mark.parametrize("nqbits_2", [1, 2, 3])
-def test_add(nqbits_1, nqbits_2):
+def test_add(dim_1, dim_2, nqbits_1, nqbits_2):
     """Test adding Qbits together."""
-    positions_1 = np.random.rand(nqbits_1, 3)
+    positions_1 = np.random.rand(nqbits_1, dim_1)
     qbits_1 = qse.Qbits(positions=positions_1)
 
-    positions_2 = np.random.rand(nqbits_2, 3)
+    positions_2 = np.random.rand(nqbits_2, dim_2)
     qbits_2 = qse.Qbits(positions=positions_2)
 
-    qbits_12 = qbits_1 + qbits_2
-
-    _qbits_checker(
-        qbits_12, np.concatenate((positions_1, positions_2)), nqbits_1 + nqbits_2
-    )
+    if dim_1 != dim_2:
+        with pytest.raises(Exception):
+            qbits_12 = qbits_1 + qbits_2
+    else:
+        qbits_12 = qbits_1 + qbits_2
+        _qbits_checker(
+            qbits_12, np.concatenate((positions_1, positions_2)), nqbits_1 + nqbits_2
+        )
 
 
 def test_add_qbit():
@@ -44,10 +50,11 @@ def test_add_qbit():
     assert all(qbits.labels == [1, 2, 3, "q"])
 
 
+@pytest.mark.parametrize("dim", [1, 2, 3])
 @pytest.mark.parametrize("nqbits", [2, 3, 4])
-def test_get_distance(nqbits):
+def test_get_distance(nqbits, dim):
     """Test get_distance on a set of qbits."""
-    positions = np.random.rand(nqbits, 3)
+    positions = np.random.rand(nqbits, dim)
     qbits = qse.Qbits(positions=positions)
 
     assert qbits.nqbits == positions.shape[0]
@@ -114,6 +121,7 @@ def test_set_distance(nqbits, distance, inds):
     assert np.isclose(qbits.get_distance(*inds), distance)
 
 
+@pytest.mark.parametrize("dim", [1, 2, 3])
 @pytest.mark.parametrize(
     "positions",
     [
@@ -122,10 +130,10 @@ def test_set_distance(nqbits, distance, inds):
     ],
 )
 @pytest.mark.parametrize("centroid", [0.0, 1.0, -1.0])
-def test_get_centroid(positions, centroid):
+def test_get_centroid(positions, centroid, dim):
     """Test get_centroid, note the positions parametrized all have zero centroid."""
-    qbits = qse.Qbits(positions=positions + centroid)
-    assert np.allclose(qbits.get_centroid(), [centroid] * 3)
+    qbits = qse.Qbits(positions=positions[:, :dim] + centroid)
+    assert np.allclose(qbits.get_centroid(), [centroid] * dim)
 
 
 @pytest.mark.parametrize(
@@ -221,37 +229,42 @@ def test_del_item(indices):
     )
 
 
-def test_rotate():
+@pytest.mark.parametrize("dim", [2, 3])
+def test_rotate(dim):
     """Simple checks for rotate."""
-    unit_square = np.array(
-        [[1.0, 0.0, 0.0], [1.0, 1.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 0.0]]
-    )
+    unit_square = np.array([[1.0, 0.0], [1.0, 1.0], [0.0, 1.0], [0.0, 0.0]])
+    if dim == 3:
+        unit_square = np.column_stack([unit_square, np.zeros(4)])
     qbits = qse.Qbits(positions=unit_square)
     qbits.rotate(90, "z")
 
     assert not np.allclose(qbits.positions, unit_square)
 
-    unit_square_rt = np.array(
-        [[0.0, 1.0, 0.0], [-1.0, 1.0, 0.0], [-1.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
-    )
+    unit_square_rt = np.array([[0.0, 1.0], [-1.0, 1.0], [-1.0, 0.0], [0.0, 0.0]])
+    if dim == 3:
+        unit_square_rt = np.column_stack([unit_square_rt, np.zeros(4)])
+
     assert np.allclose(qbits.positions, unit_square_rt)
 
     # Check that a centered square is invariant (with relabelling).
-    square_centered = np.array(
-        [[1.0, 1.0, 0.0], [1.0, -1.0, 0.0], [-1.0, 1.0, 0.0], [-1.0, -1.0, 0.0]]
-    )
+    square_centered = np.array([[1.0, 1.0], [1.0, -1.0], [-1.0, 1.0], [-1.0, -1.0]])
+    if dim == 3:
+        square_centered = np.column_stack([square_centered, np.zeros(4)])
+
     qbits = qse.Qbits(positions=square_centered)
     qbits.rotate(90, "z")
     assert np.allclose(qbits.positions, square_centered[[2, 0, 3, 1]])
 
 
+@pytest.mark.parametrize("dim", [2, 3])
 @pytest.mark.parametrize("angle", [10, 20, 30])
 @pytest.mark.parametrize("axis", [None, "z", (0, 0, 1)])
-def test_rotate_square_z(angle, axis):
+def test_rotate_square_z(dim, angle, axis):
     """Test rotating a square system about the z axis."""
-    positions = np.array(
-        [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0], [1.0, 0.0, 1.0]]
-    )
+    z_coords = [0.0, 0.0, 1.0, 1.0]
+    positions = np.array([[0.0, 0.0], [1.0, 0.0], [0.0, 0.0], [1.0, 0.0]])
+    if dim == 3:
+        positions = np.column_stack([positions, z_coords])
     qbits = qse.Qbits(positions=positions)
 
     if axis is None:
@@ -262,12 +275,14 @@ def test_rotate_square_z(angle, axis):
     angle_rads = np.pi * angle / 180
     new_positions = np.array(
         [
-            [0.0, 0.0, 0.0],
-            [np.cos(angle_rads), np.sin(angle_rads), 0.0],
-            [0.0, 0.0, 1.0],
-            [np.cos(angle_rads), np.sin(angle_rads), 1.0],
+            [0.0, 0.0],
+            [np.cos(angle_rads), np.sin(angle_rads)],
+            [0.0, 0.0],
+            [np.cos(angle_rads), np.sin(angle_rads)],
         ]
     )
+    if dim == 3:
+        new_positions = np.column_stack([new_positions, z_coords])
     assert np.allclose(qbits.positions, new_positions)
 
 
@@ -499,3 +514,69 @@ def test_compute_interaction_hamiltonian():
 
     for op in ham[3:]:
         assert "".join(op.operator) == "YX"
+
+
+@pytest.mark.parametrize("dimension", [1, 2, 3])
+def test_add_dim(dimension):
+    """Tests the add_dim method."""
+    positions = np.ones((4, dimension))
+    qbits = qse.Qbits(positions=positions)
+    assert qbits.dim == dimension
+
+    if qbits.dim == 3:
+        with pytest.raises(Exception):
+            qbits.add_dim()
+
+    else:
+        qbits.add_dim()
+        assert qbits.dim == dimension + 1
+        assert np.allclose(
+            qbits.positions, np.column_stack([positions, np.zeros(positions.shape[0])])
+        )
+
+
+@pytest.mark.parametrize("dimension", [1, 2, 3])
+@pytest.mark.parametrize("dim_rm", ["x", "y", "z"])
+def test_remove_dim(dimension, dim_rm):
+    """Tests the remove_dim method."""
+    positions = np.ones((4, dimension))
+    qbits = qse.Qbits(positions=positions)
+    assert qbits.dim == dimension
+
+    if qbits.dim == 1:
+        with pytest.raises(Exception):
+            qbits.remove_dim()
+
+    else:
+        qbits.remove_dim(dim_rm)
+        if (dimension == 2) and (dim_rm == "z"):
+            assert qbits.dim == dimension
+            assert np.allclose(qbits.positions, positions)
+        else:
+            assert qbits.dim == dimension - 1
+            assert qbits.positions.shape == (4, dimension - 1)
+
+
+@pytest.mark.parametrize(
+    "scaled_positions",
+    [
+        np.array([[1.0, 0.0, 3.0], [0.2, 0.42, 1]]),
+        np.array([[0.0, 0.0, 1.0]]),
+        np.ones((7, 3)),
+    ],
+)
+@pytest.mark.parametrize(
+    "cell",
+    [
+        np.array([[1.0, 1.0, 2.0], [-0.2, 0.0, 0.0], [3.0, 0.0, 10.0]]),
+        np.eye(3),
+        np.array([[1.2, -1.0, -2.0], [3.2, 3.2, 3.2], [3.0, -1.0, 10.0]]),
+    ],
+)
+def test_get_scaled_positions(scaled_positions, cell):
+    """Test the get_scaled_positions method."""
+    positions = np.dot(scaled_positions, cell)
+
+    qbits = qse.Qbits(positions=positions, cell=cell)
+    assert np.allclose(scaled_positions, qbits.get_scaled_positions())
+    assert qbits.positions.shape == scaled_positions.shape

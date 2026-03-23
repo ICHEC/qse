@@ -3,6 +3,7 @@ This module defines the central object in the QSE package: the Qbits object.
 """
 
 import numbers
+import warnings
 from math import cos, sin
 
 import numpy as np
@@ -23,17 +24,14 @@ class Qbits:
 
     Parameters
     ----------
-    labels: list of str
-        A list of strings corresponding to a label for each qubit.
-    states: list of 2-length arrays.
-        State of each qubit.
     positions: list of xyz-positions
         Qubit positions.  Anything that can be converted to an
         ndarray of shape (n, 3) will do: [(x1,y1,z1), (x2,y2,z2),
         ...].
-    scaled_positions: list of scaled-positions
-        Like positions, but given in units of the unit cell.
-        Can not be set at the same time as positions.
+    labels: list of str
+        A list of strings corresponding to a label for each qubit.
+    states: list of 2-length arrays.
+        State of each qubit.
     cell: 3x3 matrix or length 3 or 6 vector
         Unit cell vectors.  Can also be given as just three
         numbers for orthorhombic cells, or 6 numbers, where
@@ -59,8 +57,8 @@ class Qbits:
     These are equivalent:
 
     >>> a = qse.Qbits(
-    ...     labels=['qb1', 'qb2'],
     ...     positions=np.array([(0, 0, 0), (0, 0, 2)])
+    ...     labels=['qb1', 'qb2'],
     ... )
     >>> a = qse.Qbits.from_qbit_list(
     ...     [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))]
@@ -68,8 +66,9 @@ class Qbits:
 
     >>> xd = np.array(
     ...    [[0, 0, 0],
-    ...     [0.5, 0.5, 0.5]])
-    >>> qdim = qse.Qbits(positions=xd)
+    ...     [0.5, 0.5, 0.5]]
+    ... )
+    >>> qdim = qse.Qbits(xd)
     >>> qdim.cell = [1,1,1]
     >>> qdim.pbc = True
     >>> qlat = qdim.repeat([3,3,3])
@@ -84,43 +83,24 @@ class Qbits:
 
     def __init__(
         self,
+        positions=None,
         labels=None,
         states=None,
-        positions=None,
-        scaled_positions=None,
         cell=None,
         pbc=None,
         calculator=None,
     ):
-        if (positions is not None) and (scaled_positions is not None):
-            raise Exception(
-                "Both 'positions' and 'scaled_positions'"
-                " cannot be passed at the same time."
-            )
-
-        if (scaled_positions is not None) and (cell is None):
-            raise Exception("'scaled_positions' requires 'cell' to not be None.")
-
-        # get number of qubits
         if labels is None:
-            if positions is not None:
-                nqbits = len(positions)
-            elif scaled_positions is not None:
-                nqbits = len(scaled_positions)
-            else:
-                nqbits = 0
+            nqbits = 0 if positions is None else len(positions)
         else:
             if not isinstance(labels, list):
                 raise Exception("'labels' must be a list.")
             nqbits = len(labels)
 
-        if (positions is not None) and (len(positions) != nqbits):
-            raise Exception("Both 'positions' and 'labels' must have the same length.")
-
-        if (scaled_positions is not None) and (len(scaled_positions) != nqbits):
-            raise Exception(
-                "Both 'scaled_positions' and 'labels' must have the same length."
-            )
+            if (positions is not None) and (len(positions) != nqbits):
+                raise Exception(
+                    "Both 'positions' and 'labels' must have the same length."
+                )
 
         self.arrays = {}
 
@@ -138,12 +118,9 @@ class Qbits:
 
         # positions
         if positions is None:
-            if scaled_positions is None:
-                positions = np.zeros((len(self.arrays["labels"]), 3))
-            else:
-                assert self.cell.rank == 3
-                positions = np.dot(scaled_positions, self.cell)
-        self.new_array("positions", positions, float, (3,))
+            positions = np.zeros((nqbits, 3))
+
+        self.new_array("positions", positions, float)
 
         # states
         if states is None:
@@ -194,6 +171,22 @@ class Qbits:
         self._calc = calc
         if hasattr(calc, "set_qbits"):
             calc.set_qbits(self)
+
+    @property
+    def positions(self):
+        return self.arrays["positions"]
+
+    @positions.setter
+    def positions(self, pos):
+        self.arrays["positions"][:] = pos
+
+    @property
+    def dim(self):
+        return self.positions.shape[1]
+
+    @property
+    def nqbits(self):
+        return len(self)
 
     def set_cell(self, cell, scale_qbits=False):
         """
@@ -273,10 +266,6 @@ class Qbits:
         return self.cell.reciprocal()
 
     @property
-    def nqbits(self):
-        return len(self)
-
-    @property
     def pbc(self):
         """Reference to pbc-flags for in-place manipulations."""
         return self._pbc
@@ -317,6 +306,15 @@ class Qbits:
                     'Array "%s" has wrong length: %d != %d.' % (name, len(a), len(b))
                 )
             break
+
+        # We allow positions to be 1D, 2D or 3D
+        if name == "positions":
+            if len(a.shape) != 2 or a.shape[1] not in [1, 2, 3]:
+                raise ValueError(
+                    "Positions must have shape (n_q, d) "
+                    "where n_q is the number of qbits and the "
+                    "dimnension d is 1, 2 or 3."
+                )
 
         if shape is not None and a.shape[1:] != shape:
             raise ValueError(
@@ -450,16 +448,16 @@ class Qbits:
         if isinstance(other, Qbit):
             other = self.from_qbit_list([other])
 
+        if self.dim != other.dim:
+            raise Exception("Cannot add systems of differing dimensions.")
+
         n1 = len(self)
         n2 = len(other)
 
         for name, a1 in self.arrays.items():
             a = np.zeros((n1 + n2,) + a1.shape[1:], a1.dtype)
             a[:n1] = a1
-            if name == "masses":
-                a2 = other.get_masses()
-            else:
-                a2 = other.arrays.get(name)
+            a2 = other.arrays.get(name)
             if a2 is not None:
                 a[n1:] = a2
             self.arrays[name] = a
@@ -469,10 +467,7 @@ class Qbits:
                 continue
             a = np.empty((n1 + n2,) + a2.shape[1:], a2.dtype)
             a[n1:] = a2
-            if name == "masses":
-                a[:n1] = self.get_masses()[:n1]
-            else:
-                a[:n1] = 0
+            a[:n1] = 0
 
             self.set_array(name, a)
 
@@ -750,6 +745,13 @@ class Qbits:
 
             \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
+        if self.dim == 1:
+            raise Exception("rotate requires 2 or 3 dimensions.")
+
+        rm_dim = False
+        if self.dim == 2:
+            self.add_dim()
+            rm_dim = True
 
         if not isinstance(a, numbers.Real):
             a, v = v, a
@@ -783,6 +785,9 @@ class Qbits:
         self.arrays["positions"][:] = (
             c * p - np.cross(p, s * v) + np.outer(np.dot(p, v), (1.0 - c) * v) + center
         )
+        if rm_dim:
+            self.remove_dim("z")
+
         if rotate_cell:
             rotcell = self.get_cell()
             rotcell[:] = (
@@ -852,6 +857,8 @@ class Qbits:
 
             \textbf{r} \rightarrow R(\textbf{r}-\textbf{c}) + \textbf{c}.
         """
+        if self.dim != 3:
+            raise Exception("euler_rotate can only be performed on 3D systems.")
 
         def rotation_mat(angle):
             return np.array(
@@ -1199,20 +1206,6 @@ class Qbits:
             )
         return self.cell.volume
 
-    def _get_positions(self):
-        """Return reference to positions-array for in-place manipulations."""
-        return self.arrays["positions"]
-
-    def _set_positions(self, pos):
-        """Set positions directly, bypassing constraints."""
-        self.arrays["positions"][:] = pos
-
-    positions = property(
-        _get_positions,
-        _set_positions,
-        doc="Attribute for direct " + "manipulation of the positions.",
-    )
-
     # Rajarshi: Below these three written to add attribute of states
     def _get_states(self):
         """Return reference to states-array for in-place manipulations."""
@@ -1270,7 +1263,20 @@ class Qbits:
     def to_pulser(self):
         from pulser import Register
 
-        return Register.from_coordinates(self.positions[:, :2], prefix="q")
+        if self.dim == 1:
+            warnings.warn("1D system passed, adding a y axis.")
+            return Register.from_coordinates(
+                np.column_stack([self.positions, np.zeros(self.nqbits)]), prefix="q"
+            )
+
+        if self.dim == 2:
+            return Register.from_coordinates(self.positions, prefix="q")
+
+        if self.dim == 3:
+            warnings.warn("3D system passed, removing the z axis.")
+            return Register.from_coordinates(self.positions[:, :2], prefix="q")
+
+        return Exception("The qbits must be 2D or 3D for use in Pulser.")
 
     def compute_interaction_hamiltonian(
         self,
@@ -1344,6 +1350,48 @@ class Qbits:
                     ops.append(Operator(interaction, (i, j), self.nqbits, coef))
 
         return Operators(ops)
+
+    def add_dim(self):
+        """
+        Adds a spatial dimension to the positions. E.e. to go from 1D to 2D systems
+        or 2D to 3D systems.
+        """
+        if self.dim == 3:
+            raise ValueError("Can't go above 3 dimensions.")
+        self.arrays["positions"] = np.column_stack(
+            [self.arrays["positions"], np.zeros(self.nqbits)]
+        )
+
+    def remove_dim(self, dim):
+        """
+        Removes a spatial dimension to the positions. E.e. to go from 2D to 1D systems
+        or 3D to 2D systems.
+
+        Parameters
+        ----------
+        dim : str
+            The dimension to be removed.
+            Must be one of 'x', 'y' or 'z'.
+        """
+        if self.dim == 1:
+            raise ValueError("Can't go below 1 dimension.")
+        axes = ["x", "y", "z"]
+        if dim not in axes:
+            raise ValueError("dim must be one of 'x', 'y' or 'z'.")
+        keep_cols = [i for i in range(self.dim) if i != axes.index(dim)]
+
+        self.arrays["positions"] = self.arrays["positions"][:, keep_cols]
+
+    def get_scaled_positions(self):
+        """
+        Get the positions in units of the unit cell.
+
+        Returns
+        -------
+        np.ndarray
+            The positions in units of the unit cell.
+        """
+        return np.dot(self.positions, np.linalg.inv(self.cell))
 
 
 def _norm_vector(v):
