@@ -69,7 +69,7 @@ class Qbits:
     >>> qdim.pbc = True
     >>> qlat = qdim.repeat([3,3,3])
 
-    The qdim will have shape = (2,1,1) and qlat will have shape = (6, 3, 3)
+    The qdim will have shape = (1,1,1) and qlat will have shape = (3, 3, 3)
 
     Notes
     -----
@@ -125,7 +125,7 @@ class Qbits:
         self.new_array("states", states, complex, (2,))
 
         # shape
-        self._shape = (self.nqbits, 1, 1)
+        self._shape = (1,) * self.dim
 
         # pbc
         self._pbc = np.zeros(3, bool)
@@ -149,13 +149,6 @@ class Qbits:
     def shape(self):
         """The shape of the qbits"""
         return self._shape
-
-    @shape.setter
-    def shape(self, new_shape):
-        """Update the shape to new shape"""
-        if self.nqbits != np.prod(new_shape):
-            raise AssertionError(f"no. of qubits= {self.nqbits}, yet shape {new_shape}")
-        self._shape = new_shape
 
     @property
     def calc(self):
@@ -294,14 +287,15 @@ class Qbits:
 
     def copy(self):
         """Return a copy."""
-        qbits = self.__class__(cell=self.cell, pbc=self.pbc)
+        qbits = self.__class__()
 
         qbits.arrays = {}
         for name, a in self.arrays.items():
             qbits.arrays[name] = a.copy()
 
-        qbits.shape = self.shape  # this was necessary, and took long time to realise!
-
+        qbits._shape = self._shape  # this was necessary, and took long time to realise!
+        qbits.cell = self.cell
+        qbits.pbc = self.pbc
         return qbits
 
     def todict(self):
@@ -487,33 +481,48 @@ class Qbits:
     def __imul__(self, m):
         """In-place repeat of qbits."""
         if isinstance(m, int):
-            m = (m, m, m)
+            m = (m,) * self.dim
 
         for x, vec in zip(m, self.cell.lattice_vectors):
             if x != 1 and not vec.any():
                 raise ValueError("Cannot repeat along undefined lattice " "vector")
 
-        M = np.prod(m)
+        fac = np.prod(m)
         n = len(self)
 
         for name, a in self.arrays.items():
-            self.arrays[name] = np.tile(a, (M,) + (1,) * (len(a.shape) - 1))
+            self.arrays[name] = np.tile(a, (fac,) + (1,) * (len(a.shape) - 1))
 
         positions = self.arrays["positions"]
+
         i0 = 0
-        for m0 in range(m[0]):
-            for m1 in range(m[1]):
-                for m2 in range(m[2]):
+
+        if self.dim == 1:
+            for m0 in range(m[0]):
+                i1 = i0 + n
+                positions[i0:i1] += np.dot((m0), self.cell.lattice_vectors)
+                i0 = i1
+
+        elif self.dim == 2:
+            for m0 in range(m[0]):
+                for m1 in range(m[1]):
                     i1 = i0 + n
-                    positions[i0:i1] += np.dot((m0, m1, m2), self.cell.lattice_vectors)
+                    positions[i0:i1] += np.dot((m0, m1), self.cell.lattice_vectors)
                     i0 = i1
 
+        elif self.dim == 3:
+            for m0 in range(m[0]):
+                for m1 in range(m[1]):
+                    for m2 in range(m[2]):
+                        i1 = i0 + n
+                        positions[i0:i1] += np.dot((m0, m1, m2), self.cell.lattice_vectors)
+                        i0 = i1
+
         self.cell.lattice_vectors = np.array(
-            [m[c] * self.cell.lattice_vectors[c] for c in range(3)]
+            [m[c] * self.cell.lattice_vectors[c] for c in range(self.dim)]
         )
 
-        new_shape = tuple(self.shape * np.array(m))
-        self.shape = new_shape
+        self._shape = tuple(self._shape * np.array(m))
         return self
 
     def draw(
