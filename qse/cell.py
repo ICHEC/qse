@@ -65,8 +65,6 @@ class Cell:
             The reciprocal cell, calculated as 2π * inverse of the
             transposed cell matrix.
         """
-        if self.rank() < 3:
-            raise ValueError("Reciprocal lattice undefined for rank < 3.")
         return 2 * np.pi * np.linalg.inv(self.lattice_vectors.T)
 
     def to_str(self):
