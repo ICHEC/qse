@@ -448,16 +448,16 @@ class Qbits:
         if isinstance(other, Qbit):
             other = self.from_qbit_list([other])
 
+        if self.dim != other.dim:
+            raise Exception("Cannot add systems of differing dimensions.")
+
         n1 = len(self)
         n2 = len(other)
 
         for name, a1 in self.arrays.items():
             a = np.zeros((n1 + n2,) + a1.shape[1:], a1.dtype)
             a[:n1] = a1
-            if name == "masses":
-                a2 = other.get_masses()
-            else:
-                a2 = other.arrays.get(name)
+            a2 = other.arrays.get(name)
             if a2 is not None:
                 a[n1:] = a2
             self.arrays[name] = a
@@ -467,10 +467,7 @@ class Qbits:
                 continue
             a = np.empty((n1 + n2,) + a2.shape[1:], a2.dtype)
             a[n1:] = a2
-            if name == "masses":
-                a[:n1] = self.get_masses()[:n1]
-            else:
-                a[:n1] = 0
+            a[:n1] = 0
 
             self.set_array(name, a)
 
