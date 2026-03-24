@@ -125,7 +125,7 @@ class Qbits:
         self.new_array("states", states, complex, (2,))
 
         # shape
-        self._shape = (1,) * self.dim
+        self.shape = (1,) * self.dim
 
         # pbc
         self._pbc = np.zeros(3, bool)
@@ -144,11 +144,6 @@ class Qbits:
             for name in ["label", "state", "position"]
         }
         return Qbits(**data)
-
-    @property
-    def shape(self):
-        """The shape of the qbits"""
-        return self._shape
 
     @property
     def calc(self):
@@ -293,7 +288,7 @@ class Qbits:
         for name, a in self.arrays.items():
             qbits.arrays[name] = a.copy()
 
-        qbits._shape = self._shape  # this was necessary, and took long time to realise!
+        qbits.shape = self.shape  # this was necessary, and took long time to realise!
         return qbits
 
     def todict(self):
@@ -519,7 +514,7 @@ class Qbits:
             [m[c] * self.cell.lattice_vectors[c] for c in range(self.dim)]
         )
 
-        self._shape = tuple(self._shape * np.array(m))
+        self.shape = tuple(self.shape * np.array(m))
         return self
 
     def draw(
