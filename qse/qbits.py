@@ -108,7 +108,12 @@ class Qbits:
 
         # positions
         if positions is None:
-            positions = np.zeros((nqbits, 3))
+            # If a cell is passed we can infer the dimension, otherwise default to 3.
+            if cell is None:
+                dim = 3
+            else:
+                dim = cell.dim if isinstance(cell, Cell) else Cell(cell).dim
+            positions = np.zeros((nqbits, dim))
 
         self.new_array("positions", positions, float)
 

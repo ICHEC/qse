@@ -39,16 +39,6 @@ def draw(
             raise Exception("The length of colouring must equal the number of Qubits.")
         colouring = [int(i) for i in colouring]
 
-    cell_rank = qbits.cell.rank
-    position_rank = np.linalg.matrix_rank(qbits.positions)
-    # if cell_rank is more than position_rank, it means that a higher dimensional cell
-    # is present, and actual structure requires repettition of cells to
-    # clearly visualize. if position_rank is more than cell_rank, it means the repettion
-    # happens in lower dimension of a local geometry which visualized in
-    # higher dimension. Either way, we need to see things in higher dimension.
-
-    rank = max(cell_rank, position_rank)
-
     draw_bonds = False if radius is None else True
     rij = None
     min_dist = None
@@ -62,12 +52,12 @@ def draw(
             draw_bonds = False
 
     fig = plt.figure()
-    projection = "3d" if rank == 3 else None
+    projection = "3d" if qbits.dim == 3 else None
     ax = fig.add_subplot(projection=projection)
     if equal_aspect:
         ax.set_aspect("equal")
 
-    if rank == 3:
+    if qbits.dim == 3:
         _draw_3d(qbits, draw_bonds, radius, rij, min_dist, ax)
     else:
         _draw_2d(
@@ -128,7 +118,12 @@ def _draw_2d(
     ax.set_xlabel("x" + f" ({units})" if units is not None else "x")
     ax.set_ylabel("y" + f" ({units})" if units is not None else "y")
 
-    x, y, _ = qbits.positions.T
+    if qbits.dim == 2:
+        x, y = qbits.positions.T
+    else:
+        x = qbits.positions.T.flatten()
+        y = np.zeros(qbits.nqbits)
+
     if draw_bonds:
         f_tol = 1.01  # fractional tolerance
         neighbours = np.array(

@@ -37,10 +37,9 @@ def _lattice_creator(
     Qbits
         Qbits object repeated along desired directions.
     """
-    # We add [[0, 0, 0]] to convert the unit cell into 3d.
-    cell = lattice_spacing * np.array(unit_cell_2d + [[0, 0, 0]])
+    cell = lattice_spacing * np.array(unit_cell_2d)
     qbits = qse.Qbits(positions=np.array(qubit_positions), cell=cell)
-    qbits = qbits.repeat(repeats + (1,))
+    qbits = qbits.repeat(repeats)
     qbits.labels = [str(i) for i in range(qbits.nqbits)]
     return qbits
 
@@ -63,7 +62,10 @@ def chain(lattice_spacing: float, repeats: int) -> qse.Qbits:
         The Qbits lattice.
     """
     _check_repeats(repeats, "repeats")
-    return _lattice_creator([[1, 0, 0], [0, 0, 0]], lattice_spacing, (repeats, 1))
+    qbits = qse.Qbits(positions=np.zeros((1, 1)), cell=np.array([[lattice_spacing]]))
+    qbits = qbits.repeat((repeats))
+    qbits.labels = [str(i) for i in range(qbits.nqbits)]
+    return qbits
 
 
 def square(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
@@ -88,9 +90,13 @@ def square(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
     """
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
-    return _lattice_creator(
-        [[1, 0, 0], [0, 1, 0]], lattice_spacing, (repeats_x, repeats_y)
+    qbits = qse.Qbits(
+        positions=np.zeros((1, 2)),
+        cell=np.array([[lattice_spacing, 0], [0, lattice_spacing]]),
     )
+    qbits = qbits.repeat((repeats_x, repeats_y))
+    qbits.labels = [str(i) for i in range(qbits.nqbits)]
+    return qbits
 
 
 def triangular(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
@@ -115,9 +121,11 @@ def triangular(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qb
     """
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
-    return _lattice_creator(
-        [[1, 0, 0], [0.5, np.sqrt(3) / 2, 0]], lattice_spacing, (repeats_x, repeats_y)
-    )
+    cell = np.array([[1, 0], [0.5, np.sqrt(3) / 2]]) * lattice_spacing
+    qbits = qse.Qbits(positions=np.zeros((1, 2)), cell=cell)
+    qbits = qbits.repeat((repeats_x, repeats_y))
+    qbits.labels = [str(i) for i in range(qbits.nqbits)]
+    return qbits
 
 
 def hexagonal(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
@@ -142,15 +150,13 @@ def hexagonal(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbi
     """
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
-    return _lattice_creator(
-        [
-            [3 / 2, np.sqrt(3) / 2, 0],
-            [3 / 2, -np.sqrt(3) / 2, 0],
-        ],
-        lattice_spacing,
-        (repeats_x, repeats_y),
-        [[0, 0, 0], [lattice_spacing, 0, 0]],
+    cell = (
+        np.array([[3 / 2, np.sqrt(3) / 2], [3 / 2, -np.sqrt(3) / 2]]) * lattice_spacing
     )
+    qbits = qse.Qbits(positions=np.array([[0, 0], [lattice_spacing, 0]]), cell=cell)
+    qbits = qbits.repeat((repeats_x, repeats_y))
+    qbits.labels = [str(i) for i in range(qbits.nqbits)]
+    return qbits
 
 
 def kagome(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
@@ -175,16 +181,20 @@ def kagome(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
     """
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
-    return _lattice_creator(
-        [[2, 0, 0], [1, np.sqrt(3), 0]],
-        lattice_spacing,
-        (repeats_x, repeats_y),
-        [
-            [0, 0, 0],
-            [lattice_spacing, 0, 0],
-            [lattice_spacing / 2, np.sqrt(3) * lattice_spacing / 2, 0],
-        ],
+    cell = np.array([[2, 0], [1, np.sqrt(3)]]) * lattice_spacing
+    qbits = qse.Qbits(
+        positions=np.array(
+            [
+                [0, 0],
+                [lattice_spacing, 0],
+                [lattice_spacing / 2, np.sqrt(3) * lattice_spacing / 2],
+            ]
+        ),
+        cell=cell,
     )
+    qbits = qbits.repeat((repeats_x, repeats_y))
+    qbits.labels = [str(i) for i in range(qbits.nqbits)]
+    return qbits
 
 
 def ring(spacing: float, nqbits: int) -> qse.Qbits:
@@ -208,7 +218,7 @@ def ring(spacing: float, nqbits: int) -> qse.Qbits:
     radius = spacing * np.sqrt(0.5 / (1.0 - np.cos(2 * np.pi / nqbits)))
     theta = np.arange(nqbits, dtype=float)
     theta *= 2.0 * np.pi / nqbits
-    positions = radius * np.array([np.cos(theta), np.sin(theta), np.zeros(nqbits)]).T
+    positions = radius * np.array([np.cos(theta), np.sin(theta)]).T
     return qse.Qbits(positions=positions)
 
 
