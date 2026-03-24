@@ -8,7 +8,7 @@ This package is adapted from Atomic Simulation Environment (ASE).
 
 __all__ = [
     "calc",
-    "cell",
+    "Cell",
     "draw",
     "lattices",
     "magnetic",
@@ -24,6 +24,7 @@ import importlib.metadata
 
 __version__ = importlib.metadata.version("qse")
 
+from qse.cell import Cell
 from qse.operator import Operator, Operators
 from qse.qbit import Qbit
 from qse.qbits import Qbits
