@@ -1,0 +1,64 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/nbclient/client.py", line 1323, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+qchain = qse.lattices.chain(lattice_spacing=3, repeats=10)
+qchain.draw(radius="nearest", equal_aspect=False)
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mTypeError[39m                                 Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[2][39m[32m, line 2[39m
+[32m      1[39m qchain = qse.lattices.chain(lattice_spacing=[32m3[39m, repeats=[32m10[39m)
+[32m----> [39m[32m2[39m [43mqchain[49m[43m.[49m[43mdraw[49m[43m([49m[43mradius[49m[43m=[49m[33;43m"[39;49m[33;43mnearest[39;49m[33;43m"[39;49m[43m,[49m[43m [49m[43mequal_aspect[49m[43m=[49m[38;5;28;43;01mFalse[39;49;00m[43m)[49m
+
+[36mFile [39m[32m/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/qse/qbits.py:555[39m, in [36mQbits.draw[39m[34m(self, radius, show_labels, colouring, units, equal_aspect)[39m
+[32m    520[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34mdraw[39m(
+[32m    521[39m     [38;5;28mself[39m,
+[32m    522[39m     radius=[38;5;28;01mNone[39;00m,
+[32m   (...)[39m[32m    526[39m     equal_aspect=[38;5;28;01mTrue[39;00m,
+[32m    527[39m ):
+[32m    528[39m [38;5;250m    [39m[33;03m"""[39;00m
+[32m    529[39m [33;03m    Visualize the positions of a set of qubits.[39;00m
+[32m    530[39m 
+[32m   (...)[39m[32m    553[39m [33;03m    qse.draw[39;00m
+[32m    554[39m [33;03m    """[39;00m
+[32m--> [39m[32m555[39m     [43m_draw[49m[43m([49m
+[32m    556[39m [43m        [49m[38;5;28;43mself[39;49m[43m,[49m
+[32m    557[39m [43m        [49m[43mradius[49m[43m=[49m[43mradius[49m[43m,[49m
+[32m    558[39m [43m        [49m[43mshow_labels[49m[43m=[49m[43mshow_labels[49m[43m,[49m
+[32m    559[39m [43m        [49m[43mcolouring[49m[43m=[49m[43mcolouring[49m[43m,[49m
+[32m    560[39m [43m        [49m[43munits[49m[43m=[49m[43munits[49m[43m,[49m
+[32m    561[39m [43m        [49m[43mequal_aspect[49m[43m=[49m[43mequal_aspect[49m[43m,[49m
+[32m    562[39m [43m    [49m[43m)[49m
+
+[36mFile [39m[32m/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/qse/visualise.py:50[39m, in [36mdraw[39m[34m(qbits, radius, show_labels, colouring, units, equal_aspect)[39m
+[32m     43[39m position_rank = np.linalg.matrix_rank(qbits.positions)
+[32m     44[39m [38;5;66;03m# if cell_rank is more than position_rank, it means that a higher dimensional cell[39;00m
+[32m     45[39m [38;5;66;03m# is present, and actual structure requires repettition of cells to[39;00m
+[32m     46[39m [38;5;66;03m# clearly visualize. if position_rank is more than cell_rank, it means the repettion[39;00m
+[32m     47[39m [38;5;66;03m# happens in lower dimension of a local geometry which visualized in[39;00m
+[32m     48[39m [38;5;66;03m# higher dimension. Either way, we need to see things in higher dimension.[39;00m
+[32m---> [39m[32m50[39m rank = [38;5;28;43mmax[39;49m[43m([49m[43mcell_rank[49m[43m,[49m[43m [49m[43mposition_rank[49m[43m)[49m
+[32m     52[39m draw_bonds = [38;5;28;01mFalse[39;00m [38;5;28;01mif[39;00m radius [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m [38;5;28;01melse[39;00m [38;5;28;01mTrue[39;00m
+[32m     53[39m rij = [38;5;28;01mNone[39;00m
+
+[31mTypeError[39m: '>' not supported between instances of 'int' and 'method'
+

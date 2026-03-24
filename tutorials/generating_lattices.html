@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Generating Lattices &#8212; qse 1.0.9 documentation</title>
+    <title>Generating Lattices &#8212; qse 1.0.10 documentation</title>
   
   
   
@@ -42,7 +42,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=9d8e4fcc"></script>
+    <script src="../_static/documentation_options.js?v=f08afc62"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
@@ -140,8 +140,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.9 documentation - Home"/>
-    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.9 documentation - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.10 documentation - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.10 documentation - Home"/>
   
   
 </a></div>
@@ -408,7 +408,46 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/501768464b0dcb9e36640bc5cc5003dc946503cdbbfe98c2ab1300c8ba341548.png" src="../_images/501768464b0dcb9e36640bc5cc5003dc946503cdbbfe98c2ab1300c8ba341548.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">qchain</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">qchain</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">,</span> <span class="n">equal_aspect</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/qse/qbits.py:555,</span> in <span class="ni">Qbits.draw</span><span class="nt">(self, radius, show_labels, colouring, units, equal_aspect)</span>
+<span class="g g-Whitespace">    </span><span class="mi">520</span> <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">521</span>     <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">522</span>     <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>    <span class="mi">526</span>     <span class="n">equal_aspect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">527</span> <span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">528</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">529</span><span class="sd">     Visualize the positions of a set of qubits.</span>
+<span class="g g-Whitespace">    </span><span class="mi">530</span><span class="sd"> </span>
+<span class="sd">   (...)    553     qse.draw</span>
+<span class="g g-Whitespace">    </span><span class="mi">554</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">555</span>     <span class="n">_draw</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">556</span>         <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">557</span>         <span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">558</span>         <span class="n">show_labels</span><span class="o">=</span><span class="n">show_labels</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">559</span>         <span class="n">colouring</span><span class="o">=</span><span class="n">colouring</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">560</span>         <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">561</span>         <span class="n">equal_aspect</span><span class="o">=</span><span class="n">equal_aspect</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">562</span>     <span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/qse/visualise.py:50,</span> in <span class="ni">draw</span><span class="nt">(qbits, radius, show_labels, colouring, units, equal_aspect)</span>
+<span class="g g-Whitespace">     </span><span class="mi">43</span> <span class="n">position_rank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span> <span class="c1"># if cell_rank is more than position_rank, it means that a higher dimensional cell</span>
+<span class="g g-Whitespace">     </span><span class="mi">45</span> <span class="c1"># is present, and actual structure requires repettition of cells to</span>
+<span class="g g-Whitespace">     </span><span class="mi">46</span> <span class="c1"># clearly visualize. if position_rank is more than cell_rank, it means the repettion</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span> <span class="c1"># happens in lower dimension of a local geometry which visualized in</span>
+<span class="g g-Whitespace">     </span><span class="mi">48</span> <span class="c1"># higher dimension. Either way, we need to see things in higher dimension.</span>
+<span class="ne">---&gt; </span><span class="mi">50</span> <span class="n">rank</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cell_rank</span><span class="p">,</span> <span class="n">position_rank</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span> <span class="n">draw_bonds</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">radius</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">True</span>
+<span class="g g-Whitespace">     </span><span class="mi">53</span> <span class="n">rij</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="ne">TypeError</span>: &#39;&gt;&#39; not supported between instances of &#39;int&#39; and &#39;method&#39;
+</pre></div>
+</div>
 </div>
 </div>
 </section>
@@ -420,9 +459,6 @@
 <span class="n">qring</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/1e674ae4659f5a18abc6ea4d235bed43042d83d494b06e00ec1b8a246caa1277.png" src="../_images/1e674ae4659f5a18abc6ea4d235bed43042d83d494b06e00ec1b8a246caa1277.png" />
 </div>
 </div>
 </section>
@@ -436,9 +472,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/f106cb9937f3183c60a09be1c80f613e15d2f5e7102b9da63a096d696abdfd04.png" src="../_images/f106cb9937f3183c60a09be1c80f613e15d2f5e7102b9da63a096d696abdfd04.png" />
-</div>
 </div>
 </section>
 <section id="triangular-lattice">
@@ -449,9 +482,6 @@
 <span class="n">qtriangle</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/8ba3e2c0db18fb05b5e067b491349d393aa29bc8a8c50a8689f40b2cf8ece0b4.png" src="../_images/8ba3e2c0db18fb05b5e067b491349d393aa29bc8a8c50a8689f40b2cf8ece0b4.png" />
 </div>
 </div>
 </section>
@@ -464,9 +494,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/2b0394576942005b0f973bfa032f97d31bf9ff262cabc7771c674418358198de.png" src="../_images/2b0394576942005b0f973bfa032f97d31bf9ff262cabc7771c674418358198de.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -474,9 +501,6 @@
 <span class="n">qhexagon</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/06161137327ee4edbbf0615070f8061b6a2e72d9681ee0d3112cddaf8c97f4ee.png" src="../_images/06161137327ee4edbbf0615070f8061b6a2e72d9681ee0d3112cddaf8c97f4ee.png" />
 </div>
 </div>
 </section>
@@ -489,9 +513,6 @@
 <span class="n">qkagome</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/2c326602983a2301f1c936824205bdc08957b66a02e07e80d6b80f846d95fe23.png" src="../_images/2c326602983a2301f1c936824205bdc08957b66a02e07e80d6b80f846d95fe23.png" />
 </div>
 </div>
 </section>
@@ -513,9 +534,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/5225f46374a6526cd921ffecd1f489c4677e56a6df1782b629bffc33f46f1f2b.png" src="../_images/5225f46374a6526cd921ffecd1f489c4677e56a6df1782b629bffc33f46f1f2b.png" />
-</div>
 </div>
 </section>
 <section id="simple-cubic-lattice">
@@ -534,9 +552,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/7e3499d8aeadeaf3452c9aaac1f9cb42294e02c1608ea6cc48444e3ab63e7ac6.png" src="../_images/7e3499d8aeadeaf3452c9aaac1f9cb42294e02c1608ea6cc48444e3ab63e7ac6.png" />
-</div>
 </div>
 </section>
 </section>
@@ -551,9 +566,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/280ec325f1479de5cc81f434f46dbabc7c55214295e6d6c218f139df29e73756.png" src="../_images/280ec325f1479de5cc81f434f46dbabc7c55214295e6d6c218f139df29e73756.png" />
-</div>
 </div>
 </section>
 </section>
@@ -562,12 +574,6 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qse</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">print_environment</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python version: 3.12.13
-qse version: 1.0.9
 </pre></div>
 </div>
 </div>

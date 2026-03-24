@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Simulating the SSH model &#8212; qse 1.0.9 documentation</title>
+    <title>Simulating the SSH model &#8212; qse 1.0.10 documentation</title>
   
   
   
@@ -42,7 +42,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=9d8e4fcc"></script>
+    <script src="../_static/documentation_options.js?v=f08afc62"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.9 documentation - Home"/>
-    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.9 documentation - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.10 documentation - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.10 documentation - Home"/>
   
   
 </a></div>
@@ -435,7 +435,49 @@ By rotating them by the angle above, there will be no interactions between qubit
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b858d8f86d7454f65411db7586d6cd600d261d2e310e0671347df56f8208a73b.png" src="../_images/b858d8f86d7454f65411db7586d6cd600d261d2e310e0671347df56f8208a73b.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">16</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">qbits_ssh</span> <span class="o">=</span> <span class="n">qbits1</span> <span class="o">+</span> <span class="n">qbits2</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="n">qbits_ssh</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="mi">90</span> <span class="o">-</span> <span class="n">angle</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="p">)</span>  <span class="c1"># by rotating to this angle interactions in the A &amp; B chains will cancel.</span>
+<span class="ne">---&gt; </span><span class="mi">16</span> <span class="n">qbits_ssh</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">show_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;µm&quot;</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/qse/qbits.py:555,</span> in <span class="ni">Qbits.draw</span><span class="nt">(self, radius, show_labels, colouring, units, equal_aspect)</span>
+<span class="g g-Whitespace">    </span><span class="mi">520</span> <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">521</span>     <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">522</span>     <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>    <span class="mi">526</span>     <span class="n">equal_aspect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">527</span> <span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">528</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">529</span><span class="sd">     Visualize the positions of a set of qubits.</span>
+<span class="g g-Whitespace">    </span><span class="mi">530</span><span class="sd"> </span>
+<span class="sd">   (...)    553     qse.draw</span>
+<span class="g g-Whitespace">    </span><span class="mi">554</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">555</span>     <span class="n">_draw</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">556</span>         <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">557</span>         <span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">558</span>         <span class="n">show_labels</span><span class="o">=</span><span class="n">show_labels</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">559</span>         <span class="n">colouring</span><span class="o">=</span><span class="n">colouring</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">560</span>         <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">561</span>         <span class="n">equal_aspect</span><span class="o">=</span><span class="n">equal_aspect</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">562</span>     <span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/qse/visualise.py:50,</span> in <span class="ni">draw</span><span class="nt">(qbits, radius, show_labels, colouring, units, equal_aspect)</span>
+<span class="g g-Whitespace">     </span><span class="mi">43</span> <span class="n">position_rank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span> <span class="c1"># if cell_rank is more than position_rank, it means that a higher dimensional cell</span>
+<span class="g g-Whitespace">     </span><span class="mi">45</span> <span class="c1"># is present, and actual structure requires repettition of cells to</span>
+<span class="g g-Whitespace">     </span><span class="mi">46</span> <span class="c1"># clearly visualize. if position_rank is more than cell_rank, it means the repettion</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span> <span class="c1"># happens in lower dimension of a local geometry which visualized in</span>
+<span class="g g-Whitespace">     </span><span class="mi">48</span> <span class="c1"># higher dimension. Either way, we need to see things in higher dimension.</span>
+<span class="ne">---&gt; </span><span class="mi">50</span> <span class="n">rank</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cell_rank</span><span class="p">,</span> <span class="n">position_rank</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span> <span class="n">draw_bonds</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">radius</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">True</span>
+<span class="g g-Whitespace">     </span><span class="mi">53</span> <span class="n">rij</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="ne">TypeError</span>: &#39;&gt;&#39; not supported between instances of &#39;int&#39; and &#39;method&#39;
+</pre></div>
+</div>
 </div>
 </div>
 <p>We can verify that there are no interactions in the same chain by computing the couplings between qubits.</p>
@@ -467,17 +509,6 @@ By rotating them by the angle above, there will be no interactions between qubit
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coupling between qbits 0 &amp; 1: -4.754427304529029e-16
-Coupling between qbits 0 &amp; 2: -5.943034130661286e-17
-Coupling between qbits 0 &amp; 3: 0.0
-Coupling between qbits 0 &amp; 4: -7.391286573549234
-Coupling between qbits 0 &amp; 5: -0.5880494737584242
-Coupling between qbits 0 &amp; 6: -0.09525640675644509
-Coupling between qbits 0 &amp; 7: -0.026269374219942052
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -491,9 +522,6 @@ Coupling between qbits 0 &amp; 7: -0.026269374219942052
         <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs_ij</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">xs_ij</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">bonds</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/1110092e95f12a779c783d28928fc8233eb4d663d3989f4c03e51cd13586466f.png" src="../_images/1110092e95f12a779c783d28928fc8233eb4d663d3989f4c03e51cd13586466f.png" />
 </div>
 </div>
 <p>Thus we see that there are no couplings between qubits in the same chain, and hence we have a SSH model.
@@ -513,46 +541,6 @@ Finally we can visualize the Hamiltonian.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10.0%. Run time:   0.00s. Est. time left: 00:00:00:00
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.0%. Run time:   0.00s. Est. time left: 00:00:00:00
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30.0%. Run time:   0.00s. Est. time left: 00:00:00:00
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>40.0%. Run time:   0.00s. Est. time left: 00:00:00:00
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>50.0%. Run time:   0.00s. Est. time left: 00:00:00:00
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>60.0%. Run time:   0.00s. Est. time left: 00:00:00:00
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>70.0%. Run time:   0.00s. Est. time left: 00:00:00:00
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>80.0%. Run time:   0.00s. Est. time left: 00:00:00:00
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>90.0%. Run time:   0.00s. Est. time left: 00:00:00:00
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100.0%. Run time:   0.00s. Est. time left: 00:00:00:00
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total run time:   0.00s
-time in compute and simulation = 0.06554007530212402 s.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/qse/qbits.py:1276: UserWarning: 3D system passed, removing the z axis.
-  warnings.warn(&quot;3D system passed, removing the z axis.&quot;)
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -561,21 +549,12 @@ time in compute and simulation = 0.06554007530212402 s.
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/b483bdd0cbb59fa247dc04ac36722452c61dac10beea2b264de194dc7b67f7b2.png" src="../_images/b483bdd0cbb59fa247dc04ac36722452c61dac10beea2b264de194dc7b67f7b2.png" />
-</div>
 </div>
 <section id="version">
 <h2>Version<a class="headerlink" href="#version" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qse</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">print_environment</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python version: 3.12.13
-qse version: 1.0.9
 </pre></div>
 </div>
 </div>

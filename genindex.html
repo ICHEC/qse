@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; qse 1.0.9 documentation</title>
+    <title>Index &#8212; qse 1.0.10 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=9d8e4fcc"></script>
+    <script src="_static/documentation_options.js?v=f08afc62"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="_static/logo.svg" class="logo__image only-light" alt="qse 1.0.9 documentation - Home"/>
-    <img src="_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.9 documentation - Home"/>
+    <img src="_static/logo.svg" class="logo__image only-light" alt="qse 1.0.10 documentation - Home"/>
+    <img src="_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.10 documentation - Home"/>
   
   
 </a></div>
@@ -380,7 +380,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.cell">cell (qse.Qbits property)</a>
+      <li><a href="api.html#qse.Cell">Cell (class in qse)</a>
 </li>
       <li><a href="api.html#qse.lattices.chain">chain() (in module qse.lattices)</a>
 </li>
@@ -450,23 +450,19 @@
 </li>
       <li><a href="api.html#qse.magnetic.get_basis">get_basis() (in module qse.magnetic)</a>
 </li>
-      <li><a href="api.html#qse.Qbits.get_cell">get_cell() (qse.Qbits method)</a>
-</li>
       <li><a href="api.html#qse.Qbits.get_centroid">get_centroid() (qse.Qbits method)</a>
 </li>
       <li><a href="api.html#qse.Qbits.get_distance">get_distance() (qse.Qbits method)</a>
 </li>
-      <li><a href="api.html#qse.Qbits.get_distances">get_distances() (qse.Qbits method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#qse.Qbits.get_distances">get_distances() (qse.Qbits method)</a>
+</li>
       <li><a href="api.html#qse.magnetic.get_number_operator">get_number_operator() (in module qse.magnetic)</a>
 </li>
       <li><a href="api.html#qse.Qbits.get_pbc">get_pbc() (qse.Qbits method)</a>
 </li>
       <li><a href="api.html#qse.Qbit.get_raw">get_raw() (qse.Qbit method)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.get_reciprocal_cell">get_reciprocal_cell() (qse.Qbits method)</a>
 </li>
       <li><a href="api.html#qse.Qbits.get_scaled_positions">get_scaled_positions() (qse.Qbits method)</a>
 </li>
@@ -480,8 +476,6 @@
         <li><a href="api.html#qse.calc.Calculator.get_spins">(qse.calc.Calculator method)</a>
 </li>
       </ul></li>
-      <li><a href="api.html#qse.Qbits.get_volume">get_volume() (qse.Qbits method)</a>
-</li>
   </ul></td>
 </tr></table>
 
@@ -643,12 +637,16 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#qse.Cell.rank">rank() (qse.Cell method)</a>
+</li>
       <li><a href="api.html#qse.Qbits.rattle">rattle() (qse.Qbits method)</a>
 </li>
-      <li><a href="api.html#qse.Qbits.remove_dim">remove_dim() (qse.Qbits method)</a>
+      <li><a href="api.html#qse.Cell.reciprocal">reciprocal() (qse.Cell method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#qse.Qbits.remove_dim">remove_dim() (qse.Qbits method)</a>
+</li>
       <li><a href="api.html#qse.Qbits.repeat">repeat() (qse.Qbits method)</a>
 </li>
       <li><a href="api.html#qse.lattices.ring">ring() (in module qse.lattices)</a>
@@ -667,8 +665,6 @@
 </li>
       <li><a href="api.html#qse.Qbits.set_array">set_array() (qse.Qbits method)</a>
 </li>
-      <li><a href="api.html#qse.Qbits.set_cell">set_cell() (qse.Qbits method)</a>
-</li>
       <li><a href="api.html#qse.Qbits.set_centroid">set_centroid() (qse.Qbits method)</a>
 </li>
       <li><a href="api.html#qse.Qbits.set_distance">set_distance() (qse.Qbits method)</a>
@@ -677,8 +673,6 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.shape">shape (qse.Qbits property)</a>
-</li>
       <li><a href="api.html#qse.Signal">Signal (class in qse)</a>
 </li>
       <li><a href="api.html#qse.lattices.square">square() (in module qse.lattices)</a>
@@ -707,8 +701,12 @@
         <li><a href="api.html#qse.Operators.to_qutip">(qse.Operators method)</a>
 </li>
       </ul></li>
-      <li><a href="api.html#qse.Operator.to_str">to_str() (qse.Operator method)</a>
+      <li><a href="api.html#qse.Cell.to_str">to_str() (qse.Cell method)</a>
+
+      <ul>
+        <li><a href="api.html#qse.Operator.to_str">(qse.Operator method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#qse.Qbits.todict">todict() (qse.Qbits method)</a>
@@ -726,6 +724,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#qse.visualise.view_matrix">view_matrix() (in module qse.visualise)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#qse.Cell.volume">volume() (qse.Cell method)</a>
 </li>
   </ul></td>
 </tr></table>
