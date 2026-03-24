@@ -12,6 +12,16 @@ in a vendor agnostic way. ASE's modular nature, and extensability make it very u
 
    This project is under active development.
 
+
+.. code-block:: python
+
+   import qse
+   qsqr = qse.lattices.square(
+      lattice_spacing=2.0,
+      repeats_x=4, repeats_y=4)
+   qsqr.draw(radius=5.0)
+
+
 Contributing
 ------------
 See the `contributing page <https://github.com/ICHEC/qse/blob/main/CONTRIBUTIONS.md>`_.
