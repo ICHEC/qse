@@ -20,21 +20,26 @@ def test_basic_properties(nqbits, dim):
     assert len(qbits) == nqbits
 
 
+@pytest.mark.parametrize("dim_1", [1, 2, 3])
+@pytest.mark.parametrize("dim_2", [1, 2, 3])
 @pytest.mark.parametrize("nqbits_1", [1, 2, 3])
 @pytest.mark.parametrize("nqbits_2", [1, 2, 3])
-def test_add(nqbits_1, nqbits_2):
+def test_add(dim_1, dim_2, nqbits_1, nqbits_2):
     """Test adding Qbits together."""
-    positions_1 = np.random.rand(nqbits_1, 3)
+    positions_1 = np.random.rand(nqbits_1, dim_1)
     qbits_1 = qse.Qbits(positions=positions_1)
 
-    positions_2 = np.random.rand(nqbits_2, 3)
+    positions_2 = np.random.rand(nqbits_2, dim_2)
     qbits_2 = qse.Qbits(positions=positions_2)
 
-    qbits_12 = qbits_1 + qbits_2
-
-    _qbits_checker(
-        qbits_12, np.concatenate((positions_1, positions_2)), nqbits_1 + nqbits_2
-    )
+    if dim_1 != dim_2:
+        with pytest.raises(Exception):
+            qbits_12 = qbits_1 + qbits_2
+    else:
+        qbits_12 = qbits_1 + qbits_2
+        _qbits_checker(
+            qbits_12, np.concatenate((positions_1, positions_2)), nqbits_1 + nqbits_2
+        )
 
 
 def test_add_qbit():
