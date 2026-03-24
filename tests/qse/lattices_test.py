@@ -16,7 +16,12 @@ _repeats = [2, 3]
 
 
 def _lattice_checker(
-    qbits, expected_qbits, lattice_spacing, expected_cell, expected_positions, expected_dim=2
+    qbits,
+    expected_qbits,
+    lattice_spacing,
+    expected_cell,
+    expected_positions,
+    expected_dim=2,
 ):
     assert isinstance(qbits, qse.Qbits)
     assert qbits.nqbits == expected_qbits
@@ -41,7 +46,7 @@ def _lattice_checker(
 def test_linear(lattice_spacing, N):
     qbits = chain(lattice_spacing, N)
     expected_cell = np.array([[lattice_spacing * N]])
-    expected_positions = np.array([[i*lattice_spacing] for i in range(N)])
+    expected_positions = np.array([[i * lattice_spacing] for i in range(N)])
     _lattice_checker(qbits, N, lattice_spacing, expected_cell, expected_positions, 1)
 
 
@@ -86,11 +91,7 @@ def test_triangular(lattice_spacing, N1, N2):
     )
 
     expected_positions = lattice_spacing * np.array(
-        [
-            [(i + j * 0.5), j * np.sqrt(3) * 0.5]
-            for i in range(N1)
-            for j in range(N2)
-        ]
+        [[(i + j * 0.5), j * np.sqrt(3) * 0.5] for i in range(N1) for j in range(N2)]
     )
     _lattice_checker(
         qbits,
