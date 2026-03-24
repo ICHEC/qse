@@ -16,7 +16,6 @@ authors = [
 version = "1.0.10"
 requires-python = ">=3.10"
 dependencies = [
-    "ase",
     "numpy",
     "matplotlib",
     "qutip",
