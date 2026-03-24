@@ -53,6 +53,7 @@ docs = [
     "sphinx-copybutton",
     "tomli",
     "pulser",  # required for creating the docs
+    "qiskit"
 ]
 
 [tool.black]
