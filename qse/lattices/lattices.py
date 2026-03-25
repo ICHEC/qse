@@ -12,38 +12,6 @@ def _check_repeats(repeats, param_name):
         )
 
 
-def _lattice_creator(
-    unit_cell_2d: list,
-    lattice_spacing: float,
-    repeats: tuple[int],
-    qubit_positions: list = [[0, 0, 0]],
-) -> qse.Qbits:
-    """Create a Qbits object from a 2d cell,
-    lattice_spacing, repeats and qubit positions.
-
-    Parameters
-    ----------
-    unit_cell_2d : list
-        The unit cell
-    lattice_spacing : float
-        Lattice spacing
-    repeats : tuple[int]
-        Repetitions along each direction, such as (3, 4, 2)
-    qubit_positions : list, optional
-        Positions for qubits as Nx3 array, by default [[0, 0, 0]]
-
-    Returns
-    -------
-    Qbits
-        Qbits object repeated along desired directions.
-    """
-    cell = lattice_spacing * np.array(unit_cell_2d)
-    qbits = qse.Qbits(positions=np.array(qubit_positions), cell=cell)
-    qbits = qbits.repeat(repeats)
-    qbits.labels = [str(i) for i in range(qbits.nqbits)]
-    return qbits
-
-
 def chain(lattice_spacing: float, repeats: int) -> qse.Qbits:
     """
     Generate a Qbits object in linear chain geometry.
