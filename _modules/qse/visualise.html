@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.visualise &#8212; qse 1.0.10 documentation</title>
+    <title>qse.visualise &#8212; qse 1.0.11 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=f08afc62"></script>
+    <script src="../../_static/documentation_options.js?v=4b767e7f"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.10 documentation - Home"/>
-    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.10 documentation - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.11 documentation - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.11 documentation - Home"/>
   
   
 </a></div>
@@ -357,16 +357,6 @@
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;The length of colouring must equal the number of Qubits.&quot;</span><span class="p">)</span>
         <span class="n">colouring</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">colouring</span><span class="p">]</span>
 
-    <span class="n">cell_rank</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">cell</span><span class="o">.</span><span class="n">rank</span>
-    <span class="n">position_rank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
-    <span class="c1"># if cell_rank is more than position_rank, it means that a higher dimensional cell</span>
-    <span class="c1"># is present, and actual structure requires repettition of cells to</span>
-    <span class="c1"># clearly visualize. if position_rank is more than cell_rank, it means the repettion</span>
-    <span class="c1"># happens in lower dimension of a local geometry which visualized in</span>
-    <span class="c1"># higher dimension. Either way, we need to see things in higher dimension.</span>
-
-    <span class="n">rank</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cell_rank</span><span class="p">,</span> <span class="n">position_rank</span><span class="p">)</span>
-
     <span class="n">draw_bonds</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">radius</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">True</span>
     <span class="n">rij</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">min_dist</span> <span class="o">=</span> <span class="kc">None</span>
@@ -380,12 +370,12 @@
             <span class="n">draw_bonds</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="n">projection</span> <span class="o">=</span> <span class="s2">&quot;3d&quot;</span> <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">projection</span> <span class="o">=</span> <span class="s2">&quot;3d&quot;</span> <span class="k">if</span> <span class="n">qbits</span><span class="o">.</span><span class="n">dim</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="kc">None</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">projection</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">equal_aspect</span><span class="p">:</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">qbits</span><span class="o">.</span><span class="n">dim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
         <span class="n">_draw_3d</span><span class="p">(</span><span class="n">qbits</span><span class="p">,</span> <span class="n">draw_bonds</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">rij</span><span class="p">,</span> <span class="n">min_dist</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">_draw_2d</span><span class="p">(</span>
@@ -447,7 +437,12 @@
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; (</span><span class="si">{</span><span class="n">units</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">if</span> <span class="n">units</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; (</span><span class="si">{</span><span class="n">units</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">if</span> <span class="n">units</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;y&quot;</span><span class="p">)</span>
 
-    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">if</span> <span class="n">qbits</span><span class="o">.</span><span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">qbits</span><span class="o">.</span><span class="n">nqbits</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">draw_bonds</span><span class="p">:</span>
         <span class="n">f_tol</span> <span class="o">=</span> <span class="mf">1.01</span>  <span class="c1"># fractional tolerance</span>
         <span class="n">neighbours</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>

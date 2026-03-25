@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.qbits &#8212; qse 1.0.10 documentation</title>
+    <title>qse.qbits &#8212; qse 1.0.11 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=f08afc62"></script>
+    <script src="../../_static/documentation_options.js?v=4b767e7f"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.10 documentation - Home"/>
-    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.10 documentation - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.11 documentation - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.11 documentation - Home"/>
   
   
 </a></div>
@@ -426,7 +426,12 @@
 
         <span class="c1"># positions</span>
         <span class="k">if</span> <span class="n">positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nqbits</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="c1"># If a cell is passed we can infer the dimension, otherwise default to 3.</span>
+            <span class="k">if</span> <span class="n">cell</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dim</span> <span class="o">=</span> <span class="mi">3</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dim</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">dim</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">Cell</span><span class="p">)</span> <span class="k">else</span> <span class="n">Cell</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span><span class="o">.</span><span class="n">dim</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nqbits</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s2">&quot;positions&quot;</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
 
