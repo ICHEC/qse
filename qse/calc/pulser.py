@@ -145,12 +145,6 @@ class Pulser(Calculator):
         self._detuning = _format_pulse(detuning)
 
     @property
-    def coords(self):
-        if self._qbits is None:
-            return None
-        return self._qbits.positions[:, :2]
-
-    @property
     def register(self):
         return self._qbits.to_pulser()
 

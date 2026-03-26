@@ -1,7 +1,7 @@
 """Definition of the Signal class."""
 
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 class Signal:
     """
@@ -10,9 +10,9 @@ class Signal:
     Parameters
     ----------
     values : list | np.ndarray
-        The values of the signal.
+        The values of the signal in rad/µs.
     duration : int
-        Duration of the signal.
+        Duration of the signal in nanoseconds.
         Defaults to the length of the passed values.
 
     Examples
@@ -237,5 +237,21 @@ class Signal:
         """
         return f"Signal(duration={self.duration}, values={self.values})"
 
-    # TODO: Define interpolating scheme to resample points
-    # if duration is changed externally.
+    @property
+    def duration(self):
+        return self._duration
+    
+    @duration.setter
+    def duration(self, duration):
+        if duration % len(self.values) != 0:
+            raise Exception("The duration must be divisible by the number of signal values.")
+        self._duration = duration
+
+    @property
+    def time_per_value(self):
+        return self.duration // len(self.values)
+    
+    def draw(self):
+        plt.plot(np.concatenate([[i] * self.time_per_value for i in self]))
+        plt.ylabel("Signal (rad/µs)")
+        plt.xlabel("Time (ns)")
