@@ -7,8 +7,9 @@ https://pulser.readthedocs.io/en/stable/
 
 from time import time
 
-from qse import Signal
 from qse.calc.calculator import Calculator
+
+from .signal import Signal, Signals
 
 try:
     import pulser
@@ -145,12 +146,6 @@ class Pulser(Calculator):
         self._detuning = _format_pulse(detuning)
 
     @property
-    def coords(self):
-        if self._qbits is None:
-            return None
-        return self._qbits.positions[:, :2]
-
-    @property
     def register(self):
         return self._qbits.to_pulser()
 
@@ -212,16 +207,11 @@ def _format_pulse(pulse):
     if pulse is None or isinstance(pulse, pulser.waveforms.Waveform):
         return pulse
     if isinstance(pulse, Signal):
-        # pulser.waveforms.InterpolatedWaveform needs minimum 2
-        # values. In the case where we have a single value,
-        # we use pulser.waveforms.ConstantWaveform.
-        if len(pulse.values) == 1:
-            return pulser.waveforms.ConstantWaveform(
-                duration=pulse.duration, value=pulse.values
-            )
-        return pulser.waveforms.InterpolatedWaveform(
-            duration=pulse.duration, values=pulse.values
-        )
+        pulse = Signals([pulse])
+
+    if isinstance(pulse, Signals):
+        return pulse.to_pulser()
+
     raise Exception(
         "Pulses must be either `qse.Signal` or `pulser.waveforms.Waveform`."
     )

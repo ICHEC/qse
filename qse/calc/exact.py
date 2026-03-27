@@ -8,9 +8,9 @@ class ExactSimulator:
 
     Parameters
     ----------
-    amplitude: qse.Signal
+    amplitude: qse.calc.Signal
         The amplitude pulse.
-    detuning: qse.Signal
+    detuning: qse.calc.Signal
         The detuning pulse.
 
     Notes

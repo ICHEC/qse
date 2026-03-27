@@ -1,6 +1,7 @@
 """Definition of the Signal class."""
 
 import numpy as np
+from pulser.waveforms import CompositeWaveform, ConstantWaveform, CustomWaveform
 
 
 class Signal:
@@ -30,25 +31,6 @@ class Signal:
     >>> signal = qse.Signal([1, 1])
     >>> signal * 3 + 0.5
     ... Signal(duration=2, values=[3.5 3.5])
-
-    Two Signals can be added together which
-    concatenates their values and sums their durations.
-    So if w1, w2 are instantiation of Signal, then
-    w = w1 + w2 gives signal with concatenated values, i.e.,
-    w.values = [w1.values, w2.values], and added duration
-    w.duration = w1.duration + w2.duration.
-    For example:
-
-    >>> signal_1 = qse.Signal([1, 1], 5)
-    >>> signal_2 = qse.Signal([2, 2], 2)
-    >>> signal_1 + signal_2
-    ... Signal(duration=7, values=[1. 1. 2. 2.])
-
-    Notes
-    -----
-    Currently, the object gets created for multi-dim arrays as well.
-    However, it should be used for 1D only, we haven't made it useful
-    or consistent for multi-dim usage.
     """
 
     def __init__(self, values, duration=None) -> None:
@@ -117,12 +99,7 @@ class Signal:
         TypeError
             If the operand type is unsupported.
         """
-        if isinstance(other, Signal):
-            return Signal(
-                values=np.append(self.values, other.values),
-                duration=self.duration + other.duration,
-            )
-        elif isinstance(other, (float, int)):
+        if isinstance(other, (float, int)):
             return Signal(values=self.values + other, duration=self.duration)
         else:
             raise TypeError(f"Unsupported operand type for +: {type(other)}")
@@ -157,10 +134,7 @@ class Signal:
         TypeError
             If the operand type is unsupported.
         """
-        if isinstance(other, Signal):
-            self.values = np.append(self.values, other.values)
-            self.duration = self.duration + other.duration
-        elif isinstance(other, (float, int)):
+        if isinstance(other, (float, int)):
             self.values = self.values + other
         else:
             raise TypeError(f"Unsupported operand type for +=: {type(other)}")
@@ -237,5 +211,77 @@ class Signal:
         """
         return f"Signal(duration={self.duration}, values={self.values})"
 
-    # TODO: Define interpolating scheme to resample points
-    # if duration is changed externally.
+    @property
+    def duration(self):
+        return self._duration
+
+    @duration.setter
+    def duration(self, new_duration):
+        if not isinstance(new_duration, int):
+            raise ValueError("The duration must be an ints")
+
+        if new_duration % len(self.values) != 0:
+            raise ValueError("The number of values must divide the duration.")
+
+        self._duration = new_duration
+
+    def time_per_value(self):
+        return self.duration // len(self.values)
+
+    def concatenate(self):
+        return np.concatenate([[i] * self.time_per_value() for i in self.values])
+
+    def to_pulser(self):
+        if len(self.values) == 1:
+            return ConstantWaveform(duration=self.duration, value=self.values[0])
+        return CustomWaveform(self.concatenate())
+
+
+class Signals:
+    """
+    The Signal class represents a collection of Signals.
+
+    Parameters
+    ----------
+    signals : list[qse.calc.Signal]
+        The signals.
+    """
+
+    def __init__(self, signals=None):
+        if signals is None:
+            signals = []
+        self._signals = signals
+
+    def __add__(self, other):
+        if isinstance(other, Signal):
+            return Signals(self._signals + [other])
+        else:
+            raise TypeError(f"Unsupported operand type for +: {type(other)}")
+
+    def __iadd__(self, other):
+        if isinstance(other, Signal):
+            self._signals += [other]
+        else:
+            raise TypeError(f"Unsupported operand type for +=: {type(other)}")
+        return self
+
+    def __getitem__(self, i):
+        return self.signals[i]
+
+    def __repr__(self) -> str:
+        return f"Total duration={self.duration}\n" + "\n".join(
+            [f"  Signal(duration={s.duration}, values={s.values})" for s in self]
+        )
+
+    @property
+    def signals(self):
+        return self._signals
+
+    @property
+    def duration(self):
+        return sum([signal.duration for signal in self])
+
+    def to_pulser(self):
+        if len(self.signals) == 1:
+            return self[0].to_pulser()
+        return CompositeWaveform(*[i.to_pulser() for i in self])
