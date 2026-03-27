@@ -128,3 +128,11 @@ def test_single_qubit(omega, delta):
     pulser_calc.calculate()
 
     assert _infidelity(exact_calc.statevector, pulser_calc.statevector) < 1e-5
+
+
+def test_default_blockade_radius():
+    """Check blockade_radius matches the pulser MockDevice for default c6 value."""
+    rabi_frequency = 2 * np.pi
+    blockade_radius = pulser.devices.MockDevice.rydberg_blockade_radius(rabi_frequency)
+
+    assert np.isclose(blockade_radius, qse.calc.blockade_radius(rabi_frequency))
