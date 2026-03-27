@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API reference &#8212; qse 1.0.11 documentation</title>
+    <title>API reference &#8212; qse 1.0.12 documentation</title>
   
   
   
@@ -42,7 +42,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=4b767e7f"></script>
+    <script src="_static/documentation_options.js?v=5c02fe19"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -140,8 +140,8 @@
       
     
     
-    <img src="_static/logo.svg" class="logo__image only-light" alt="qse 1.0.11 documentation - Home"/>
-    <img src="_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.11 documentation - Home"/>
+    <img src="_static/logo.svg" class="logo__image only-light" alt="qse 1.0.12 documentation - Home"/>
+    <img src="_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.12 documentation - Home"/>
   
   
 </a></div>
@@ -454,6 +454,7 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.calculate"><code class="docutils literal notranslate"><span class="pre">Pulser.calculate()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.blockade_radius"><code class="docutils literal notranslate"><span class="pre">blockade_radius()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.lattices">qse.lattices</a><ul class="nav section-nav flex-column">
@@ -1593,6 +1594,32 @@ amplitude pulse and detuning pulse.</p>
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="qse.calc.blockade_radius">
+<span class="sig-prename descclassname"><span class="pre">qse.calc.</span></span><span class="sig-name descname"><span class="pre">blockade_radius</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rabi_frequency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c6</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5420158.53</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qse/calc/blockade_radius.html#blockade_radius"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.calc.blockade_radius" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the blockade radius based on the Rabi frequency and C6 coefficient.
+The blockade radius is a measure of the distance at which the Rydberg blockade
+effect occurs, preventing simultaneous excitation of nearby atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rabi_frequency</strong> (<em>float</em>) – The Rabi frequency (in rads/μs) associated with the atomic transition.</p></li>
+<li><p><strong>c6</strong> (<em>float, optional</em>) – The C6 coefficient (in rads/μs * μm^6) for the van der Waals interaction.
+Default is 5420158.53.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>float</em> – The blockade radius (in μm).</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The blockade radius is calculated as:</p>
+<div class="math notranslate nohighlight">
+\[r_b = \left( \frac{C_6}{\Omega} \right)^{1/6}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Omega\)</span> is the Rabi frequency and <span class="math notranslate nohighlight">\(C_6\)</span> is the van der Waals
+coefficient.</p>
+</dd></dl>
+
 </section>
 <section id="module-qse.lattices">
 <span id="qse-lattices"></span><h2>qse.lattices<a class="headerlink" href="#module-qse.lattices" title="Link to this heading">#</a></h2>
@@ -2073,6 +2100,7 @@ Defaults to True.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.Pulser.calculate"><code class="docutils literal notranslate"><span class="pre">Pulser.calculate()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.calc.blockade_radius"><code class="docutils literal notranslate"><span class="pre">blockade_radius()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-qse.lattices">qse.lattices</a><ul class="nav section-nav flex-column">

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Calculation Example &#8212; qse 1.0.11 documentation</title>
+    <title>Calculation Example &#8212; qse 1.0.12 documentation</title>
   
   
   
@@ -42,7 +42,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=4b767e7f"></script>
+    <script src="../_static/documentation_options.js?v=5c02fe19"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/pulser-calc-example';</script>
@@ -140,8 +140,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.11 documentation - Home"/>
-    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.11 documentation - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.12 documentation - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.12 documentation - Home"/>
   
   
 </a></div>
@@ -392,26 +392,27 @@ We use <code class="docutils literal notranslate"><span class="pre">pulser</span
 </div>
 <section id="create-a-2d-square-lattice">
 <h2>Create a 2D square lattice<a class="headerlink" href="#create-a-2d-square-lattice" title="Link to this heading">#</a></h2>
+<p>We generate the qbits object that represents a 2D lattice, keeping the lattice spacing a bit below the blockade radius keeps
+the nearest neighbours antiferromagnetic.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">omega_max</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>  <span class="c1"># rad/µs</span>
 <span class="n">rabi_frequency</span> <span class="o">=</span> <span class="n">omega_max</span> <span class="o">/</span> <span class="mf">2.0</span>  <span class="c1"># rad/µs</span>
 
-<span class="c1"># Now we generate the qbits object that represents a 2D lattice.</span>
-<span class="c1"># Keeping the lattice spacing a bit below the blockade radius keeps</span>
-<span class="c1"># the nearest neighbours antiferromagnetic.</span>
-<span class="n">blockade_radius</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">MockDevice</span><span class="o">.</span><span class="n">rydberg_blockade_radius</span><span class="p">(</span>
-    <span class="n">rabi_frequency</span>
-<span class="p">)</span>  <span class="c1"># in µm</span>
+<span class="n">blockade_radius</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">blockade_radius</span><span class="p">(</span><span class="n">rabi_frequency</span><span class="p">)</span>
 <span class="n">q2d</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">square</span><span class="p">(</span>
     <span class="n">lattice_spacing</span><span class="o">=</span><span class="mf">0.8</span> <span class="o">*</span> <span class="n">blockade_radius</span><span class="p">,</span> <span class="n">repeats_x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">repeats_y</span><span class="o">=</span><span class="mi">2</span>
 <span class="p">)</span>
 
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Blockade radius: </span><span class="si">{</span><span class="n">blockade_radius</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> µm&quot;</span><span class="p">)</span>
 <span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;µm&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Blockade radius: 9.76 µm
+</pre></div>
+</div>
 <img alt="../_images/aca6c9f6435d0f0c39fe13cf8e9811318c718b305bf39375e036c92e441a548a.png" src="../_images/aca6c9f6435d0f0c39fe13cf8e9811318c718b305bf39375e036c92e441a548a.png" />
 </div>
 </div>
@@ -496,7 +497,7 @@ We use <code class="docutils literal notranslate"><span class="pre">pulser</span
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total run time:   0.03s
-time in compute and simulation = 0.09675383567810059 s.
+time in compute and simulation = 0.09470677375793457 s.
 </pre></div>
 </div>
 </div>
@@ -517,7 +518,7 @@ time in compute and simulation = 0.09675383567810059 s.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/259bc1acae8447faa6809199633e7d9b2de4bcdd4d673cc4295ad592bae21b70.png" src="../_images/259bc1acae8447faa6809199633e7d9b2de4bcdd4d673cc4295ad592bae21b70.png" />
+<img alt="../_images/fcf7291adfd316b8996e367e1bc08c847d9a8b5cd83171a44bf199d96a16c2f4.png" src="../_images/fcf7291adfd316b8996e367e1bc08c847d9a8b5cd83171a44bf199d96a16c2f4.png" />
 </div>
 </div>
 <p>The states <code class="docutils literal notranslate"><span class="pre">011001</span></code> and <code class="docutils literal notranslate"><span class="pre">100110</span></code> are the most prevalent, we can visualise them using the <code class="docutils literal notranslate"><span class="pre">colouring</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">draw</span></code>.
@@ -553,7 +554,7 @@ We see that they correspond to anti-ferromagnetic orderings.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python version: 3.12.13
-qse version: 1.0.11
+qse version: 1.0.12
 </pre></div>
 </div>
 </div>
