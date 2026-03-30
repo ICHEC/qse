@@ -1,6 +1,6 @@
 import numpy as np
 
-from qse import Signal, Signals
+from qse import Signals
 
 
 class ExactSimulator:

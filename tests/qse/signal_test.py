@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from qse.signal import Signal, Signals
+from qse.signal import Signal
 
 
 @pytest.mark.parametrize(
@@ -44,7 +44,7 @@ def test_initialization(n_values, duration_per_val):
 def test_initialization_fail(values, duration):
     """Check that signals raise errors correctly."""
     with pytest.raises(Exception):
-        signal = Signal(values, duration)
+        Signal(values, duration)
 
 
 @pytest.mark.parametrize(

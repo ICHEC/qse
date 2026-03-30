@@ -16,6 +16,8 @@ __all__ = [
     "Qbits",
     "Operator",
     "Operators",
+    "Signal",
+    "Signals",
     "utils",
     "visualise",
 ]

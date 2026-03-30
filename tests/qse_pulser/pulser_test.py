@@ -129,7 +129,10 @@ def test_single_qubit(omega, delta):
     assert _infidelity(exact_calc.statevector, pulser_calc.statevector) < 1e-5
 
 
-def check_signal_to_pulser():
+def test_signal_to_pulser():
+    """
+    Check that a amplitude and detuning signal matches.
+    """
     omega_max = 2.0 * 2 * np.pi  # rad/µs
     rabi_frequency = omega_max / 2.0  # rad/µs
     delta_0 = -6 * rabi_frequency  # ns
@@ -137,6 +140,7 @@ def check_signal_to_pulser():
     t_rise = 252  # ns
     t_fall = 500  # ns
     t_sweep = (delta_f - delta_0) / (2 * np.pi * 10) * 1000  # ns
+    t_sweep = int(t_sweep)
 
     # up ramp, constant, downramp waveform
     amplitude_afm = pulser.CompositeWaveform(
@@ -144,7 +148,7 @@ def check_signal_to_pulser():
         pulser.waveforms.ConstantWaveform(t_sweep, omega_max),
         pulser.waveforms.RampWaveform(t_fall, omega_max, 0.0),
     )
-    amplitude = qse.Signals([])
+    amplitude = qse.Signals()
     amplitude += qse.Signal(omega_max * np.linspace(0, 1, t_rise))
     amplitude += qse.Signal([omega_max], t_sweep)
     amplitude += qse.Signal(omega_max - omega_max * np.linspace(0, 1, t_fall))
@@ -158,9 +162,17 @@ def check_signal_to_pulser():
         pulser.waveforms.ConstantWaveform(t_fall, delta_f),
     )
 
-    detuning = qse.Signals([])
+    detuning = qse.Signals()
     detuning += qse.Signal([delta_0], t_rise)
     detuning += qse.Signal(delta_0 + (delta_f - delta_0) * np.linspace(0, 1, t_sweep))
-    detuning += qse.calc.Signal([delta_f], t_fall)
+    detuning += qse.Signal([delta_f], t_fall)
 
     assert detuning.to_pulser() == detuning_afm
+
+
+def test_default_blockade_radius():
+    """Check blockade_radius matches the pulser MockDevice for default c6 value."""
+    rabi_frequency = 2 * np.pi
+    blockade_radius = pulser.devices.MockDevice.rydberg_blockade_radius(rabi_frequency)
+
+    assert np.isclose(blockade_radius, qse.calc.blockade_radius(rabi_frequency))
