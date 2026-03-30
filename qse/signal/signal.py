@@ -6,6 +6,8 @@ import numpy as np
 class Signal:
     """
     The Signal class represents a 1D signal with values and duration.
+    The duration must be divisble by the number of values and each value
+    is assume to last for an equal duration.
 
     Parameters
     ----------
