@@ -31,7 +31,7 @@ def test_qbits_to_pulser(dim, nqbits):
 @pytest.mark.parametrize("signal_type", ["amplitude", "detuning"])
 def test_pulser_signals(duration, signal_type):
     """Check initializing and updating the amplitude and detuning signals."""
-    signal = qse.calc.Signal(np.arange(duration))
+    signal = qse.Signal(np.arange(duration))
 
     # check initializing
     pulser_calc = qse.calc.Pulser(**{signal_type: signal})
@@ -39,7 +39,7 @@ def test_pulser_signals(duration, signal_type):
     assert np.allclose(getattr(pulser_calc, signal_type).samples, signal.values)
 
     # check we can update the sigals
-    signal_new = qse.calc.Signal(0.7 * np.arange(duration + 2))
+    signal_new = qse.Signal(0.7 * np.arange(duration + 2))
     setattr(pulser_calc, signal_type, signal_new)
     assert getattr(pulser_calc, signal_type).duration == signal_new.duration
     assert np.allclose(getattr(pulser_calc, signal_type).samples, signal_new.values)
@@ -57,8 +57,8 @@ def test_pulser_calc():
 
     # Initialise the pulser calculator
     pulser_calc = qse.calc.Pulser(
-        amplitude=qse.calc.Signal([omega0], duration),
-        detuning=qse.calc.Signal([delta0], duration),
+        amplitude=qse.Signal([omega0], duration),
+        detuning=qse.Signal([delta0], duration),
         qbits=qbits,
         label="test_run",
     )
@@ -104,8 +104,8 @@ def single_qubit_evolution(time, delta, omega):
 def test_single_qubit(omega, delta):
     """Test the pulser calculator against the exact calculator for a single qbit."""
     duration = 400
-    amplitude = qse.calc.Signal([omega], duration)
-    detuning = qse.calc.Signal([delta], duration)
+    amplitude = qse.Signal([omega], duration)
+    detuning = qse.Signal([delta], duration)
 
     # pass time in micro seconds.
     exact_calc = qse.calc.ExactSimulator(amplitude=amplitude, detuning=detuning)
@@ -144,10 +144,10 @@ def check_signal_to_pulser():
         pulser.waveforms.ConstantWaveform(t_sweep, omega_max),
         pulser.waveforms.RampWaveform(t_fall, omega_max, 0.0),
     )
-    amplitude = qse.calc.Signals([])
-    amplitude += qse.calc.Signal(omega_max * np.linspace(0, 1, t_rise))
-    amplitude += qse.calc.Signal([omega_max], t_sweep)
-    amplitude += qse.calc.Signal(omega_max - omega_max * np.linspace(0, 1, t_fall))
+    amplitude = qse.Signals([])
+    amplitude += qse.Signal(omega_max * np.linspace(0, 1, t_rise))
+    amplitude += qse.Signal([omega_max], t_sweep)
+    amplitude += qse.Signal(omega_max - omega_max * np.linspace(0, 1, t_fall))
 
     assert amplitude.to_pulser() == amplitude_afm
 
@@ -158,11 +158,9 @@ def check_signal_to_pulser():
         pulser.waveforms.ConstantWaveform(t_fall, delta_f),
     )
 
-    detuning = qse.calc.Signals([])
-    detuning += qse.calc.Signal([delta_0], t_rise)
-    detuning += qse.calc.Signal(
-        delta_0 + (delta_f - delta_0) * np.linspace(0, 1, t_sweep)
-    )
+    detuning = qse.Signals([])
+    detuning += qse.Signal([delta_0], t_rise)
+    detuning += qse.Signal(delta_0 + (delta_f - delta_0) * np.linspace(0, 1, t_sweep))
     detuning += qse.calc.Signal([delta_f], t_fall)
 
     assert detuning.to_pulser() == detuning_afm

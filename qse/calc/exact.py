@@ -1,6 +1,6 @@
 import numpy as np
 
-from .signal import Signal, Signals
+from qse import Signal, Signals
 
 
 class ExactSimulator:
@@ -42,10 +42,10 @@ class ExactSimulator:
 
     def __init__(self, amplitude=None, detuning=None):
         if not isinstance(amplitude, Signals):
-            amplitude = Signals(amplitude)
+            amplitude = Signals([amplitude])
 
         if not isinstance(detuning, Signals):
-            detuning = Signals(detuning)
+            detuning = Signals([detuning])
 
         _check_pulses(amplitude, detuning)
 
@@ -53,11 +53,13 @@ class ExactSimulator:
         self.detuning = detuning
 
     def calculate(self):
-        delta_t = _nano_to_micro(self.amplitude.duration / len(self.amplitude.values))
         state = np.array([[1.0], [0.0]])
-        for amp, det in zip(self.amplitude.values, self.detuning.values):
-            unitary = _get_unitary(amp, det, delta_t)
-            state = unitary @ state
+
+        for amp_s, det_s in zip(self.amplitude, self.detuning):
+            delta_t = _nano_to_micro(amp_s.time_per_value())
+            for amp, det in zip(amp_s.values, det_s.values):
+                unitary = _get_unitary(amp, det, delta_t)
+                state = unitary @ state
         self.statevector = state
 
 
@@ -73,7 +75,7 @@ def _check_pulses(amplitude, detuning):
     if amplitude.duration != detuning.duration:
         raise Exception("The amplitude and detuning must have the same duration.")
 
-    if not len(amplitude) != len(detuning):
+    if len(amplitude) != len(detuning):
         raise Exception(
             "The amplitude and detuning must contain the same number of signals."
         )

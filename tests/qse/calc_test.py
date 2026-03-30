@@ -43,8 +43,8 @@ def test_single_qubit(omega, delta):
 
     # Initialise the pulser calculator
     exact_calc = qse.calc.ExactSimulator(
-        amplitude=qse.calc.Signal([omega], duration),
-        detuning=qse.calc.Signal([delta], duration),
+        amplitude=qse.Signal([omega], duration),
+        detuning=qse.Signal([delta], duration),
     )
 
     # Compute

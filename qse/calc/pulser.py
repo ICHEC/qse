@@ -7,9 +7,8 @@ https://pulser.readthedocs.io/en/stable/
 
 from time import time
 
+from qse import Signal, Signals
 from qse.calc.calculator import Calculator
-
-from .signal import Signal, Signals
 
 try:
     import pulser
