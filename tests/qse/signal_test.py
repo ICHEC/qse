@@ -30,6 +30,7 @@ def test_initialization(n_values, duration_per_val):
     signal = Signal(values, duration)
     assert np.allclose(signal.values, values)
     assert duration == signal.duration
+    assert signal.time_per_value == duration_per_val
 
 
 @pytest.mark.parametrize(
