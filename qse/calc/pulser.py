@@ -29,9 +29,9 @@ class Pulser(Calculator):
     ----------
     qbits: qse.Qbits
         The qbits object.
-    amplitude: qse.Signal, pulser.waveforms.Waveform
+    amplitude: qse.calc.Signal, qse.calc.Signals, pulser.waveforms.Waveform
         The amplitude pulse.
-    detuning: qse.Signal, pulser.waveforms.Waveform
+    detuning: qse.calc.Signal, qse.calc.Signals, pulser.waveforms.Waveform
         The detuning pulse.
     channel : str
         Which channel to use. For example "rydberg_global" for Rydberg or
@@ -61,8 +61,8 @@ class Pulser(Calculator):
     >>> duration = 400
     >>> pulser_calc = qse.calc.Pulser(
     ...     qbits=qbits,
-    ...     amplitude=qse.Signal(np.ones(6) * 1.01, duration),
-    ...     detuning=qse.Signal(np.ones(6) * 0.12, duration),
+    ...     amplitude=qse.Signal([1.01], duration),
+    ...     detuning=qse.Signal([0.12], duration),
     ... )
     >>> pulser_calc.build_sequence()
     >>> pulser_calc.calculate()
@@ -206,12 +206,10 @@ class Pulser(Calculator):
 def _format_pulse(pulse):
     if pulse is None or isinstance(pulse, pulser.waveforms.Waveform):
         return pulse
-    if isinstance(pulse, Signal):
-        pulse = Signals([pulse])
-
-    if isinstance(pulse, Signals):
+    if isinstance(pulse, (Signal, Signals)):
         return pulse.to_pulser()
 
     raise Exception(
-        "Pulses must be either `qse.Signal` or `pulser.waveforms.Waveform`."
+        "Pulses must be either `qse.calc.Signal`, `qse.calc.Signals` "
+        "or `pulser.waveforms.Waveform`."
     )

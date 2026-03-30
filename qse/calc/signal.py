@@ -1,7 +1,6 @@
 """Definition of the Signal class."""
 
 import numpy as np
-from pulser.waveforms import CompositeWaveform, ConstantWaveform, CustomWaveform
 
 
 class Signal:
@@ -211,6 +210,9 @@ class Signal:
         """
         return f"Signal(duration={self.duration}, values={self.values})"
 
+    def __len__(self):
+        return len(self.values)
+
     @property
     def duration(self):
         return self._duration
@@ -220,19 +222,21 @@ class Signal:
         if not isinstance(new_duration, int):
             raise ValueError("The duration must be an ints")
 
-        if new_duration % len(self.values) != 0:
+        if new_duration % len(self) != 0:
             raise ValueError("The number of values must divide the duration.")
 
         self._duration = new_duration
 
     def time_per_value(self):
-        return self.duration // len(self.values)
+        return self.duration // len(self)
 
     def concatenate(self):
         return np.concatenate([[i] * self.time_per_value() for i in self.values])
 
     def to_pulser(self):
-        if len(self.values) == 1:
+        from pulser.waveforms import ConstantWaveform, CustomWaveform
+
+        if len(self) == 1:
             return ConstantWaveform(duration=self.duration, value=self.values[0])
         return CustomWaveform(self.concatenate())
 
@@ -273,6 +277,9 @@ class Signals:
             [f"  Signal(duration={s.duration}, values={s.values})" for s in self]
         )
 
+    def __len__(self):
+        return len(self.signals)
+
     @property
     def signals(self):
         return self._signals
@@ -282,6 +289,8 @@ class Signals:
         return sum([signal.duration for signal in self])
 
     def to_pulser(self):
-        if len(self.signals) == 1:
+        from pulser.waveforms import CompositeWaveform
+
+        if len(self) == 1:
             return self[0].to_pulser()
         return CompositeWaveform(*[i.to_pulser() for i in self])

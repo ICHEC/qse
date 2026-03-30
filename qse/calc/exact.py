@@ -1,5 +1,5 @@
 import numpy as np
-
+from .signal import Signal, Signals
 
 class ExactSimulator:
     r"""
@@ -8,9 +8,9 @@ class ExactSimulator:
 
     Parameters
     ----------
-    amplitude: qse.calc.Signal
+    amplitude: qse.calc.Signal, qse.calc.Signals
         The amplitude pulse.
-    detuning: qse.calc.Signal
+    detuning: qse.calc.Signal, qse.calc.Signals
         The detuning pulse.
 
     Notes
@@ -39,7 +39,14 @@ class ExactSimulator:
     """
 
     def __init__(self, amplitude=None, detuning=None):
+        if not isinstance(amplitude, Signals):
+            amplitude = Signals(amplitude)
+
+        if not isinstance(detuning, Signals):
+            detuning = Signals(detuning)
+
         _check_pulses(amplitude, detuning)
+
         self.amplitude = amplitude
         self.detuning = detuning
 
@@ -61,12 +68,17 @@ def _get_unitary(omega, delta, time):
 
 
 def _check_pulses(amplitude, detuning):
-    if not amplitude.duration == detuning.duration:
+    if amplitude.duration != detuning.duration:
         raise Exception("The amplitude and detuning must have the same duration.")
-    if not len(amplitude.values) == len(detuning.values):
-        raise Exception(
-            "The amplitude and detuning must have the same amount of values."
-        )
+    
+    if not len(amplitude) != len(detuning):
+        raise Exception("The amplitude and detuning must contain the same number of signals.")
+
+    for a,d in zip(amplitude, detuning):
+        if len(a) != len(d):
+            raise Exception(
+                "The amplitude and detuning must have the same amount of values."
+            )
 
 
 def _nano_to_micro(t):
