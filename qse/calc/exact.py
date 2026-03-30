@@ -1,5 +1,7 @@
 import numpy as np
+
 from .signal import Signal, Signals
+
 
 class ExactSimulator:
     r"""
@@ -70,11 +72,13 @@ def _get_unitary(omega, delta, time):
 def _check_pulses(amplitude, detuning):
     if amplitude.duration != detuning.duration:
         raise Exception("The amplitude and detuning must have the same duration.")
-    
-    if not len(amplitude) != len(detuning):
-        raise Exception("The amplitude and detuning must contain the same number of signals.")
 
-    for a,d in zip(amplitude, detuning):
+    if not len(amplitude) != len(detuning):
+        raise Exception(
+            "The amplitude and detuning must contain the same number of signals."
+        )
+
+    for a, d in zip(amplitude, detuning):
         if len(a) != len(d):
             raise Exception(
                 "The amplitude and detuning must have the same amount of values."
