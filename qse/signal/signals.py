@@ -12,7 +12,7 @@ class Signals:
 
     Parameters
     ----------
-    signals : list[qse.calc.Signal], optional
+    signals : list[qse.Signal], optional
         The signals.
 
     Examples
@@ -23,6 +23,13 @@ class Signals:
     ... Total duration=15
     ...   Signal(duration=10, values=[1.])
     ...   Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
+
+    We can also create Signals by addition, for example to create
+    the same signal as above:
+
+    >>> z = qse.Signals()
+    >>> z += x
+    >>> z += y
     """
 
     def __init__(self, signals=None):

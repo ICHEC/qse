@@ -28,9 +28,9 @@ class Pulser(Calculator):
     ----------
     qbits: qse.Qbits
         The qbits object.
-    amplitude: qse.calc.Signal, qse.calc.Signals, pulser.waveforms.Waveform
+    amplitude: qse.Signal, qse.Signals, pulser.waveforms.Waveform
         The amplitude pulse.
-    detuning: qse.calc.Signal, qse.calc.Signals, pulser.waveforms.Waveform
+    detuning: qse.Signal, qse.Signals, pulser.waveforms.Waveform
         The detuning pulse.
     channel : str
         Which channel to use. For example "rydberg_global" for Rydberg or
@@ -209,6 +209,6 @@ def _format_pulse(pulse):
         return pulse.to_pulser()
 
     raise Exception(
-        "Pulses must be either `qse.calc.Signal`, `qse.calc.Signals` "
+        "Pulses must be either `qse.Signal`, `qse.Signals` "
         "or `pulser.waveforms.Waveform`."
     )
