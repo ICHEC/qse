@@ -2,6 +2,8 @@
 
 import numpy as np
 
+from .draw import draw
+
 
 class Signal:
     """
@@ -19,10 +21,15 @@ class Signal:
 
     Examples
     --------
-    One can create a signal by passing an array of values:
+    To create a constant signal, passing a single value:
 
-    >>> qse.Signal([1, 2, 3], 100)
-    ... Signal(duration=100, values=[1. 2. 3.])
+    >>> qse.Signal([1], 10)
+    ... Signal(duration=10, values=[1.])
+
+    To create an arbitrary signal, pass an array
+    whose length is equal to the duration:
+    >>> qse.Signal(np.linspace(0, 1, 5), 5)
+    ... Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
 
     Arithmetic operations with scalars is supported.
     Adding or multiplying a scalar to a Signal returns
@@ -230,14 +237,52 @@ class Signal:
         self._duration = new_duration
 
     def time_per_value(self):
+        """
+        Get the duration per value. Recall that the values are equally
+        spaced over the total duration.
+
+        Returns
+        -------
+        int
+            The duration of each value.
+        """
         return self.duration // len(self)
 
     def expand(self):
+        """
+        Get an array of length 'duration' whose entries are the signal values.
+
+        Returns
+        -------
+        np.ndarray
+            An array representing the signal.
+        """
         return np.concatenate([[i] * self.time_per_value() for i in self.values])
 
     def to_pulser(self):
+        """
+        Convert to a Pulser Waveform.
+
+        Returns
+        -------
+        pulser.waveforms.Waveform
+            The waveform.
+        """
         from pulser.waveforms import ConstantWaveform, CustomWaveform
 
         if len(self) == 1:
             return ConstantWaveform(duration=self.duration, value=self.values[0])
         return CustomWaveform(self.expand())
+
+    def draw(self, time_units=None, signal_units=None):
+        """
+        Draw the signal.
+
+        Parameters
+        ----------
+        time_units : str, optional
+            The units of the duration.
+        signal_units : str, optional
+            The units of the signal.
+        """
+        return draw(self, time_units=time_units, signal_units=signal_units)

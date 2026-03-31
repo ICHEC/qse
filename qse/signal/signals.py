@@ -1,5 +1,8 @@
 """Definition of the Signal class."""
 
+import numpy as np
+
+from .draw import draw
 from .signal import Signal
 
 
@@ -9,8 +12,17 @@ class Signals:
 
     Parameters
     ----------
-    signals : list[qse.calc.Signal]
+    signals : list[qse.calc.Signal], optional
         The signals.
+
+    Examples
+    --------
+    >>> x = qse.Signal([1], 10)
+    >>> y = qse.Signal(np.linspace(0, 1, 5), 5)
+    >>> qse.Signals([x, y])
+    ... Total duration=15
+    ...   Signal(duration=10, values=[1.])
+    ...   Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
     """
 
     def __init__(self, signals=None):
@@ -54,8 +66,40 @@ class Signals:
         return sum([signal.duration for signal in self])
 
     def to_pulser(self):
+        """
+        Convert to a Pulser Waveform.
+
+        Returns
+        -------
+        pulser.waveforms.Waveform
+            The waveform.
+        """
         from pulser.waveforms import CompositeWaveform
 
         if len(self) == 1:
             return self[0].to_pulser()
         return CompositeWaveform(*[i.to_pulser() for i in self])
+
+    def expand(self):
+        """
+        Get an array of length 'duration' whose entries are the signal values.
+
+        Returns
+        -------
+        np.ndarray
+            An array representing the signal.
+        """
+        return np.concatenate([i.expand() for i in self])
+
+    def draw(self, time_units=None, signal_units=None):
+        """
+        Draw the signal.
+
+        Parameters
+        ----------
+        time_units : str, optional
+            The units of the duration.
+        signal_units : str, optional
+            The units of the signal.
+        """
+        return draw(self, time_units=time_units, signal_units=signal_units)

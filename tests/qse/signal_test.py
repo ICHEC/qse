@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from qse.signal import Signal
+from qse.signal import Signal, Signals
 
 
 @pytest.mark.parametrize(
@@ -85,3 +85,27 @@ def test_scalar_operations(values, duration_per_val, scalar):
     signal *= scalar
     assert signal.duration == duration
     assert np.allclose(signal.values / scalar, values)
+
+
+def test_signals():
+    """
+    Test the Signals class.
+    """
+    omega_max = 2.03
+    t_rise = 10
+    t_sweep = 23
+    t_fall = 6
+
+    amplitude = Signals()
+
+    amplitude += Signal(omega_max * np.linspace(0, 1, t_rise))
+    assert amplitude.duration == t_rise
+    assert len(amplitude) == 1
+
+    amplitude += Signal([omega_max], t_sweep)
+    assert amplitude.duration == t_rise + t_sweep
+    assert len(amplitude) == 2
+
+    amplitude += Signal(omega_max - omega_max * np.linspace(0, 1, t_fall))
+    assert amplitude.duration == t_rise + t_sweep + t_fall
+    assert len(amplitude) == 3
