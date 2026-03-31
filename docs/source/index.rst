@@ -3,34 +3,53 @@ QSE
 
 The Quantum Simulation Environment (QSE) package is intended to provide a flexible,
 modular way to frame a quantum simulation problem involving position dependend quantum degrees of freedom.
-Primarily we look at a collection of qubits at given set of coordinates.
-These can be arbitrary coordinates, or defined on a lattice.
+Primarily we look at a collection of qubits at given set of coordinates. These can be arbitrary coordinates, or defined on a lattice.
 
 QSE's design is adapted from Atomic Simulation Environment (ASE) to suit the needs
 for an abstract representation for
 
-#. `defining quantum computing systems`
-#. `computing operations/simulations`
+#. **defining quantum computing systems**
+#. **computing operations/simulations**
 
-in a vendor agnostic way.
-ASE's modular nature, and extensability make it very useful for a similar quantum computing application.
+in a vendor or backend agnostic way. ASE's modular nature, and extensability make it very useful for a similar quantum computing application.
+Below is the visual organization of the components of QSE.
 
 .. mermaid::
-   graph TB
+  :config: {"layout": "tidy-tree"}
 
-   A[QSE]
-   Qs[Qbits]
-   calc[Calculator]
+   mindmap
+      root((QSE))
+         Qbits
+            Qbit
+            Cell
+         Calculator
+            Pulser
+            MyQLM
+            Qutip
+         Utils
+            Magnetic
+            Signals
+         lattices
+            2D
+            3D
+         Visualise
 
-   A ----> Qs & calc
-
-
-.. autoclasstree:: qse.Qbits
 
 
 .. note::
 
    This project is under active development.
+
+
+
+
+Qbits
+-----
+
+`Qbit` is the smallest class that represents just one qubits. `Qbits` is the primary class that represents a collection of qubits.
+It can be instantiated by providing a list of coordinates, or as an empty class.
+See the `Qbits examples <https://github/ICHEC/qse/docs/build/html/tutorials/creating_and_manipulating_qbits.html>`_ for more details.
+
 
 
 .. code-block:: python
@@ -42,11 +61,13 @@ ASE's modular nature, and extensability make it very useful for a similar quantu
    qsqr.draw(radius=5.0)
 
 
+Calculator
+----------
+
 
 Contributing
 ------------
 See the `contributing page <https://github.com/ICHEC/qse/blob/main/CONTRIBUTIONS.md>`_.
-
 
 .. toctree::
    :hidden:
