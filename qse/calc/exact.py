@@ -1,5 +1,7 @@
 import numpy as np
 
+from qse import Signals
+
 
 class ExactSimulator:
     r"""
@@ -8,9 +10,9 @@ class ExactSimulator:
 
     Parameters
     ----------
-    amplitude: qse.Signal
+    amplitude: qse.Signal, qse.Signals
         The amplitude pulse.
-    detuning: qse.Signal
+    detuning: qse.Signal, qse.Signals
         The detuning pulse.
 
     Notes
@@ -39,16 +41,25 @@ class ExactSimulator:
     """
 
     def __init__(self, amplitude=None, detuning=None):
+        if not isinstance(amplitude, Signals):
+            amplitude = Signals([amplitude])
+
+        if not isinstance(detuning, Signals):
+            detuning = Signals([detuning])
+
         _check_pulses(amplitude, detuning)
+
         self.amplitude = amplitude
         self.detuning = detuning
 
     def calculate(self):
-        delta_t = _nano_to_micro(self.amplitude.duration / len(self.amplitude.values))
         state = np.array([[1.0], [0.0]])
-        for amp, det in zip(self.amplitude.values, self.detuning.values):
-            unitary = _get_unitary(amp, det, delta_t)
-            state = unitary @ state
+
+        for amp_s, det_s in zip(self.amplitude, self.detuning):
+            delta_t = _nano_to_micro(amp_s.time_per_value())
+            for amp, det in zip(amp_s.values, det_s.values):
+                unitary = _get_unitary(amp, det, delta_t)
+                state = unitary @ state
         self.statevector = state
 
 
@@ -61,12 +72,19 @@ def _get_unitary(omega, delta, time):
 
 
 def _check_pulses(amplitude, detuning):
-    if not amplitude.duration == detuning.duration:
+    if amplitude.duration != detuning.duration:
         raise Exception("The amplitude and detuning must have the same duration.")
-    if not len(amplitude.values) == len(detuning.values):
+
+    if len(amplitude) != len(detuning):
         raise Exception(
-            "The amplitude and detuning must have the same amount of values."
+            "The amplitude and detuning must contain the same number of signals."
         )
+
+    for a, d in zip(amplitude, detuning):
+        if len(a) != len(d):
+            raise Exception(
+                "The amplitude and detuning must have the same amount of values."
+            )
 
 
 def _nano_to_micro(t):
