@@ -3,16 +3,22 @@ root: index
 parts:
   - caption: Getting Started
     chapters:
-      - file: CONTRIBUTIONS # JB will look for CONTRIBUTIONS.md
+      - file: INSTALLATION  # Installation instructions
   
   - caption: Tutorials
     chapters:
       - file: tutorials/creating_and_manipulating_qbits
       - file: tutorials/generating_lattices
       - file: tutorials/pulser-calc-example
+  - caption: Use-Cases
+    chapters:
       - file: tutorials/ssh_model
-      - file: ../examples/pulser-myqlm-conversion
-  
+    #  - file: ../examples/pulser-myqlm-conversion
+  - caption: Theory
+    chapters:
+      - file: theory/spatial-correlation
   - caption: API Reference
     chapters:
-      - file: autoapi/index # This is where sphinx-autoapi dumps the docs
+      - file: autoapi/qse/index # This is where sphinx-autoapi dumps the docs
+      - file: CONTRIBUTIONS # JB will look for CONTRIBUTIONS.md
+      - file: removal

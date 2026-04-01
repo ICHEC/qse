@@ -1,3 +1,17 @@
+---
+jupytext:
+    formats: md:myst
+    text_representation:
+        extension: .md
+        format_name: myst
+kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+mystnb:
+    render_markdown_format: myst
+---
+
 # QSE
 
 The Quantum Simulation Environment (QSE) package is intended to provide a flexible,
@@ -14,24 +28,24 @@ in a vendor and backend agnostic way. ASE's modular nature, and extensibility ma
 Below is the visual organization of the components of QSE.
 
 ```{mermaid}
-  :config: {"layout": "tidy-tree"}
+:config: {"layout": "tidy-tree"}
 
-   mindmap
-      root((QSE))
-         Qbits
-            Qbit
-            Cell
-         Calculator
-            Pulser
-            MyQLM
-            Qutip
-         Utils
-            Magnetic
-            Signals
-         lattices
-            2D
-            3D
-         Visualise
+mindmap
+   root((QSE))
+      Qbits
+         Qbit
+         Cell
+      Calculator
+         Pulser
+         MyQLM
+         Qutip
+      Utils
+         Magnetic
+         Signals
+      lattices
+         2D
+         3D
+      Visualise
 ```
 
 
@@ -50,7 +64,7 @@ See the [Qbits examples](https://github/ICHEC/qse/docs/build/html/tutorials/crea
 
 
 
-```python
+```{code-cell}
 import qse
 qsqr = qse.lattices.square(
    lattice_spacing=2.0,
@@ -66,27 +80,3 @@ Calculator
 
 See the [contributing page](https://github.com/ICHEC/qse/blob/main/CONTRIBUTIONS.md).
 
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-
-   Home <self>
-   INSTALLATION
-
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: Tutorials
-
-   tutorials/creating_and_manipulating_qbits
-   tutorials/generating_lattices
-   tutorials/pulser-calc-example
-   tutorials/ssh_model
-
-
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: API Reference
-
-   api 

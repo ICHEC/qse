@@ -1,8 +1,22 @@
 """
 Quantum Simulation Environment.
 
-
 This package is adapted from Atomic Simulation Environment (ASE).
+
+Following are the major components of the module -
+
+.. mermaid::
+
+    mindmap
+    root((QSE))
+        qse.calc
+        qse.lattices
+        qse.magnetic
+        qse.qbit
+        qse.qbits
+        qse.signal
+        qse.utils
+
 
 """
 
