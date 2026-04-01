@@ -1,0 +1,18 @@
+format: jb-book
+root: index
+parts:
+  - caption: Getting Started
+    chapters:
+      - file: CONTRIBUTIONS # JB will look for CONTRIBUTIONS.md
+  
+  - caption: Tutorials
+    chapters:
+      - file: tutorials/creating_and_manipulating_qbits
+      - file: tutorials/generating_lattices
+      - file: tutorials/pulser-calc-example
+      - file: tutorials/ssh_model
+      - file: ../examples/pulser-myqlm-conversion
+  
+  - caption: API Reference
+    chapters:
+      - file: autoapi/index # This is where sphinx-autoapi dumps the docs
