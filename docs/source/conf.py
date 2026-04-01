@@ -34,7 +34,13 @@ extensions = [
     "sphinx_jupyterbook_latex",
     "sphinx_togglebutton",
     "sphinx_copybutton",
+    "sphinxcontrib.mermaid",
 ]
+
+# Optional: customize Mermaid settings
+mermaid_version = "10.4.0"  # Specific Mermaid.js version
+mermaid_init_js = "mermaid.initialize({startOnLoad:true});"
+
 # nbsphinx_execute = "never"
 templates_path = ["_templates"]
 exclude_patterns = []
