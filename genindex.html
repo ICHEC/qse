@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; qse 1.0.13 documentation</title>
+    <title>Index &#8212; QSE</title>
   
   
   
@@ -29,11 +29,15 @@
   <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/default.css?v=b9f5b887" />
   
   <!-- So that users can add custom icons -->
   <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -41,18 +45,22 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=e7fe7c04"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
     <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
 
@@ -575,8 +583,8 @@ window.runMermaid = runMermaid;</script>
       
     
     
-    <img src="_static/logo.svg" class="logo__image only-light" alt="qse 1.0.13 documentation - Home"/>
-    <img src="_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.13 documentation - Home"/>
+    <img src="_static/logo.svg" class="logo__image only-light" alt="QSE - Home"/>
+    <img src="_static/logo.svg" class="logo__image only-dark pst-js-only" alt="QSE - Home"/>
   
   
 </a></div>
@@ -589,8 +597,8 @@ window.runMermaid = runMermaid;</script>
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="INSTALLATION.html">Installation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
@@ -598,11 +606,33 @@ window.runMermaid = runMermaid;</script>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/creating_and_manipulating_qbits.html">Creating and manipulating Qbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/generating_lattices.html">Generating Lattices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/pulser-calc-example.html">Calculation Example</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Use-Cases</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="tutorials/ssh_model.html">Simulating the SSH model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="theory/spatial-correlation.html">Computing spatial correlation in magnetic models</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="autoapi/qse/index.html">qse</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="autoapi/qse/calc/index.html">qse.calc</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/qse/calc/myqlm/index.html">qse.calc.myqlm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/qse/calc/pulser/index.html">qse.calc.pulser</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/qse/lattices/index.html">qse.lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/qse/magnetic/index.html">qse.magnetic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/qse/qbit/index.html">qse.qbit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/qse/qbits/index.html">qse.qbits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/qse/signal/index.html">qse.signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/qse/utils/index.html">qse.utils</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTIONS.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="removal.html">Removal of unused functions/classes/methods</a></li>
 </ul>
 
     </div>
@@ -649,53 +679,6 @@ window.runMermaid = runMermaid;</script>
         <div class="header-article-item">
 
 <div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/ICHEC/qse" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/ICHEC/qse/issues/new?title=Issue%20on%20page%20%2Fgenindex.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="btn__text-container">Open issue</span>
-</a>
-</li>
-      
-  </ul>
-</div>
-
 
 
 
@@ -753,7 +736,8 @@ window.runMermaid = runMermaid;</script>
 <h1 id="index">Index</h1>
 
 <div class="genindex-jumpbox">
- <a href="#A"><strong>A</strong></a>
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
  | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
@@ -763,7 +747,6 @@ window.runMermaid = runMermaid;</script>
  | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#K"><strong>K</strong></a>
- | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
@@ -775,75 +758,209 @@ window.runMermaid = runMermaid;</script>
  | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
  | <a href="#X"><strong>X</strong></a>
- | <a href="#Y"><strong>Y</strong></a>
- | <a href="#Z"><strong>Z</strong></a>
  
 </div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="autoapi/qse/index.html#qse.Signal.__add__">__add__() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__add__">(qse.signal.Signal method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.__delitem__">__delitem__() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.__delitem__">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.__eq__">__eq__() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.__eq__">(qse.qbits.Qbits method)</a>
+</li>
+        <li><a href="autoapi/qse/index.html#qse.Signal.__eq__">(qse.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__eq__">(qse.signal.Signal method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.__getitem__">__getitem__() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.__getitem__">(qse.qbits.Qbits method)</a>
+</li>
+        <li><a href="autoapi/qse/index.html#qse.Signal.__getitem__">(qse.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__getitem__">(qse.signal.Signal method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Signal.__iadd__">__iadd__() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__iadd__">(qse.signal.Signal method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.__imul__">__imul__() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.__imul__">(qse.qbits.Qbits method)</a>
+</li>
+        <li><a href="autoapi/qse/index.html#qse.Signal.__imul__">(qse.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__imul__">(qse.signal.Signal method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="autoapi/qse/index.html#qse.Signal.__iter__">__iter__() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__iter__">(qse.signal.Signal method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Signal.__mul__">__mul__() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__mul__">(qse.signal.Signal method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.__ne__">__ne__() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.__ne__">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Signal.__radd__">__radd__() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__radd__">(qse.signal.Signal method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.__repr__">__repr__() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.__repr__">(qse.qbits.Qbits method)</a>
+</li>
+        <li><a href="autoapi/qse/index.html#qse.Signal.__repr__">(qse.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__repr__">(qse.signal.Signal method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Signal.__rmul__">__rmul__() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__rmul__">(qse.signal.Signal method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.add_dim">add_dim() (qse.Qbits method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.add_dim">add_dim() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.add_dim">(qse.qbits.Qbits method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.append">append() (qse.Qbits method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.append">append() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.append">(qse.qbits.Qbits method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.calc.blockade_radius">blockade_radius() (in module qse.calc)</a>
+      <li><a href="autoapi/qse/calc/index.html#qse.calc.blockade_radius">blockade_radius() (in module qse.calc)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.calc.Pulser.build_sequence">build_sequence() (qse.calc.Pulser method)</a>
+      <li><a href="autoapi/qse/calc/index.html#qse.calc.Pulser.build_sequence">build_sequence() (qse.calc.Pulser method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.build_sequence">(qse.calc.pulser.Pulser method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.calc">calc (qse.Qbits property)</a>
-</li>
-      <li><a href="api.html#qse.calc.Calculator.calculate">calculate() (qse.calc.Calculator method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.calc">calc (qse.Qbits property)</a>
 
       <ul>
-        <li><a href="api.html#qse.calc.Myqlm.calculate">(qse.calc.Myqlm method)</a>
-</li>
-        <li><a href="api.html#qse.calc.Pulser.calculate">(qse.calc.Pulser method)</a>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.calc">(qse.qbits.Qbits property)</a>
 </li>
       </ul></li>
-      <li><a href="api.html#qse.calc.Calculator">Calculator (class in qse.calc)</a>
+      <li><a href="autoapi/qse/calc/index.html#qse.calc.Calculator.calculate">calculate() (qse.calc.Calculator method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/calc/index.html#qse.calc.Myqlm.calculate">(qse.calc.Myqlm method)</a>
+</li>
+        <li><a href="autoapi/qse/calc/myqlm/index.html#qse.calc.myqlm.Myqlm.calculate">(qse.calc.myqlm.Myqlm method)</a>
+</li>
+        <li><a href="autoapi/qse/calc/index.html#qse.calc.Pulser.calculate">(qse.calc.Pulser method)</a>
+</li>
+        <li><a href="autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser.calculate">(qse.calc.pulser.Pulser method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/calc/index.html#qse.calc.Calculator">Calculator (class in qse.calc)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Cell">Cell (class in qse)</a>
+      <li><a href="autoapi/qse/index.html#qse.Cell">Cell (class in qse)</a>
 </li>
-      <li><a href="api.html#qse.lattices.chain">chain() (in module qse.lattices)</a>
+      <li><a href="autoapi/qse/lattices/index.html#qse.lattices.chain">chain() (in module qse.lattices)</a>
 </li>
-      <li><a href="api.html#qse.Qbits.compute_interaction_hamiltonian">compute_interaction_hamiltonian() (qse.Qbits method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.compute_interaction_hamiltonian">compute_interaction_hamiltonian() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.compute_interaction_hamiltonian">(qse.qbits.Qbits method)</a>
 </li>
-      <li><a href="api.html#qse.Qbits.copy">copy() (qse.Qbits method)</a>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.copy">copy() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.copy">(qse.qbits.Qbits method)</a>
 </li>
-      <li><a href="api.html#qse.Qbit.cut_reference_to_qbits">cut_reference_to_qbits() (qse.Qbit method)</a>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbit.cut_reference_to_qbits">cut_reference_to_qbits() (qse.Qbit method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbit/index.html#qse.qbit.Qbit.cut_reference_to_qbits">(qse.qbit.Qbit method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbit.delete">delete() (qse.Qbit method)</a>
+      <li><a href="autoapi/qse/qbits/index.html#qse.qbits.default">default() (in module qse.qbits)</a>
 </li>
-      <li><a href="api.html#qse.draw">draw() (in module qse)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbit.delete">delete() (qse.Qbit method)</a>
 
       <ul>
-        <li><a href="api.html#qse.visualise.draw">(in module qse.visualise)</a>
+        <li><a href="autoapi/qse/qbit/index.html#qse.qbit.Qbit.delete">(qse.qbit.Qbit method)</a>
 </li>
-        <li><a href="api.html#qse.Qbits.draw">(qse.Qbits method)</a>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="autoapi/qse/index.html#qse.draw">draw() (in module qse)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/index.html#qse.Qbits.draw">(qse.Qbits method)</a>
+</li>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.draw">(qse.qbits.Qbits method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -852,16 +969,22 @@ window.runMermaid = runMermaid;</script>
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.euler_rotate">euler_rotate() (qse.Qbits method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.euler_rotate">euler_rotate() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.euler_rotate">(qse.qbits.Qbits method)</a>
 </li>
-      <li><a href="api.html#qse.calc.ExactSimulator">ExactSimulator (class in qse.calc)</a>
+      </ul></li>
+      <li><a href="autoapi/qse/calc/index.html#qse.calc.ExactSimulator">ExactSimulator (class in qse.calc)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Operators.extend">extend() (qse.Operators method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Operators.extend">extend() (qse.Operators method)</a>
 
       <ul>
-        <li><a href="api.html#qse.Qbits.extend">(qse.Qbits method)</a>
+        <li><a href="autoapi/qse/index.html#qse.Qbits.extend">(qse.Qbits method)</a>
+</li>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.extend">(qse.qbits.Qbits method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -870,50 +993,98 @@ window.runMermaid = runMermaid;</script>
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.fromdict">fromdict() (qse.Qbits class method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.fromdict">fromdict() (qse.Qbits class method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.fromdict">(qse.qbits.Qbits class method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbit.get">get() (qse.Qbit method)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.get_all_distances">get_all_distances() (qse.Qbits method)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.get_angle">get_angle() (qse.Qbits method)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.get_angles">get_angles() (qse.Qbits method)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.get_array">get_array() (qse.Qbits method)</a>
-</li>
-      <li><a href="api.html#qse.magnetic.get_basis">get_basis() (in module qse.magnetic)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.get_centroid">get_centroid() (qse.Qbits method)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.get_distance">get_distance() (qse.Qbits method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.get_distances">get_distances() (qse.Qbits method)</a>
-</li>
-      <li><a href="api.html#qse.magnetic.get_number_operator">get_number_operator() (in module qse.magnetic)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.get_pbc">get_pbc() (qse.Qbits method)</a>
-</li>
-      <li><a href="api.html#qse.Qbit.get_raw">get_raw() (qse.Qbit method)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.get_scaled_positions">get_scaled_positions() (qse.Qbits method)</a>
-</li>
-      <li><a href="api.html#qse.calc.Calculator.get_sij">get_sij() (qse.calc.Calculator method)</a>
-</li>
-      <li><a href="api.html#qse.magnetic.get_sisj">get_sisj() (in module qse.magnetic)</a>
-</li>
-      <li><a href="api.html#qse.magnetic.get_spins">get_spins() (in module qse.magnetic)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbit.get">get() (qse.Qbit method)</a>
 
       <ul>
-        <li><a href="api.html#qse.calc.Calculator.get_spins">(qse.calc.Calculator method)</a>
+        <li><a href="autoapi/qse/qbit/index.html#qse.qbit.Qbit.get">(qse.qbit.Qbit method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.get_all_distances">get_all_distances() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.get_all_distances">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.get_angle">get_angle() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.get_angle">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.get_angles">get_angles() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.get_angles">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.get_array">get_array() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.get_array">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/magnetic/index.html#qse.magnetic.get_basis">get_basis() (in module qse.magnetic)</a>
+</li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.get_centroid">get_centroid() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.get_centroid">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.get_distance">get_distance() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.get_distance">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.get_distances">get_distances() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.get_distances">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/magnetic/index.html#qse.magnetic.get_number_operator">get_number_operator() (in module qse.magnetic)</a>
+</li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.get_pbc">get_pbc() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.get_pbc">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbit.get_raw">get_raw() (qse.Qbit method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbit/index.html#qse.qbit.Qbit.get_raw">(qse.qbit.Qbit method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.get_scaled_positions">get_scaled_positions() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.get_scaled_positions">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/calc/index.html#qse.calc.Calculator.get_sij">get_sij() (qse.calc.Calculator method)</a>
+</li>
+      <li><a href="autoapi/qse/magnetic/index.html#qse.magnetic.get_sisj">get_sisj() (in module qse.magnetic)</a>
+</li>
+      <li><a href="autoapi/qse/magnetic/index.html#qse.magnetic.get_spins">get_spins() (in module qse.magnetic)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/calc/index.html#qse.calc.Calculator.get_spins">(qse.calc.Calculator method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -922,7 +1093,7 @@ window.runMermaid = runMermaid;</script>
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.lattices.hexagonal">hexagonal() (in module qse.lattices)</a>
+      <li><a href="autoapi/qse/lattices/index.html#qse.lattices.hexagonal">hexagonal() (in module qse.lattices)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -930,7 +1101,7 @@ window.runMermaid = runMermaid;</script>
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.utils.int2bin">int2bin() (in module qse.utils)</a>
+      <li><a href="autoapi/qse/utils/index.html#qse.utils.int2bin">int2bin() (in module qse.utils)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -938,19 +1109,7 @@ window.runMermaid = runMermaid;</script>
 <h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.lattices.kagome">kagome() (in module qse.lattices)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="L">L</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbit.label">label (qse.Qbit property)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.labels">labels (qse.Qbits property)</a>
+      <li><a href="autoapi/qse/lattices/index.html#qse.lattices.kagome">kagome() (in module qse.lattices)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -962,42 +1121,58 @@ window.runMermaid = runMermaid;</script>
     module
 
       <ul>
-        <li><a href="api.html#module-qse">qse</a>
+        <li><a href="autoapi/qse/index.html#module-qse">qse</a>
 </li>
-        <li><a href="api.html#module-qse.calc">qse.calc</a>
+        <li><a href="autoapi/qse/calc/index.html#module-qse.calc">qse.calc</a>
 </li>
-        <li><a href="api.html#module-qse.lattices">qse.lattices</a>
+        <li><a href="autoapi/qse/calc/myqlm/index.html#module-qse.calc.myqlm">qse.calc.myqlm</a>
 </li>
-        <li><a href="api.html#module-qse.magnetic">qse.magnetic</a>
+        <li><a href="autoapi/qse/calc/pulser/index.html#module-qse.calc.pulser">qse.calc.pulser</a>
 </li>
-        <li><a href="api.html#module-qse.utils">qse.utils</a>
+        <li><a href="autoapi/qse/lattices/index.html#module-qse.lattices">qse.lattices</a>
 </li>
-        <li><a href="api.html#module-qse.visualise">qse.visualise</a>
+        <li><a href="autoapi/qse/magnetic/index.html#module-qse.magnetic">qse.magnetic</a>
+</li>
+        <li><a href="autoapi/qse/qbit/index.html#module-qse.qbit">qse.qbit</a>
+</li>
+        <li><a href="autoapi/qse/qbits/index.html#module-qse.qbits">qse.qbits</a>
+</li>
+        <li><a href="autoapi/qse/signal/index.html#module-qse.signal">qse.signal</a>
+</li>
+        <li><a href="autoapi/qse/utils/index.html#module-qse.utils">qse.utils</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.calc.Myqlm">Myqlm (class in qse.calc)</a>
+      <li><a href="autoapi/qse/calc/index.html#qse.calc.Myqlm">Myqlm (class in qse.calc)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/calc/myqlm/index.html#qse.calc.myqlm.Myqlm">(class in qse.calc.myqlm)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.new_array">new_array() (qse.Qbits method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.new_array">new_array() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.new_array">(qse.qbits.Qbits method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Operator">Operator (class in qse)</a>
+      <li><a href="autoapi/qse/index.html#qse.Operator">Operator (class in qse)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Operators">Operators (class in qse)</a>
+      <li><a href="autoapi/qse/index.html#qse.Operators">Operators (class in qse)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1005,70 +1180,118 @@ window.runMermaid = runMermaid;</script>
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.pbc">pbc (qse.Qbits property)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.pbc">pbc (qse.Qbits property)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.pbc">(qse.qbits.Qbits property)</a>
 </li>
-      <li><a href="api.html#qse.Qbits.pop">pop() (qse.Qbits method)</a>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.pop">pop() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.pop">(qse.qbits.Qbits method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbit.position">position (qse.Qbit property)</a>
+      <li><a href="autoapi/qse/utils/index.html#qse.utils.print_environment">print_environment() (in module qse.utils)</a>
 </li>
-      <li><a href="api.html#qse.utils.print_environment">print_environment() (in module qse.utils)</a>
+      <li><a href="autoapi/qse/calc/index.html#qse.calc.Pulser">Pulser (class in qse.calc)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/calc/pulser/index.html#qse.calc.pulser.Pulser">(class in qse.calc.pulser)</a>
 </li>
-      <li><a href="api.html#qse.calc.Pulser">Pulser (class in qse.calc)</a>
-</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="Q">Q</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbit">Qbit (class in qse)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbit">Qbit (class in qse)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbit/index.html#qse.qbit.Qbit">(class in qse.qbit)</a>
 </li>
-      <li><a href="api.html#qse.Qbits">Qbits (class in qse)</a>
+      </ul></li>
+      <li><a href="autoapi/qse/qbit/index.html#qse.qbit.qbitproperty">qbitproperty() (in module qse.qbit)</a>
 </li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits">Qbits (class in qse)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits">(class in qse.qbits)</a>
+</li>
+      </ul></li>
       <li>
     qse
 
       <ul>
-        <li><a href="api.html#module-qse">module</a>
+        <li><a href="autoapi/qse/index.html#module-qse">module</a>
 </li>
       </ul></li>
       <li>
     qse.calc
 
       <ul>
-        <li><a href="api.html#module-qse.calc">module</a>
+        <li><a href="autoapi/qse/calc/index.html#module-qse.calc">module</a>
 </li>
       </ul></li>
       <li>
-    qse.lattices
+    qse.calc.myqlm
 
       <ul>
-        <li><a href="api.html#module-qse.lattices">module</a>
+        <li><a href="autoapi/qse/calc/myqlm/index.html#module-qse.calc.myqlm">module</a>
+</li>
+      </ul></li>
+      <li>
+    qse.calc.pulser
+
+      <ul>
+        <li><a href="autoapi/qse/calc/pulser/index.html#module-qse.calc.pulser">module</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
+    qse.lattices
+
+      <ul>
+        <li><a href="autoapi/qse/lattices/index.html#module-qse.lattices">module</a>
+</li>
+      </ul></li>
+      <li>
     qse.magnetic
 
       <ul>
-        <li><a href="api.html#module-qse.magnetic">module</a>
+        <li><a href="autoapi/qse/magnetic/index.html#module-qse.magnetic">module</a>
+</li>
+      </ul></li>
+      <li>
+    qse.qbit
+
+      <ul>
+        <li><a href="autoapi/qse/qbit/index.html#module-qse.qbit">module</a>
+</li>
+      </ul></li>
+      <li>
+    qse.qbits
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#module-qse.qbits">module</a>
+</li>
+      </ul></li>
+      <li>
+    qse.signal
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#module-qse.signal">module</a>
 </li>
       </ul></li>
       <li>
     qse.utils
 
       <ul>
-        <li><a href="api.html#module-qse.utils">module</a>
-</li>
-      </ul></li>
-      <li>
-    qse.visualise
-
-      <ul>
-        <li><a href="api.html#module-qse.visualise">module</a>
+        <li><a href="autoapi/qse/utils/index.html#module-qse.utils">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1077,54 +1300,94 @@ window.runMermaid = runMermaid;</script>
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Cell.rank">rank() (qse.Cell method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Cell.rank">rank() (qse.Cell method)</a>
 </li>
-      <li><a href="api.html#qse.Qbits.rattle">rattle() (qse.Qbits method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.rattle">rattle() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.rattle">(qse.qbits.Qbits method)</a>
 </li>
-      <li><a href="api.html#qse.Cell.reciprocal">reciprocal() (qse.Cell method)</a>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Cell.reciprocal">reciprocal() (qse.Cell method)</a>
 </li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.remove_dim">remove_dim() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.remove_dim">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.remove_dim">remove_dim() (qse.Qbits method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.repeat">repeat() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.repeat">(qse.qbits.Qbits method)</a>
 </li>
-      <li><a href="api.html#qse.Qbits.repeat">repeat() (qse.Qbits method)</a>
+      </ul></li>
+      <li><a href="autoapi/qse/lattices/index.html#qse.lattices.ring">ring() (in module qse.lattices)</a>
 </li>
-      <li><a href="api.html#qse.lattices.ring">ring() (in module qse.lattices)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.rotate">rotate() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.rotate">(qse.qbits.Qbits method)</a>
 </li>
-      <li><a href="api.html#qse.Qbits.rotate">rotate() (qse.Qbits method)</a>
-</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbit.set">set() (qse.Qbit method)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.set_angle">set_angle() (qse.Qbits method)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.set_array">set_array() (qse.Qbits method)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.set_centroid">set_centroid() (qse.Qbits method)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.set_distance">set_distance() (qse.Qbits method)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.set_pbc">set_pbc() (qse.Qbits method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Signal">Signal (class in qse)</a>
-</li>
-      <li><a href="api.html#qse.lattices.square">square() (in module qse.lattices)</a>
-</li>
-      <li><a href="api.html#qse.Qbit.state">state (qse.Qbit property)</a>
-</li>
-      <li><a href="api.html#qse.Qbits.states">states (qse.Qbits property)</a>
-</li>
-      <li><a href="api.html#qse.magnetic.structure_factor_from_sij">structure_factor_from_sij() (in module qse.magnetic)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbit.set">set() (qse.Qbit method)</a>
 
       <ul>
-        <li><a href="api.html#qse.calc.Calculator.structure_factor_from_sij">(qse.calc.Calculator method)</a>
+        <li><a href="autoapi/qse/qbit/index.html#qse.qbit.Qbit.set">(qse.qbit.Qbit method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.set_angle">set_angle() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.set_angle">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.set_array">set_array() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.set_array">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.set_centroid">set_centroid() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.set_centroid">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.set_distance">set_distance() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.set_distance">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.set_pbc">set_pbc() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.set_pbc">(qse.qbits.Qbits method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/index.html#qse.Signal">Signal (class in qse)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal">(class in qse.signal)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/qse/lattices/index.html#qse.lattices.square">square() (in module qse.lattices)</a>
+</li>
+      <li><a href="autoapi/qse/magnetic/index.html#qse.magnetic.structure_factor_from_sij">structure_factor_from_sij() (in module qse.magnetic)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/calc/index.html#qse.calc.Calculator.structure_factor_from_sij">(qse.calc.Calculator method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1133,29 +1396,37 @@ window.runMermaid = runMermaid;</script>
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Operators.to_qiskit">to_qiskit() (qse.Operators method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Operators.to_qiskit">to_qiskit() (qse.Operators method)</a>
 </li>
-      <li><a href="api.html#qse.Operator.to_qutip">to_qutip() (qse.Operator method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Operator.to_qutip">to_qutip() (qse.Operator method)</a>
 
       <ul>
-        <li><a href="api.html#qse.Operators.to_qutip">(qse.Operators method)</a>
+        <li><a href="autoapi/qse/index.html#qse.Operators.to_qutip">(qse.Operators method)</a>
 </li>
       </ul></li>
-      <li><a href="api.html#qse.Cell.to_str">to_str() (qse.Cell method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Cell.to_str">to_str() (qse.Cell method)</a>
 
       <ul>
-        <li><a href="api.html#qse.Operator.to_str">(qse.Operator method)</a>
+        <li><a href="autoapi/qse/index.html#qse.Operator.to_str">(qse.Operator method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.todict">todict() (qse.Qbits method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.todict">todict() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.todict">(qse.qbits.Qbits method)</a>
 </li>
-      <li><a href="api.html#qse.lattices.torus">torus() (in module qse.lattices)</a>
+      </ul></li>
+      <li><a href="autoapi/qse/lattices/index.html#qse.lattices.torus">torus() (in module qse.lattices)</a>
 </li>
-      <li><a href="api.html#qse.Qbits.translate">translate() (qse.Qbits method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.translate">translate() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.translate">(qse.qbits.Qbits method)</a>
 </li>
-      <li><a href="api.html#qse.lattices.triangular">triangular() (in module qse.lattices)</a>
+      </ul></li>
+      <li><a href="autoapi/qse/lattices/index.html#qse.lattices.triangular">triangular() (in module qse.lattices)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1163,11 +1434,7 @@ window.runMermaid = runMermaid;</script>
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.visualise.view_matrix">view_matrix() (in module qse.visualise)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Cell.volume">volume() (qse.Cell method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Cell.volume">volume() (qse.Cell method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1175,35 +1442,27 @@ window.runMermaid = runMermaid;</script>
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.wrap">wrap() (qse.Qbits method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.wrap">wrap() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.wrap">(qse.qbits.Qbits method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbits.write">write() (qse.Qbits method)</a>
+      <li><a href="autoapi/qse/index.html#qse.Qbits.write">write() (qse.Qbits method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.write">(qse.qbits.Qbits method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="X">X</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbit.x">x (qse.Qbit property)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="Y">Y</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbit.y">y (qse.Qbit property)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="Z">Z</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#qse.Qbit.z">z (qse.Qbit property)</a>
+      <li><a href="autoapi/qse/qbit/index.html#qse.qbit.xyzproperty">xyzproperty() (in module qse.qbit)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1246,7 +1505,7 @@ By ICHEC
 
   <p class="copyright">
     
-      © Copyright ....
+      © Copyright 2023.
       <br/>
     
   </p>

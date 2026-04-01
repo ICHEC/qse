@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>qse.qbits &#8212; qse 1.0.13 documentation</title>
+    <title>qse.qbits &#8212; QSE</title>
   
   
   
@@ -29,11 +29,15 @@
   <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/default.css?v=b9f5b887" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -41,18 +45,22 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=e7fe7c04"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
     <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
 
@@ -575,8 +583,8 @@ window.runMermaid = runMermaid;</script>
       
     
     
-    <img src="../../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.13 documentation - Home"/>
-    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.13 documentation - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="QSE - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="QSE - Home"/>
   
   
 </a></div>
@@ -589,8 +597,8 @@ window.runMermaid = runMermaid;</script>
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a></li>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../INSTALLATION.html">Installation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
@@ -598,11 +606,33 @@ window.runMermaid = runMermaid;</script>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/creating_and_manipulating_qbits.html">Creating and manipulating Qbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/generating_lattices.html">Generating Lattices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/pulser-calc-example.html">Calculation Example</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Use-Cases</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../tutorials/ssh_model.html">Simulating the SSH model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../theory/spatial-correlation.html">Computing spatial correlation in magnetic models</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../autoapi/qse/index.html">qse</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../autoapi/qse/calc/index.html">qse.calc</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../autoapi/qse/calc/myqlm/index.html">qse.calc.myqlm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../autoapi/qse/calc/pulser/index.html">qse.calc.pulser</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../autoapi/qse/lattices/index.html">qse.lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../autoapi/qse/magnetic/index.html">qse.magnetic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../autoapi/qse/qbit/index.html">qse.qbit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../autoapi/qse/qbits/index.html">qse.qbits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../autoapi/qse/signal/index.html">qse.signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../autoapi/qse/utils/index.html">qse.utils</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTIONS.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../removal.html">Removal of unused functions/classes/methods</a></li>
 </ul>
 
     </div>
@@ -649,53 +679,6 @@ window.runMermaid = runMermaid;</script>
         <div class="header-article-item">
 
 <div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/ICHEC/qse" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/ICHEC/qse/issues/new?title=Issue%20on%20page%20%2F_modules/qse/qbits.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="btn__text-container">Open issue</span>
-</a>
-</li>
-      
-  </ul>
-</div>
-
 
 
 
@@ -767,7 +750,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits">
-<a class="viewcode-back" href="../../api.html#qse.Qbits">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Qbits</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Qbits object can represent an isolated molecule, or a</span>
@@ -905,9 +888,12 @@ window.runMermaid = runMermaid;</script>
         <span class="k">return</span> <span class="n">Qbits</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
 
     <span class="nd">@property</span>
+<div class="viewcode-block" id="Qbits.calc">
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.calc">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculator object.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc</span></div>
+
 
     <span class="nd">@calc</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">calc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calc</span><span class="p">):</span>
@@ -948,30 +934,33 @@ window.runMermaid = runMermaid;</script>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cell</span> <span class="o">=</span> <span class="n">new_cell</span>
 
     <span class="nd">@property</span>
+<div class="viewcode-block" id="Qbits.pbc">
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.pbc">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">pbc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Reference to pbc-flags for in-place manipulations.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pbc</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pbc</span></div>
+
 
     <span class="nd">@pbc</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">pbc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pbc</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pbc</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">pbc</span>
 
 <div class="viewcode-block" id="Qbits.set_pbc">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.set_pbc">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.set_pbc">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_pbc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pbc</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set periodic boundary condition flags.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pbc</span> <span class="o">=</span> <span class="n">pbc</span></div>
 
 
 <div class="viewcode-block" id="Qbits.get_pbc">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_pbc">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.get_pbc">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_pbc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get periodic boundary condition flags.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pbc</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Qbits.new_array">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.new_array">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.new_array">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">new_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add new array.</span>
 
@@ -1016,7 +1005,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.get_array">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_array">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.get_array">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get an array.</span>
 
@@ -1029,7 +1018,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.set_array">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.set_array">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.set_array">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update array.</span>
@@ -1055,7 +1044,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.copy">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.copy">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.copy">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a copy.&quot;&quot;&quot;</span>
         <span class="n">qbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">cell</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="n">pbc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pbc</span><span class="p">)</span>
@@ -1069,7 +1058,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.todict">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.todict">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.todict">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">todict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;For basic JSON (non-database) support.&quot;&quot;&quot;</span>
         <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1082,9 +1071,9 @@ window.runMermaid = runMermaid;</script>
         <span class="k">return</span> <span class="n">d</span></div>
 
 
-<div class="viewcode-block" id="Qbits.fromdict">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.fromdict">[docs]</a>
     <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Qbits.fromdict">
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.fromdict">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fromdict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dct</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Rebuild qbits object from dictionary representation (todict).&quot;&quot;&quot;</span>
         <span class="n">dct</span> <span class="o">=</span> <span class="n">dct</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1107,6 +1096,8 @@ window.runMermaid = runMermaid;</script>
     <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">&quot;positions&quot;</span><span class="p">])</span>
 
+<div class="viewcode-block" id="Qbits.__repr__">
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;We use pymatgen type of style to print Qbits class&quot;&quot;&quot;</span>
         <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1136,7 +1127,8 @@ window.runMermaid = runMermaid;</script>
         <span class="n">txt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">(</span><span class="se">\n</span><span class="si">{1}{2}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">insep</span><span class="p">,</span> <span class="n">insep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">txt</span>
+        <span class="k">return</span> <span class="n">txt</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="n">qbits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1144,7 +1136,7 @@ window.runMermaid = runMermaid;</script>
         <span class="k">return</span> <span class="n">qbits</span>
 
 <div class="viewcode-block" id="Qbits.extend">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.extend">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.extend">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Extend qbits object by appending qbits from *other*.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Qbit</span><span class="p">):</span>
@@ -1179,7 +1171,7 @@ window.runMermaid = runMermaid;</script>
         <span class="k">return</span> <span class="bp">self</span>
 
 <div class="viewcode-block" id="Qbits.append">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.append">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.append">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qbit</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Append qbit to end.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">([</span><span class="n">qbit</span><span class="p">]))</span></div>
@@ -1189,6 +1181,8 @@ window.runMermaid = runMermaid;</script>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
             <span class="k">yield</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
+<div class="viewcode-block" id="Qbits.__getitem__">
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.__getitem__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a subset of the qbits.</span>
@@ -1229,8 +1223,11 @@ window.runMermaid = runMermaid;</script>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">qbits</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">qbits</span>
+        <span class="k">return</span> <span class="n">qbits</span></div>
 
+
+<div class="viewcode-block" id="Qbits.__delitem__">
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.__delitem__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete a subset of the qbits.</span>
@@ -1248,10 +1245,11 @@ window.runMermaid = runMermaid;</script>
         <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="nb">bool</span><span class="p">)</span>
         <span class="n">mask</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span></div>
+
 
 <div class="viewcode-block" id="Qbits.pop">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.pop">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.pop">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove and return qbit at index *i* (default last).&quot;&quot;&quot;</span>
         <span class="n">qbit</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -1260,6 +1258,8 @@ window.runMermaid = runMermaid;</script>
         <span class="k">return</span> <span class="n">qbit</span></div>
 
 
+<div class="viewcode-block" id="Qbits.__imul__">
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.__imul__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__imul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;In-place repeat of qbits.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
@@ -1307,10 +1307,11 @@ window.runMermaid = runMermaid;</script>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
 
 <div class="viewcode-block" id="Qbits.draw">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.draw">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.draw">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1357,7 +1358,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.repeat">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.repeat">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.repeat">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">repeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rep</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create new repeated qbits object.</span>
 
@@ -1374,7 +1375,7 @@ window.runMermaid = runMermaid;</script>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">rep</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Qbits.translate">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.translate">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.translate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">displacement</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Translate qbit positions.</span>
@@ -1389,7 +1390,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.get_centroid">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_centroid">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.get_centroid">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_centroid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the centroid of the positions.</span>
@@ -1413,7 +1414,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.set_centroid">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.set_centroid">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.set_centroid">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_centroid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">centroid</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the centroid of the positions.</span>
@@ -1437,7 +1438,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.rotate">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.rotate">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.rotate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">rotate_cell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotate qbits based on a vector and an angle, or two vectors.</span>
@@ -1554,7 +1555,7 @@ window.runMermaid = runMermaid;</script>
         <span class="k">return</span> <span class="n">center</span>
 
 <div class="viewcode-block" id="Qbits.euler_rotate">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.euler_rotate">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.euler_rotate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">euler_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">psi</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotate qbits via Euler angles (in degrees).</span>
@@ -1660,7 +1661,7 @@ window.runMermaid = runMermaid;</script>
                 <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
 
 <div class="viewcode-block" id="Qbits.get_angle">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_angle">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.get_angle">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the angle in degress formed by three qubits.</span>
@@ -1697,7 +1698,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.get_angles">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_angles">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.get_angles">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the angle in degress formed by three qubits for multiple groupings.</span>
@@ -1726,7 +1727,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.set_angle">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.set_angle">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.set_angle">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_angle</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
@@ -1772,7 +1773,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.rattle">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.rattle">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.rattle">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rattle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stdev</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Randomly displace qbits.</span>
@@ -1796,7 +1797,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.get_distance">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_distance">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.get_distance">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the distance between two qbits.</span>
@@ -1817,7 +1818,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.get_distances">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_distances">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.get_distances">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return distances of the ith qubit with a list of qubits.</span>
@@ -1838,7 +1839,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.get_all_distances">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_all_distances">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.get_all_distances">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_all_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the distances of all of the qubits with all of the other qubits.</span>
@@ -1857,7 +1858,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.set_distance">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.set_distance">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.set_distance">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_distance</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">i</span><span class="p">,</span>
@@ -1924,7 +1925,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.wrap">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.wrap">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.wrap">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">wrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">wrap_kw</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrap positions to unit cell.</span>
 
@@ -1941,6 +1942,8 @@ window.runMermaid = runMermaid;</script>
         <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">[:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_positions</span><span class="p">(</span><span class="n">wrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">wrap_kw</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="Qbits.__eq__">
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.__eq__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check for identity of two qbits objects.</span>
 
@@ -1956,8 +1959,11 @@ window.runMermaid = runMermaid;</script>
             <span class="ow">and</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;states&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">b</span><span class="p">[</span><span class="s2">&quot;states&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
             <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">cell</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
             <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pbc</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">pbc</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-        <span class="p">)</span>
+        <span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="Qbits.__ne__">
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.__ne__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if two qbits objects are not equal.</span>
 
@@ -1968,7 +1974,8 @@ window.runMermaid = runMermaid;</script>
         <span class="k">if</span> <span class="n">eq</span> <span class="ow">is</span> <span class="bp">NotImplemented</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">eq</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="ow">not</span> <span class="n">eq</span>
+            <span class="k">return</span> <span class="ow">not</span> <span class="n">eq</span></div>
+
 
     <span class="c1"># Rajarshi: Below these three written to add attribute of states</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2002,7 +2009,7 @@ window.runMermaid = runMermaid;</script>
     <span class="p">)</span>
 
 <div class="viewcode-block" id="Qbits.write">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.write">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.write">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Write qbits object to a file.</span>
 
@@ -2036,7 +2043,7 @@ window.runMermaid = runMermaid;</script>
         <span class="k">return</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;The qbits must be 2D or 3D for use in Pulser.&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Qbits.compute_interaction_hamiltonian">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.compute_interaction_hamiltonian">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.compute_interaction_hamiltonian">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_interaction_hamiltonian</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">distance_func</span><span class="p">,</span>
@@ -2112,7 +2119,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.add_dim">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.add_dim">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.add_dim">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_dim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a spatial dimension to the positions. E.e. to go from 1D to 2D systems</span>
@@ -2126,7 +2133,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.remove_dim">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.remove_dim">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.remove_dim">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_dim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes a spatial dimension to the positions. E.e. to go from 2D to 1D systems</span>
@@ -2149,7 +2156,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Qbits.get_scaled_positions">
-<a class="viewcode-back" href="../../api.html#qse.Qbits.get_scaled_positions">[docs]</a>
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.Qbits.get_scaled_positions">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_scaled_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the positions in units of the unit cell.</span>
@@ -2191,6 +2198,8 @@ window.runMermaid = runMermaid;</script>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
 
 
+<div class="viewcode-block" id="default">
+<a class="viewcode-back" href="../../autoapi/qse/qbits/index.html#qse.default">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dflt</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper function for setting default values.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -2208,7 +2217,8 @@ window.runMermaid = runMermaid;</script>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">newdata</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">data</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
 </pre></div>
 
                 </article>
@@ -2247,7 +2257,7 @@ By ICHEC
 
   <p class="copyright">
     
-      © Copyright ....
+      © Copyright 2023.
       <br/>
     
   </p>

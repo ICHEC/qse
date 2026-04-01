@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Computing spatial correlation in magnetic models &#8212; qse 1.0.13 documentation</title>
+    <title>Computing spatial correlation in magnetic models &#8212; QSE</title>
   
   
   
@@ -30,11 +30,15 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css?v=b9f5b887" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -42,21 +46,29 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=e7fe7c04"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'theory/spatial-correlation';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="qse" href="../autoapi/qse/index.html" />
+    <link rel="prev" title="Simulating the SSH model" href="../tutorials/ssh_model.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -108,8 +120,6 @@
       
       
       
-        
-      
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
@@ -140,8 +150,8 @@
       
     
     
-    <img src="../_static/logo.svg" class="logo__image only-light" alt="qse 1.0.13 documentation - Home"/>
-    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="qse 1.0.13 documentation - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="QSE - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="QSE - Home"/>
   
   
 </a></div>
@@ -154,8 +164,8 @@
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../INSTALLATION.html">Installation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
@@ -163,11 +173,33 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/creating_and_manipulating_qbits.html">Creating and manipulating Qbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/generating_lattices.html">Generating Lattices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/pulser-calc-example.html">Calculation Example</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Use-Cases</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/ssh_model.html">Simulating the SSH model</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Computing spatial correlation in magnetic models</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../autoapi/qse/index.html">qse</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../autoapi/qse/calc/index.html">qse.calc</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/qse/calc/myqlm/index.html">qse.calc.myqlm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/qse/calc/pulser/index.html">qse.calc.pulser</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/qse/lattices/index.html">qse.lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/qse/magnetic/index.html">qse.magnetic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/qse/qbit/index.html">qse.qbit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/qse/qbits/index.html">qse.qbits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/qse/signal/index.html">qse.signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/qse/utils/index.html">qse.utils</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTIONS.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../removal.html">Removal of unused functions/classes/methods</a></li>
 </ul>
 
     </div>
@@ -214,53 +246,6 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/ICHEC/qse" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="Source repository"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/ICHEC/qse/issues/new?title=Issue%20on%20page%20%2Ftheory/spatial-correlation.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="Open an issue"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="btn__text-container">Open issue</span>
-</a>
-</li>
-      
-  </ul>
-</div>
-
 
 
 
@@ -367,22 +352,22 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-spins">Quantum Spins</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-1-i-j">Case 1: $i = j$</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-2-i-neq-j">Case 2: $i \neq j$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-1-i-j">Case 1: <span class="math notranslate nohighlight">\(i = j\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-2-i-neq-j">Case 2: <span class="math notranslate nohighlight">\(i \neq j\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-expression">Final Expression</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivation-of-the-final-expression">Derivation of the final expression</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operator-decomposition">1. <strong>Operator Decomposition</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-value-for-i-j">2. <strong>Expectation Value for $i = j$</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-value-for-i-neq-j">3. <strong>Expectation Value for $i \neq j$</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-diagonal-term-langle-sigma-i-z-sigma-j-z-rangle">(a) <strong>Diagonal Term $(\langle \sigma_i^z \sigma_j^z \rangle$)</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-off-diagonal-term-1-langle-sigma-i-sigma-j-rangle">(b) <strong>Off-Diagonal Term 1 ($\langle \sigma_i^+ \sigma_j^- \rangle$)</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-off-diagonal-term-2-langle-sigma-i-sigma-j-rangle">(c) <strong>Off-Diagonal Term 2 ($\langle \sigma_i^- \sigma_j^+ \rangle$)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-value-for-i-j">2. <strong>Expectation Value for <span class="math notranslate nohighlight">\(i = j\)</span></strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-value-for-i-neq-j">3. <strong>Expectation Value for <span class="math notranslate nohighlight">\(i \neq j\)</span></strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-diagonal-term-langle-sigma-i-z-sigma-j-z-rangle">(a) <strong>Diagonal Term <span class="math notranslate nohighlight">\((\langle \sigma_i^z \sigma_j^z \rangle\)</span>)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-off-diagonal-term-1-langle-sigma-i-sigma-j-rangle">(b) <strong>Off-Diagonal Term 1 (<span class="math notranslate nohighlight">\(\langle \sigma_i^+ \sigma_j^- \rangle\)</span>)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-off-diagonal-term-2-langle-sigma-i-sigma-j-rangle">(c) <strong>Off-Diagonal Term 2 (<span class="math notranslate nohighlight">\(\langle \sigma_i^- \sigma_j^+ \rangle\)</span>)</strong></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-expression-for-i-neq-j">4. <strong>Final Expression for $i \neq j$</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-expression-for-i-neq-j">4. <strong>Final Expression for <span class="math notranslate nohighlight">\(i \neq j\)</span></strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Summary</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rough-work">rough work</a></li>
 </ul>
@@ -398,30 +383,33 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="computing-spatial-correlation-in-magnetic-models">
+  <section class="tex2jax_ignore mathjax_ignore" id="computing-spatial-correlation-in-magnetic-models">
 <h1>Computing spatial correlation in magnetic models<a class="headerlink" href="#computing-spatial-correlation-in-magnetic-models" title="Link to this heading">#</a></h1>
-<p>Imagine a lattice of say $N$ atoms, in $L_1\times L_2\times L_3$ geometry of repititions,
-with ${\bf A_1, A_2, A_3}$ as lattice vectors. A general point on this lattice ie given by</p>
-<p>$$
+<p>Imagine a lattice of say <span class="math notranslate nohighlight">\(N\)</span> atoms, in <span class="math notranslate nohighlight">\(L_1\times L_2\times L_3\)</span> geometry of repititions,
+with <span class="math notranslate nohighlight">\({\bf A_1, A_2, A_3}\)</span> as lattice vectors. A general point on this lattice ie given by</p>
+<div class="math notranslate nohighlight">
+\[
 {\bf X(n_1, n_2, n_3)} = n_1 {\bf A_1} + n_2 {\bf A_2} + n_3 {\bf A_3}
-$$</p>
-<p>Where $n_1, n_2, n_3$ are integers, and for the finite size chosen above, $n_i = 0,1,\dots L_i - 1$.
-We shorten the labels as $i\equiv (n_1, n_2, n_3)$, and express lattice positions as ${\bf X_i}$.</p>
+\]</div>
+<p>Where <span class="math notranslate nohighlight">\(n_1, n_2, n_3\)</span> are integers, and for the finite size chosen above, <span class="math notranslate nohighlight">\(n_i = 0,1,\dots L_i - 1\)</span>.
+We shorten the labels as <span class="math notranslate nohighlight">\(i\equiv (n_1, n_2, n_3)\)</span>, and express lattice positions as <span class="math notranslate nohighlight">\({\bf X_i}\)</span>.</p>
 <section id="classical-spins">
 <h2>Classical Spins<a class="headerlink" href="#classical-spins" title="Link to this heading">#</a></h2>
-<p>Now, imagine a lattice where each of the site has a classical spin, represented by a unit vector ${\bf S_i}$. If the energy of this system is given by a classical Heisenberg model, then we have</p>
-<p>$$
+<p>Now, imagine a lattice where each of the site has a classical spin, represented by a unit vector <span class="math notranslate nohighlight">\({\bf S_i}\)</span>. If the energy of this system is given by a classical Heisenberg model, then we have</p>
+<div class="math notranslate nohighlight">
+\[
 H = \sum_{ij} J_{ij}~{\bf S_i}\cdot {\bf S_j}
-$$</p>
-<p>where $J_{ij}$ is exchange between the spins, often restricted to nearest neighbours or next nearest neighbours.</p>
-<p>Depending on the exchange, the ground state, or lowest energy state of the system will have some specific configuration of spin vectors. For example, if $J_{ij} &lt; 0$, then independent of the scale of exchanges, the energy is minimized in ferromagnetic state, i.e., when all the spins are pointed in the same direction ${\bf S_i} = (0, 0, 1)$.</p>
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(J_{ij}\)</span> is exchange between the spins, often restricted to nearest neighbours or next nearest neighbours.</p>
+<p>Depending on the exchange, the ground state, or lowest energy state of the system will have some specific configuration of spin vectors. For example, if <span class="math notranslate nohighlight">\(J_{ij} &lt; 0\)</span>, then independent of the scale of exchanges, the energy is minimized in ferromagnetic state, i.e., when all the spins are pointed in the same direction <span class="math notranslate nohighlight">\({\bf S_i} = (0, 0, 1)\)</span>.</p>
 <p>When spins are in states other than ferromagnetic state, one needs some quantity for better comprehension of the nature of the spin orientation. There are several commonly known periodic states that can be visualised spatially, such as Neel type Antiferromagnetic states. Howevever, more complex periodic patterns, or somewhat disordered patterns are hard to make sense of visually. For this we compute the following:</p>
 <section id="spin-correlation">
 <h3>Spin-Correlation<a class="headerlink" href="#spin-correlation" title="Link to this heading">#</a></h3>
-<p>One computes $S_{ij} = \langle {\bf S_i} \cdot {S_j}\rangle$ for all $i, j$. For classical models, this could be for a single spin configuration, or at finite temperature, averaged of thermally generated ensemble of configurations. Then we compute Fourier transform of this:</p>
-<p>$$
+<p>One computes <span class="math notranslate nohighlight">\(S_{ij} = \langle {\bf S_i} \cdot {S_j}\rangle\)</span> for all <span class="math notranslate nohighlight">\(i, j\)</span>. For classical models, this could be for a single spin configuration, or at finite temperature, averaged of thermally generated ensemble of configurations. Then we compute Fourier transform of this:</p>
+<div class="math notranslate nohighlight">
+\[
 S({\bf q}) = \frac {1}{N^2} \sum_{ij} S_{ij}~e^{\left(i {\bf q}\cdot ({\bf X_i} - {\bf X_j})\right)}
-$$</p>
+\]</div>
 <p>This is defined as the <strong>Structure Factor</strong>.</p>
 </section>
 <section id="properties">
@@ -435,201 +423,247 @@ $$</p>
 </section>
 <section id="quantum-spins">
 <h2>Quantum Spins<a class="headerlink" href="#quantum-spins" title="Link to this heading">#</a></h2>
-<p>Let’s consider case of quantum spins, that is, say at each site we have a spin-$\frac 12$ object instead of classical spins. In that case we have to know the many-body quantum state, say $|\Psi \rangle$ in which the system exists, and the site correlation we need to compute is the expectation value of the spin operators:</p>
-<p>$$
+<p>Let’s consider case of quantum spins, that is, say at each site we have a spin-<span class="math notranslate nohighlight">\(\frac 12\)</span> object instead of classical spins. In that case we have to know the many-body quantum state, say <span class="math notranslate nohighlight">\(|\Psi \rangle\)</span> in which the system exists, and the site correlation we need to compute is the expectation value of the spin operators:</p>
+<div class="math notranslate nohighlight">
+\[
 \langle\Psi| {\bf S_i}\cdot {\bf S_j}|\Psi\rangle
-$$</p>
-<p>To compute the expectation value $\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle$ for a system of $N$ spin-$\frac 12$ particles, where $\mathbf{S}_i = (S_i^x, S_i^y, S_i^z)$ are the spin operators at site $i$, we derive the expression by expanding the dot product and simplifying using the  properties of Pauli matrices. The spin operators are defined as $S_i^\alpha = \frac{\hbar}{2} \sigma_i^\alpha$ for $\alpha = x, y, z$, where $\sigma_i^\alpha$ are the Pauli matrices. Setting $\hbar = 1$ for simplicity, we have $S_i^\alpha = \frac{1}{2} \sigma_i^\alpha$.</p>
-<p>The operator $\mathbf{S}_i \cdot \mathbf{S}_j$ is:</p>
-<p>$$
+\]</div>
+<p>To compute the expectation value <span class="math notranslate nohighlight">\(\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle\)</span> for a system of <span class="math notranslate nohighlight">\(N\)</span> spin-<span class="math notranslate nohighlight">\(\frac 12\)</span> particles, where <span class="math notranslate nohighlight">\(\mathbf{S}_i = (S_i^x, S_i^y, S_i^z)\)</span> are the spin operators at site <span class="math notranslate nohighlight">\(i\)</span>, we derive the expression by expanding the dot product and simplifying using the  properties of Pauli matrices. The spin operators are defined as <span class="math notranslate nohighlight">\(S_i^\alpha = \frac{\hbar}{2} \sigma_i^\alpha\)</span> for <span class="math notranslate nohighlight">\(\alpha = x, y, z\)</span>, where <span class="math notranslate nohighlight">\(\sigma_i^\alpha\)</span> are the Pauli matrices. Setting <span class="math notranslate nohighlight">\(\hbar = 1\)</span> for simplicity, we have <span class="math notranslate nohighlight">\(S_i^\alpha = \frac{1}{2} \sigma_i^\alpha\)</span>.</p>
+<p>The operator <span class="math notranslate nohighlight">\(\mathbf{S}_i \cdot \mathbf{S}_j\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{S}_i \cdot \mathbf{S}_j = S_i^x S_j^x + S_i^y S_j^y + S_i^z S_j^z.
-$$</p>
+\]</div>
 <p>Substituting the expressions in terms of Pauli matrices:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y + \sigma_i^z \sigma_j^z \right).
-$$</p>
+\]</div>
 <p>We now use the identity for the sum of the (x) and (y) components:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y = \sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+,
-$$</p>
-<p>where $\sigma_i^+ = \sigma_i^x + i\sigma_i^y$ and $\sigma_i^- = \sigma_i^x - i\sigma_i^y$ are the raising and lowering operators. This identity holds for all $i$ and $j$, but we must handle the case $i = j$ separately due to the properties of the operators.</p>
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma_i^+ = \sigma_i^x + i\sigma_i^y\)</span> and <span class="math notranslate nohighlight">\(\sigma_i^- = \sigma_i^x - i\sigma_i^y\)</span> are the raising and lowering operators. This identity holds for all <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>, but we must handle the case <span class="math notranslate nohighlight">\(i = j\)</span> separately due to the properties of the operators.</p>
 <section id="case-1-i-j">
-<h3>Case 1: $i = j$<a class="headerlink" href="#case-1-i-j" title="Link to this heading">#</a></h3>
-<p>When $i = j$, the expectation value simplifies to:</p>
-<p>$$
+<h3>Case 1: <span class="math notranslate nohighlight">\(i = j\)</span><a class="headerlink" href="#case-1-i-j" title="Link to this heading">#</a></h3>
+<p>When <span class="math notranslate nohighlight">\(i = j\)</span>, the expectation value simplifies to:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{S}_i \cdot \mathbf{S}_i = (S_i^x)^2 + (S_i^y)^2 + (S_i^z)^2.
-$$</p>
-<p>For a spin-$\frac 12$ particle, the eigenvalues of $\mathbf{S}_i^2$ are $s(s+1) = \frac{3}{4}$ (since $s = \frac{1}{2}$), and the operator is proportional to the identity:</p>
-<p>$$
+\]</div>
+<p>For a spin-<span class="math notranslate nohighlight">\(\frac 12\)</span> particle, the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{S}_i^2\)</span> are <span class="math notranslate nohighlight">\(s(s+1) = \frac{3}{4}\)</span> (since <span class="math notranslate nohighlight">\(s = \frac{1}{2}\)</span>), and the operator is proportional to the identity:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{S}_i \cdot \mathbf{S}_i = \frac{3}{4} \mathbb{I}.
-$$</p>
+\]</div>
 <p>Thus, the expectation value is:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_i | \Psi \rangle = \frac{3}{4} \langle \Psi | \mathbb{I} | \Psi \rangle = \frac{3}{4}.
-$$</p>
+\]</div>
 </section>
 <section id="case-2-i-neq-j">
-<h3>Case 2: $i \neq j$<a class="headerlink" href="#case-2-i-neq-j" title="Link to this heading">#</a></h3>
-<p>For $i \neq j$, we use the expanded form:</p>
-<p>$$
+<h3>Case 2: <span class="math notranslate nohighlight">\(i \neq j\)</span><a class="headerlink" href="#case-2-i-neq-j" title="Link to this heading">#</a></h3>
+<p>For <span class="math notranslate nohighlight">\(i \neq j\)</span>, we use the expanded form:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y + \sigma_i^z \sigma_j^z \right) = \frac{1}{4} \left( \sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+ + \sigma_i^z \sigma_j^z \right).
-$$</p>
+\]</div>
 <p>Thus, the expectation value is:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle = \frac{1}{4} \left[ \langle \Psi | \sigma_i^+ \sigma_j^- | \Psi \rangle + \langle \Psi | \sigma_i^- \sigma_j^+ | \Psi \rangle + \langle \Psi | \sigma_i^z \sigma_j^z | \Psi \rangle \right].
-$$</p>
+\]</div>
 </section>
 <section id="final-expression">
 <h3>Final Expression<a class="headerlink" href="#final-expression" title="Link to this heading">#</a></h3>
 <p>Combining both cases, the expectation value is:</p>
-<p>$$
-\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle =
-\begin{cases}
-\frac{3}{4} &amp; \text{if } i = j, \
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle = 
+\begin{cases} 
+\frac{3}{4} &amp; \text{if } i = j, \\
 \frac{1}{4} \left( \langle \sigma_i^+ \sigma_j^- \rangle + \langle \sigma_i^- \sigma_j^+ \rangle + \langle \sigma_i^z \sigma_j^z \rangle \right) &amp; \text{if } i \neq j,
 \end{cases}
-$$</p>
-<p>where $\langle \cdot \rangle$ denotes the expectation value in the state $|\Psi\rangle$.</p>
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\langle \cdot \rangle\)</span> denotes the expectation value in the state <span class="math notranslate nohighlight">\(|\Psi\rangle\)</span>.</p>
 </section>
 <section id="summary">
 <h3>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>For $i = j$, the result is $\frac{3}{4}$.</p></li>
-<li><p>For $i \neq j$, the expectation value requires computing three terms: the expectation values of the operators $\sigma_i^+ \sigma_j^-$, $\sigma_i^- \sigma_j^+$, and $\sigma_i^z \sigma_j^z$ in the state $|\Psi\rangle$.</p></li>
+<li><p>For <span class="math notranslate nohighlight">\(i = j\)</span>, the result is <span class="math notranslate nohighlight">\(\frac{3}{4}\)</span>.</p></li>
+<li><p>For <span class="math notranslate nohighlight">\(i \neq j\)</span>, the expectation value requires computing three terms: the expectation values of the operators <span class="math notranslate nohighlight">\(\sigma_i^+ \sigma_j^-\)</span>, <span class="math notranslate nohighlight">\(\sigma_i^- \sigma_j^+\)</span>, and <span class="math notranslate nohighlight">\(\sigma_i^z \sigma_j^z\)</span> in the state <span class="math notranslate nohighlight">\(|\Psi\rangle\)</span>.</p></li>
 </ul>
-<p>This expression accounts for the quantum mechanical nature of the spin operators and is valid for any state $|\Psi\rangle$ in the Hilbert space. The operators $\sigma_i^\pm$ and $\sigma_i^z$ are defined in the basis of the $2^N$-dimensional Hilbert space, and their matrix elements can be evaluated once the state $|\Psi\rangle$ is specified.</p>
+<p>This expression accounts for the quantum mechanical nature of the spin operators and is valid for any state <span class="math notranslate nohighlight">\(|\Psi\rangle\)</span> in the Hilbert space. The operators <span class="math notranslate nohighlight">\(\sigma_i^\pm\)</span> and <span class="math notranslate nohighlight">\(\sigma_i^z\)</span> are defined in the basis of the <span class="math notranslate nohighlight">\(2^N\)</span>-dimensional Hilbert space, and their matrix elements can be evaluated once the state <span class="math notranslate nohighlight">\(|\Psi\rangle\)</span> is specified.</p>
 </section>
 </section>
 <section id="derivation-of-the-final-expression">
 <h2>Derivation of the final expression<a class="headerlink" href="#derivation-of-the-final-expression" title="Link to this heading">#</a></h2>
-<p>Now let’s get a bit more in detail, and express the state $\Psi$ as linear combination of the product  state basis of the $N$-qubit or $N$-spin Hilbert space. Then $|\Psi\rangle = \sum_{\alpha}|\alpha\rangle$ where, $\alpha$ symbolically is $\alpha \equiv a_0a_1a_2 \dots a_{N-1}$, and $a_i$ are binary numbers.</p>
-<p>To compute the expectation value $\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle$ for a state $|\Psi\rangle = \sum_a c_a |a\rangle$, where $|a\rangle$ are computational basis states (e.g., $|a\rangle = |00101\rangle$), we express the operator $\mathbf{S}_i \cdot \mathbf{S}_j$ in terms of Pauli matrices and evaluate its expectation using the coefficients $c_a$. The derivation below assumes the basis convention where:</p>
+<p>Now let’s get a bit more in detail, and express the state <span class="math notranslate nohighlight">\(\Psi\)</span> as linear combination of the product  state basis of the <span class="math notranslate nohighlight">\(N\)</span>-qubit or <span class="math notranslate nohighlight">\(N\)</span>-spin Hilbert space. Then <span class="math notranslate nohighlight">\(|\Psi\rangle = \sum_{\alpha}|\alpha\rangle\)</span> where, <span class="math notranslate nohighlight">\(\alpha\)</span> symbolically is <span class="math notranslate nohighlight">\(\alpha \equiv a_0a_1a_2 \dots a_{N-1}\)</span>, and <span class="math notranslate nohighlight">\(a_i\)</span> are binary numbers.</p>
+<p>To compute the expectation value <span class="math notranslate nohighlight">\(\langle \Psi | \mathbf{S}_i \cdot \mathbf{S}_j | \Psi \rangle\)</span> for a state <span class="math notranslate nohighlight">\(|\Psi\rangle = \sum_a c_a |a\rangle\)</span>, where <span class="math notranslate nohighlight">\(|a\rangle\)</span> are computational basis states (e.g., <span class="math notranslate nohighlight">\(|a\rangle = |00101\rangle\)</span>), we express the operator <span class="math notranslate nohighlight">\(\mathbf{S}_i \cdot \mathbf{S}_j\)</span> in terms of Pauli matrices and evaluate its expectation using the coefficients <span class="math notranslate nohighlight">\(c_a\)</span>. The derivation below assumes the basis convention where:</p>
 <ul class="simple">
-<li><p>$|0\rangle$ corresponds to $\sigma^z = +1$ (spin up in $z$-direction).</p></li>
-<li><p>$|1\rangle$ corresponds to $\sigma^z = -1$ (spin down in $z$-direction).</p></li>
+<li><p><span class="math notranslate nohighlight">\(|0\rangle\)</span> corresponds to <span class="math notranslate nohighlight">\(\sigma^z = +1\)</span> (spin up in <span class="math notranslate nohighlight">\(z\)</span>-direction).</p></li>
+<li><p><span class="math notranslate nohighlight">\(|1\rangle\)</span> corresponds to <span class="math notranslate nohighlight">\(\sigma^z = -1\)</span> (spin down in <span class="math notranslate nohighlight">\(z\)</span>-direction).</p></li>
 </ul>
 <section id="operator-decomposition">
 <h3>1. <strong>Operator Decomposition</strong><a class="headerlink" href="#operator-decomposition" title="Link to this heading">#</a></h3>
-<p>The spin operator $\mathbf{S}_i \cdot \mathbf{S}_j$ decomposes as:</p>
-<p>$$
+<p>The spin operator <span class="math notranslate nohighlight">\(\mathbf{S}_i \cdot \mathbf{S}_j\)</span> decomposes as:</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y + \sigma_i^z \sigma_j^z \right).
-$$</p>
-<p>Using raising/lowering operators $(\sigma^\pm = \frac{1}{2}(\sigma^x \pm i\sigma^y)$):</p>
-<p>$$
+\]</div>
+<p>Using raising/lowering operators <span class="math notranslate nohighlight">\((\sigma^\pm = \frac{1}{2}(\sigma^x \pm i\sigma^y)\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[
 \sigma_i^x \sigma_j^x + \sigma_i^y \sigma_j^y = 2(\sigma_i^+ \sigma_j^- + \sigma_i^- \sigma_j^+),
-$$</p>
+\]</div>
 <p>so the operator simplifies to:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \mathbf{S}_i \cdot \mathbf{S}_j = \frac{1}{4} \left( 2\sigma_i^+ \sigma_j^- + 2\sigma_i^- \sigma_j^+ + \sigma_i^z \sigma_j^z \right) = \frac{1}{2} \sigma_i^+ \sigma_j^- + \frac{1}{2} \sigma_i^- \sigma_j^+ + \frac{1}{4} \sigma_i^z \sigma_j^z.
-$$</p>
+\]</div>
 </section>
 <section id="expectation-value-for-i-j">
-<h3>2. <strong>Expectation Value for $i = j$</strong><a class="headerlink" href="#expectation-value-for-i-j" title="Link to this heading">#</a></h3>
-<p>When $i = j$:</p>
-<p>$$
+<h3>2. <strong>Expectation Value for <span class="math notranslate nohighlight">\(i = j\)</span></strong><a class="headerlink" href="#expectation-value-for-i-j" title="Link to this heading">#</a></h3>
+<p>When <span class="math notranslate nohighlight">\(i = j\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
 \langle \mathbf{S}_i \cdot \mathbf{S}_i \rangle = \langle (\mathbf{S}_i)^2 \rangle = s(s+1) = \frac{3}{4}.
-$$</p>
+\]</div>
 </section>
 <section id="expectation-value-for-i-neq-j">
-<h3>3. <strong>Expectation Value for $i \neq j$</strong><a class="headerlink" href="#expectation-value-for-i-neq-j" title="Link to this heading">#</a></h3>
-<p>For $i \neq j$, the expectation value is:</p>
-<p>$$
+<h3>3. <strong>Expectation Value for <span class="math notranslate nohighlight">\(i \neq j\)</span></strong><a class="headerlink" href="#expectation-value-for-i-neq-j" title="Link to this heading">#</a></h3>
+<p>For <span class="math notranslate nohighlight">\(i \neq j\)</span>, the expectation value is:</p>
+<div class="math notranslate nohighlight">
+\[
 \langle \mathbf{S}_i \cdot \mathbf{S}_j \rangle = \frac{1}{2} \langle \sigma_i^+ \sigma_j^- \rangle + \frac{1}{2} \langle \sigma_i^- \sigma_j^+ \rangle + \frac{1}{4} \langle \sigma_i^z \sigma_j^z \rangle.
-$$</p>
-<p>We evaluate each term using the coefficients $c_a$:</p>
+\]</div>
+<p>We evaluate each term using the coefficients <span class="math notranslate nohighlight">\(c_a\)</span>:</p>
 <section id="a-diagonal-term-langle-sigma-i-z-sigma-j-z-rangle">
-<h4>(a) <strong>Diagonal Term $(\langle \sigma_i^z \sigma_j^z \rangle$)</strong><a class="headerlink" href="#a-diagonal-term-langle-sigma-i-z-sigma-j-z-rangle" title="Link to this heading">#</a></h4>
+<h4>(a) <strong>Diagonal Term <span class="math notranslate nohighlight">\((\langle \sigma_i^z \sigma_j^z \rangle\)</span>)</strong><a class="headerlink" href="#a-diagonal-term-langle-sigma-i-z-sigma-j-z-rangle" title="Link to this heading">#</a></h4>
 <p>This term is <strong>diagonal</strong> in the basis, so:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \sigma_i^z \sigma_j^z |a\rangle = (1 - 2a_i)(1 - 2a_j) |a\rangle,
-$$</p>
-<p>where $a_i, a_j \in {0, 1}$ are the bits of $|a\rangle$ at positions $i$ and $j$. Thus:</p>
-<p>$$
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(a_i, a_j \in \{0, 1\}\)</span> are the bits of <span class="math notranslate nohighlight">\(|a\rangle\)</span> at positions <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>. Thus:</p>
+<div class="math notranslate nohighlight">
+\[
 \langle \sigma_i^z \sigma_j^z \rangle = \sum_{a} |c_a|^2 (1 - 2a_i)(1 - 2a_j).
-$$</p>
+\]</div>
 </section>
 <section id="b-off-diagonal-term-1-langle-sigma-i-sigma-j-rangle">
-<h4>(b) <strong>Off-Diagonal Term 1 ($\langle \sigma_i^+ \sigma_j^- \rangle$)</strong><a class="headerlink" href="#b-off-diagonal-term-1-langle-sigma-i-sigma-j-rangle" title="Link to this heading">#</a></h4>
+<h4>(b) <strong>Off-Diagonal Term 1 (<span class="math notranslate nohighlight">\(\langle \sigma_i^+ \sigma_j^- \rangle\)</span>)</strong><a class="headerlink" href="#b-off-diagonal-term-1-langle-sigma-i-sigma-j-rangle" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p>$\sigma_j^-$ flips $a_j$ from 0 to 1 (if $a_j = 0$).</p></li>
-<li><p>$\sigma_i^+$ flips $a_i$ from 1 to 0 (if $a_i = 1$).</p></li>
-<li><p>Non-zero only when $a_j = 0$ and $a_i = 1$:</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_j^-\)</span> flips <span class="math notranslate nohighlight">\(a_j\)</span> from 0 to 1 (if <span class="math notranslate nohighlight">\(a_j = 0\)</span>).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_i^+\)</span> flips <span class="math notranslate nohighlight">\(a_i\)</span> from 1 to 0 (if <span class="math notranslate nohighlight">\(a_i = 1\)</span>).</p></li>
+<li><p>Non-zero only when <span class="math notranslate nohighlight">\(a_j = 0\)</span> and <span class="math notranslate nohighlight">\(a_i = 1\)</span>:</p></li>
 </ul>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \sigma_i^+ \sigma_j^- |a\rangle = |b\rangle, \quad \text{where } b = a \text{ with } a_j = 1 \text{ and } a_i = 0.
-$$</p>
+\]</div>
 <p>The expectation is:</p>
-<p>$$
-\langle \sigma_i^+ \sigma_j^- \rangle = \sum_{\substack{a \ a_i=1, a_j=0}} c_a^* c_b, \quad b = a \oplus (2^i + 2^j).
-$$</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\langle \sigma_i^+ \sigma_j^- \rangle = \sum_{\substack{a \\ a_i=1, a_j=0}} c_a^* c_b, \quad b = a \oplus (2^i + 2^j).
+\end{split}\]</div>
 </section>
 <section id="c-off-diagonal-term-2-langle-sigma-i-sigma-j-rangle">
-<h4>(c) <strong>Off-Diagonal Term 2 ($\langle \sigma_i^- \sigma_j^+ \rangle$)</strong><a class="headerlink" href="#c-off-diagonal-term-2-langle-sigma-i-sigma-j-rangle" title="Link to this heading">#</a></h4>
+<h4>(c) <strong>Off-Diagonal Term 2 (<span class="math notranslate nohighlight">\(\langle \sigma_i^- \sigma_j^+ \rangle\)</span>)</strong><a class="headerlink" href="#c-off-diagonal-term-2-langle-sigma-i-sigma-j-rangle" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p>$\sigma_j^+$ flips $a_j$ from 1 to 0 (if $a_j = 1$).</p></li>
-<li><p>$\sigma_i^-$ flips $a_i$ from 0 to 1 (if $a_i = 0$).</p></li>
-<li><p>Non-zero only when $a_j = 1$ and $a_i = 0$:</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_j^+\)</span> flips <span class="math notranslate nohighlight">\(a_j\)</span> from 1 to 0 (if <span class="math notranslate nohighlight">\(a_j = 1\)</span>).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma_i^-\)</span> flips <span class="math notranslate nohighlight">\(a_i\)</span> from 0 to 1 (if <span class="math notranslate nohighlight">\(a_i = 0\)</span>).</p></li>
+<li><p>Non-zero only when <span class="math notranslate nohighlight">\(a_j = 1\)</span> and <span class="math notranslate nohighlight">\(a_i = 0\)</span>:</p></li>
 </ul>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \sigma_i^- \sigma_j^+ |a\rangle = |d\rangle, \quad \text{where } d = a \text{ with } a_j = 0 \text{ and } a_i = 1.
-$$</p>
+\]</div>
 <p>The expectation is:</p>
-<p>$$
-\langle \sigma_i^- \sigma_j^+ \rangle = \sum_{\substack{a \ a_i=0, a_j=1}} c_a^* c_d, \quad d = a \oplus (2^i + 2^j).
-$$</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\langle \sigma_i^- \sigma_j^+ \rangle = \sum_{\substack{a \\ a_i=0, a_j=1}} c_a^* c_d, \quad d = a \oplus (2^i + 2^j).
+\end{split}\]</div>
 </section>
 </section>
 <section id="final-expression-for-i-neq-j">
-<h3>4. <strong>Final Expression for $i \neq j$</strong><a class="headerlink" href="#final-expression-for-i-neq-j" title="Link to this heading">#</a></h3>
+<h3>4. <strong>Final Expression for <span class="math notranslate nohighlight">\(i \neq j\)</span></strong><a class="headerlink" href="#final-expression-for-i-neq-j" title="Link to this heading">#</a></h3>
 <p>Combining all terms, we have the following:</p>
-<p>$$
-\langle \mathbf{S}<em>i \cdot \mathbf{S}<em>j \rangle = \frac{1}{2} \left( \sum</em>{\substack{a \ a_i=1, a_j=0}} c_a^* c_b \right) + \frac{1}{2} \left( \sum</em>{\substack{a \ a_i=0, a_j=1}} c_a^* c_d \right) + \frac{1}{4} \left( \sum_{a} |c_a|^2 (1 - 2a_i)(1 - 2a_j) \right)
-$$</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\langle \mathbf{S}_i \cdot \mathbf{S}_j \rangle = \frac{1}{2} \left( \sum_{\substack{a \\ a_i=1, a_j=0}} c_a^* c_b \right) + \frac{1}{2} \left( \sum_{\substack{a \\ a_i=0, a_j=1}} c_a^* c_d \right) + \frac{1}{4} \left( \sum_{a} |c_a|^2 (1 - 2a_i)(1 - 2a_j) \right)
+\end{split}\]</div>
 <p>where:</p>
 <ul class="simple">
-<li><p>$b = a \oplus (2^i + 2^j)$ (flip bits at $i$ and $j$),</p></li>
-<li><p>$d = a \oplus (2^i + 2^j)$ (same as $b$).</p></li>
+<li><p><span class="math notranslate nohighlight">\(b = a \oplus (2^i + 2^j)\)</span> (flip bits at <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>),</p></li>
+<li><p><span class="math notranslate nohighlight">\(d = a \oplus (2^i + 2^j)\)</span> (same as <span class="math notranslate nohighlight">\(b\)</span>).</p></li>
 </ul>
 </section>
 <section id="id1">
 <h3>Summary<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p><strong>For $i = j$</strong>: $\langle \mathbf{S}_i \cdot \mathbf{S}_j \rangle = \frac{3}{4}$.</p></li>
-<li><p><strong>For $i \neq j$</strong>: Use the boxed expression above, which depends on:</p>
+<li><p><strong>For <span class="math notranslate nohighlight">\(i = j\)</span></strong>: <span class="math notranslate nohighlight">\(\langle \mathbf{S}_i \cdot \mathbf{S}_j \rangle = \frac{3}{4}\)</span>.</p></li>
+<li><p><strong>For <span class="math notranslate nohighlight">\(i \neq j\)</span></strong>: Use the boxed expression above, which depends on:</p>
 <ol class="arabic simple">
-<li><p>Diagonal terms: Weighted by $|c_a|^2$ and spin eigenvalues.</p></li>
-<li><p>Off-diagonal terms: Correlations between basis states differing by spin flips at $i$ and $j$.</p></li>
+<li><p>Diagonal terms: Weighted by <span class="math notranslate nohighlight">\(|c_a|^2\)</span> and spin eigenvalues.</p></li>
+<li><p>Off-diagonal terms: Correlations between basis states differing by spin flips at <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>.</p></li>
 </ol>
 </li>
 </ul>
-<p>This expression is efficiently computable by iterating over all basis states $a$ and summing contributions.</p>
+<p>This expression is efficiently computable by iterating over all basis states <span class="math notranslate nohighlight">\(a\)</span> and summing contributions.</p>
 </section>
 <section id="rough-work">
 <h3>rough work<a class="headerlink" href="#rough-work" title="Link to this heading">#</a></h3>
-<p>$$
-|\alpha\rangle \equiv |a_0 a_1 a_2 … a_N\rangle
-= |a_0\rangle \times |a_1\rangle \times |a_2\rangle \times … |a_N\rangle
-$$</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
+|\alpha\rangle \equiv |a_0 a_1 a_2 ... a_N\rangle
+ = |a_0\rangle \times |a_1\rangle \times |a_2\rangle \times ... |a_N\rangle
+\]</div>
+<div class="math notranslate nohighlight">
+\[
 (p_0^0|+\rangle + p_1^0|-\rangle) \times
 (p_0^1|+\rangle + p_1^1|-\rangle) \times
 (p_0^2|+\rangle + p_1^2|-\rangle) \times
 \dots
 (p_0^N|+\rangle + p_1^N|-\rangle)
-$$</p>
-<p>$$
+\]</div>
+<div class="math notranslate nohighlight">
+\[
 \langle S_{x,y,z}\rangle
-$$</p>
-<p>$$
+\]</div>
+<div class="math notranslate nohighlight">
+\[
 \langle S_{x,y,z}S_{x,y,z}\rangle
-$$
-$$
+\]</div>
+<div class="math notranslate nohighlight">
+\[
 |\psi\rangle = \sum_\alpha c_\alpha |\alpha \rangle
-$$</p>
+\]</div>
 </section>
 </section>
 </section>
 
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./theory"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
 
                 </article>
               
@@ -641,6 +675,24 @@ $$</p>
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="../tutorials/ssh_model.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Simulating the SSH model</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../autoapi/qse/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">qse</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -666,22 +718,22 @@ $$</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-spins">Quantum Spins</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-1-i-j">Case 1: $i = j$</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-2-i-neq-j">Case 2: $i \neq j$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-1-i-j">Case 1: <span class="math notranslate nohighlight">\(i = j\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-2-i-neq-j">Case 2: <span class="math notranslate nohighlight">\(i \neq j\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-expression">Final Expression</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivation-of-the-final-expression">Derivation of the final expression</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operator-decomposition">1. <strong>Operator Decomposition</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-value-for-i-j">2. <strong>Expectation Value for $i = j$</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-value-for-i-neq-j">3. <strong>Expectation Value for $i \neq j$</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-diagonal-term-langle-sigma-i-z-sigma-j-z-rangle">(a) <strong>Diagonal Term $(\langle \sigma_i^z \sigma_j^z \rangle$)</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-off-diagonal-term-1-langle-sigma-i-sigma-j-rangle">(b) <strong>Off-Diagonal Term 1 ($\langle \sigma_i^+ \sigma_j^- \rangle$)</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-off-diagonal-term-2-langle-sigma-i-sigma-j-rangle">(c) <strong>Off-Diagonal Term 2 ($\langle \sigma_i^- \sigma_j^+ \rangle$)</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-value-for-i-j">2. <strong>Expectation Value for <span class="math notranslate nohighlight">\(i = j\)</span></strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-value-for-i-neq-j">3. <strong>Expectation Value for <span class="math notranslate nohighlight">\(i \neq j\)</span></strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-diagonal-term-langle-sigma-i-z-sigma-j-z-rangle">(a) <strong>Diagonal Term <span class="math notranslate nohighlight">\((\langle \sigma_i^z \sigma_j^z \rangle\)</span>)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-off-diagonal-term-1-langle-sigma-i-sigma-j-rangle">(b) <strong>Off-Diagonal Term 1 (<span class="math notranslate nohighlight">\(\langle \sigma_i^+ \sigma_j^- \rangle\)</span>)</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-off-diagonal-term-2-langle-sigma-i-sigma-j-rangle">(c) <strong>Off-Diagonal Term 2 (<span class="math notranslate nohighlight">\(\langle \sigma_i^- \sigma_j^+ \rangle\)</span>)</strong></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-expression-for-i-neq-j">4. <strong>Final Expression for $i \neq j$</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-expression-for-i-neq-j">4. <strong>Final Expression for <span class="math notranslate nohighlight">\(i \neq j\)</span></strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Summary</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rough-work">rough work</a></li>
 </ul>
@@ -710,7 +762,7 @@ By ICHEC
 
   <p class="copyright">
     
-      © Copyright ....
+      © Copyright 2023.
       <br/>
     
   </p>
