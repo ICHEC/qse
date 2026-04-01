@@ -35,3 +35,7 @@ To run `pytest` on a single file use
 ```bash
 pytest <filename>
 ```
+
+```{note}
+For developing, if one clones the git repo, one should run `./setup.sh` script to setup the necessary git-hooks in the repo after cloning it.
+```

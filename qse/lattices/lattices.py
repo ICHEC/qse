@@ -12,40 +12,7 @@ def _check_repeats(repeats, param_name):
         )
 
 
-def _lattice_creator(
-    unit_cell_2d: list,
-    lattice_spacing: float,
-    repeats: tuple[int],
-    qubit_positions: list = [[0, 0, 0]],
-) -> qse.Qbits:
-    """Create a Qbits object from a 2d cell,
-    lattice_spacing, repeats and qubit positions.
-
-    Parameters
-    ----------
-    unit_cell_2d : list
-        The unit cell
-    lattice_spacing : float
-        Lattice spacing
-    repeats : tuple[int]
-        Repetitions along each direction, such as (3, 4, 2)
-    qubit_positions : list, optional
-        Positions for qubits as Nx3 array, by default [[0, 0, 0]]
-
-    Returns
-    -------
-    Qbits
-        Qbits object repeated along desired directions.
-    """
-
-    unit = qse.Qbits(positions=np.array(qubit_positions))
-
-    # We add [[0, 0, 0]] to convert the unit cell into 3d.
-    unit.cell = lattice_spacing * qse.cell.Cell(unit_cell_2d + [[0, 0, 0]])
-    return unit.repeat(repeats + (1,))
-
-
-def chain(lattice_spacing: float = 1.0, repeats: int = 6) -> qse.Qbits:
+def chain(lattice_spacing: float, repeats: int) -> qse.Qbits:
     """
     Generate a Qbits object in linear chain geometry.
 
@@ -54,7 +21,8 @@ def chain(lattice_spacing: float = 1.0, repeats: int = 6) -> qse.Qbits:
     lattice_spacing : float
         The lattice spacing.
     repeats : int
-        The number of repeats. Must be greater than 1.
+        The number of repeats.
+        Must be greater than 1.
 
     Returns
     -------
@@ -62,12 +30,13 @@ def chain(lattice_spacing: float = 1.0, repeats: int = 6) -> qse.Qbits:
         The Qbits lattice.
     """
     _check_repeats(repeats, "repeats")
-    return _lattice_creator([[1, 0, 0], [0, 0, 0]], lattice_spacing, (repeats, 1))
+    qbits = qse.Qbits(positions=np.zeros((1, 1)), cell=np.array([[lattice_spacing]]))
+    qbits = qbits.repeat((repeats))
+    qbits.labels = [str(i) for i in range(qbits.nqbits)]
+    return qbits
 
 
-def square(
-    lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2
-) -> qse.Qbits:
+def square(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
     """
     Generate a Qbits object in square lattice geometry.
 
@@ -76,9 +45,11 @@ def square(
     lattice_spacing : float
         The lattice spacing.
     repeats_x : int
-        The number of repeats in the x direction. Must be greater than 1.
+        The number of repeats in the x direction.
+        Must be greater than 1.
     repeats_y : int
-        The number of repeats in the y direction. Must be greater than 1.
+        The number of repeats in the y direction.
+        Must be greater than 1.
 
     Returns
     -------
@@ -87,14 +58,16 @@ def square(
     """
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
-    return _lattice_creator(
-        [[1, 0, 0], [0, 1, 0]], lattice_spacing, (repeats_x, repeats_y)
+    qbits = qse.Qbits(
+        positions=np.zeros((1, 2)),
+        cell=np.array([[lattice_spacing, 0], [0, lattice_spacing]]),
     )
+    qbits = qbits.repeat((repeats_x, repeats_y))
+    qbits.labels = [str(i) for i in range(qbits.nqbits)]
+    return qbits
 
 
-def triangular(
-    lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2
-) -> qse.Qbits:
+def triangular(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
     """
     Generate a Qbits object in triangular lattice geometry.
 
@@ -103,9 +76,11 @@ def triangular(
     lattice_spacing : float
         The lattice spacing.
     repeats_x : int
-        The number of repeats in the x direction. Must be greater than 1.
+        The number of repeats in the x direction.
+        Must be greater than 1.
     repeats_y : int
-        The number of repeats in the y direction. Must be greater than 1.
+        The number of repeats in the y direction.
+        Must be greater than 1.
 
     Returns
     -------
@@ -114,14 +89,14 @@ def triangular(
     """
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
-    return _lattice_creator(
-        [[1, 0, 0], [0.5, np.sqrt(3) / 2, 0]], lattice_spacing, (repeats_x, repeats_y)
-    )
+    cell = np.array([[1, 0], [0.5, np.sqrt(3) / 2]]) * lattice_spacing
+    qbits = qse.Qbits(positions=np.zeros((1, 2)), cell=cell)
+    qbits = qbits.repeat((repeats_x, repeats_y))
+    qbits.labels = [str(i) for i in range(qbits.nqbits)]
+    return qbits
 
 
-def hexagonal(
-    lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2
-) -> qse.Qbits:
+def hexagonal(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
     """
     Generate a Qbits object in hexagonal lattice geometry.
 
@@ -130,9 +105,11 @@ def hexagonal(
     lattice_spacing : float
         The lattice spacing.
     repeats_x : int
-        The number of repeats in the x direction. Must be greater than 1.
+        The number of repeats in the x direction.
+        Must be greater than 1.
     repeats_y : int
-        The number of repeats in the y direction. Must be greater than 1.
+        The number of repeats in the y direction.
+        Must be greater than 1.
 
     Returns
     -------
@@ -141,20 +118,16 @@ def hexagonal(
     """
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
-    return _lattice_creator(
-        [
-            [3 / 2, np.sqrt(3) / 2, 0],
-            [3 / 2, -np.sqrt(3) / 2, 0],
-        ],
-        lattice_spacing,
-        (repeats_x, repeats_y),
-        [[0, 0, 0], [lattice_spacing, 0, 0]],
+    cell = (
+        np.array([[3 / 2, np.sqrt(3) / 2], [3 / 2, -np.sqrt(3) / 2]]) * lattice_spacing
     )
+    qbits = qse.Qbits(positions=np.array([[0, 0], [lattice_spacing, 0]]), cell=cell)
+    qbits = qbits.repeat((repeats_x, repeats_y))
+    qbits.labels = [str(i) for i in range(qbits.nqbits)]
+    return qbits
 
 
-def kagome(
-    lattice_spacing: float = 1.0, repeats_x: int = 2, repeats_y: int = 2
-) -> qse.Qbits:
+def kagome(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
     """
     Generate a Qbits object in kagome lattice geometry.
 
@@ -163,9 +136,11 @@ def kagome(
     lattice_spacing : float
         The lattice spacing.
     repeats_x : int
-        The number of repeats in the x direction. Must be greater than 1.
+        The number of repeats in the x direction.
+        Must be greater than 1.
     repeats_y : int
-        The number of repeats in the y direction. Must be greater than 1.
+        The number of repeats in the y direction.
+        Must be greater than 1.
 
     Returns
     -------
@@ -174,81 +149,81 @@ def kagome(
     """
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
-    return _lattice_creator(
-        [[2, 0, 0], [1, np.sqrt(3), 0]],
-        lattice_spacing,
-        (repeats_x, repeats_y),
-        [
-            [0, 0, 0],
-            [lattice_spacing, 0, 0],
-            [lattice_spacing / 2, np.sqrt(3) * lattice_spacing / 2, 0],
-        ],
+    cell = np.array([[2, 0], [1, np.sqrt(3)]]) * lattice_spacing
+    qbits = qse.Qbits(
+        positions=np.array(
+            [
+                [0, 0],
+                [lattice_spacing, 0],
+                [lattice_spacing / 2, np.sqrt(3) * lattice_spacing / 2],
+            ]
+        ),
+        cell=cell,
     )
+    qbits = qbits.repeat((repeats_x, repeats_y))
+    qbits.labels = [str(i) for i in range(qbits.nqbits)]
+    return qbits
 
 
-def ring(center=np.zeros(3), radius=3.0, npoints=12) -> qse.Qbits:
-    """Generate Qbits object in ring geometry.
-        The ring is placed in xy plane at center.
+def ring(spacing: float, nqbits: int) -> qse.Qbits:
+    """
+    Generate a Qbits object in a ring geometry.
 
     Parameters
     ----------
-    center : array_like, optional
-        3D coordinate for the centre
-        of the ring, by default np.zeros(3)
-    radius : float, optional
-        Radius of ring, by default 3.0
-    npoints : int, optional
-        Number of points on ring, by default 12
+    radius : float
+        The spacing between the qubits.
+    nqbits : int
+        Number of qubits on the ring.
 
     Returns
     -------
     Qbits
-        The Qbits object with ring geometry.
+        The Qbits object.
     """
-    theta = np.arange(npoints, dtype=float)
-    theta *= 2.0 * np.pi / npoints
-    positions = np.array([np.cos(theta), np.sin(theta), np.zeros(npoints)]).T
-    positions *= radius
-    positions += center
-    qring = qse.Qbits(positions=positions)
-    return qring
+    # Using cosine rule
+    # spacing^2 = 2radius^2 [ 1 - cos(2pi/nqubits) ]
+    radius = spacing * np.sqrt(0.5 / (1.0 - np.cos(2 * np.pi / nqbits)))
+    theta = np.arange(nqbits, dtype=float)
+    theta *= 2.0 * np.pi / nqbits
+    positions = radius * np.array([np.cos(theta), np.sin(theta)]).T
+    return qse.Qbits(positions=positions)
 
 
-def torus(N1=12, N2=12, Rin=1.0, Rout=3.0, center=np.zeros(3)) -> qse.Qbits:
-    """Generate Qbits object in a torus geometry.
+def torus(
+    n_outer: int, n_inner: int, inner_radius: float, outer_radius: float
+) -> qse.Qbits:
+    """
+    Generate a Qbits object in a torus geometry.
 
     Parameters
     ----------
-    N1 : int, optional
-        Number of points in larger (outer) dimension, by default 12
-    N2 : int, optional
-        Number of points in smaller (inner) dimension, by default 12
-    Rin : float, optional
-        Inner radius, by default 1.0
-    Rout : float, optional
-        Outer radius, by default 3.0
-    center : _type_, optional
-        Center of the torus, by default np.zeros(3)
+    n_outer : int
+        Number of points in larger (outer) dimension.
+    n_inner : int
+        Number of points in smaller (inner) dimension.
+    inner_radius : float
+        The inner radius.
+    outer_radius : float
+        The outer radius.
 
     Returns
     -------
     Qbits
-        The Qbits object with torus geometry.
+        The Qbits object.
     """
-    theta = (2.0 * np.pi / N1) * np.arange(N1)
-    phi = (2.0 * np.pi / N2) * np.arange(N2)
-    #
+    theta = (2.0 * np.pi / n_outer) * np.arange(n_outer)
+    phi = (2.0 * np.pi / n_inner) * np.arange(n_inner)
+
     positions = (
         np.array(
             [
-                np.outer(Rout + Rin * np.cos(theta), np.cos(phi)),
-                np.outer(Rout + Rin * np.cos(theta), np.sin(phi)),
-                np.outer(Rin * np.sin(theta), np.ones(phi.shape)),
+                np.outer(outer_radius + inner_radius * np.cos(theta), np.cos(phi)),
+                np.outer(outer_radius + inner_radius * np.cos(theta), np.sin(phi)),
+                np.outer(inner_radius * np.sin(theta), np.ones(phi.shape)),
             ]
         )
-        .reshape(3, N1 * N2)
+        .reshape(3, n_outer * n_inner)
         .T
     )
-    positions += center
-    qtorus = qse.Qbits(positions=positions)
-    return qtorus
+    return qse.Qbits(positions=positions)

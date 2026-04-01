@@ -1,0 +1,63 @@
+---
+name: Auto bump version
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'qse/**'
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+
+      - name: Install tomlkit
+        run: pip install tomlkit
+
+      - name: Bump patch version
+        run: python bump_patch.py
+
+      - name: Commit and push changes
+        run: |
+          VERSION_BRANCH="auto-bump-version/patch-$(date +%s)"
+          COMMIT_MESSAGE="chore: bump patch version [skip ci]"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # check if there are changes to commit
+          git add pyproject.toml
+          if ! git diff --cached --quiet; then
+            echo "changes detected. Creating new branch and PR ..."
+
+            # Create a new branch and switch to it.
+            git checkout -b $VERSION_BRANCH
+
+            # Commit the changes
+            git commit -m "$COMMIT_MESSAGE"
+
+            # Push the new branch
+            git push origin $VERSION_BRANCH
+
+            # Create the pull request using github CLI
+            PR_URL=$(gh pr create --title "🤖 Auto Bump Version Patch" --body "This PR was automatically created to bump the patch version." --base main --head $VERSION_BRANCH --label "version-bump")
+
+            echo "Pull request created successfully"
+
+            gh pr merge $PR_URL --squash --auto # later we add --delete-branch if everything works.
+          else
+            echo "No changes to pyproject.toml. Skipping the PR creation"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

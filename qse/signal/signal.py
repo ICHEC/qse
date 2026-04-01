@@ -2,67 +2,48 @@
 
 import numpy as np
 
+from .draw import draw
+
 
 class Signal:
     """
-    Signal class represents a 1D signal with values and duration.
-
-    The class supports arithmetic operations with other signals and
-    scalars.
-    Specifically:
-
-    * Adding a scalar to a Signal returns a new Signal with modified
-      values and the same duration. Say W is a signal, then W + 3.0 returns
-      a signal with same duration, and values W.values + 3.0.
-
-    * Adding two Signal instances concatenates their values and sums
-      their durations. So if w1, w2 are instantiation of Signal, then
-      w = w1 + w2 gives signal with concatenated values, i.e.,
-      w.values = [w1.values, w2.values], and added duration
-      w.duration = w1.duration + w2.duration.
+    The Signal class represents a 1D signal with values and duration.
+    The duration must be divisble by the number of values and each value
+    is assume to last for an equal duration.
 
     Parameters
     ----------
-    values : ndarray
+    values : list | np.ndarray
         The values of the signal.
     duration : int
         Duration of the signal.
+        Defaults to the length of the passed values.
 
-    Notes
-    -----
-    Currently, the object gets created for multi-dim arrays as well.
-    However, it should be used for 1D only, we haven't made it useful
-    or consistent for multi-dim usage.
+    Examples
+    --------
+    To create a constant signal, passing a single value:
+
+    >>> qse.Signal([1], 10)
+    ... Signal(duration=10, values=[1.])
+
+    To create an arbitrary signal, pass an array
+    whose length is equal to the duration:
+    >>> qse.Signal(np.linspace(0, 1, 5), 5)
+    ... Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
+
+    Arithmetic operations with scalars is supported.
+    Adding or multiplying a scalar to a Signal returns
+    a new Signal with modified values and the same duration.
+    For example:
+
+    >>> signal = qse.Signal([1, 1])
+    >>> signal * 3 + 0.5
+    ... Signal(duration=2, values=[3.5 3.5])
     """
 
     def __init__(self, values, duration=None) -> None:
-        """Instantiates the Signal class.
-
-        Parameters
-        ----------
-        values : array_like
-            The signal values.
-        duration : int, optional
-            Duration of the signal, by default None
-        """
-        self.values = np.asarray(values)
-        self._duration = len(self.values) if duration is None else int(duration)
-
-    @property
-    def duration(self) -> int:
-        """
-        Duration of the signal.
-
-        Returns
-        -------
-        int
-            The duration.
-        """
-        return self._duration
-
-    @duration.setter
-    def duration(self, value):
-        self._duration = value
+        self.values = np.asarray(values, dtype=float)
+        self.duration = len(self.values) if duration is None else int(duration)
 
     def __iter__(self):
         """
@@ -126,12 +107,7 @@ class Signal:
         TypeError
             If the operand type is unsupported.
         """
-        if isinstance(other, Signal):
-            return Signal(
-                values=np.append(self.values, other.values),
-                duration=self.duration + other.duration,
-            )
-        elif isinstance(other, (float, int)):
+        if isinstance(other, (float, int)):
             return Signal(values=self.values + other, duration=self.duration)
         else:
             raise TypeError(f"Unsupported operand type for +: {type(other)}")
@@ -166,11 +142,8 @@ class Signal:
         TypeError
             If the operand type is unsupported.
         """
-        if isinstance(other, Signal):
-            self.values = np.append(self.values, other.values)
-            self.duration += other.duration
-        elif isinstance(other, (float, int)):
-            self.values += other
+        if isinstance(other, (float, int)):
+            self.values = self.values + other
         else:
             raise TypeError(f"Unsupported operand type for +=: {type(other)}")
         return self
@@ -230,7 +203,7 @@ class Signal:
             If the operand type is unsupported.
         """
         if isinstance(other, (float, int)):
-            self.values *= other
+            self.values = self.values * other
         else:
             raise TypeError(f"Unsupported operand type for *=: {type(other)}")
         return self
@@ -246,5 +219,70 @@ class Signal:
         """
         return f"Signal(duration={self.duration}, values={self.values})"
 
-    # TODO: Define interpolating scheme to resample points
-    # if duration is changed externally.
+    def __len__(self):
+        return len(self.values)
+
+    @property
+    def duration(self):
+        return self._duration
+
+    @duration.setter
+    def duration(self, new_duration):
+        if not isinstance(new_duration, int):
+            raise ValueError("The duration must be an ints")
+
+        if new_duration % len(self) != 0:
+            raise ValueError("The number of values must divide the duration.")
+
+        self._duration = new_duration
+
+    def time_per_value(self):
+        """
+        Get the duration per value. Recall that the values are equally
+        spaced over the total duration.
+
+        Returns
+        -------
+        int
+            The duration of each value.
+        """
+        return self.duration // len(self)
+
+    def expand(self):
+        """
+        Get an array of length 'duration' whose entries are the signal values.
+
+        Returns
+        -------
+        np.ndarray
+            An array representing the signal.
+        """
+        return np.concatenate([[i] * self.time_per_value() for i in self.values])
+
+    def to_pulser(self):
+        """
+        Convert to a Pulser Waveform.
+
+        Returns
+        -------
+        pulser.waveforms.Waveform
+            The waveform.
+        """
+        from pulser.waveforms import ConstantWaveform, CustomWaveform
+
+        if len(self) == 1:
+            return ConstantWaveform(duration=self.duration, value=self.values[0])
+        return CustomWaveform(self.expand())
+
+    def draw(self, time_units=None, signal_units=None):
+        """
+        Draw the signal.
+
+        Parameters
+        ----------
+        time_units : str, optional
+            The units of the duration.
+        signal_units : str, optional
+            The units of the signal.
+        """
+        return draw(self, time_units=time_units, signal_units=signal_units)
