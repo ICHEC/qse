@@ -50,6 +50,7 @@ docs = [
     "sphinx_jupyterbook_latex",
     "sphinx-togglebutton",
     "sphinx-copybutton",
+    "sphinxcontrib-mermaid",
     "tomli",
     "pulser",  # required for creating the docs
 ]
