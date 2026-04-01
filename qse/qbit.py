@@ -61,7 +61,11 @@ class Qbit:
     -----
     You can create a qbit object with
 
-    >>> q = qse.Qbit()
+    .. jupyter-execute::
+
+        import qse
+        q = qse.Qbit()
+        print(q)
     """
 
     __slots__ = ["data", "qbits", "index"]

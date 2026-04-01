@@ -34,6 +34,7 @@ html:
 # Sphinx-specific overrides (The core of your conf.py)
 sphinx:
   extra_extensions:
+    - jupyter_sphinx
     - sphinx.ext.autodoc
     - sphinx.ext.coverage
     - sphinx.ext.napoleon
@@ -48,6 +49,9 @@ sphinx:
     # specifically for the auto-generated API files.
     suppress_warnings:
       - etoc.toctree
+      - app.add_node
+      - app.add_directive
+    
     html_theme_options:
       show_nav_level: 4
       collapse_navigation: false
