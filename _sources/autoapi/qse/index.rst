@@ -37,7 +37,6 @@ Submodules
    /autoapi/qse/magnetic/index
    /autoapi/qse/qbit/index
    /autoapi/qse/qbits/index
-   /autoapi/qse/signal/index
    /autoapi/qse/utils/index
 
 
@@ -52,6 +51,7 @@ Classes
    qse.Qbit
    qse.Qbits
    qse.Signal
+   qse.Signals
 
 
 Functions
@@ -810,6 +810,8 @@ Package Contents
 .. py:class:: Signal(values, duration=None)
 
    The Signal class represents a 1D signal with values and duration.
+   The duration must be divisble by the number of values and each value
+   is assume to last for an equal duration.
 
    :Parameters: * **values** (*list | np.ndarray*) -- The values of the signal.
                 * **duration** (*int*) -- Duration of the signal.
@@ -817,10 +819,15 @@ Package Contents
 
    .. rubric:: Examples
 
-   One can create a signal by passing an array of values:
+   To create a constant signal, passing a single value:
 
-   >>> qse.Signal([1, 2, 3], 100)
-   ... Signal(duration=100, values=[1. 2. 3.])
+   >>> qse.Signal([1], 10)
+   ... Signal(duration=10, values=[1.])
+
+   To create an arbitrary signal, pass an array
+   whose length is equal to the duration:
+   >>> qse.Signal(np.linspace(0, 1, 5), 5)
+   ... Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
 
    Arithmetic operations with scalars is supported.
    Adding or multiplying a scalar to a Signal returns
@@ -830,25 +837,6 @@ Package Contents
    >>> signal = qse.Signal([1, 1])
    >>> signal * 3 + 0.5
    ... Signal(duration=2, values=[3.5 3.5])
-
-   Two Signals can be added together which
-   concatenates their values and sums their durations.
-   So if w1, w2 are instantiation of Signal, then
-   w = w1 + w2 gives signal with concatenated values, i.e.,
-   w.values = [w1.values, w2.values], and added duration
-   w.duration = w1.duration + w2.duration.
-   For example:
-
-   >>> signal_1 = qse.Signal([1, 1], 5)
-   >>> signal_2 = qse.Signal([2, 2], 2)
-   >>> signal_1 + signal_2
-   ... Signal(duration=7, values=[1. 1. 2. 2.])
-
-   .. rubric:: Notes
-
-   Currently, the object gets created for multi-dim arrays as well.
-   However, it should be used for 1D only, we haven't made it useful
-   or consistent for multi-dim usage.
 
 
    .. py:method:: __iter__()
@@ -948,6 +936,88 @@ Package Contents
       Return a string representation of the signal.
 
       :returns: *str* -- String representation.
+
+
+
+   .. py:method:: time_per_value()
+
+      Get the duration per value. Recall that the values are equally
+      spaced over the total duration.
+
+      :returns: *int* -- The duration of each value.
+
+
+
+   .. py:method:: expand()
+
+      Get an array of length 'duration' whose entries are the signal values.
+
+      :returns: *np.ndarray* -- An array representing the signal.
+
+
+
+   .. py:method:: to_pulser()
+
+      Convert to a Pulser Waveform.
+
+      :returns: *pulser.waveforms.Waveform* -- The waveform.
+
+
+
+   .. py:method:: draw(time_units=None, signal_units=None)
+
+      Draw the signal.
+
+      :Parameters: * **time_units** (*str, optional*) -- The units of the duration.
+                   * **signal_units** (*str, optional*) -- The units of the signal.
+
+
+
+.. py:class:: Signals(signals=None)
+
+   The Signal class represents a collection of Signals.
+
+   :Parameters: **signals** (*list[qse.Signal], optional*) -- The signals.
+
+   .. rubric:: Examples
+
+   >>> x = qse.Signal([1], 10)
+   >>> y = qse.Signal(np.linspace(0, 1, 5), 5)
+   >>> qse.Signals([x, y])
+   ... Total duration=15
+   ...   Signal(duration=10, values=[1.])
+   ...   Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
+
+   We can also create Signals by addition, for example to create
+   the same signal as above:
+
+   >>> z = qse.Signals()
+   >>> z += x
+   >>> z += y
+
+
+   .. py:method:: to_pulser()
+
+      Convert to a Pulser Waveform.
+
+      :returns: *pulser.waveforms.Waveform* -- The waveform.
+
+
+
+   .. py:method:: expand()
+
+      Get an array of length 'duration' whose entries are the signal values.
+
+      :returns: *np.ndarray* -- An array representing the signal.
+
+
+
+   .. py:method:: draw(time_units=None, signal_units=None)
+
+      Draw the signal.
+
+      :Parameters: * **time_units** (*str, optional*) -- The units of the duration.
+                   * **signal_units** (*str, optional*) -- The units of the signal.
 
 
 

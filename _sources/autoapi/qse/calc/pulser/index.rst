@@ -31,8 +31,8 @@ Module Contents
    QSE-Calculator for pulser.
 
    :Parameters: * **qbits** (*qse.Qbits*) -- The qbits object.
-                * **amplitude** (*qse.Signal, pulser.waveforms.Waveform*) -- The amplitude pulse.
-                * **detuning** (*qse.Signal, pulser.waveforms.Waveform*) -- The detuning pulse.
+                * **amplitude** (*qse.Signal, qse.Signals, pulser.waveforms.Waveform*) -- The amplitude pulse.
+                * **detuning** (*qse.Signal, qse.Signals, pulser.waveforms.Waveform*) -- The detuning pulse.
                 * **channel** (*str*) -- Which channel to use. For example "rydberg_global" for Rydberg or
                   "mw_global" for microwave.
                   Defaults to "rydberg_global".
@@ -55,8 +55,8 @@ Module Contents
    >>> duration = 400
    >>> pulser_calc = qse.calc.Pulser(
    ...     qbits=qbits,
-   ...     amplitude=qse.Signal(np.ones(6) * 1.01, duration),
-   ...     detuning=qse.Signal(np.ones(6) * 0.12, duration),
+   ...     amplitude=qse.Signal([1.01], duration),
+   ...     detuning=qse.Signal([0.12], duration),
    ... )
    >>> pulser_calc.build_sequence()
    >>> pulser_calc.calculate()

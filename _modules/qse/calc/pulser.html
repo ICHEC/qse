@@ -627,7 +627,6 @@ window.runMermaid = runMermaid;</script>
 <li class="toctree-l2"><a class="reference internal" href="../../../autoapi/qse/magnetic/index.html">qse.magnetic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../autoapi/qse/qbit/index.html">qse.qbit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../autoapi/qse/qbits/index.html">qse.qbits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/qse/signal/index.html">qse.signal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../autoapi/qse/utils/index.html">qse.utils</a></li>
 </ul>
 </details></li>
@@ -742,7 +741,7 @@ window.runMermaid = runMermaid;</script>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">qse</span><span class="w"> </span><span class="kn">import</span> <span class="n">Signal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qse</span><span class="w"> </span><span class="kn">import</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">Signals</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qse.calc.calculator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Calculator</span>
 
 <span class="k">try</span><span class="p">:</span>
@@ -765,9 +764,9 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">    ----------</span>
 <span class="sd">    qbits: qse.Qbits</span>
 <span class="sd">        The qbits object.</span>
-<span class="sd">    amplitude: qse.Signal, pulser.waveforms.Waveform</span>
+<span class="sd">    amplitude: qse.Signal, qse.Signals, pulser.waveforms.Waveform</span>
 <span class="sd">        The amplitude pulse.</span>
-<span class="sd">    detuning: qse.Signal, pulser.waveforms.Waveform</span>
+<span class="sd">    detuning: qse.Signal, qse.Signals, pulser.waveforms.Waveform</span>
 <span class="sd">        The detuning pulse.</span>
 <span class="sd">    channel : str</span>
 <span class="sd">        Which channel to use. For example &quot;rydberg_global&quot; for Rydberg or</span>
@@ -797,8 +796,8 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">    &gt;&gt;&gt; duration = 400</span>
 <span class="sd">    &gt;&gt;&gt; pulser_calc = qse.calc.Pulser(</span>
 <span class="sd">    ...     qbits=qbits,</span>
-<span class="sd">    ...     amplitude=qse.Signal(np.ones(6) * 1.01, duration),</span>
-<span class="sd">    ...     detuning=qse.Signal(np.ones(6) * 0.12, duration),</span>
+<span class="sd">    ...     amplitude=qse.Signal([1.01], duration),</span>
+<span class="sd">    ...     detuning=qse.Signal([0.12], duration),</span>
 <span class="sd">    ... )</span>
 <span class="sd">    &gt;&gt;&gt; pulser_calc.build_sequence()</span>
 <span class="sd">    &gt;&gt;&gt; pulser_calc.calculate()</span>
@@ -882,12 +881,6 @@ window.runMermaid = runMermaid;</script>
         <span class="bp">self</span><span class="o">.</span><span class="n">_detuning</span> <span class="o">=</span> <span class="n">_format_pulse</span><span class="p">(</span><span class="n">detuning</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
-
-    <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qbits</span><span class="o">.</span><span class="n">to_pulser</span><span class="p">()</span>
 
@@ -955,19 +948,12 @@ window.runMermaid = runMermaid;</script>
 <span class="k">def</span><span class="w"> </span><span class="nf">_format_pulse</span><span class="p">(</span><span class="n">pulse</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">pulse</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pulse</span><span class="p">,</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">Waveform</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">pulse</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pulse</span><span class="p">,</span> <span class="n">Signal</span><span class="p">):</span>
-        <span class="c1"># pulser.waveforms.InterpolatedWaveform needs minimum 2</span>
-        <span class="c1"># values. In the case where we have a single value,</span>
-        <span class="c1"># we use pulser.waveforms.ConstantWaveform.</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pulse</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">ConstantWaveform</span><span class="p">(</span>
-                <span class="n">duration</span><span class="o">=</span><span class="n">pulse</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">pulse</span><span class="o">.</span><span class="n">values</span>
-            <span class="p">)</span>
-        <span class="k">return</span> <span class="n">pulser</span><span class="o">.</span><span class="n">waveforms</span><span class="o">.</span><span class="n">InterpolatedWaveform</span><span class="p">(</span>
-            <span class="n">duration</span><span class="o">=</span><span class="n">pulse</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">pulse</span><span class="o">.</span><span class="n">values</span>
-        <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pulse</span><span class="p">,</span> <span class="p">(</span><span class="n">Signal</span><span class="p">,</span> <span class="n">Signals</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">pulse</span><span class="o">.</span><span class="n">to_pulser</span><span class="p">()</span>
+
     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-        <span class="s2">&quot;Pulses must be either `qse.Signal` or `pulser.waveforms.Waveform`.&quot;</span>
+        <span class="s2">&quot;Pulses must be either `qse.Signal`, `qse.Signals` &quot;</span>
+        <span class="s2">&quot;or `pulser.waveforms.Waveform`.&quot;</span>
     <span class="p">)</span>
 </pre></div>
 

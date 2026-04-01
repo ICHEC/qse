@@ -194,7 +194,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../magnetic/index.html">qse.magnetic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../qbit/index.html">qse.qbit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../qbits/index.html">qse.qbits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../signal/index.html">qse.signal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../utils/index.html">qse.utils</a></li>
 </ul>
 </details></li>
@@ -537,8 +536,8 @@ Only supported for a single qubit.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>amplitude</strong> (<em>qse.Signal</em>) – The amplitude pulse.</p></li>
-<li><p><strong>detuning</strong> (<em>qse.Signal</em>) – The detuning pulse.</p></li>
+<li><p><strong>amplitude</strong> (<em>qse.Signal, qse.Signals</em>) – The amplitude pulse.</p></li>
+<li><p><strong>detuning</strong> (<em>qse.Signal, qse.Signals</em>) – The detuning pulse.</p></li>
 </ul>
 </dd>
 </dl>
@@ -596,8 +595,8 @@ Defaults to True.</p></li>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The qbits object.</p></li>
-<li><p><strong>amplitude</strong> (<em>qse.Signal, pulser.waveforms.Waveform</em>) – The amplitude pulse.</p></li>
-<li><p><strong>detuning</strong> (<em>qse.Signal, pulser.waveforms.Waveform</em>) – The detuning pulse.</p></li>
+<li><p><strong>amplitude</strong> (<em>qse.Signal, qse.Signals, pulser.waveforms.Waveform</em>) – The amplitude pulse.</p></li>
+<li><p><strong>detuning</strong> (<em>qse.Signal, qse.Signals, pulser.waveforms.Waveform</em>) – The detuning pulse.</p></li>
 <li><p><strong>channel</strong> (<em>str</em>) – Which channel to use. For example “rydberg_global” for Rydberg or
 “mw_global” for microwave.
 Defaults to “rydberg_global”.</p></li>
@@ -620,8 +619,8 @@ Defaults to True.</p></li>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">duration</span> <span class="o">=</span> <span class="mi">400</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">Pulser</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">qbits</span><span class="o">=</span><span class="n">qbits</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">amplitude</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.01</span><span class="p">,</span> <span class="n">duration</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="n">detuning</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.12</span><span class="p">,</span> <span class="n">duration</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">amplitude</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mf">1.01</span><span class="p">],</span> <span class="n">duration</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">detuning</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mf">0.12</span><span class="p">],</span> <span class="n">duration</span><span class="p">),</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span><span class="o">.</span><span class="n">build_sequence</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
