@@ -24,12 +24,12 @@ class Signal:
     To create a constant signal, passing a single value:
 
     .. jupyter-execute::
-        
+
         import qse
         s = qse.Signal([1], 10)
         print(s)
 
-    
+
     To create an arbitrary signal, pass an array
     whose length is equal to the duration:
 
