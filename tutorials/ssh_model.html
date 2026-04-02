@@ -374,7 +374,6 @@ there will be no interaction between qubits <span class="math notranslate nohigh
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pulser</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 </pre></div>
@@ -403,10 +402,12 @@ By rotating them by the angle above, there will be no interactions between qubit
 
 <span class="n">qbits1</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="o">=</span><span class="n">lattice_spacing</span><span class="p">,</span> <span class="n">repeats</span><span class="o">=</span><span class="n">repeats</span><span class="p">)</span>
 <span class="n">qbits1</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;A</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repeats</span><span class="p">)]</span>
+<span class="n">qbits1</span><span class="o">.</span><span class="n">add_dim</span><span class="p">()</span>  <span class="c1"># Make 2D</span>
 
 <span class="n">qbits2</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="o">=</span><span class="n">lattice_spacing</span><span class="p">,</span> <span class="n">repeats</span><span class="o">=</span><span class="n">repeats</span><span class="p">)</span>
 <span class="n">qbits2</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;B</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="n">repeats</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repeats</span><span class="p">)]</span>
-<span class="n">qbits2</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="n">lattice_spacing</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">qbits2</span><span class="o">.</span><span class="n">add_dim</span><span class="p">()</span>
+<span class="n">qbits2</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="n">lattice_spacing</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 
 <span class="n">qbits_ssh</span> <span class="o">=</span> <span class="n">qbits1</span> <span class="o">+</span> <span class="n">qbits2</span>
 <span class="n">qbits_ssh</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span>
@@ -418,36 +419,15 @@ By rotating them by the angle above, there will be no interactions between qubit
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">9</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">qbits1</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;A</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repeats</span><span class="p">)]</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> 
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">qbits2</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="o">=</span><span class="n">lattice_spacing</span><span class="p">,</span> <span class="n">repeats</span><span class="o">=</span><span class="n">repeats</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">qbits2</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;B</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="n">repeats</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repeats</span><span class="p">)]</span>
-<span class="ne">----&gt; </span><span class="mi">9</span> <span class="n">qbits2</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="n">lattice_spacing</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> 
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">qbits_ssh</span> <span class="o">=</span> <span class="n">qbits1</span> <span class="o">+</span> <span class="n">qbits2</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="n">qbits_ssh</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/qse/qbits.py:593,</span> in <span class="ni">Qbits.translate</span><span class="nt">(self, displacement)</span>
-<span class="g g-Whitespace">    </span><span class="mi">583</span> <span class="k">def</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">displacement</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">584</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">585</span><span class="sd">     Translate qbit positions.</span>
-<span class="g g-Whitespace">    </span><span class="mi">586</span><span class="sd"> </span>
-<span class="sd">   (...)    591         nx3 array (where n is the number of qbits).</span>
-<span class="g g-Whitespace">    </span><span class="mi">592</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">593</span>     <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">displacement</span><span class="p">)</span>
-
-<span class="ne">ValueError</span>: non-broadcastable output operand with shape (4,1) doesn&#39;t match the broadcast shape (4,3)
-</pre></div>
-</div>
+<img alt="../_images/b858d8f86d7454f65411db7586d6cd600d261d2e310e0671347df56f8208a73b.png" src="../_images/b858d8f86d7454f65411db7586d6cd600d261d2e310e0671347df56f8208a73b.png" />
 </div>
 </div>
 <p>We can verify that there are no interactions in the same chain by computing the couplings between qubits.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">magnetic_field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">magnetic_field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="p">)</span>  <span class="c1"># We need to define the field in 3D for the calculator.</span>
 <span class="n">c3</span> <span class="o">=</span> <span class="mi">3700</span>
 
 
@@ -456,7 +436,7 @@ By rotating them by the angle above, there will be no interactions between qubit
     <span class="n">r</span> <span class="o">=</span> <span class="n">qbits_ssh</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">qbits_ssh</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
     <span class="n">r</span> <span class="o">/=</span> <span class="n">d</span>
-    <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">magnetic_field</span><span class="p">)</span>
+    <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">magnetic_field</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">c3</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">cos_theta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">d</span><span class="o">**</span><span class="mi">3</span>
 
 
@@ -470,6 +450,17 @@ By rotating them by the angle above, there will be no interactions between qubit
 <span class="n">couplings</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">qbits_ssh</span><span class="o">.</span><span class="n">nqbits</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coupling between qbits 0 &amp; </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">coupling_mat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coupling between qbits 0 &amp; 1: -4.754427304529029e-16
+Coupling between qbits 0 &amp; 2: -5.943034130661286e-17
+Coupling between qbits 0 &amp; 3: 0.0
+Coupling between qbits 0 &amp; 4: -7.391286573549234
+Coupling between qbits 0 &amp; 5: -0.5880494737584242
+Coupling between qbits 0 &amp; 6: -0.09525640675644509
+Coupling between qbits 0 &amp; 7: -0.026269374219942052
 </pre></div>
 </div>
 </div>
@@ -487,16 +478,18 @@ By rotating them by the angle above, there will be no interactions between qubit
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/1110092e95f12a779c783d28928fc8233eb4d663d3989f4c03e51cd13586466f.png" src="../_images/1110092e95f12a779c783d28928fc8233eb4d663d3989f4c03e51cd13586466f.png" />
+</div>
 </div>
 <p>Thus we see that there are no couplings between qubits in the same chain, and hence we have a SSH model.
 Finally we can visualize the Hamiltonian.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simple_pulse</span> <span class="o">=</span> <span class="n">pulser</span><span class="o">.</span><span class="n">Pulse</span><span class="o">.</span><span class="n">ConstantPulse</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-<span class="n">pcalc_ssh</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">Pulser</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pcalc_ssh</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">Pulser</span><span class="p">(</span>
     <span class="n">qbits</span><span class="o">=</span><span class="n">qbits_ssh</span><span class="p">,</span>
-    <span class="n">amplitude</span><span class="o">=</span><span class="n">simple_pulse</span><span class="o">.</span><span class="n">amplitude</span><span class="p">,</span>
-    <span class="n">detuning</span><span class="o">=</span><span class="n">simple_pulse</span><span class="o">.</span><span class="n">detuning</span><span class="p">,</span>
+    <span class="n">amplitude</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mf">0.0</span><span class="p">],</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">detuning</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mf">0.0</span><span class="p">],</span> <span class="mi">10</span><span class="p">),</span>
     <span class="n">channel</span><span class="o">=</span><span class="s2">&quot;mw_global&quot;</span><span class="p">,</span>
     <span class="n">magnetic_field</span><span class="o">=</span><span class="n">magnetic_field</span><span class="p">,</span>
 <span class="p">)</span>
@@ -505,13 +498,52 @@ Finally we can visualize the Hamiltonian.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10.0%. Run time:   0.00s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.0%. Run time:   0.00s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30.0%. Run time:   0.00s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>40.0%. Run time:   0.00s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>50.0%. Run time:   0.00s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>60.0%. Run time:   0.00s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>70.0%. Run time:   0.00s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>80.0%. Run time:   0.00s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>90.0%. Run time:   0.00s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100.0%. Run time:   0.00s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total run time:   0.01s
+time in compute and simulation = 0.06565499305725098 s.
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ham</span> <span class="o">=</span> <span class="n">pcalc_ssh</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">get_hamiltonian</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">full</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ham</span> <span class="o">=</span> <span class="n">pcalc_ssh</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">get_hamiltonian</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">full</span><span class="p">()</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">visualise</span><span class="o">.</span><span class="n">view_matrix</span><span class="p">(</span><span class="n">ham</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">vcenter</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b483bdd0cbb59fa247dc04ac36722452c61dac10beea2b264de194dc7b67f7b2.png" src="../_images/b483bdd0cbb59fa247dc04ac36722452c61dac10beea2b264de194dc7b67f7b2.png" />
 </div>
 </div>
 <section id="version">
@@ -519,6 +551,12 @@ Finally we can visualize the Hamiltonian.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qse</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">print_environment</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python version: 3.12.13
+qse version: 1.1.2
 </pre></div>
 </div>
 </div>
