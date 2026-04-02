@@ -45,6 +45,12 @@ sphinx:
     - autoapi.extension
   
   config:
+    # This forces the inclusion of the Widget Manager JS library
+    # which is required for the 'click and drag' to work.
+    html_js_files:
+      - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js
+      - https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js
+    
     # This tells Sphinx to ignore the "external-toc" warnings 
     # specifically for the auto-generated API files.
     suppress_warnings:

@@ -51,6 +51,7 @@ docs = [
     "sphinxcontrib-mermaid",
     "ipykernel",
     "ipywidgets",
+    "ipympl",
     "pulser",  # required for creating the docs
 ]
 
