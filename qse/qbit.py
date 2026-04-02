@@ -164,7 +164,7 @@ class Qbit:
 
     def delete(self, name):
         """Delete name attribute."""
-        assert self.atoms is None
+        assert self.atoms is None # RT: why is this still there from ASE???
         assert name not in ["label", "position", "state"]
         self.data[name] = None
 

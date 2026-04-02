@@ -23,22 +23,34 @@ class Signal:
     --------
     To create a constant signal, passing a single value:
 
-    >>> qse.Signal([1], 10)
-    ... Signal(duration=10, values=[1.])
+    .. jupyter-execute::
+        
+        import qse
+        s = qse.Signal([1], 10)
+        print(s)
 
+    
     To create an arbitrary signal, pass an array
     whose length is equal to the duration:
-    >>> qse.Signal(np.linspace(0, 1, 5), 5)
-    ... Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
+
+    .. jupyter-execute::
+
+        import qse
+        ss = qse.Signal(np.linspace(0, 1, 5), 5)
+        print(ss)
 
     Arithmetic operations with scalars is supported.
     Adding or multiplying a scalar to a Signal returns
     a new Signal with modified values and the same duration.
     For example:
 
-    >>> signal = qse.Signal([1, 1])
-    >>> signal * 3 + 0.5
-    ... Signal(duration=2, values=[3.5 3.5])
+    .. jupyter-execute::
+
+        import qse
+        signal = qse.Signal([1, 1])
+        signal = signal * 3 + 0.5
+        print(signal)
+
     """
 
     def __init__(self, values, duration=None) -> None:
