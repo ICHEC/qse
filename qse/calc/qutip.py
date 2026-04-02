@@ -23,7 +23,7 @@ class Qutip(Calculator):
         if self.amplitude.duration != self.detuning.duration:
             raise Exception("Amplitude and Detuning signals must have same duration.")
 
-        self._build_hamiltonians()
+        self._build_hamiltonian_operators()
 
     def calculate(self, e_ops=None):
         state = qp.tensor([qp.fock(2)] * self.qbits.nqbits)
@@ -31,13 +31,14 @@ class Qutip(Calculator):
         if e_ops is not None:
             exps = []
 
-        for i in range(self.amplitude.duration):
-            print(i)
-            hamiltonian = self.get_hamiltonian(i)
-            evo_step = qp.sesolve(hamiltonian, state, [0, 1e-3])
-            state = evo_step.final_state
-            if e_ops is not None:
-                exps.append([qp.expect(op, state) for op in e_ops])
+        for amp_s, det_s in zip(self.amplitude, self.detuning):
+            delta_t = _nano_to_micro(amp_s.time_per_value())
+            for amp, det in zip(amp_s.values, det_s.values):
+                hamiltonian = self.get_hamiltonian(amp, det)
+                evo_step = qp.sesolve(hamiltonian, state, [0, delta_t])
+                state = evo_step.final_state
+                if e_ops is not None:
+                    exps.append([qp.expect(op, state) for op in e_ops])
 
         result = {"state": state}
         if e_ops is not None:
@@ -45,14 +46,14 @@ class Qutip(Calculator):
 
         return result
 
-    def get_hamiltonian(self, i):
+    def get_hamiltonian(self, amplitude, detuning):
         return (
-            0.5 * self.ham_amplitude * self.amplitude.values[i]
-            - self.ham_detuning * self.detuning.values[i]
+            0.5 * self.ham_amplitude * amplitude
+            - self.ham_detuning * detuning
             + self.ham_int
         )
 
-    def _build_hamiltonians(self):
+    def _build_hamiltonian_operators(self):
         interaction = self.qbits.compute_interaction_hamiltonian(
             lambda d: self.c6 / d**6, "N"
         )
@@ -65,3 +66,23 @@ class Qutip(Calculator):
         self.ham_detuning = Operators(
             [Operator("N", i, n) for i in range(n)]
         ).to_qutip()
+
+
+def _check_pulses(amplitude, detuning):
+    if amplitude.duration != detuning.duration:
+        raise Exception("The amplitude and detuning must have the same duration.")
+
+    if len(amplitude) != len(detuning):
+        raise Exception(
+            "The amplitude and detuning must contain the same number of signals."
+        )
+
+    for a, d in zip(amplitude, detuning):
+        if len(a) != len(d):
+            raise Exception(
+                "The amplitude and detuning must have the same amount of values."
+            )
+
+
+def _nano_to_micro(t):
+    return t / 1000
