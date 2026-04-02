@@ -61,7 +61,11 @@ class Qbit:
     -----
     You can create a qbit object with
 
-    >>> q = qse.Qbit()
+    .. jupyter-execute::
+
+        import qse
+        q = qse.Qbit()
+        print(q)
     """
 
     __slots__ = ["data", "qbits", "index"]
@@ -160,7 +164,7 @@ class Qbit:
 
     def delete(self, name):
         """Delete name attribute."""
-        assert self.atoms is None
+        assert self.atoms is None  # RT: why is this still there from ASE???
         assert name not in ["label", "position", "state"]
         self.data[name] = None
 

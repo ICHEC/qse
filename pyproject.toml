@@ -43,6 +43,7 @@ pulser = ["pulser"]
 myqlm = ["myqlm"]
 docs = [
     "jupyter-book>=1.0.0,<2.0.0",
+    "jupyter-sphinx",
     "myst-nb>=1.1.0",
     "sphinx-autoapi>=3.0.0",
     "sphinx-copybutton",
@@ -50,6 +51,7 @@ docs = [
     "sphinxcontrib-mermaid",
     "ipykernel",
     "ipywidgets",
+    "ipympl",
     "pulser",  # required for creating the docs
 ]
 

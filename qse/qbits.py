@@ -45,36 +45,44 @@ class Qbits:
         Used to attach a calculator for doing computation.
 
     Examples
-    --------
+    ========
+
     Empty Qbits object:
 
-    >>> qs = qse.Qbits()
+    .. jupyter-execute::
+
+        import qse
+        qs = qse.Qbits()
+        print(qs)
 
     These are equivalent:
 
-    >>> a = qse.Qbits(
-    ...     positions=np.array([(0, 0, 0), (0, 0, 2)])
-    ...     labels=['qb1', 'qb2'],
-    ... )
-    >>> a = qse.Qbits.from_qbit_list(
-    ...     [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))]
-    ... )
+    .. jupyter-execute::
 
-    >>> xd = np.array(
-    ...    [[0, 0, 0],
-    ...     [0.5, 0.5, 0.5]]
-    ... )
-    >>> qdim = qse.Qbits(xd)
-    >>> qdim.cell = np.eye(3)
-    >>> qdim.pbc = True
-    >>> qlat = qdim.repeat([3,3,3])
+        from qse import Qbit, Qbits
+        # below two methods are equivalent
+        a = Qbits(
+            positions=np.array([(0, 0, 0), (0, 0, 2)]),
+            labels=['qb1', 'qb2'])
+
+        a = Qbits.from_qbit_list(
+            [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))])
+        print(a)
+
+        import numpy as np
+        xd = np.array([[0, 0, 0], [0.5, 0.5, 0.5]])
+        qdim = Qbits(xd)
+        qdim.cell = np.eye(3)
+        qdim.pbc = True
+        qlat = qdim.repeat([3,3,3])
+        print(qlat)
 
     The qdim will have shape = (1,1,1) and qlat will have shape = (3, 3, 3)
 
-    Notes
-    -----
-    In order to do computation, a calculator object has to attached
-    to the qbits object.
+    .. note::
+        In order to do computation, a calculator object has to attached
+        to the qbits object.
+
     """
 
     def __init__(
