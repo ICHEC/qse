@@ -60,6 +60,8 @@ class Qbits:
     .. jupyter-execute::
 
         from qse import Qbit, Qbits
+        import numpy as np
+
         # below two methods are equivalent
         a = Qbits(
             positions=np.array([(0, 0, 0), (0, 0, 2)]),
@@ -69,7 +71,6 @@ class Qbits:
             [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))])
         print(a)
 
-        import numpy as np
         xd = np.array([[0, 0, 0], [0.5, 0.5, 0.5]])
         qdim = Qbits(xd)
         qdim.cell = np.eye(3)
