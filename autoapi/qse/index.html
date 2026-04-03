@@ -36,6 +36,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/default.css?v=b9f5b887" />
@@ -52,12 +54,15 @@
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -501,6 +506,8 @@ mermaid.initialize(
 window.addEventListener("load", load);
 window.runMermaid = runMermaid;</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/qse/index';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="qse.calc" href="calc/index.html" />
@@ -630,7 +637,13 @@ window.runMermaid = runMermaid;</script>
 <li class="toctree-l2"><a class="reference internal" href="magnetic/index.html">qse.magnetic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qbit/index.html">qse.qbit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="qbits/index.html">qse.qbits</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="signal/index.html">qse.signal</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="signal/signal/index.html">qse.signal.signal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signal/signals/index.html">qse.signal.signals</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="utils/index.html">qse.utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualise/index.html">qse.visualise</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTIONS.html">Contributing</a></li>
@@ -914,7 +927,9 @@ root((QSE))
 <li class="toctree-l1"><a class="reference internal" href="magnetic/index.html">qse.magnetic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qbit/index.html">qse.qbit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qbits/index.html">qse.qbits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signal/index.html">qse.signal</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils/index.html">qse.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualise/index.html">qse.visualise</a></li>
 </ul>
 </div>
 </section>
@@ -1135,8 +1150,19 @@ Qbits object. Defaults to None.</p></li>
 </dl>
 <p class="rubric">Notes</p>
 <p>You can create a qbit object with</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbit</span><span class="p">()</span>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Qbit(label=&#39;X&#39;, position=[0.0, 0.0, 0.0], state=[(1+0j), 0j])
+</pre></div>
+</div>
+</div>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.Qbit.cut_reference_to_qbits">
@@ -1199,33 +1225,76 @@ value: False.</p></li>
 </dl>
 <p class="rubric">Examples</p>
 <p>Empty Qbits object:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qs</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">()</span>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="n">qs</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qs</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Qbits(
+ pbc=False,
+...)
+</pre></div>
+</div>
+</div>
 </div>
 <p>These are equivalent:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">positions</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
-<span class="gp">... </span>    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;qb1&#39;</span><span class="p">,</span> <span class="s1">&#39;qb2&#39;</span><span class="p">],</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="o">.</span><span class="n">from_qbit_list</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="n">Qbit</span><span class="p">(</span><span class="s1">&#39;qb1&#39;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="n">Qbit</span><span class="p">(</span><span class="s1">&#39;qb2&#39;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))]</span>
-<span class="gp">... </span><span class="p">)</span>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">qse</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qbit</span><span class="p">,</span> <span class="n">Qbits</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># below two methods are equivalent</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Qbits</span><span class="p">(</span>
+    <span class="n">positions</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]),</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;qb1&#39;</span><span class="p">,</span> <span class="s1">&#39;qb2&#39;</span><span class="p">])</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Qbits</span><span class="o">.</span><span class="n">from_qbit_list</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">Qbit</span><span class="p">(</span><span class="s1">&#39;qb1&#39;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="n">Qbit</span><span class="p">(</span><span class="s1">&#39;qb2&#39;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">xd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<span class="n">qdim</span> <span class="o">=</span> <span class="n">Qbits</span><span class="p">(</span><span class="n">xd</span><span class="p">)</span>
+<span class="n">qdim</span><span class="o">.</span><span class="n">cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">qdim</span><span class="o">.</span><span class="n">pbc</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">qlat</span> <span class="o">=</span> <span class="n">qdim</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qlat</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-<span class="gp">... </span>   <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]]</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qdim</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">xd</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qdim</span><span class="o">.</span><span class="n">cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qdim</span><span class="o">.</span><span class="n">pbc</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qlat</span> <span class="o">=</span> <span class="n">qdim</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Qbits(
+ Qbit(label=&#39;qb1&#39;, position=[0.0, 0.0, 0.0], state=[(1+0j), 0j], index=0),
+ Qbit(label=&#39;qb2&#39;, position=[0.0, 0.0, 2.0], state=[(1+0j), 0j], index=1),
+ pbc=False,
+...)
+Qbits(
+ Qbit(label=&#39;0&#39;, position=[0.0, 0.0, 0.0], state=[(1+0j), 0j], index=0),
+ Qbit(label=&#39;1&#39;, position=[0.5, 0.5, 0.5], state=[(1+0j), 0j], index=1),
+ Qbit(label=&#39;0&#39;, position=[0.0, 0.0, 1.0], state=[(1+0j), 0j], index=2),
+ ...
+ Qbit(label=&#39;1&#39;, position=[2.5, 2.5, 1.5], state=[(1+0j), 0j], index=0),
+ Qbit(label=&#39;0&#39;, position=[2.0, 2.0, 2.0], state=[(1+0j), 0j], index=1),
+ Qbit(label=&#39;1&#39;, position=[2.5, 2.5, 2.5], state=[(1+0j), 0j], index=2),
+ pbc=True,
+ cell=
+   3.00000    0.00000    0.00000
+   0.00000    3.00000    0.00000
+   0.00000    0.00000    3.00000,
+...)
 </pre></div>
+</div>
+</div>
 </div>
 <p>The qdim will have shape = (1,1,1) and qlat will have shape = (3, 3, 3)</p>
-<p class="rubric">Notes</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>In order to do computation, a calculator object has to attached
 to the qbits object.</p>
+</div>
 <dl class="py property">
 <dt class="sig sig-object py" id="qse.Qbits.calc">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calc</span></span><a class="headerlink" href="#qse.Qbits.calc" title="Link to this definition">#</a></dt>
@@ -1796,22 +1865,56 @@ Defaults to the length of the passed values.</p></li>
 </dl>
 <p class="rubric">Examples</p>
 <p>To create a constant signal, passing a single value:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="mi">10</span><span class="p">)</span>
-<span class="gp">... </span><span class="n">Signal</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mf">1.</span><span class="p">])</span>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Signal(duration=10, values=[1.])
+</pre></div>
+</div>
+</div>
+</div>
 <p>To create an arbitrary signal, pass an array
-whose length is equal to the duration:
-&gt;&gt;&gt; qse.Signal(np.linspace(0, 1, 5), 5)
-… Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])</p>
+whose length is equal to the duration:</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">ss</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
+</pre></div>
+</div>
+</div>
+</div>
 <p>Arithmetic operations with scalars is supported.
 Adding or multiplying a scalar to a Signal returns
 a new Signal with modified values and the same duration.
 For example:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">signal</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">signal</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mf">0.5</span>
-<span class="gp">... </span><span class="n">Signal</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mf">3.5</span> <span class="mf">3.5</span><span class="p">])</span>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="n">signal</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">signal</span> <span class="o">=</span> <span class="n">signal</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mf">0.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Signal(duration=2, values=[3.5 3.5])
+</pre></div>
+</div>
+</div>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.Signal.__iter__">
@@ -2013,21 +2116,34 @@ spaced over the total duration.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="mi">10</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qse</span><span class="o">.</span><span class="n">Signals</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
-<span class="gp">... </span><span class="n">Total</span> <span class="n">duration</span><span class="o">=</span><span class="mi">15</span>
-<span class="gp">... </span>  <span class="n">Signal</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mf">1.</span><span class="p">])</span>
-<span class="gp">... </span>  <span class="n">Signal</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span>   <span class="mf">0.25</span> <span class="mf">0.5</span>  <span class="mf">0.75</span> <span class="mf">1.</span>  <span class="p">])</span>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">ss</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signals</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signals</span><span class="p">()</span>
+<span class="n">z</span> <span class="o">+=</span> <span class="n">x</span>
+<span class="n">z</span> <span class="o">+=</span> <span class="n">y</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>We can also create Signals by addition, for example to create
-the same signal as above:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">z</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signals</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span> <span class="o">+=</span> <span class="n">x</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span> <span class="o">+=</span> <span class="n">y</span>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Total duration=15
+  Signal(duration=10, values=[1.])
+  Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
+Total duration=15
+  Signal(duration=10, values=[1.])
+  Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
 </pre></div>
 </div>
+</div>
+</div>
+<p>As shown above, one can also create Signals by adding two signals.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="qse.Signals.to_pulser">
 <span class="sig-name descname"><span class="pre">to_pulser</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/qse/signal/signals.html#Signals.to_pulser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.Signals.to_pulser" title="Link to this definition">#</a></dt>

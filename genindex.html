@@ -35,6 +35,8 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/default.css?v=b9f5b887" />
@@ -51,12 +53,15 @@
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -498,6 +503,8 @@ mermaid.initialize(
 window.addEventListener("load", load);
 window.runMermaid = runMermaid;</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -627,7 +634,13 @@ window.runMermaid = runMermaid;</script>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/qse/magnetic/index.html">qse.magnetic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/qse/qbit/index.html">qse.qbit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/qse/qbits/index.html">qse.qbits</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="autoapi/qse/signal/index.html">qse.signal</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/qse/signal/signal/index.html">qse.signal.signal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/qse/signal/signals/index.html">qse.signal.signals</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/qse/utils/index.html">qse.utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/qse/visualise/index.html">qse.visualise</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="CONTRIBUTIONS.html">Contributing</a></li>
@@ -763,7 +776,13 @@ window.runMermaid = runMermaid;</script>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/qse/index.html#qse.Signal.__add__">__add__() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__add__">(qse.signal.Signal method)</a>
 </li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.__add__">(qse.signal.signal.Signal method)</a>
+</li>
+      </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Qbits.__delitem__">__delitem__() (qse.Qbits method)</a>
 
       <ul>
@@ -777,6 +796,10 @@ window.runMermaid = runMermaid;</script>
 </li>
         <li><a href="autoapi/qse/index.html#qse.Signal.__eq__">(qse.Signal method)</a>
 </li>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__eq__">(qse.signal.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.__eq__">(qse.signal.signal.Signal method)</a>
+</li>
       </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Qbits.__getitem__">__getitem__() (qse.Qbits method)</a>
 
@@ -785,9 +808,19 @@ window.runMermaid = runMermaid;</script>
 </li>
         <li><a href="autoapi/qse/index.html#qse.Signal.__getitem__">(qse.Signal method)</a>
 </li>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__getitem__">(qse.signal.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.__getitem__">(qse.signal.signal.Signal method)</a>
+</li>
       </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Signal.__iadd__">__iadd__() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__iadd__">(qse.signal.Signal method)</a>
 </li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.__iadd__">(qse.signal.signal.Signal method)</a>
+</li>
+      </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Qbits.__imul__">__imul__() (qse.Qbits method)</a>
 
       <ul>
@@ -795,13 +828,29 @@ window.runMermaid = runMermaid;</script>
 </li>
         <li><a href="autoapi/qse/index.html#qse.Signal.__imul__">(qse.Signal method)</a>
 </li>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__imul__">(qse.signal.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.__imul__">(qse.signal.signal.Signal method)</a>
+</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/qse/index.html#qse.Signal.__iter__">__iter__() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__iter__">(qse.signal.Signal method)</a>
 </li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.__iter__">(qse.signal.signal.Signal method)</a>
+</li>
+      </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Signal.__mul__">__mul__() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__mul__">(qse.signal.Signal method)</a>
 </li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.__mul__">(qse.signal.signal.Signal method)</a>
+</li>
+      </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Qbits.__ne__">__ne__() (qse.Qbits method)</a>
 
       <ul>
@@ -809,7 +858,13 @@ window.runMermaid = runMermaid;</script>
 </li>
       </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Signal.__radd__">__radd__() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__radd__">(qse.signal.Signal method)</a>
 </li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.__radd__">(qse.signal.signal.Signal method)</a>
+</li>
+      </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Qbits.__repr__">__repr__() (qse.Qbits method)</a>
 
       <ul>
@@ -817,9 +872,19 @@ window.runMermaid = runMermaid;</script>
 </li>
         <li><a href="autoapi/qse/index.html#qse.Signal.__repr__">(qse.Signal method)</a>
 </li>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__repr__">(qse.signal.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.__repr__">(qse.signal.signal.Signal method)</a>
+</li>
       </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Signal.__rmul__">__rmul__() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.__rmul__">(qse.signal.Signal method)</a>
 </li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.__rmul__">(qse.signal.signal.Signal method)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -923,11 +988,21 @@ window.runMermaid = runMermaid;</script>
       <li><a href="autoapi/qse/index.html#qse.draw">draw() (in module qse)</a>
 
       <ul>
+        <li><a href="autoapi/qse/visualise/index.html#qse.visualise.draw">(in module qse.visualise)</a>
+</li>
         <li><a href="autoapi/qse/index.html#qse.Qbits.draw">(qse.Qbits method)</a>
 </li>
         <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.draw">(qse.qbits.Qbits method)</a>
 </li>
         <li><a href="autoapi/qse/index.html#qse.Signal.draw">(qse.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.draw">(qse.signal.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.draw">(qse.signal.signal.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signals.draw">(qse.signal.Signals method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/signals/index.html#qse.signal.signals.Signals.draw">(qse.signal.signals.Signals method)</a>
 </li>
         <li><a href="autoapi/qse/index.html#qse.Signals.draw">(qse.Signals method)</a>
 </li>
@@ -949,6 +1024,14 @@ window.runMermaid = runMermaid;</script>
       <li><a href="autoapi/qse/index.html#qse.Signal.expand">expand() (qse.Signal method)</a>
 
       <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.expand">(qse.signal.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.expand">(qse.signal.signal.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signals.expand">(qse.signal.Signals method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/signals/index.html#qse.signal.signals.Signals.expand">(qse.signal.signals.Signals method)</a>
+</li>
         <li><a href="autoapi/qse/index.html#qse.Signals.expand">(qse.Signals method)</a>
 </li>
       </ul></li>
@@ -1112,7 +1195,15 @@ window.runMermaid = runMermaid;</script>
 </li>
         <li><a href="autoapi/qse/qbits/index.html#module-qse.qbits">qse.qbits</a>
 </li>
+        <li><a href="autoapi/qse/signal/index.html#module-qse.signal">qse.signal</a>
+</li>
+        <li><a href="autoapi/qse/signal/signal/index.html#module-qse.signal.signal">qse.signal.signal</a>
+</li>
+        <li><a href="autoapi/qse/signal/signals/index.html#module-qse.signal.signals">qse.signal.signals</a>
+</li>
         <li><a href="autoapi/qse/utils/index.html#module-qse.utils">qse.utils</a>
+</li>
+        <li><a href="autoapi/qse/visualise/index.html#module-qse.visualise">qse.visualise</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1216,8 +1307,6 @@ window.runMermaid = runMermaid;</script>
         <li><a href="autoapi/qse/calc/myqlm/index.html#module-qse.calc.myqlm">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     qse.calc.pulser
 
@@ -1232,6 +1321,8 @@ window.runMermaid = runMermaid;</script>
         <li><a href="autoapi/qse/lattices/index.html#module-qse.lattices">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     qse.magnetic
 
@@ -1254,10 +1345,38 @@ window.runMermaid = runMermaid;</script>
 </li>
       </ul></li>
       <li>
+    qse.signal
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#module-qse.signal">module</a>
+</li>
+      </ul></li>
+      <li>
+    qse.signal.signal
+
+      <ul>
+        <li><a href="autoapi/qse/signal/signal/index.html#module-qse.signal.signal">module</a>
+</li>
+      </ul></li>
+      <li>
+    qse.signal.signals
+
+      <ul>
+        <li><a href="autoapi/qse/signal/signals/index.html#module-qse.signal.signals">module</a>
+</li>
+      </ul></li>
+      <li>
     qse.utils
 
       <ul>
         <li><a href="autoapi/qse/utils/index.html#module-qse.utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    qse.visualise
+
+      <ul>
+        <li><a href="autoapi/qse/visualise/index.html#module-qse.visualise">module</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1328,14 +1447,14 @@ window.runMermaid = runMermaid;</script>
         <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.set_centroid">(qse.qbits.Qbits method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/qse/index.html#qse.Qbits.set_distance">set_distance() (qse.Qbits method)</a>
 
       <ul>
         <li><a href="autoapi/qse/qbits/index.html#qse.qbits.Qbits.set_distance">(qse.qbits.Qbits method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/qse/index.html#qse.Qbits.set_pbc">set_pbc() (qse.Qbits method)</a>
 
       <ul>
@@ -1343,9 +1462,21 @@ window.runMermaid = runMermaid;</script>
 </li>
       </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Signal">Signal (class in qse)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal">(class in qse.signal)</a>
 </li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal">(class in qse.signal.signal)</a>
+</li>
+      </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Signals">Signals (class in qse)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signals">(class in qse.signal)</a>
 </li>
+        <li><a href="autoapi/qse/signal/signals/index.html#qse.signal.signals.Signals">(class in qse.signal.signals)</a>
+</li>
+      </ul></li>
       <li><a href="autoapi/qse/lattices/index.html#qse.lattices.square">square() (in module qse.lattices)</a>
 </li>
       <li><a href="autoapi/qse/magnetic/index.html#qse.magnetic.structure_factor_from_sij">structure_factor_from_sij() (in module qse.magnetic)</a>
@@ -1361,15 +1492,31 @@ window.runMermaid = runMermaid;</script>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/qse/index.html#qse.Signal.time_per_value">time_per_value() (qse.Signal method)</a>
+
+      <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.time_per_value">(qse.signal.Signal method)</a>
 </li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.time_per_value">(qse.signal.signal.Signal method)</a>
+</li>
+      </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Signal.to_pulser">to_pulser() (qse.Signal method)</a>
 
       <ul>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signal.to_pulser">(qse.signal.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/signal/index.html#qse.signal.signal.Signal.to_pulser">(qse.signal.signal.Signal method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/index.html#qse.signal.Signals.to_pulser">(qse.signal.Signals method)</a>
+</li>
+        <li><a href="autoapi/qse/signal/signals/index.html#qse.signal.signals.Signals.to_pulser">(qse.signal.signals.Signals method)</a>
+</li>
         <li><a href="autoapi/qse/index.html#qse.Signals.to_pulser">(qse.Signals method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/qse/index.html#qse.Operators.to_qiskit">to_qiskit() (qse.Operators method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/qse/index.html#qse.Operator.to_qutip">to_qutip() (qse.Operator method)</a>
 
       <ul>
@@ -1382,8 +1529,6 @@ window.runMermaid = runMermaid;</script>
         <li><a href="autoapi/qse/index.html#qse.Operator.to_str">(qse.Operator method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/qse/index.html#qse.Qbits.todict">todict() (qse.Qbits method)</a>
 
       <ul>
@@ -1405,6 +1550,10 @@ window.runMermaid = runMermaid;</script>
 
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="autoapi/qse/visualise/index.html#qse.visualise.view_matrix">view_matrix() (in module qse.visualise)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/qse/index.html#qse.Cell.volume">volume() (qse.Cell method)</a>
 </li>

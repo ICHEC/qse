@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>qse.qbit &#8212; QSE</title>
+    <title>qse.visualise &#8212; QSE</title>
   
   
   
@@ -67,13 +67,13 @@
     <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/qse/qbit/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/qse/visualise/index';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="qse.qbits" href="../qbits/index.html" />
-    <link rel="prev" title="qse.magnetic" href="../magnetic/index.html" />
+    <link rel="next" title="Contributing" href="../../../CONTRIBUTIONS.html" />
+    <link rel="prev" title="qse.utils" href="../utils/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -197,7 +197,7 @@
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../lattices/index.html">qse.lattices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../magnetic/index.html">qse.magnetic</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">qse.qbit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../qbit/index.html">qse.qbit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../qbits/index.html">qse.qbits</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../signal/index.html">qse.signal</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../signal/signal/index.html">qse.signal.signal</a></li>
@@ -205,7 +205,7 @@
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../utils/index.html">qse.utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../visualise/index.html">qse.visualise</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">qse.visualise</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTIONS.html">Contributing</a></li>
@@ -269,7 +269,7 @@
       
       
       
-      <li><a href="../../../_sources/autoapi/qse/qbit/index.rst" target="_blank"
+      <li><a href="../../../_sources/autoapi/qse/visualise/index.rst" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -345,7 +345,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>qse.qbit</h1>
+    <h1>qse.visualise</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -355,19 +355,10 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.qbitproperty"><code class="docutils literal notranslate"><span class="pre">qbitproperty()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.xyzproperty"><code class="docutils literal notranslate"><span class="pre">xyzproperty()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.Qbit"><code class="docutils literal notranslate"><span class="pre">Qbit</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.Qbit.cut_reference_to_qbits"><code class="docutils literal notranslate"><span class="pre">Qbit.cut_reference_to_qbits()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.Qbit.get_raw"><code class="docutils literal notranslate"><span class="pre">Qbit.get_raw()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.Qbit.get"><code class="docutils literal notranslate"><span class="pre">Qbit.get()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.Qbit.set"><code class="docutils literal notranslate"><span class="pre">Qbit.set()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.Qbit.delete"><code class="docutils literal notranslate"><span class="pre">Qbit.delete()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.view_matrix"><code class="docutils literal notranslate"><span class="pre">view_matrix()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -381,29 +372,22 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-qse.qbit">
-<span id="qse-qbit"></span><h1>qse.qbit<a class="headerlink" href="#module-qse.qbit" title="Link to this heading">#</a></h1>
-<p>Functions adapted from ASE’s Qbit/Qbits styled objects.</p>
-<section id="classes">
-<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#qse.qbit.Qbit" title="qse.qbit.Qbit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Qbit</span></code></a></p></td>
-<td><p>Class for representing a single qbit.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
+  <section id="module-qse.visualise">
+<span id="qse-visualise"></span><h1>qse.visualise<a class="headerlink" href="#module-qse.visualise" title="Link to this heading">#</a></h1>
+<p>This is the visualisation module of QSE package.
+It defines a number of helper functions to better
+visualise data.</p>
+<p>One of the most common function is the <cite>draw</cite> function
+to draw the qubits.</p>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#qse.qbit.qbitproperty" title="qse.qbit.qbitproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qbitproperty</span></code></a>(name, doc)</p></td>
-<td><p>Helper function to easily create Qbit attribute property.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#qse.visualise.draw" title="qse.visualise.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>(qbits[, radius, show_labels, colouring, units, ...])</p></td>
+<td><p>Visualize the positions of a set of qubits.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#qse.qbit.xyzproperty" title="qse.qbit.xyzproperty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xyzproperty</span></code></a>(index)</p></td>
-<td><p>Helper function to easily create Qbit XYZ-property.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#qse.visualise.view_matrix" title="qse.visualise.view_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_matrix</span></code></a>(matrix[, labels_x, labels_y, vcenter])</p></td>
+<td><p>Visualise a matrix.</p></td>
 </tr>
 </tbody>
 </table>
@@ -412,80 +396,44 @@
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="qse.qbit.qbitproperty">
-<span class="sig-prename descclassname"><span class="pre">qse.qbit.</span></span><span class="sig-name descname"><span class="pre">qbitproperty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbit.html#qbitproperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbit.qbitproperty" title="Link to this definition">#</a></dt>
-<dd><p>Helper function to easily create Qbit attribute property.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qse.qbit.xyzproperty">
-<span class="sig-prename descclassname"><span class="pre">qse.qbit.</span></span><span class="sig-name descname"><span class="pre">xyzproperty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbit.html#xyzproperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbit.xyzproperty" title="Link to this definition">#</a></dt>
-<dd><p>Helper function to easily create Qbit XYZ-property.</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="qse.qbit.Qbit">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qse.qbit.</span></span><span class="sig-name descname"><span class="pre">Qbit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qbits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbit.html#Qbit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbit.Qbit" title="Link to this definition">#</a></dt>
-<dd><p>Class for representing a single qbit.</p>
+<dt class="sig sig-object py" id="qse.visualise.draw">
+<span class="sig-prename descclassname"><span class="pre">qse.visualise.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equal_aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/visualise.html#draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.visualise.draw" title="Link to this definition">#</a></dt>
+<dd><p>Visualize the positions of a set of qubits.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>label</strong> (<em>str or int</em>) – Can be a str or an int label.</p></li>
-<li><p><strong>state</strong> (<em>list or tuple or np.ndarray</em>) – Quantum state of the qubit</p></li>
-<li><p><strong>position</strong> (<em>list or np.ndarray</em>) – Sequence of 3 floats qubit position.</p></li>
-<li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The Qbits object that the Qbit is attached
-to. Defaults to None.</p></li>
-<li><p><strong>index</strong> (<em>int</em>) – The associated index of the Qbit in the
-Qbits object. Defaults to None.</p></li>
+<li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The Qbits object.</p></li>
+<li><p><strong>radius</strong> (<em>float | str</em>) – A cutoff radius for visualizing bonds.
+Pass ‘nearest’ to set the radius to the smallest
+distance between the passed qubits.
+If no value is passed the bonds will not be visualized.</p></li>
+<li><p><strong>show_labels</strong> (<em>bool</em>) – Whether to show the labels of the qubits.
+Defaults to False.</p></li>
+<li><p><strong>colouring</strong> (<em>str | list</em>) – A set of integers used to assign different colors to each Qubit.
+This can be used to view different magnetic orderings.
+Must have the same length as the number of Qubits.</p></li>
+<li><p><strong>units</strong> (<em>str, optional</em>) – The units of distance.</p></li>
+<li><p><strong>equal_aspect</strong> (<em>bool, optional</em>) – Whether to have the same scaling for the axes.
+Defaults to True.</p></li>
 </ul>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
-<p>You can create a qbit object with</p>
-<div class="jupyter_cell jupyter_container docutils container">
-<div class="cell_input code_cell docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
-<span class="n">q</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbit</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Qbit(label=&#39;X&#39;, position=[0.0, 0.0, 0.0], state=[(1+0j), 0j])
-</pre></div>
-</div>
-</div>
-</div>
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.qbit.Qbit.cut_reference_to_qbits">
-<span class="sig-name descname"><span class="pre">cut_reference_to_qbits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbit.html#Qbit.cut_reference_to_qbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbit.Qbit.cut_reference_to_qbits" title="Link to this definition">#</a></dt>
-<dd><p>Cut reference to qbits object.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.qbit.Qbit.get_raw">
-<span class="sig-name descname"><span class="pre">get_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbit.html#Qbit.get_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbit.Qbit.get_raw" title="Link to this definition">#</a></dt>
-<dd><p>Get name attribute, return None if not explicitly set.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.qbit.Qbit.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbit.html#Qbit.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbit.Qbit.get" title="Link to this definition">#</a></dt>
-<dd><p>Get name attribute, return default if not explicitly set.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.qbit.Qbit.set">
-<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbit.html#Qbit.set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbit.Qbit.set" title="Link to this definition">#</a></dt>
-<dd><p>Set name attribute to value.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="qse.qbit.Qbit.delete">
-<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/qbit.html#Qbit.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbit.Qbit.delete" title="Link to this definition">#</a></dt>
-<dd><p>Delete name attribute.</p>
-</dd></dl>
-
+<dl class="py function">
+<dt class="sig sig-object py" id="qse.visualise.view_matrix">
+<span class="sig-prename descclassname"><span class="pre">qse.visualise.</span></span><span class="sig-name descname"><span class="pre">view_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vcenter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/visualise.html#view_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.visualise.view_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Visualise a matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> (<em>np.ndarray</em>) – The matrix to be visualised.</p></li>
+<li><p><strong>labels_x</strong> (<em>list, optional</em>) – Labels to be displayed on the x axis.</p></li>
+<li><p><strong>labels_y</strong> (<em>list, optional</em>) – Labels to be displayed on the y axis.</p></li>
+<li><p><strong>vcenter</strong> (<em>float, optional</em>) – The center of the colorbar.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -504,7 +452,7 @@ Qbits object. Defaults to None.</p></li>
         },
         kernelOptions: {
             name: "python3",
-            path: "./autoapi/qse/qbit"
+            path: "./autoapi/qse/visualise"
         },
         predefinedOutput: true
     }
@@ -522,20 +470,20 @@ Qbits object. Defaults to None.</p></li>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../magnetic/index.html"
+       href="../utils/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">qse.magnetic</p>
+        <p class="prev-next-title">qse.utils</p>
       </div>
     </a>
     <a class="right-next"
-       href="../qbits/index.html"
+       href="../../../CONTRIBUTIONS.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">qse.qbits</p>
+        <p class="prev-next-title">Contributing</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -557,19 +505,10 @@ Qbits object. Defaults to None.</p></li>
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.qbitproperty"><code class="docutils literal notranslate"><span class="pre">qbitproperty()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.xyzproperty"><code class="docutils literal notranslate"><span class="pre">xyzproperty()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.Qbit"><code class="docutils literal notranslate"><span class="pre">Qbit</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.Qbit.cut_reference_to_qbits"><code class="docutils literal notranslate"><span class="pre">Qbit.cut_reference_to_qbits()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.Qbit.get_raw"><code class="docutils literal notranslate"><span class="pre">Qbit.get_raw()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.Qbit.get"><code class="docutils literal notranslate"><span class="pre">Qbit.get()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.Qbit.set"><code class="docutils literal notranslate"><span class="pre">Qbit.set()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.qbit.Qbit.delete"><code class="docutils literal notranslate"><span class="pre">Qbit.delete()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.view_matrix"><code class="docutils literal notranslate"><span class="pre">view_matrix()</span></code></a></li>
 </ul>
 </li>
 </ul>

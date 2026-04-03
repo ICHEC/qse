@@ -35,6 +35,8 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/default.css?v=b9f5b887" />
@@ -51,12 +53,15 @@
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -498,6 +503,8 @@ mermaid.initialize(
 window.addEventListener("load", load);
 window.runMermaid = runMermaid;</script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/qse/signal/signal';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -627,7 +634,13 @@ window.runMermaid = runMermaid;</script>
 <li class="toctree-l2"><a class="reference internal" href="../../../autoapi/qse/magnetic/index.html">qse.magnetic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../autoapi/qse/qbit/index.html">qse.qbit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../autoapi/qse/qbits/index.html">qse.qbits</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../autoapi/qse/signal/index.html">qse.signal</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../autoapi/qse/signal/signal/index.html">qse.signal.signal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../autoapi/qse/signal/signals/index.html">qse.signal.signals</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../autoapi/qse/utils/index.html">qse.utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/qse/visualise/index.html">qse.visualise</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTIONS.html">Contributing</a></li>
@@ -740,7 +753,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Signal</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Signal class represents a 1D signal with values and duration.</span>
@@ -759,22 +772,36 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">    --------</span>
 <span class="sd">    To create a constant signal, passing a single value:</span>
 
-<span class="sd">    &gt;&gt;&gt; qse.Signal([1], 10)</span>
-<span class="sd">    ... Signal(duration=10, values=[1.])</span>
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        import qse</span>
+<span class="sd">        s = qse.Signal([1], 10)</span>
+<span class="sd">        print(s)</span>
+
 
 <span class="sd">    To create an arbitrary signal, pass an array</span>
 <span class="sd">    whose length is equal to the duration:</span>
-<span class="sd">    &gt;&gt;&gt; qse.Signal(np.linspace(0, 1, 5), 5)</span>
-<span class="sd">    ... Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])</span>
+
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        import qse</span>
+<span class="sd">        import numpy as np</span>
+
+<span class="sd">        ss = qse.Signal(np.linspace(0, 1, 5), 5)</span>
+<span class="sd">        print(ss)</span>
 
 <span class="sd">    Arithmetic operations with scalars is supported.</span>
 <span class="sd">    Adding or multiplying a scalar to a Signal returns</span>
 <span class="sd">    a new Signal with modified values and the same duration.</span>
 <span class="sd">    For example:</span>
 
-<span class="sd">    &gt;&gt;&gt; signal = qse.Signal([1, 1])</span>
-<span class="sd">    &gt;&gt;&gt; signal * 3 + 0.5</span>
-<span class="sd">    ... Signal(duration=2, values=[3.5 3.5])</span>
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        import qse</span>
+<span class="sd">        signal = qse.Signal([1, 1])</span>
+<span class="sd">        signal = signal * 3 + 0.5</span>
+<span class="sd">        print(signal)</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -782,7 +809,7 @@ window.runMermaid = runMermaid;</script>
         <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">if</span> <span class="n">duration</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Signal.__iter__">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.__iter__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.__iter__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterate over the signal values.</span>
@@ -796,7 +823,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal.__getitem__">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.__getitem__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.__getitem__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Access individual signal value(s) by index or slice.</span>
@@ -815,7 +842,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal.__eq__">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.__eq__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.__eq__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check for equality with another signal.</span>
@@ -834,7 +861,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal.__add__">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.__add__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.__add__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add another signal or scalar to this signal.</span>
@@ -861,7 +888,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal.__radd__">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.__radd__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.__radd__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Right addition operator.</span>
@@ -875,7 +902,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal.__iadd__">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.__iadd__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.__iadd__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        In-place addition with another signal or scalar.</span>
@@ -903,7 +930,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal.__mul__">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.__mul__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.__mul__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Multiply signal values by a scalar.</span>
@@ -930,7 +957,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal.__rmul__">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.__rmul__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.__rmul__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Right multiplication by a scalar.</span>
@@ -944,7 +971,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal.__imul__">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.__imul__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.__imul__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__imul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        In-place multiplication by a scalar.</span>
@@ -972,7 +999,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal.__repr__">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.__repr__">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a string representation of the signal.</span>
@@ -1003,7 +1030,7 @@ window.runMermaid = runMermaid;</script>
         <span class="bp">self</span><span class="o">.</span><span class="n">_duration</span> <span class="o">=</span> <span class="n">new_duration</span>
 
 <div class="viewcode-block" id="Signal.time_per_value">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.time_per_value">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.time_per_value">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">time_per_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the duration per value. Recall that the values are equally</span>
@@ -1018,7 +1045,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal.expand">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.expand">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.expand">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">expand</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an array of length &#39;duration&#39; whose entries are the signal values.</span>
@@ -1032,7 +1059,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal.to_pulser">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.to_pulser">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.to_pulser">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">to_pulser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert to a Pulser Waveform.</span>
@@ -1050,7 +1077,7 @@ window.runMermaid = runMermaid;</script>
 
 
 <div class="viewcode-block" id="Signal.draw">
-<a class="viewcode-back" href="../../../autoapi/qse/index.html#qse.Signal.draw">[docs]</a>
+<a class="viewcode-back" href="../../../autoapi/qse/signal/signal/index.html#qse.Signal.draw">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_units</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">signal_units</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw the signal.</span>

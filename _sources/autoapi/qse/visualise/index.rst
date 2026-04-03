@@ -1,0 +1,60 @@
+qse.visualise
+=============
+
+.. py:module:: qse.visualise
+
+.. autoapi-nested-parse::
+
+   Visualize
+   ---------
+
+   This is the visualisation module of QSE package.
+   It defines a number of helper functions to better
+   visualise data.
+
+   One of the most common function is the `draw` function
+   to draw the qubits.
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   qse.visualise.draw
+   qse.visualise.view_matrix
+
+
+Module Contents
+---------------
+
+.. py:function:: draw(qbits, radius=None, show_labels=False, colouring=None, units=None, equal_aspect=True)
+
+   Visualize the positions of a set of qubits.
+
+   :Parameters: * **qbits** (*qse.Qbits*) -- The Qbits object.
+                * **radius** (*float | str*) -- A cutoff radius for visualizing bonds.
+                  Pass 'nearest' to set the radius to the smallest
+                  distance between the passed qubits.
+                  If no value is passed the bonds will not be visualized.
+                * **show_labels** (*bool*) -- Whether to show the labels of the qubits.
+                  Defaults to False.
+                * **colouring** (*str | list*) -- A set of integers used to assign different colors to each Qubit.
+                  This can be used to view different magnetic orderings.
+                  Must have the same length as the number of Qubits.
+                * **units** (*str, optional*) -- The units of distance.
+                * **equal_aspect** (*bool, optional*) -- Whether to have the same scaling for the axes.
+                  Defaults to True.
+
+
+.. py:function:: view_matrix(matrix, labels_x=None, labels_y=None, vcenter=None)
+
+   Visualise a matrix.
+
+   :Parameters: * **matrix** (*np.ndarray*) -- The matrix to be visualised.
+                * **labels_x** (*list, optional*) -- Labels to be displayed on the x axis.
+                * **labels_y** (*list, optional*) -- Labels to be displayed on the y axis.
+                * **vcenter** (*float, optional*) -- The center of the colorbar.
+
+

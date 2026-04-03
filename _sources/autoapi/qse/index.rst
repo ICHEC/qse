@@ -37,7 +37,9 @@ Submodules
    /autoapi/qse/magnetic/index
    /autoapi/qse/qbit/index
    /autoapi/qse/qbits/index
+   /autoapi/qse/signal/index
    /autoapi/qse/utils/index
+   /autoapi/qse/visualise/index
 
 
 Classes
@@ -203,7 +205,11 @@ Package Contents
 
    You can create a qbit object with
 
-   >>> q = qse.Qbit()
+   .. jupyter-execute::
+
+       import qse
+       q = qse.Qbit()
+       print(q)
 
 
    .. py:method:: cut_reference_to_qbits()
@@ -262,33 +268,40 @@ Package Contents
 
    Empty Qbits object:
 
-   >>> qs = qse.Qbits()
+   .. jupyter-execute::
+
+       import qse
+       qs = qse.Qbits()
+       print(qs)
 
    These are equivalent:
 
-   >>> a = qse.Qbits(
-   ...     positions=np.array([(0, 0, 0), (0, 0, 2)])
-   ...     labels=['qb1', 'qb2'],
-   ... )
-   >>> a = qse.Qbits.from_qbit_list(
-   ...     [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))]
-   ... )
+   .. jupyter-execute::
 
-   >>> xd = np.array(
-   ...    [[0, 0, 0],
-   ...     [0.5, 0.5, 0.5]]
-   ... )
-   >>> qdim = qse.Qbits(xd)
-   >>> qdim.cell = np.eye(3)
-   >>> qdim.pbc = True
-   >>> qlat = qdim.repeat([3,3,3])
+       from qse import Qbit, Qbits
+       import numpy as np
+
+       # below two methods are equivalent
+       a = Qbits(
+           positions=np.array([(0, 0, 0), (0, 0, 2)]),
+           labels=['qb1', 'qb2'])
+
+       a = Qbits.from_qbit_list(
+           [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))])
+       print(a)
+
+       xd = np.array([[0, 0, 0], [0.5, 0.5, 0.5]])
+       qdim = Qbits(xd)
+       qdim.cell = np.eye(3)
+       qdim.pbc = True
+       qlat = qdim.repeat([3,3,3])
+       print(qlat)
 
    The qdim will have shape = (1,1,1) and qlat will have shape = (3, 3, 3)
 
-   .. rubric:: Notes
-
-   In order to do computation, a calculator object has to attached
-   to the qbits object.
+   .. note::
+       In order to do computation, a calculator object has to attached
+       to the qbits object.
 
 
    .. py:property:: calc
@@ -821,22 +834,35 @@ Package Contents
 
    To create a constant signal, passing a single value:
 
-   >>> qse.Signal([1], 10)
-   ... Signal(duration=10, values=[1.])
+   .. jupyter-execute::
+
+       import qse
+       s = qse.Signal([1], 10)
+       print(s)
 
    To create an arbitrary signal, pass an array
    whose length is equal to the duration:
-   >>> qse.Signal(np.linspace(0, 1, 5), 5)
-   ... Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
+
+   .. jupyter-execute::
+
+       import qse
+       import numpy as np
+
+       ss = qse.Signal(np.linspace(0, 1, 5), 5)
+       print(ss)
 
    Arithmetic operations with scalars is supported.
    Adding or multiplying a scalar to a Signal returns
    a new Signal with modified values and the same duration.
    For example:
 
-   >>> signal = qse.Signal([1, 1])
-   >>> signal * 3 + 0.5
-   ... Signal(duration=2, values=[3.5 3.5])
+   .. jupyter-execute::
+
+       import qse
+       signal = qse.Signal([1, 1])
+       signal = signal * 3 + 0.5
+       print(signal)
+
 
 
    .. py:method:: __iter__()
@@ -981,19 +1007,21 @@ Package Contents
 
    .. rubric:: Examples
 
-   >>> x = qse.Signal([1], 10)
-   >>> y = qse.Signal(np.linspace(0, 1, 5), 5)
-   >>> qse.Signals([x, y])
-   ... Total duration=15
-   ...   Signal(duration=10, values=[1.])
-   ...   Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
+   .. jupyter-execute::
 
-   We can also create Signals by addition, for example to create
-   the same signal as above:
+       import qse
+       import numpy as np
 
-   >>> z = qse.Signals()
-   >>> z += x
-   >>> z += y
+       x = qse.Signal([1], 10)
+       y = qse.Signal(np.linspace(0, 1, 5), 5)
+       ss = qse.Signals([x, y])
+       print(ss)
+       z = qse.Signals()
+       z += x
+       z += y
+       print(z)
+
+   As shown above, one can also create Signals by adding two signals.
 
 
    .. py:method:: to_pulser()
