@@ -22,7 +22,7 @@ class Signals:
 
         import qse
         import numpy as np
-        
+
         x = qse.Signal([1], 10)
         y = qse.Signal(np.linspace(0, 1, 5), 5)
         ss = qse.Signals([x, y])
