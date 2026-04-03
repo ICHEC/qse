@@ -36,6 +36,8 @@ class Signal:
     .. jupyter-execute::
 
         import qse
+        import numpy as np
+        
         ss = qse.Signal(np.linspace(0, 1, 5), 5)
         print(ss)
 
