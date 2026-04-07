@@ -1,3 +1,16 @@
+"""
+Visualize
+---------
+
+This is the visualisation module of QSE package.
+It defines a number of helper functions to better
+visualise data.
+
+One of the most common function is the `draw` function
+to draw the qubits.
+
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.colors import TwoSlopeNorm

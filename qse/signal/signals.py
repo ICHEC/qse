@@ -17,19 +17,22 @@ class Signals:
 
     Examples
     --------
-    >>> x = qse.Signal([1], 10)
-    >>> y = qse.Signal(np.linspace(0, 1, 5), 5)
-    >>> qse.Signals([x, y])
-    ... Total duration=15
-    ...   Signal(duration=10, values=[1.])
-    ...   Signal(duration=5, values=[0.   0.25 0.5  0.75 1.  ])
 
-    We can also create Signals by addition, for example to create
-    the same signal as above:
+    .. jupyter-execute::
 
-    >>> z = qse.Signals()
-    >>> z += x
-    >>> z += y
+        import qse
+        import numpy as np
+
+        x = qse.Signal([1], 10)
+        y = qse.Signal(np.linspace(0, 1, 5), 5)
+        ss = qse.Signals([x, y])
+        print(ss)
+        z = qse.Signals()
+        z += x
+        z += y
+        print(z)
+
+    As shown above, one can also create Signals by adding two signals.
     """
 
     def __init__(self, signals=None):
