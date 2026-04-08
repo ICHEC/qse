@@ -288,7 +288,7 @@ class Signal:
             return ConstantWaveform(duration=self.duration, value=self.values[0])
         return CustomWaveform(self.expand())
 
-    def draw(self, time_units=None, signal_units=None):
+    def draw(self, time_units=None, signal_units=None, title=None):
         """
         Draw the signal.
 
@@ -298,5 +298,7 @@ class Signal:
             The units of the duration.
         signal_units : str, optional
             The units of the signal.
+        title : str, optional
+            A title for the plot.
         """
-        return draw(self, time_units=time_units, signal_units=signal_units)
+        return draw(self, time_units=time_units, signal_units=signal_units, title=title)
