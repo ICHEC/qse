@@ -21,6 +21,7 @@ Following are the major components of the module -
 """
 
 __all__ = [
+    "bar",
     "calc",
     "Cell",
     "draw",
@@ -44,6 +45,6 @@ from qse.operator import Operator, Operators
 from qse.qbit import Qbit
 from qse.qbits import Qbits
 from qse.signal import Signal, Signals
-from qse.visualise import draw
+from qse.visualise import draw, bar
 
 from qse import calc, lattices, magnetic, utils, visualise  # isort: skip
