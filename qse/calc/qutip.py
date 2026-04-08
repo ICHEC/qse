@@ -1,7 +1,7 @@
 import numpy as np
 import qutip as qp
 
-from qse import Operator, Operators
+from qse import Operator, Operators, Signals
 from qse.calc.calculator import Calculator
 
 c6 = 5420158.53  # (rad/µs)(µm)**6
@@ -17,11 +17,17 @@ class Qutip(Calculator):
             is_calculator_available=True,
             installation_message="",
         )
+
+        if not isinstance(amplitude, Signals):
+            amplitude = Signals([amplitude])
+
+        if not isinstance(detuning, Signals):
+            detuning = Signals([detuning])
+
+        _check_pulses(amplitude, detuning)
+
         self.amplitude = amplitude
         self.detuning = detuning
-
-        if self.amplitude.duration != self.detuning.duration:
-            raise Exception("Amplitude and Detuning signals must have same duration.")
 
         self._build_hamiltonian_operators()
 
@@ -40,7 +46,7 @@ class Qutip(Calculator):
                 if e_ops is not None:
                     exps.append([qp.expect(op, state) for op in e_ops])
 
-        result = {"state": state}
+        result = {"state": state.full()}
         if e_ops is not None:
             result["expectations" : np.array(exps)]
 
