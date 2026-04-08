@@ -220,9 +220,11 @@ def bar(dict, cutoff=0, ylabel="Count"):
     Parameters
     ----------
     dict : dict
-        A dictionary where keys are categories and values are their corresponding counts or values.
+        A dictionary where keys are categories and values are their corresponding
+        counts or values.
     cutoff : int or float, optional
-        Minimum value threshold for inclusion in the plot. Keys with values less than or equal to `cutoff` are excluded.
+        Minimum value threshold for inclusion in the plot. Keys with values less
+        than or equal to `cutoff` are excluded.
         Default is 0.
     ylabel : str, optional
         Label for the y-axis of the plot. Default is "Count".

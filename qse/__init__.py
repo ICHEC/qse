@@ -45,6 +45,6 @@ from qse.operator import Operator, Operators
 from qse.qbit import Qbit
 from qse.qbits import Qbits
 from qse.signal import Signal, Signals
-from qse.visualise import draw, bar
+from qse.visualise import bar, draw
 
 from qse import calc, lattices, magnetic, utils, visualise  # isort: skip
