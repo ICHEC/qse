@@ -24,6 +24,7 @@ Functions
 
    qse.visualise.draw
    qse.visualise.view_matrix
+   qse.visualise.bar
 
 
 Module Contents
@@ -56,5 +57,17 @@ Module Contents
                 * **labels_x** (*list, optional*) -- Labels to be displayed on the x axis.
                 * **labels_y** (*list, optional*) -- Labels to be displayed on the y axis.
                 * **vcenter** (*float, optional*) -- The center of the colorbar.
+
+
+.. py:function:: bar(dict, cutoff=0, ylabel='Count')
+
+   Plot a bar chart from a dictionary, filtering values below a cutoff.
+
+   :Parameters: * **dict** (*dict*) -- A dictionary where keys are categories and values are their corresponding
+                  counts or values.
+                * **cutoff** (*int or float, optional*) -- Minimum value threshold for inclusion in the plot. Keys with values less
+                  than or equal to `cutoff` are excluded.
+                  Default is 0.
+                * **ylabel** (*str, optional*) -- Label for the y-axis of the plot. Default is "Count".
 
 

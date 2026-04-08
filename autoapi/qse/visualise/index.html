@@ -359,6 +359,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.view_matrix"><code class="docutils literal notranslate"><span class="pre">view_matrix()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.bar"><code class="docutils literal notranslate"><span class="pre">bar()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -388,6 +389,9 @@ to draw the qubits.</p>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#qse.visualise.view_matrix" title="qse.visualise.view_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_matrix</span></code></a>(matrix[, labels_x, labels_y, vcenter])</p></td>
 <td><p>Visualise a matrix.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#qse.visualise.bar" title="qse.visualise.bar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bar</span></code></a>(dict[, cutoff, ylabel])</p></td>
+<td><p>Plot a bar chart from a dictionary, filtering values below a cutoff.</p></td>
 </tr>
 </tbody>
 </table>
@@ -431,6 +435,24 @@ Defaults to True.</p></li>
 <li><p><strong>labels_x</strong> (<em>list, optional</em>) – Labels to be displayed on the x axis.</p></li>
 <li><p><strong>labels_y</strong> (<em>list, optional</em>) – Labels to be displayed on the y axis.</p></li>
 <li><p><strong>vcenter</strong> (<em>float, optional</em>) – The center of the colorbar.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qse.visualise.bar">
+<span class="sig-prename descclassname"><span class="pre">qse.visualise.</span></span><span class="sig-name descname"><span class="pre">bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Count'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/visualise.html#bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.visualise.bar" title="Link to this definition">#</a></dt>
+<dd><p>Plot a bar chart from a dictionary, filtering values below a cutoff.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dict</strong> (<em>dict</em>) – A dictionary where keys are categories and values are their corresponding
+counts or values.</p></li>
+<li><p><strong>cutoff</strong> (<em>int or float, optional</em>) – Minimum value threshold for inclusion in the plot. Keys with values less
+than or equal to <cite>cutoff</cite> are excluded.
+Default is 0.</p></li>
+<li><p><strong>ylabel</strong> (<em>str, optional</em>) – Label for the y-axis of the plot. Default is “Count”.</p></li>
 </ul>
 </dd>
 </dl>
@@ -509,6 +531,7 @@ Defaults to True.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.view_matrix"><code class="docutils literal notranslate"><span class="pre">view_matrix()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.bar"><code class="docutils literal notranslate"><span class="pre">bar()</span></code></a></li>
 </ul>
 </li>
 </ul>

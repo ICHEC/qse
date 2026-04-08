@@ -190,12 +190,13 @@ Module Contents
 
 
 
-   .. py:method:: draw(time_units=None, signal_units=None)
+   .. py:method:: draw(time_units=None, signal_units=None, title=None)
 
       Draw the signal.
 
       :Parameters: * **time_units** (*str, optional*) -- The units of the duration.
                    * **signal_units** (*str, optional*) -- The units of the signal.
+                   * **title** (*str, optional*) -- A title for the plot.
 
 
 

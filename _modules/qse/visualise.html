@@ -964,6 +964,35 @@ window.runMermaid = runMermaid;</script>
     <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>  <span class="c1"># More natural to invert y-axis for these plots.</span>
     <span class="k">return</span> <span class="n">fig</span></div>
 
+
+
+<div class="viewcode-block" id="bar">
+<a class="viewcode-back" href="../../autoapi/qse/visualise/index.html#qse.bar">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">bar</span><span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Count&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot a bar chart from a dictionary, filtering values below a cutoff.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dict : dict</span>
+<span class="sd">        A dictionary where keys are categories and values are their corresponding</span>
+<span class="sd">        counts or values.</span>
+<span class="sd">    cutoff : int or float, optional</span>
+<span class="sd">        Minimum value threshold for inclusion in the plot. Keys with values less</span>
+<span class="sd">        than or equal to `cutoff` are excluded.</span>
+<span class="sd">        Default is 0.</span>
+<span class="sd">    ylabel : str, optional</span>
+<span class="sd">        Label for the y-axis of the plot. Default is &quot;Count&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+    <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">cutoff</span><span class="p">}</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span></div>
+
 </pre></div>
 
                 </article>

@@ -61,6 +61,7 @@ Functions
 
 .. autoapisummary::
 
+   qse.bar
    qse.draw
 
 
@@ -990,12 +991,13 @@ Package Contents
 
 
 
-   .. py:method:: draw(time_units=None, signal_units=None)
+   .. py:method:: draw(time_units=None, signal_units=None, title=None)
 
       Draw the signal.
 
       :Parameters: * **time_units** (*str, optional*) -- The units of the duration.
                    * **signal_units** (*str, optional*) -- The units of the signal.
+                   * **title** (*str, optional*) -- A title for the plot.
 
 
 
@@ -1040,13 +1042,26 @@ Package Contents
 
 
 
-   .. py:method:: draw(time_units=None, signal_units=None)
+   .. py:method:: draw(time_units=None, signal_units=None, title=None)
 
       Draw the signal.
 
       :Parameters: * **time_units** (*str, optional*) -- The units of the duration.
                    * **signal_units** (*str, optional*) -- The units of the signal.
+                   * **title** (*str, optional*) -- A title for the plot.
 
+
+
+.. py:function:: bar(dict, cutoff=0, ylabel='Count')
+
+   Plot a bar chart from a dictionary, filtering values below a cutoff.
+
+   :Parameters: * **dict** (*dict*) -- A dictionary where keys are categories and values are their corresponding
+                  counts or values.
+                * **cutoff** (*int or float, optional*) -- Minimum value threshold for inclusion in the plot. Keys with values less
+                  than or equal to `cutoff` are excluded.
+                  Default is 0.
+                * **ylabel** (*str, optional*) -- Label for the y-axis of the plot. Default is "Count".
 
 
 .. py:function:: draw(qbits, radius=None, show_labels=False, colouring=None, units=None, equal_aspect=True)
