@@ -101,7 +101,7 @@ def test_pulser_calc_qutip():
     # qutip calc
     qutip_calc = qse.calc.Qutip(amplitude=amp, detuning=det, qbits=qbits)
     result = qutip_calc.calculate()
-    np.allclose(result["state"], pulser_calc.statevector)
+    assert np.allclose(result["state"], pulser_calc.statevector)
 
 
 def _infidelity(state_1, state_2):
