@@ -2,7 +2,7 @@
 QUBO
 ----
 
-This module helps from the QUBO (Quadratic Unconstrained Binary Optimization) problem.
+This module helps frame the QUBO (Quadratic Unconstrained Binary Optimization) problem.
 The Qubo problem is finding minima of the following function
 
 .. math::
@@ -11,6 +11,14 @@ The Qubo problem is finding minima of the following function
 
 where :math:`x_i` are binary variables, :math:`i` runs over the number of variables :math:`N` and the
 matrix :math:`Q_{ij}` defines the QUBO problem.
+
+Several interesting usecases map to QUBO, such as
+
+.# Ising model
+.# Set partitioning problem
+.# Portfolio optimization
+.# Traffic optimization
+
 """
 
 # import matplotlib.pyplot as plt
