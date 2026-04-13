@@ -1,5 +1,8 @@
 """
 Functions for computing magnetic correlation
+
+
+See the theoretical notes on spatial correlation here: :doc:`/theory/spatial-correlation>`.
 """
 
 import numpy as np
