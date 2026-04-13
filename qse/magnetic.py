@@ -30,6 +30,19 @@ def get_basis(nqbits: int, hsize: int = None):
     -------
     np.ndarray
         The basis of shape (hsize, N).
+
+    Examples
+    --------
+
+    .. jupyter-execute::
+
+        import qse
+        from qse.magnetic import get_basis
+
+        b = get_basis(nqbits=3)
+        print(f"Basis shape = {b.shape}")
+        print(f"Basis = {b.astype(bool)}")
+        
     """
     if hsize is None:
         hsize = 2**nqbits
