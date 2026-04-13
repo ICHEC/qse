@@ -1,4 +1,4 @@
-"""
+r"""
 QUBO
 ----
 
@@ -17,10 +17,10 @@ defines the QUBO problem.
 
 Several interesting usecases map to QUBO, such as
 
-.# Ising model
-.# Set partitioning problem
-.# Portfolio optimization
-.# Traffic optimization
+- Ising model
+- Set partitioning problem
+- Portfolio optimization
+- Traffic optimization
 
 """
 
