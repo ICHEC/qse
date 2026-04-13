@@ -23,6 +23,7 @@ Several interesting usecases map to QUBO, such as
 
 # import matplotlib.pyplot as plt
 import numpy as np
+
 # from scipy.optimize import minimize
 from scipy.spatial.distance import cdist  # , pdist, squareform
 
