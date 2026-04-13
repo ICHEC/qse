@@ -37,6 +37,7 @@ Submodules
    /autoapi/qse/magnetic/index
    /autoapi/qse/qbit/index
    /autoapi/qse/qbits/index
+   /autoapi/qse/qubo/index
    /autoapi/qse/signal/index
    /autoapi/qse/utils/index
    /autoapi/qse/visualise/index
