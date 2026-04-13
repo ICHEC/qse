@@ -32,7 +32,7 @@ import qse
 class Qubo:
     """
     Qubo Class
-    
+
     Parameters
     ----------
     N : int
@@ -47,6 +47,7 @@ class Qubo:
     Q : np.ndarray, optional
         The matrix for the QUBO problem, by default None
     """
+
     def __init__(self, N, N2=None, C6=1.0, Q=None) -> None:
         if N2 is None:
             self.N = N
@@ -64,7 +65,7 @@ class Qubo:
         else:
             self._Q = Q
         self._qrij = self.Q2rij()
-    
+
     def nn1d_Q(self, diag=-1.0, offdiag=2.0):
         qq = np.eye(self.N, self.N)
         np.fill_diagonal(qq, diag)
@@ -78,16 +79,16 @@ class Qubo:
         return qq
 
     def radial1d_Q(self, diag=-1.0, offdiag=2.0, power=2) -> np.ndarray:
-        qq = np.fromfunction(lambda i, j: abs(i-j)**power, (self.N, self.N))
+        qq = np.fromfunction(lambda i, j: abs(i - j) ** power, (self.N, self.N))
         np.fill_diagonal(qq, diag)
         qq = np.divide(1, qq, where=self.offdiagonal, out=None)
         return qq
-    
+
     def radial2d_Q(self, diag=-1.0, offdiag=2.0, power=2) -> np.ndarray:
         qq = np.fromfunction(
-            lambda i1, i2, j1, j2: abs(i1 - j1)**power + abs(i2 - j2)**power,
-            (self.L1, self.L2, self.L1, self.L2)
-            ).reshape(self.N, self.N)
+            lambda i1, i2, j1, j2: abs(i1 - j1) ** power + abs(i2 - j2) ** power,
+            (self.L1, self.L2, self.L1, self.L2),
+        ).reshape(self.N, self.N)
         np.fill_diagonal(qq, diag)
         qq = np.divide(1, qq, where=self.offdiagonal, out=None)
         return qq
@@ -117,22 +118,24 @@ class Qubo:
         return qq
 
     def random_Q(self, diag=-1.0, offdiag=2.0) -> np.ndarray:
-        qq = np.random.random((self.N, self.N)) # [ 0, 1]
-        qq = qq + qq.T                          # [ 0, 2]
-        qq *= 0.5                               # [ 0, 1]
-        qq *= offdiag                           # [-offdiag, offdiag]
+        qq = np.random.random((self.N, self.N))  # [ 0, 1]
+        qq = qq + qq.T  # [ 0, 2]
+        qq *= 0.5  # [ 0, 1]
+        qq *= offdiag  # [-offdiag, offdiag]
         np.fill_diagonal(qq, diag)
         return qq
-    
+
     def Q2rij(self) -> np.ndarray:
         rij = np.zeros((self.N, self.N), dtype=float)
         rij[:] = np.divide(
-            self.C6**(1.0/6.0),
+            self.C6 ** (1.0 / 6.0),
             np.where(self.offdiagonal, self.Q, 0.0),
-            where=self.offdiagonal, out=None)
+            where=self.offdiagonal,
+            out=None,
+        )
         np.fill_diagonal(rij, 0)
         return rij
-    
+
     def cost_function(self, x):
         """
         Cost function to minimize for mapping positions
@@ -148,17 +151,18 @@ class Qubo:
             raise ValueError(f"x should of size {self.N * 2}, got {x.size}")
         Ri = np.reshape(x, (self.N, 2))
         rij = cdist(Ri, Ri)
-        sum_square = ((self.qrij - rij)**2).sum()
+        sum_square = ((self.qrij - rij) ** 2).sum()
         return sum_square
 
     @property
     def Q(self):
         return self._Q
+
     @Q.setter
     def Q(self, q):
         self._Q = q
         self._qrij = self.Q2rij()
-    
+
     @property
     def qrij(self):
         return self._qrij
