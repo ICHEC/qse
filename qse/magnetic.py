@@ -33,7 +33,7 @@ def get_basis(nqbits: int, hsize: int = None):
 
     Examples
     --------
-    
+
     .. jupyter-execute::
 
         import qse
