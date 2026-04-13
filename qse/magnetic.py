@@ -42,7 +42,6 @@ def get_basis(nqbits: int, hsize: int = None):
         b = get_basis(nqbits=3)
         print(f"Basis shape = {b.shape}")
         print(f"Basis = {b.astype(bool)}")
-        
     """
     if hsize is None:
         hsize = 2**nqbits
