@@ -211,3 +211,29 @@ def view_matrix(matrix, labels_x=None, labels_y=None, vcenter=None):
 
     ax.invert_yaxis()  # More natural to invert y-axis for these plots.
     return fig
+
+
+def bar(dict, cutoff=0, ylabel="Count"):
+    """
+    Plot a bar chart from a dictionary, filtering values below a cutoff.
+
+    Parameters
+    ----------
+    dict : dict
+        A dictionary where keys are categories and values are their corresponding
+        counts or values.
+    cutoff : int or float, optional
+        Minimum value threshold for inclusion in the plot. Keys with values less
+        than or equal to `cutoff` are excluded.
+        Default is 0.
+    ylabel : str, optional
+        Label for the y-axis of the plot. Default is "Count".
+    """
+    fig = plt.figure()
+
+    dict = {k: v for k, v in dict.items() if v > cutoff}
+    plt.bar(list(dict.keys()), list(dict.values()))
+    plt.xticks(rotation="vertical")
+    plt.ylabel(ylabel)
+
+    return fig
