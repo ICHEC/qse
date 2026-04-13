@@ -12,11 +12,12 @@ parts:
       - file: tutorials/pulser-calc-example
   - caption: Use-Cases
     chapters:
-      - file: tutorials/ssh_model
+      - file: use-cases/ssh_model
     #  - file: ../examples/pulser-myqlm-conversion
   - caption: Theory
     chapters:
       - file: theory/spatial-correlation
+      - file: theory/blockade-radius
   - caption: API Reference
     chapters:
       - file: autoapi/qse/index # This is where sphinx-autoapi dumps the docs
