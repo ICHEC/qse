@@ -28,6 +28,7 @@ Classes
    qse.calc.ExactSimulator
    qse.calc.Myqlm
    qse.calc.Pulser
+   qse.calc.Qutip
 
 
 Functions
@@ -242,6 +243,27 @@ Package Contents
    .. py:method:: calculate(progress=True)
 
       Run the calculation.
+
+
+
+.. py:class:: Qutip(qbits, amplitude, detuning)
+
+   Bases: :py:obj:`qse.calc.calculator.Calculator`
+
+
+   Base-class for all QSE calculators.
+
+   :Parameters: * **label** (*str*) -- Name used for all files.  Not supported by all calculators.
+                  May contain a directory, but please use the directory parameter
+                  for that instead.
+                * **qbits** (*Qbits object*) -- Optional Qbits object to which the calculator will be
+                  attached.  When restarting, qbits will get its positions and
+                  unit-cell updated from file.
+
+
+   .. py:method:: calculate(e_ops=None)
+
+      Do the calculation.
 
 
 
