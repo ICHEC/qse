@@ -33,7 +33,7 @@ def get_basis(nqbits: int, hsize: int = None):
 
     Examples
     --------
-
+    
     .. jupyter-execute::
 
         import qse
@@ -41,7 +41,8 @@ def get_basis(nqbits: int, hsize: int = None):
 
         b = get_basis(nqbits=3)
         print(f"Basis shape = {b.shape}")
-        print(f"Basis = {b.astype(bool)}")
+        print(f"Basis = ")
+        print(f"{b.astype(int)}")
     """
     if hsize is None:
         hsize = 2**nqbits
