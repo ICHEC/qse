@@ -2,7 +2,9 @@
 This module Provides QSE calculator interface to Pulser. It is derived from
 the ASE's CP2K calculator, though at the end it may look very different from
 ASE calculator.
-https://pulser.readthedocs.io/en/stable/
+
+It defines the `Pulser backend <https://pulser.readthedocs.io/en/stable/>`_
+for analog computation.
 """
 
 from time import time
