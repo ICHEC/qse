@@ -54,9 +54,7 @@ class Qutip(Calculator):
 
     def get_hamiltonian(self, amplitude, detuning):
         return (
-            self.ham_amplitude * amplitude
-            + self.ham_detuning * detuning
-            + self.ham_int
+            self.ham_amplitude * amplitude + self.ham_detuning * detuning + self.ham_int
         )
 
     def _build_hamiltonian_operators(self):
@@ -70,7 +68,7 @@ class Qutip(Calculator):
             [Operator("X", i, n, 0.5) for i in range(n)]
         ).to_qutip()
         self.ham_detuning = Operators(
-            [Operator("N", i, n, 0.5) for i in range(n)]
+            [Operator("N", i, n, -1.0) for i in range(n)]
         ).to_qutip()
 
 

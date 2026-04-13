@@ -82,26 +82,28 @@ def test_pulser_calc():
 
 def test_pulser_calc_qutip():
     """Test the pulser calculator matches the qutip calculator."""
-    # Define the lattice
-    repeats = 4
-    qbits = qse.lattices.chain(4.0, repeats)
-
-    duration = 40
+    duration = 400
     omega0 = 10.01
     delta0 = 0.12
 
+    # Define the lattice
+    br = qse.calc.blockade_radius(omega0)
+    qbits = qse.lattices.square(0.9 * br, 2, 2)
+
     amp = qse.Signal([omega0], duration)
     det = qse.Signal([delta0], duration)
+
+    qutip_calc = qse.calc.Qutip(amplitude=amp, detuning=det, qbits=qbits)
+    result = qutip_calc.calculate()
 
     # pulser calc
     pulser_calc = qse.calc.Pulser(amplitude=amp, detuning=det, qbits=qbits)
     pulser_calc.build_sequence()
     pulser_calc.calculate()
 
-    # qutip calc
-    qutip_calc = qse.calc.Qutip(amplitude=amp, detuning=det, qbits=qbits)
-    result = qutip_calc.calculate()
-    assert np.allclose(result["state"], pulser_calc.statevector)
+    overlap = (np.conj(result["state"].flatten()) * pulser_calc.statevector).sum()
+    infidelity = 1.0 - np.abs(overlap) ** 2
+    assert infidelity < 1e-4
 
 
 def _infidelity(state_1, state_2):
