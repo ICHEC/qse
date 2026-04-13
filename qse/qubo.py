@@ -23,10 +23,10 @@ Several interesting usecases map to QUBO, such as
 
 # import matplotlib.pyplot as plt
 import numpy as np
-from scipy.optimize import minimize
+# from scipy.optimize import minimize
 from scipy.spatial.distance import cdist  # , pdist, squareform
 
-import qse
+# import qse
 
 
 class Qubo:
@@ -69,7 +69,7 @@ class Qubo:
     def nn1d_Q(self, diag=-1.0, offdiag=2.0):
         qq = np.eye(self.N, self.N)
         np.fill_diagonal(qq, diag)
-        i, j = np.diag_indices(N)
+        i, j = np.diag_indices(self.N)
         upper = (i, np.roll(j, -1))
         lower = (np.roll(j, -1), i)
         qq[upper] = offdiag
