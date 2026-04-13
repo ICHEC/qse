@@ -105,7 +105,6 @@ class Qubo:
         iis, nns = [], []
         for i1 in range(self.L1):
             for i2 in range(self.L2):
-                xi = (i1, i2)
                 ii = indices[i1, i2]
                 j1, j2 = i1, n2d[i2]
                 nns.append(indices[j1, j2])
