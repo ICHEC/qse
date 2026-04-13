@@ -83,7 +83,7 @@ class Qbits:
     .. note::
         In order to do computation, a calculator object has to attached
         to the qbits object.
-    
+
     See the Qbits tutorial :doc:`/tutorials/creating_and_manipulating_qbits`
     for more details.
     """
