@@ -2,15 +2,18 @@
 QUBO
 ----
 
-This module helps frame the QUBO (Quadratic Unconstrained Binary Optimization) problem.
-The Qubo problem is finding minima of the following function
+This module helps frame the QUBO (Quadratic Unconstrained
+Binary Optimization) problem. The Qubo problem is finding
+minima of the following function
 
 .. math::
+
     F(x_1, x_2, ..., x_N) = \sum_{i, j} Q_{ij} x_i x_j
 
 
-where :math:`x_i` are binary variables, :math:`i` runs over the number of variables :math:`N` and the
-matrix :math:`Q_{ij}` defines the QUBO problem.
+where :math:`x_i` are binary variables, :math:`i` runs over
+the number of variables :math:`N` and the matrix :math:`Q_{ij}`
+defines the QUBO problem.
 
 Several interesting usecases map to QUBO, such as
 
