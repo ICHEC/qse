@@ -1,5 +1,9 @@
 """
 Functions for computing magnetic correlation
+
+
+See the theoretical notes on spatial correlation
+here: :doc:`/theory/spatial-correlation>`.
 """
 
 import numpy as np
@@ -26,6 +30,19 @@ def get_basis(nqbits: int, hsize: int = None):
     -------
     np.ndarray
         The basis of shape (hsize, N).
+
+    Examples
+    --------
+
+    .. jupyter-execute::
+
+        import qse
+        from qse.magnetic import get_basis
+
+        b = get_basis(nqbits=3)
+        print(f"Basis shape = {b.shape}")
+        print(f"Basis = ")
+        print(f"{b.astype(int)}")
     """
     if hsize is None:
         hsize = 2**nqbits
