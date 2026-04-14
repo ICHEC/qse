@@ -545,6 +545,8 @@ Qbits(
 <p>In order to do computation, a calculator object has to attached
 to the qbits object.</p>
 </div>
+<p>See the Qbits tutorial <a class="reference internal" href="../../../tutorials/creating_and_manipulating_qbits.html"><span class="doc">Creating and manipulating Qbits</span></a>
+for more details.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="qse.qbits.Qbits.calc">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calc</span></span><a class="reference internal" href="../../../_modules/qse/qbits.html#Qbits.calc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.qbits.Qbits.calc" title="Link to this definition">#</a></dt>
@@ -772,13 +774,28 @@ cell. Defaults to = (0, 0, 0).</p></li>
 <p class="rubric">Examples</p>
 <p>The following all rotate 90 degrees anticlockwise around the z-axis,
 so that the x-axis is rotated into the y-axis:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="s1">&#39;-z&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span><span class="o">.</span><span class="n">rotate</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="n">q2d</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+<span class="n">q2d</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+<span class="n">q2d</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">q2d</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+<span class="c1"># q2d.rotate(90, &#39;z&#39;)</span>
+<span class="c1"># q2d.rotate(90, (0, 0, 1))</span>
+<span class="c1"># q2d.rotate(-90, &#39;-z&#39;)</span>
+<span class="c1"># q2d.rotate(&#39;x&#39;, &#39;y&#39;)</span>
+<span class="c1"># q2d.rotate((1, 0, 0), (0, 1, 0))</span>
 </pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/index_2_0.png" src="../../../_images/index_2_0.png" />
+<img alt="../../../_images/index_2_1.png" src="../../../_images/index_2_1.png" />
+<img alt="../../../_images/index_2_2.png" src="../../../_images/index_2_2.png" />
+</div>
 </div>
 <p class="rubric">Notes</p>
 <p>If ‘a’ is an angle, <span class="math notranslate nohighlight">\(\theta\)</span>, and if <span class="math notranslate nohighlight">\(\textbf{v}\)</span> is the vector
@@ -1032,36 +1049,64 @@ coefficients less than <cite>tol</cite> are discarded. Default is 1e-8.</p></li>
 </dl>
 <p class="rubric">Examples</p>
 <p>To create a ZZ Hamiltonian for only nearest neighbour qubits</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spacing</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">coupling</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span><span class="o">.</span><span class="n">compute_interaction_hamiltonian</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">coupling</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">spacing</span><span class="p">),</span> <span class="s2">&quot;Z&quot;</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="gp">... </span><span class="n">Number</span> <span class="n">of</span> <span class="n">qubits</span><span class="p">:</span> <span class="mi">4</span>
-<span class="gp">... </span><span class="n">Number</span> <span class="n">of</span> <span class="n">terms</span><span class="p">:</span> <span class="mi">3</span>
-<span class="gp">...</span>
-<span class="gp">... </span><span class="o">-</span><span class="mf">2.00</span> <span class="n">Z0</span> <span class="n">Z1</span>
-<span class="gp">... </span><span class="o">-</span><span class="mf">2.00</span> <span class="n">Z1</span> <span class="n">Z2</span>
-<span class="gp">... </span><span class="o">-</span><span class="mf">2.00</span> <span class="n">Z2</span> <span class="n">Z3</span>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="n">spacing</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">coupling</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">compute_interaction_hamiltonian</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">coupling</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">spacing</span><span class="p">),</span> <span class="s2">&quot;Z&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>To create an XY Hamiltonian based on distance</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spacing</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">coupling</span> <span class="o">=</span> <span class="mf">1.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hamiltonian</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">compute_interaction_hamiltonian</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">coupling</span> <span class="o">/</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">]</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hamiltonian</span> <span class="o">+=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">compute_interaction_hamiltonian</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">coupling</span> <span class="o">/</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">]</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="gp">... </span><span class="n">Number</span> <span class="n">of</span> <span class="n">qubits</span><span class="p">:</span> <span class="mi">2</span>
-<span class="gp">... </span><span class="n">Number</span> <span class="n">of</span> <span class="n">terms</span><span class="p">:</span> <span class="mi">2</span>
-<span class="gp">...</span>
-<span class="gp">... </span><span class="mf">1.00</span> <span class="n">X0</span> <span class="n">Y1</span>
-<span class="gp">... </span><span class="mf">1.00</span> <span class="n">Y0</span> <span class="n">X1</span>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Number of qubits: 4
+Number of terms: 4
+
+-2.00 Z0 Z1
+-2.00 Z0 Z2
+-2.00 Z1 Z3
+-2.00 Z2 Z3
 </pre></div>
+</div>
+</div>
+</div>
+<p>To create an XY Hamiltonian based on distance</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="n">spacing</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">coupling</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">compute_interaction_hamiltonian</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">coupling</span> <span class="o">/</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">])</span>
+<span class="n">H</span> <span class="o">+=</span> <span class="n">qbits</span><span class="o">.</span><span class="n">compute_interaction_hamiltonian</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">coupling</span> <span class="o">/</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Number of qubits: 4
+Number of terms: 12
+
+1.00 X0 Y1
+1.00 X0 Y2
+0.35 X0 Y3
+0.35 X1 Y2
+1.00 X1 Y3
+1.00 X2 Y3
+1.00 Y0 X1
+1.00 Y0 X2
+0.35 Y0 X3
+0.35 Y1 X2
+1.00 Y1 X3
+1.00 Y2 X3
+</pre></div>
+</div>
+</div>
 </div>
 </dd></dl>
 

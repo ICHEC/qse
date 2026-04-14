@@ -8,7 +8,9 @@ qse.calc.pulser
    This module Provides QSE calculator interface to Pulser. It is derived from
    the ASE's CP2K calculator, though at the end it may look very different from
    ASE calculator.
-   https://pulser.readthedocs.io/en/stable/
+
+   It defines the `Pulser backend <https://pulser.readthedocs.io/en/stable/>`_
+   for analog computation.
 
 
 
@@ -51,16 +53,20 @@ Module Contents
 
    A simple example of using the Pulser calculator:
 
-   >>> qbits = qse.lattices.chain(4.0, 4)
-   >>> duration = 400
-   >>> pulser_calc = qse.calc.Pulser(
-   ...     qbits=qbits,
-   ...     amplitude=qse.Signal([1.01], duration),
-   ...     detuning=qse.Signal([0.12], duration),
-   ... )
-   >>> pulser_calc.build_sequence()
-   >>> pulser_calc.calculate()
-   >>> pulser_calc.get_spins()
+   .. jupyter-execute::
+
+       import qse
+       qbits = qse.lattices.square(4.0, 3, 3)
+       duration = 400
+       amp = qse.Signal([1.01], duration)
+       det = qse.Signal([0.12], duration)
+       pcalc = qse.calc.Pulser(
+           qbits=qbits,
+           amplitude=amp,
+           detuning=det)
+       pcalc.build_sequence()
+       pcalc.calculate()
+       pcalc.get_spins()
 
    .. rubric:: Notes
 

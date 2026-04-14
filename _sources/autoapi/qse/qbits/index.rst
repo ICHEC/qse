@@ -89,6 +89,9 @@ Module Contents
        In order to do computation, a calculator object has to attached
        to the qbits object.
 
+   See the Qbits tutorial :doc:`/tutorials/creating_and_manipulating_qbits`
+   for more details.
+
 
    .. py:property:: calc
 
@@ -303,12 +306,20 @@ Module Contents
       The following all rotate 90 degrees anticlockwise around the z-axis,
       so that the x-axis is rotated into the y-axis:
 
-      >>> qbits.rotate(90)
-      >>> qbits.rotate(90, 'z')
-      >>> qbits.rotate(90, (0, 0, 1))
-      >>> qbits.rotate(-90, '-z')
-      >>> qbits.rotate('x', 'y')
-      >>> qbits.rotate((1, 0, 0), (0, 1, 0))
+      .. jupyter-execute::
+
+          import qse
+          q2d = qse.lattices.square(1.0, 3, 3)
+          q2d.draw()
+          q2d.rotate(45)
+          q2d.draw()
+          q2d.rotate(45, 'x')
+          q2d.draw()
+          # q2d.rotate(90, 'z')
+          # q2d.rotate(90, (0, 0, 1))
+          # q2d.rotate(-90, '-z')
+          # q2d.rotate('x', 'y')
+          # q2d.rotate((1, 0, 0), (0, 1, 0))
 
       .. rubric:: Notes
 
@@ -549,35 +560,29 @@ Module Contents
 
       To create a ZZ Hamiltonian for only nearest neighbour qubits
 
-      >>> spacing = 1.0
-      >>> qbits = qse.lattices.chain(spacing, 4)
-      >>> coupling = -2.
-      >>> qbits.compute_interaction_hamiltonian(
-      ...     lambda x: coupling*np.isclose(x, spacing), "Z"
-      ... )
-      ... Number of qubits: 4
-      ... Number of terms: 3
-      ...
-      ... -2.00 Z0 Z1
-      ... -2.00 Z1 Z2
-      ... -2.00 Z2 Z3
+      .. jupyter-execute::
+
+          import qse
+          spacing = 1.0
+          qbits = qse.lattices.square(spacing, 2, 2)
+          coupling = -2.
+          H = qbits.compute_interaction_hamiltonian(
+              lambda x: coupling*np.isclose(x, spacing), "Z")
+          print(H)
 
       To create an XY Hamiltonian based on distance
 
-      >>> spacing = 1.0
-      >>> qbits = qse.lattices.chain(spacing, 2)
-      >>> coupling = 1.
-      >>> hamiltonian = qbits.compute_interaction_hamiltonian(
-      ...     lambda x: coupling / x**3, ["X", "Y"]
-      ... )
-      >>> hamiltonian += qbits.compute_interaction_hamiltonian(
-      ...     lambda x: coupling / x**3, ["Y", "X"]
-      ... )
-      ... Number of qubits: 2
-      ... Number of terms: 2
-      ...
-      ... 1.00 X0 Y1
-      ... 1.00 Y0 X1
+      .. jupyter-execute::
+
+          import qse
+          spacing = 1.0
+          qbits = qse.lattices.square(spacing, 2, 2)
+          coupling = 1.
+          H = qbits.compute_interaction_hamiltonian(
+              lambda x: coupling / x**3, ["X", "Y"])
+          H += qbits.compute_interaction_hamiltonian(
+              lambda x: coupling / x**3, ["Y", "X"])
+          print(H)
 
 
 

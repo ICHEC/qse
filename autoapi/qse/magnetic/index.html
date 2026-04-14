@@ -382,6 +382,8 @@
   <section id="module-qse.magnetic">
 <span id="qse-magnetic"></span><h1>qse.magnetic<a class="headerlink" href="#module-qse.magnetic" title="Link to this heading">#</a></h1>
 <p>Functions for computing magnetic correlation</p>
+<p>See the theoretical notes on spatial correlation
+here: <span class="xref std std-doc">/theory/spatial-correlation&gt;</span>.</p>
 <section id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
@@ -426,6 +428,34 @@ Defaults to the full Hilbert space, <span class="math notranslate nohighlight">\
 <dd class="field-even"><p><em>np.ndarray</em> – The basis of shape (hsize, N).</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qse.magnetic</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_basis</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">get_basis</span><span class="p">(</span><span class="n">nqbits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basis shape = </span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basis = &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Basis shape = (8, 3)
+Basis = 
+[[0 0 0]
+ [0 0 1]
+ [0 1 0]
+ [0 1 1]
+ [1 0 0]
+ [1 0 1]
+ [1 1 0]
+ [1 1 1]]
+</pre></div>
+</div>
+</div>
+</div>
 </dd></dl>
 
 <dl class="py function">

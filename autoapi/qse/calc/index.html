@@ -637,17 +637,72 @@ Defaults to True.</p></li>
 </dl>
 <p class="rubric">Examples</p>
 <p>A simple example of using the Pulser calculator:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="mf">4.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">duration</span> <span class="o">=</span> <span class="mi">400</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">Pulser</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">qbits</span><span class="o">=</span><span class="n">qbits</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">amplitude</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mf">1.01</span><span class="p">],</span> <span class="n">duration</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="n">detuning</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mf">0.12</span><span class="p">],</span> <span class="n">duration</span><span class="p">),</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span><span class="o">.</span><span class="n">build_sequence</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pulser_calc</span><span class="o">.</span><span class="n">get_spins</span><span class="p">()</span>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="mf">4.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">duration</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="n">amp</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mf">1.01</span><span class="p">],</span> <span class="n">duration</span><span class="p">)</span>
+<span class="n">det</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="mf">0.12</span><span class="p">],</span> <span class="n">duration</span><span class="p">)</span>
+<span class="n">pcalc</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">Pulser</span><span class="p">(</span>
+    <span class="n">qbits</span><span class="o">=</span><span class="n">qbits</span><span class="p">,</span>
+    <span class="n">amplitude</span><span class="o">=</span><span class="n">amp</span><span class="p">,</span>
+    <span class="n">detuning</span><span class="o">=</span><span class="n">det</span><span class="p">)</span>
+<span class="n">pcalc</span><span class="o">.</span><span class="n">build_sequence</span><span class="p">()</span>
+<span class="n">pcalc</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
+<span class="n">pcalc</span><span class="o">.</span><span class="n">get_spins</span><span class="p">()</span>
 </pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>10.0%. Run time:   0.03s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>20.0%. Run time:   0.06s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>30.0%. Run time:   0.09s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>40.0%. Run time:   0.12s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>50.0%. Run time:   0.15s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>60.0%. Run time:   0.18s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>70.0%. Run time:   0.21s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>80.0%. Run time:   0.24s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>90.0%. Run time:   0.27s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>100.0%. Run time:   0.29s. Est. time left: 00:00:00:00
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Total run time:   0.29s
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>time in compute and simulation = 0.5069777965545654 s.
+</pre></div>
+</div>
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([[-0.00969476, -0.32252248,  0.92650917],
+       [-0.00445941, -0.31324353,  0.92746763],
+       [-0.00969476, -0.32252248,  0.92650917],
+       [-0.00445941, -0.31324353,  0.92746763],
+       [ 0.00822629, -0.31255377,  0.92795807],
+       [-0.00445941, -0.31324353,  0.92746763],
+       [-0.00969476, -0.32252248,  0.92650917],
+       [-0.00445941, -0.31324353,  0.92746763],
+       [-0.00969476, -0.32252248,  0.92650917]])
+</pre></div>
+</div>
+</div>
 </div>
 <p class="rubric">Notes</p>
 <p>Pulser will only use the x-y coordinates of the Qbits object.</p>

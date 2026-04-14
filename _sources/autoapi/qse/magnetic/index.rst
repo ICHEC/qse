@@ -8,6 +8,10 @@ qse.magnetic
    Functions for computing magnetic correlation
 
 
+   See the theoretical notes on spatial correlation
+   here: :doc:`/theory/spatial-correlation>`.
+
+
 
 Functions
 ---------
@@ -36,6 +40,18 @@ Module Contents
                   Defaults to the full Hilbert space, :math:`2^N`.
 
    :returns: *np.ndarray* -- The basis of shape (hsize, N).
+
+   .. rubric:: Examples
+
+   .. jupyter-execute::
+
+       import qse
+       from qse.magnetic import get_basis
+
+       b = get_basis(nqbits=3)
+       print(f"Basis shape = {b.shape}")
+       print(f"Basis = ")
+       print(f"{b.astype(int)}")
 
 
 .. py:function:: get_spins(statevector: numpy.ndarray[complex], nqbits: int, ibasis: numpy.ndarray[bool] = None) -> numpy.ndarray[float]

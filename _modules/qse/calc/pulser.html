@@ -751,7 +751,9 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">This module Provides QSE calculator interface to Pulser. It is derived from</span>
 <span class="sd">the ASE&#39;s CP2K calculator, though at the end it may look very different from</span>
 <span class="sd">ASE calculator.</span>
-<span class="sd">https://pulser.readthedocs.io/en/stable/</span>
+
+<span class="sd">It defines the `Pulser backend &lt;https://pulser.readthedocs.io/en/stable/&gt;`_</span>
+<span class="sd">for analog computation.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
@@ -807,16 +809,20 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">    --------</span>
 <span class="sd">    A simple example of using the Pulser calculator:</span>
 
-<span class="sd">    &gt;&gt;&gt; qbits = qse.lattices.chain(4.0, 4)</span>
-<span class="sd">    &gt;&gt;&gt; duration = 400</span>
-<span class="sd">    &gt;&gt;&gt; pulser_calc = qse.calc.Pulser(</span>
-<span class="sd">    ...     qbits=qbits,</span>
-<span class="sd">    ...     amplitude=qse.Signal([1.01], duration),</span>
-<span class="sd">    ...     detuning=qse.Signal([0.12], duration),</span>
-<span class="sd">    ... )</span>
-<span class="sd">    &gt;&gt;&gt; pulser_calc.build_sequence()</span>
-<span class="sd">    &gt;&gt;&gt; pulser_calc.calculate()</span>
-<span class="sd">    &gt;&gt;&gt; pulser_calc.get_spins()</span>
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        import qse</span>
+<span class="sd">        qbits = qse.lattices.square(4.0, 3, 3)</span>
+<span class="sd">        duration = 400</span>
+<span class="sd">        amp = qse.Signal([1.01], duration)</span>
+<span class="sd">        det = qse.Signal([0.12], duration)</span>
+<span class="sd">        pcalc = qse.calc.Pulser(</span>
+<span class="sd">            qbits=qbits,</span>
+<span class="sd">            amplitude=amp,</span>
+<span class="sd">            detuning=det)</span>
+<span class="sd">        pcalc.build_sequence()</span>
+<span class="sd">        pcalc.calculate()</span>
+<span class="sd">        pcalc.get_spins()</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>

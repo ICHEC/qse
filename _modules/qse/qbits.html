@@ -835,6 +835,8 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">        In order to do computation, a calculator object has to attached</span>
 <span class="sd">        to the qbits object.</span>
 
+<span class="sd">    See the Qbits tutorial :doc:`/tutorials/creating_and_manipulating_qbits`</span>
+<span class="sd">    for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
@@ -1488,12 +1490,20 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">        The following all rotate 90 degrees anticlockwise around the z-axis,</span>
 <span class="sd">        so that the x-axis is rotated into the y-axis:</span>
 
-<span class="sd">        &gt;&gt;&gt; qbits.rotate(90)</span>
-<span class="sd">        &gt;&gt;&gt; qbits.rotate(90, &#39;z&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; qbits.rotate(90, (0, 0, 1))</span>
-<span class="sd">        &gt;&gt;&gt; qbits.rotate(-90, &#39;-z&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; qbits.rotate(&#39;x&#39;, &#39;y&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; qbits.rotate((1, 0, 0), (0, 1, 0))</span>
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            import qse</span>
+<span class="sd">            q2d = qse.lattices.square(1.0, 3, 3)</span>
+<span class="sd">            q2d.draw()</span>
+<span class="sd">            q2d.rotate(45)</span>
+<span class="sd">            q2d.draw()</span>
+<span class="sd">            q2d.rotate(45, &#39;x&#39;)</span>
+<span class="sd">            q2d.draw()</span>
+<span class="sd">            # q2d.rotate(90, &#39;z&#39;)</span>
+<span class="sd">            # q2d.rotate(90, (0, 0, 1))</span>
+<span class="sd">            # q2d.rotate(-90, &#39;-z&#39;)</span>
+<span class="sd">            # q2d.rotate(&#39;x&#39;, &#39;y&#39;)</span>
+<span class="sd">            # q2d.rotate((1, 0, 0), (0, 1, 0))</span>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
@@ -2100,35 +2110,29 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">        --------</span>
 <span class="sd">        To create a ZZ Hamiltonian for only nearest neighbour qubits</span>
 
-<span class="sd">        &gt;&gt;&gt; spacing = 1.0</span>
-<span class="sd">        &gt;&gt;&gt; qbits = qse.lattices.chain(spacing, 4)</span>
-<span class="sd">        &gt;&gt;&gt; coupling = -2.</span>
-<span class="sd">        &gt;&gt;&gt; qbits.compute_interaction_hamiltonian(</span>
-<span class="sd">        ...     lambda x: coupling*np.isclose(x, spacing), &quot;Z&quot;</span>
-<span class="sd">        ... )</span>
-<span class="sd">        ... Number of qubits: 4</span>
-<span class="sd">        ... Number of terms: 3</span>
-<span class="sd">        ...</span>
-<span class="sd">        ... -2.00 Z0 Z1</span>
-<span class="sd">        ... -2.00 Z1 Z2</span>
-<span class="sd">        ... -2.00 Z2 Z3</span>
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            import qse</span>
+<span class="sd">            spacing = 1.0</span>
+<span class="sd">            qbits = qse.lattices.square(spacing, 2, 2)</span>
+<span class="sd">            coupling = -2.</span>
+<span class="sd">            H = qbits.compute_interaction_hamiltonian(</span>
+<span class="sd">                lambda x: coupling*np.isclose(x, spacing), &quot;Z&quot;)</span>
+<span class="sd">            print(H)</span>
 
 <span class="sd">        To create an XY Hamiltonian based on distance</span>
 
-<span class="sd">        &gt;&gt;&gt; spacing = 1.0</span>
-<span class="sd">        &gt;&gt;&gt; qbits = qse.lattices.chain(spacing, 2)</span>
-<span class="sd">        &gt;&gt;&gt; coupling = 1.</span>
-<span class="sd">        &gt;&gt;&gt; hamiltonian = qbits.compute_interaction_hamiltonian(</span>
-<span class="sd">        ...     lambda x: coupling / x**3, [&quot;X&quot;, &quot;Y&quot;]</span>
-<span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; hamiltonian += qbits.compute_interaction_hamiltonian(</span>
-<span class="sd">        ...     lambda x: coupling / x**3, [&quot;Y&quot;, &quot;X&quot;]</span>
-<span class="sd">        ... )</span>
-<span class="sd">        ... Number of qubits: 2</span>
-<span class="sd">        ... Number of terms: 2</span>
-<span class="sd">        ...</span>
-<span class="sd">        ... 1.00 X0 Y1</span>
-<span class="sd">        ... 1.00 Y0 X1</span>
+<span class="sd">        .. jupyter-execute::</span>
+
+<span class="sd">            import qse</span>
+<span class="sd">            spacing = 1.0</span>
+<span class="sd">            qbits = qse.lattices.square(spacing, 2, 2)</span>
+<span class="sd">            coupling = 1.</span>
+<span class="sd">            H = qbits.compute_interaction_hamiltonian(</span>
+<span class="sd">                lambda x: coupling / x**3, [&quot;X&quot;, &quot;Y&quot;])</span>
+<span class="sd">            H += qbits.compute_interaction_hamiltonian(</span>
+<span class="sd">                lambda x: coupling / x**3, [&quot;Y&quot;, &quot;X&quot;])</span>
+<span class="sd">            print(H)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ops</span> <span class="o">=</span> <span class="p">[]</span>
 
