@@ -645,7 +645,7 @@ window.runMermaid = runMermaid;</script>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="utils/index.html">qse.utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="visualise/index.html">qse.visualise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vis/index.html">qse.vis</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTIONS.html">Contributing</a></li>
@@ -797,7 +797,6 @@ window.runMermaid = runMermaid;</script>
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Cell"><code class="docutils literal notranslate"><span class="pre">Cell</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Cell.rank"><code class="docutils literal notranslate"><span class="pre">Cell.rank()</span></code></a></li>
@@ -891,8 +890,6 @@ window.runMermaid = runMermaid;</script>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signals.draw"><code class="docutils literal notranslate"><span class="pre">Signals.draw()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.bar"><code class="docutils literal notranslate"><span class="pre">bar()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -933,7 +930,7 @@ root((QSE))
 <li class="toctree-l1"><a class="reference internal" href="qubo/index.html">qse.qubo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="signal/index.html">qse.signal</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils/index.html">qse.utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="visualise/index.html">qse.visualise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vis/index.html">qse.vis</a></li>
 </ul>
 </div>
 </section>
@@ -961,20 +958,6 @@ root((QSE))
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#qse.Signals" title="qse.Signals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Signals</span></code></a></p></td>
 <td><p>The Signal class represents a collection of Signals.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#qse.bar" title="qse.bar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bar</span></code></a>(dict[, cutoff, ylabel])</p></td>
-<td><p>Plot a bar chart from a dictionary, filtering values below a cutoff.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#qse.draw" title="qse.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>(qbits[, radius, show_labels, colouring, units, ...])</p></td>
-<td><p>Visualize the positions of a set of qubits.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1449,7 +1432,7 @@ Defaults to True.</p></li>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#qse.draw" title="qse.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qse.draw</span></code></a></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">qse.draw</span></code></p>
 </div>
 </dd></dl>
 
@@ -2236,49 +2219,6 @@ Total duration=15
 
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="qse.bar">
-<span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Count'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/qse/visualise.html#bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.bar" title="Link to this definition">#</a></dt>
-<dd><p>Plot a bar chart from a dictionary, filtering values below a cutoff.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dict</strong> (<em>dict</em>) – A dictionary where keys are categories and values are their corresponding
-counts or values.</p></li>
-<li><p><strong>cutoff</strong> (<em>int or float, optional</em>) – Minimum value threshold for inclusion in the plot. Keys with values less
-than or equal to <cite>cutoff</cite> are excluded.
-Default is 0.</p></li>
-<li><p><strong>ylabel</strong> (<em>str, optional</em>) – Label for the y-axis of the plot. Default is “Count”.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="qse.draw">
-<span class="sig-prename descclassname"><span class="pre">qse.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equal_aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/qse/visualise.html#draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.draw" title="Link to this definition">#</a></dt>
-<dd><p>Visualize the positions of a set of qubits.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>qbits</strong> (<em>qse.Qbits</em>) – The Qbits object.</p></li>
-<li><p><strong>radius</strong> (<em>float | str</em>) – A cutoff radius for visualizing bonds.
-Pass ‘nearest’ to set the radius to the smallest
-distance between the passed qubits.
-If no value is passed the bonds will not be visualized.</p></li>
-<li><p><strong>show_labels</strong> (<em>bool</em>) – Whether to show the labels of the qubits.
-Defaults to False.</p></li>
-<li><p><strong>colouring</strong> (<em>str | list</em>) – A set of integers used to assign different colors to each Qubit.
-This can be used to view different magnetic orderings.
-Must have the same length as the number of Qubits.</p></li>
-<li><p><strong>units</strong> (<em>str, optional</em>) – The units of distance.</p></li>
-<li><p><strong>equal_aspect</strong> (<em>bool, optional</em>) – Whether to have the same scaling for the axes.
-Defaults to True.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
 </section>
 
@@ -2350,7 +2290,6 @@ Defaults to True.</p></li>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Cell"><code class="docutils literal notranslate"><span class="pre">Cell</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Cell.rank"><code class="docutils literal notranslate"><span class="pre">Cell.rank()</span></code></a></li>
@@ -2444,8 +2383,6 @@ Defaults to True.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.Signals.draw"><code class="docutils literal notranslate"><span class="pre">Signals.draw()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.bar"><code class="docutils literal notranslate"><span class="pre">bar()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
 </ul>
 </li>
 </ul>

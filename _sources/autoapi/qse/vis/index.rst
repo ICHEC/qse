@@ -1,7 +1,7 @@
-qse.visualise
-=============
+qse.vis
+=======
 
-.. py:module:: qse.visualise
+.. py:module:: qse.vis
 
 .. autoapi-nested-parse::
 
@@ -22,15 +22,16 @@ Functions
 
 .. autoapisummary::
 
-   qse.visualise.draw
-   qse.visualise.view_matrix
-   qse.visualise.bar
+   qse.vis.draw_qbits
+   qse.vis.draw_signal
+   qse.vis.bar
+   qse.vis.view_matrix
 
 
-Module Contents
----------------
+Package Contents
+----------------
 
-.. py:function:: draw(qbits, radius=None, show_labels=False, colouring=None, units=None, equal_aspect=True)
+.. py:function:: draw_qbits(qbits, radius=None, show_labels=False, colouring=None, units=None, equal_aspect=True)
 
    Visualize the positions of a set of qubits.
 
@@ -49,14 +50,13 @@ Module Contents
                   Defaults to True.
 
 
-.. py:function:: view_matrix(matrix, labels_x=None, labels_y=None, vcenter=None)
+.. py:function:: draw_signal(signal, time_units=None, signal_units=None, title=None)
 
-   Visualise a matrix.
+   Draw the signal.
 
-   :Parameters: * **matrix** (*np.ndarray*) -- The matrix to be visualised.
-                * **labels_x** (*list, optional*) -- Labels to be displayed on the x axis.
-                * **labels_y** (*list, optional*) -- Labels to be displayed on the y axis.
-                * **vcenter** (*float, optional*) -- The center of the colorbar.
+   :Parameters: * **time_units** (*str, optional*) -- The units of the duration.
+                * **signal_units** (*str, optional*) -- The units of the signal.
+                * **title** (*str, optional*) -- A title for the plot.
 
 
 .. py:function:: bar(dict, cutoff=0, ylabel='Count')
@@ -69,5 +69,15 @@ Module Contents
                   than or equal to `cutoff` are excluded.
                   Default is 0.
                 * **ylabel** (*str, optional*) -- Label for the y-axis of the plot. Default is "Count".
+
+
+.. py:function:: view_matrix(matrix, labels_x=None, labels_y=None, vcenter=None)
+
+   Visualise a matrix.
+
+   :Parameters: * **matrix** (*np.ndarray*) -- The matrix to be visualised.
+                * **labels_x** (*list, optional*) -- Labels to be displayed on the x axis.
+                * **labels_y** (*list, optional*) -- Labels to be displayed on the y axis.
+                * **vcenter** (*float, optional*) -- The center of the colorbar.
 
 

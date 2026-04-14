@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>qse.visualise &#8212; QSE</title>
+    <title>qse.vis &#8212; QSE</title>
   
   
   
@@ -67,7 +67,7 @@
     <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/qse/visualise/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/qse/vis/index';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -207,7 +207,7 @@
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../utils/index.html">qse.utils</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">qse.visualise</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">qse.vis</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CONTRIBUTIONS.html">Contributing</a></li>
@@ -271,7 +271,7 @@
       
       
       
-      <li><a href="../../../_sources/autoapi/qse/visualise/index.rst" target="_blank"
+      <li><a href="../../../_sources/autoapi/qse/vis/index.rst" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -347,7 +347,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>qse.visualise</h1>
+    <h1>qse.vis</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -358,10 +358,11 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.view_matrix"><code class="docutils literal notranslate"><span class="pre">view_matrix()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.bar"><code class="docutils literal notranslate"><span class="pre">bar()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.draw_qbits"><code class="docutils literal notranslate"><span class="pre">draw_qbits()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.draw_signal"><code class="docutils literal notranslate"><span class="pre">draw_signal()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.bar"><code class="docutils literal notranslate"><span class="pre">bar()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.view_matrix"><code class="docutils literal notranslate"><span class="pre">view_matrix()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -375,8 +376,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-qse.visualise">
-<span id="qse-visualise"></span><h1>qse.visualise<a class="headerlink" href="#module-qse.visualise" title="Link to this heading">#</a></h1>
+  <section id="module-qse.vis">
+<span id="qse-vis"></span><h1>qse.vis<a class="headerlink" href="#module-qse.vis" title="Link to this heading">#</a></h1>
 <p>This is the visualisation module of QSE package.
 It defines a number of helper functions to better
 visualise data.</p>
@@ -386,24 +387,27 @@ to draw the qubits.</p>
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#qse.visualise.draw" title="qse.visualise.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>(qbits[, radius, show_labels, colouring, units, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#qse.vis.draw_qbits" title="qse.vis.draw_qbits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_qbits</span></code></a>(qbits[, radius, show_labels, colouring, ...])</p></td>
 <td><p>Visualize the positions of a set of qubits.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#qse.visualise.view_matrix" title="qse.visualise.view_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_matrix</span></code></a>(matrix[, labels_x, labels_y, vcenter])</p></td>
-<td><p>Visualise a matrix.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#qse.vis.draw_signal" title="qse.vis.draw_signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_signal</span></code></a>(signal[, time_units, signal_units, title])</p></td>
+<td><p>Draw the signal.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#qse.visualise.bar" title="qse.visualise.bar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bar</span></code></a>(dict[, cutoff, ylabel])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#qse.vis.bar" title="qse.vis.bar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bar</span></code></a>(dict[, cutoff, ylabel])</p></td>
 <td><p>Plot a bar chart from a dictionary, filtering values below a cutoff.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#qse.vis.view_matrix" title="qse.vis.view_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_matrix</span></code></a>(matrix[, labels_x, labels_y, vcenter])</p></td>
+<td><p>Visualise a matrix.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
-<section id="module-contents">
-<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="qse.visualise.draw">
-<span class="sig-prename descclassname"><span class="pre">qse.visualise.</span></span><span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equal_aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/visualise.html#draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.visualise.draw" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="qse.vis.draw_qbits">
+<span class="sig-prename descclassname"><span class="pre">qse.vis.</span></span><span class="sig-name descname"><span class="pre">draw_qbits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colouring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equal_aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/vis/qbits.html#draw_qbits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.vis.draw_qbits" title="Link to this definition">#</a></dt>
 <dd><p>Visualize the positions of a set of qubits.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -427,24 +431,23 @@ Defaults to True.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qse.visualise.view_matrix">
-<span class="sig-prename descclassname"><span class="pre">qse.visualise.</span></span><span class="sig-name descname"><span class="pre">view_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vcenter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/visualise.html#view_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.visualise.view_matrix" title="Link to this definition">#</a></dt>
-<dd><p>Visualise a matrix.</p>
+<dt class="sig sig-object py" id="qse.vis.draw_signal">
+<span class="sig-prename descclassname"><span class="pre">qse.vis.</span></span><span class="sig-name descname"><span class="pre">draw_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/vis/signal.html#draw_signal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.vis.draw_signal" title="Link to this definition">#</a></dt>
+<dd><p>Draw the signal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>matrix</strong> (<em>np.ndarray</em>) – The matrix to be visualised.</p></li>
-<li><p><strong>labels_x</strong> (<em>list, optional</em>) – Labels to be displayed on the x axis.</p></li>
-<li><p><strong>labels_y</strong> (<em>list, optional</em>) – Labels to be displayed on the y axis.</p></li>
-<li><p><strong>vcenter</strong> (<em>float, optional</em>) – The center of the colorbar.</p></li>
+<li><p><strong>time_units</strong> (<em>str, optional</em>) – The units of the duration.</p></li>
+<li><p><strong>signal_units</strong> (<em>str, optional</em>) – The units of the signal.</p></li>
+<li><p><strong>title</strong> (<em>str, optional</em>) – A title for the plot.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="qse.visualise.bar">
-<span class="sig-prename descclassname"><span class="pre">qse.visualise.</span></span><span class="sig-name descname"><span class="pre">bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Count'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/visualise.html#bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.visualise.bar" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="qse.vis.bar">
+<span class="sig-prename descclassname"><span class="pre">qse.vis.</span></span><span class="sig-name descname"><span class="pre">bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Count'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/vis/visualise.html#bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.vis.bar" title="Link to this definition">#</a></dt>
 <dd><p>Plot a bar chart from a dictionary, filtering values below a cutoff.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -455,6 +458,22 @@ counts or values.</p></li>
 than or equal to <cite>cutoff</cite> are excluded.
 Default is 0.</p></li>
 <li><p><strong>ylabel</strong> (<em>str, optional</em>) – Label for the y-axis of the plot. Default is “Count”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qse.vis.view_matrix">
+<span class="sig-prename descclassname"><span class="pre">qse.vis.</span></span><span class="sig-name descname"><span class="pre">view_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vcenter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/vis/visualise.html#view_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.vis.view_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Visualise a matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> (<em>np.ndarray</em>) – The matrix to be visualised.</p></li>
+<li><p><strong>labels_x</strong> (<em>list, optional</em>) – Labels to be displayed on the x axis.</p></li>
+<li><p><strong>labels_y</strong> (<em>list, optional</em>) – Labels to be displayed on the y axis.</p></li>
+<li><p><strong>vcenter</strong> (<em>float, optional</em>) – The center of the colorbar.</p></li>
 </ul>
 </dd>
 </dl>
@@ -476,7 +495,7 @@ Default is 0.</p></li>
         },
         kernelOptions: {
             name: "python3",
-            path: "./autoapi/qse/visualise"
+            path: "./autoapi/qse/vis"
         },
         predefinedOutput: true
     }
@@ -530,10 +549,11 @@ Default is 0.</p></li>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.view_matrix"><code class="docutils literal notranslate"><span class="pre">view_matrix()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.visualise.bar"><code class="docutils literal notranslate"><span class="pre">bar()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.draw_qbits"><code class="docutils literal notranslate"><span class="pre">draw_qbits()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.draw_signal"><code class="docutils literal notranslate"><span class="pre">draw_signal()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.bar"><code class="docutils literal notranslate"><span class="pre">bar()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.view_matrix"><code class="docutils literal notranslate"><span class="pre">view_matrix()</span></code></a></li>
 </ul>
 </li>
 </ul>
