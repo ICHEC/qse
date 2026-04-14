@@ -2,7 +2,8 @@
 
 import numpy as np
 
-from .draw import draw
+from qse.vis import draw_signal
+
 from .signal import Signal
 
 
@@ -114,4 +115,6 @@ class Signals:
         title : str, optional
             A title for the plot.
         """
-        return draw(self, time_units=time_units, signal_units=signal_units, title=title)
+        return draw_signal(
+            self, time_units=time_units, signal_units=signal_units, title=title
+        )

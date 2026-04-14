@@ -11,7 +11,7 @@ import numpy as np
 from qse.cell import Cell
 from qse.operator import Operator, Operators
 from qse.qbit import Qbit
-from qse.visualise import draw as _draw
+from qse.vis import draw_qbits
 
 
 class Qbits:
@@ -566,7 +566,7 @@ class Qbits:
         --------
         qse.draw
         """
-        _draw(
+        draw_qbits(
             self,
             radius=radius,
             show_labels=show_labels,
