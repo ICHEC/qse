@@ -765,7 +765,9 @@ window.runMermaid = runMermaid;</script>
 <a class="viewcode-back" href="../../../autoapi/qse/lattices/index.html#qse.lattices.chain">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">chain</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generate a Qbits object in linear chain geometry.</span>
+<span class="sd">    Generate a Qbits object in linear chain geometry. This is</span>
+<span class="sd">    the simplest lattice in one dimension, with equally separated</span>
+<span class="sd">    qubits along a line.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -779,6 +781,22 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">    -------</span>
 <span class="sd">    Qbits</span>
 <span class="sd">        The Qbits lattice.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    ----</span>
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        import qse</span>
+<span class="sd">        q1d = qse.lattices.chain(</span>
+<span class="sd">            lattice_spacing=2.0,</span>
+<span class="sd">            repeats=6)</span>
+<span class="sd">        q1d.draw()</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    For a one dimensional lattice, there isn&#39;t really a &#39;lattice vector&#39;</span>
+<span class="sd">    as the positions are represented as numbers. The lattice separation</span>
+<span class="sd">    :math:`a` can be thought of as 1D lattice vector.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats</span><span class="p">,</span> <span class="s2">&quot;repeats&quot;</span><span class="p">)</span>
     <span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">cell</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">lattice_spacing</span><span class="p">]]))</span>
@@ -791,7 +809,7 @@ window.runMermaid = runMermaid;</script>
 <div class="viewcode-block" id="square">
 <a class="viewcode-back" href="../../../autoapi/qse/lattices/index.html#qse.lattices.square">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">square</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a Qbits object in square lattice geometry.</span>
 
 <span class="sd">    Parameters</span>
@@ -809,6 +827,26 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">    -------</span>
 <span class="sd">    Qbits</span>
 <span class="sd">        The Qbits lattice.</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    ----</span>
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        import qse</span>
+<span class="sd">        qbit = qse.lattices.square(</span>
+<span class="sd">            lattice_spacing=2.0,</span>
+<span class="sd">            repeats_x=3, repeats_y=3)</span>
+<span class="sd">        qbit.draw(radius=4)</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    For the square lattice the unit vectors are</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        A_1 = (a, 0) \quad A_2 = (0, a)</span>
+
+<span class="sd">    with the single basis point at origin :math:`(0, 0)`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_x</span><span class="p">,</span> <span class="s2">&quot;repeats_x&quot;</span><span class="p">)</span>
     <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_y</span><span class="p">,</span> <span class="s2">&quot;repeats_y&quot;</span><span class="p">)</span>
@@ -825,7 +863,7 @@ window.runMermaid = runMermaid;</script>
 <div class="viewcode-block" id="triangular">
 <a class="viewcode-back" href="../../../autoapi/qse/lattices/index.html#qse.lattices.triangular">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">triangular</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a Qbits object in triangular lattice geometry.</span>
 
 <span class="sd">    Parameters</span>
@@ -843,6 +881,25 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">    -------</span>
 <span class="sd">    Qbits</span>
 <span class="sd">        The Qbits lattice.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    ----</span>
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        import qse</span>
+<span class="sd">        qbit = qse.lattices.triangular(</span>
+<span class="sd">            lattice_spacing=2.0,</span>
+<span class="sd">            repeats_x=3, repeats_y=3)</span>
+<span class="sd">        qbit.draw(radius=3)</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    For the triangular lattice the unit vectors are</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        A_1 = (a, 0) \quad A_2 = (\frac 12 a,\frac{\sqrt{3}}{2} a)</span>
+
+<span class="sd">    with the single basis point at origin :math:`(0, 0)`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_x</span><span class="p">,</span> <span class="s2">&quot;repeats_x&quot;</span><span class="p">)</span>
     <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_y</span><span class="p">,</span> <span class="s2">&quot;repeats_y&quot;</span><span class="p">)</span>
@@ -857,7 +914,7 @@ window.runMermaid = runMermaid;</script>
 <div class="viewcode-block" id="hexagonal">
 <a class="viewcode-back" href="../../../autoapi/qse/lattices/index.html#qse.lattices.hexagonal">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">hexagonal</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a Qbits object in hexagonal lattice geometry.</span>
 
 <span class="sd">    Parameters</span>
@@ -875,6 +932,26 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">    -------</span>
 <span class="sd">    Qbits</span>
 <span class="sd">        The Qbits lattice.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    ----</span>
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        import qse</span>
+<span class="sd">        qbit = qse.lattices.hexagonal(</span>
+<span class="sd">            lattice_spacing=2.0,</span>
+<span class="sd">            repeats_x=3, repeats_y=3)</span>
+<span class="sd">        qbit.draw(radius=3)</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    For the hexagonal lattice the unit vectors are</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        A_1 = (\frac 32 a, \frac{\sqrt{3}}{2} a)\quad</span>
+<span class="sd">        A_2 = (\frac 32 a, -\frac{\sqrt{3}}{2} a)</span>
+
+<span class="sd">    with two basis points at :math:`(0, 0)` and :math:`(a, 0)`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_x</span><span class="p">,</span> <span class="s2">&quot;repeats_x&quot;</span><span class="p">)</span>
     <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_y</span><span class="p">,</span> <span class="s2">&quot;repeats_y&quot;</span><span class="p">)</span>
@@ -891,7 +968,7 @@ window.runMermaid = runMermaid;</script>
 <div class="viewcode-block" id="kagome">
 <a class="viewcode-back" href="../../../autoapi/qse/lattices/index.html#qse.lattices.kagome">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">kagome</span><span class="p">(</span><span class="n">lattice_spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">repeats_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">repeats_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a Qbits object in kagome lattice geometry.</span>
 
 <span class="sd">    Parameters</span>
@@ -909,6 +986,29 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">    -------</span>
 <span class="sd">    Qbits</span>
 <span class="sd">        The Qbits lattice.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    ----</span>
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        import qse</span>
+<span class="sd">        qbit = qse.lattices.kagome(</span>
+<span class="sd">            lattice_spacing=2.0,</span>
+<span class="sd">            repeats_x=3, repeats_y=3)</span>
+<span class="sd">        qbit.draw(radius=3)</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    -----</span>
+<span class="sd">    For the kagome lattice the unit vectors are</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        A_1 = (2a, 0)\quad</span>
+<span class="sd">        A_2 = (a, \sqrt{3}a)</span>
+
+<span class="sd">    with three basis points at</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        (0, 0)\quad (a, 0) \quad (\frac 12 a, \frac{\sqrt{3}}{2}a)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_x</span><span class="p">,</span> <span class="s2">&quot;repeats_x&quot;</span><span class="p">)</span>
     <span class="n">_check_repeats</span><span class="p">(</span><span class="n">repeats_y</span><span class="p">,</span> <span class="s2">&quot;repeats_y&quot;</span><span class="p">)</span>
@@ -932,12 +1032,12 @@ window.runMermaid = runMermaid;</script>
 <div class="viewcode-block" id="ring">
 <a class="viewcode-back" href="../../../autoapi/qse/lattices/index.html#qse.lattices.ring">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ring</span><span class="p">(</span><span class="n">spacing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">nqbits</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a Qbits object in a ring geometry.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    radius : float</span>
+<span class="sd">    spacing : float</span>
 <span class="sd">        The spacing between the qubits.</span>
 <span class="sd">    nqbits : int</span>
 <span class="sd">        Number of qubits on the ring.</span>
@@ -946,6 +1046,33 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">    -------</span>
 <span class="sd">    Qbits</span>
 <span class="sd">        The Qbits object.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        import qse</span>
+<span class="sd">        qbit = qse.lattices.ring(</span>
+<span class="sd">            spacing=1.0,</span>
+<span class="sd">            nqbits=9)</span>
+<span class="sd">        qbit.draw(radius=3)</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    This can be thought of as 1D chain where you connect</span>
+<span class="sd">    the end point and place them on a circular shape.</span>
+
+<span class="sd">    :math:`n` points placed on a circle of radius :math:`r`</span>
+<span class="sd">    have coordinates :math:`X_l = (r\cos\theta_l, r\sin\theta_l)`,</span>
+<span class="sd">    where :math:`l` ranges from 0 to :math:`n-1` and</span>
+<span class="sd">    :math:`\theta_l = \frac{2\pi l}{n}`.</span>
+
+<span class="sd">    If the qubit spacing supplied is :math:`a`, then we compute the</span>
+<span class="sd">    appropriate radius by solving :math:`a = |X_{l+1} - X_l|`, which</span>
+<span class="sd">    gives us the radius :math:`r` as</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        r = \frac{a} {\sqrt{2 (1 - \cos{\frac{2\pi}{n}})}}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Using cosine rule</span>
     <span class="c1"># spacing^2 = 2radius^2 [ 1 - cos(2pi/nqubits) ]</span>
@@ -980,6 +1107,22 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">    -------</span>
 <span class="sd">    Qbits</span>
 <span class="sd">        The Qbits object.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        import qse</span>
+<span class="sd">        qbit = qse.lattices.torus(</span>
+<span class="sd">            n_outer=12, n_inner=12,</span>
+<span class="sd">            inner_radius=5.0,</span>
+<span class="sd">            outer_radius=6.0)</span>
+<span class="sd">        qbit.draw()</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    Though its not a commonly explored geometry, it represents</span>
+<span class="sd">    the 2D version of a ring, with periodic connection built in.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">theta</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">n_outer</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_outer</span><span class="p">)</span>
     <span class="n">phi</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">n_inner</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_inner</span><span class="p">)</span>
