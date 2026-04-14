@@ -18,6 +18,7 @@ parts:
     chapters:
       - file: theory/spatial-correlation
       - file: theory/blockade-radius
+      - file: theory/adiabatic_evolution
   - caption: API Reference
     chapters:
       - file: autoapi/qse/index # This is where sphinx-autoapi dumps the docs
