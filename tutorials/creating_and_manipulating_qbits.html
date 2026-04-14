@@ -409,21 +409,28 @@
     <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.76</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">]),</span>
     <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
 <span class="p">]</span>
-<span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;qbit1&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit2&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit3&quot;</span><span class="p">])</span>
+<span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;qbit1&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit2&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit3&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.76</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">]),</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.76</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">]),</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="p">]</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;qbit1&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit2&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit3&quot;</span><span class="p">])</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;qbit1&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit2&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit3&quot;</span><span class="p">])</span>
 
-<span class="ne">NameError</span>: name &#39;positions&#39; is not defined
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/qse/qbits.py:139,</span> in <span class="ni">Qbits.__init__</span><span class="nt">(self, positions, labels, states, cell, pbc, calculator)</span>
+<span class="g g-Whitespace">    </span><span class="mi">137</span> <span class="c1"># states</span>
+<span class="g g-Whitespace">    </span><span class="mi">138</span> <span class="k">if</span> <span class="n">states</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">139</span>     <span class="n">states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">140</span>     <span class="n">states</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="g g-Whitespace">    </span><span class="mi">141</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s2">&quot;states&quot;</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="nb">complex</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
+
+<span class="ne">AttributeError</span>: &#39;list&#39; object has no attribute &#39;shape&#39;
 </pre></div>
 </div>
 </div>
