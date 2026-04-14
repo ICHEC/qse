@@ -40,12 +40,12 @@ def chain(lattice_spacing: float, repeats: int) -> qse.Qbits:
             lattice_spacing=2.0,
             repeats=6)
         q1d.draw()
-    
+
     Note
     ----
     For a one dimensional lattice, there isn't really a 'lattice vector'
     as the positions are represented as numbers. The lattice separation
-    :math:`a` can be thought of as 1D lattice vector. 
+    :math:`a` can be thought of as 1D lattice vector.
     """
     _check_repeats(repeats, "repeats")
     qbits = qse.Qbits(positions=np.zeros((1, 1)), cell=np.array([[lattice_spacing]]))
@@ -73,7 +73,7 @@ def square(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
     -------
     Qbits
         The Qbits lattice.
-    
+
 
     Examples
     ----
@@ -91,7 +91,7 @@ def square(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
 
     .. math::
         A_1 = (a, 0) \quad A_2 = (0, a)
-    
+
     with the single basis point at origin :math:`(0, 0)`.
     """
     _check_repeats(repeats_x, "repeats_x")
@@ -124,7 +124,7 @@ def triangular(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qb
     -------
     Qbits
         The Qbits lattice.
-    
+
     Examples
     ----
     .. jupyter-execute::
@@ -227,7 +227,7 @@ def kagome(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
     Examples
     ----
     .. jupyter-execute::
-    
+
         import qse
         qbit = qse.lattices.kagome(
             lattice_spacing=2.0,
@@ -242,8 +242,8 @@ def kagome(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
         A_1 = (2a, 0)\quad
         A_2 = (a, \sqrt{3}a)
 
-    with three basis points at 
-    
+    with three basis points at
+
     .. math::
         (0, 0)\quad (a, 0) \quad (\frac 12 a, \frac{\sqrt{3}}{2}a)
     """
@@ -280,11 +280,11 @@ def ring(spacing: float, nqbits: int) -> qse.Qbits:
     -------
     Qbits
         The Qbits object.
-    
+
     Examples
     --------
     .. jupyter-execute::
-    
+
         import qse
         qbit = qse.lattices.ring(
             spacing=1.0,
@@ -338,7 +338,7 @@ def torus(
     -------
     Qbits
         The Qbits object.
-    
+
     Examples
     --------
     .. jupyter-execute::
