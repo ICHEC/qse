@@ -404,33 +404,24 @@
 <p>The first way of creating a Qbits object is by specifying the <code class="docutils literal notranslate"><span class="pre">positions</span></code> of their qubits in the <em>cartesian coordinate system</em>. With the <code class="docutils literal notranslate"><span class="pre">labels</span></code> parameter we are assigning a label to each qubit.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coords</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.76</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">]),</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.76</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">]),</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
-<span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">[</span><span class="mf">0.76</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">0.76</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;qbit1&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit2&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit3&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.76</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">]),</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.76</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">]),</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="p">]</span>
-<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;qbit1&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit2&quot;</span><span class="p">,</span> <span class="s2">&quot;qbit3&quot;</span><span class="p">])</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/qse/qbits.py:139,</span> in <span class="ni">Qbits.__init__</span><span class="nt">(self, positions, labels, states, cell, pbc, calculator)</span>
-<span class="g g-Whitespace">    </span><span class="mi">137</span> <span class="c1"># states</span>
-<span class="g g-Whitespace">    </span><span class="mi">138</span> <span class="k">if</span> <span class="n">states</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">139</span>     <span class="n">states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">140</span>     <span class="n">states</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="g g-Whitespace">    </span><span class="mi">141</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_array</span><span class="p">(</span><span class="s2">&quot;states&quot;</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="nb">complex</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
-
-<span class="ne">AttributeError</span>: &#39;list&#39; object has no attribute &#39;shape&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Qbits(
+ Qbit(label=&#39;qbit1&#39;, position=[0.76, 0.0, 0.58], state=[(1+0j), 0j], index=0),
+ Qbit(label=&#39;qbit2&#39;, position=[-0.76, 0.0, 0.58], state=[(1+0j), 0j], index=1),
+ Qbit(label=&#39;qbit3&#39;, position=[0.0, 0.0, 0.0], state=[(1+0j), 0j], index=2),
+ pbc=False,
+...)
 </pre></div>
 </div>
 </div>
@@ -450,6 +441,16 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Qbits(
+ Qbit(label=&#39;X&#39;, position=[0.76, 0.0, 0.58], state=[(1+0j), 0j], index=0),
+ Qbit(label=&#39;X&#39;, position=[-0.76, 0.0, 0.58], state=[(1+0j), 0j], index=1),
+ Qbit(label=&#39;X&#39;, position=[0.0, 0.0, 0.0], state=[(1+0j), 0j], index=2),
+ pbc=False,
+...)
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
@@ -465,6 +466,9 @@
 <span class="n">qbits</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/aacf9bb292e4c778df5f363601d927093bb6562b8661a3f05bb298116efe97ab.png" src="../_images/aacf9bb292e4c778df5f363601d927093bb6562b8661a3f05bb298116efe97ab.png" />
 </div>
 </div>
 <p>Our drawing function is also able to draw 2d structures. We can see an example of this in the cell below, that creates and draws a 2d Qbits object.</p>
@@ -484,6 +488,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/d9e1c66a63a557b3dd69b7b219625685b99b3604378f31c86a130ad0e217145f.png" src="../_images/d9e1c66a63a557b3dd69b7b219625685b99b3604378f31c86a130ad0e217145f.png" />
+</div>
 </div>
 </section>
 <section id="translate-repeated-structure">
@@ -496,6 +503,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/c63677cd6d32124f29799b152cb53edacf2dea31967f7bc99600556930b6c4f0.png" src="../_images/c63677cd6d32124f29799b152cb53edacf2dea31967f7bc99600556930b6c4f0.png" />
+</div>
 </div>
 <p>Translations of the structure can also be made using the <code class="docutils literal notranslate"><span class="pre">set_centroid</span></code> method, as we can see below.</p>
 <div class="cell docutils container">
@@ -504,6 +514,9 @@
 <span class="n">qbits</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/eaed95c9bd825ecccb393a8c3077796703c6baeb2a5f516cacc0d172688ed91b.png" src="../_images/eaed95c9bd825ecccb393a8c3077796703c6baeb2a5f516cacc0d172688ed91b.png" />
 </div>
 </div>
 </section>
@@ -517,6 +530,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/9b6bd4a05341612f6e4ad0e5b6ee0dd6071bc54b4a01923194872a454f384a3b.png" src="../_images/9b6bd4a05341612f6e4ad0e5b6ee0dd6071bc54b4a01923194872a454f384a3b.png" />
+</div>
 </div>
 <p>With the method <code class="docutils literal notranslate"><span class="pre">euler_rotate</span></code> we can rotate a lattice by inputting the angles <span class="math notranslate nohighlight">\(\phi\)</span>, <span class="math notranslate nohighlight">\(\theta\)</span>, <span class="math notranslate nohighlight">\(\psi\)</span> in degrees, as shown below.</p>
 <div class="cell docutils container">
@@ -527,6 +543,9 @@
 <span class="n">qbits</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3debb87ec8980f4c5deee06959fc90e41e4eb63689c39410716ad61c6f94b788.png" src="../_images/3debb87ec8980f4c5deee06959fc90e41e4eb63689c39410716ad61c6f94b788.png" />
 </div>
 </div>
 </section>
