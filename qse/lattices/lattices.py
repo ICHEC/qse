@@ -14,7 +14,9 @@ def _check_repeats(repeats, param_name):
 
 def chain(lattice_spacing: float, repeats: int) -> qse.Qbits:
     """
-    Generate a Qbits object in linear chain geometry.
+    Generate a Qbits object in linear chain geometry. This is
+    the simplest lattice in one dimension, with equally separated
+    qubits along a line.
 
     Parameters
     ----------
@@ -28,6 +30,22 @@ def chain(lattice_spacing: float, repeats: int) -> qse.Qbits:
     -------
     Qbits
         The Qbits lattice.
+
+    Examples
+    ----
+    .. jupyter-execute::
+
+        import qse
+        q1d = qse.lattices.chain(
+            lattice_spacing=2.0,
+            repeats=6)
+        q1d.draw()
+    
+    Note
+    ----
+    For a one dimensional lattice, there isn't really a 'lattice vector'
+    as the positions are represented as numbers. The lattice separation
+    :math:`a` can be thought of as 1D lattice vector. 
     """
     _check_repeats(repeats, "repeats")
     qbits = qse.Qbits(positions=np.zeros((1, 1)), cell=np.array([[lattice_spacing]]))
@@ -37,7 +55,7 @@ def chain(lattice_spacing: float, repeats: int) -> qse.Qbits:
 
 
 def square(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
-    """
+    r"""
     Generate a Qbits object in square lattice geometry.
 
     Parameters
@@ -55,6 +73,26 @@ def square(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
     -------
     Qbits
         The Qbits lattice.
+    
+
+    Examples
+    ----
+    .. jupyter-execute::
+
+        import qse
+        qbit = qse.lattices.square(
+            lattice_spacing=2.0,
+            repeats_x=3, repeats_y=3)
+        qbit.draw(radius=4)
+
+    Note
+    ----
+    For the square lattice the unit vectors are
+
+    .. math::
+        A_1 = (a, 0) \quad A_2 = (0, a)
+    
+    with the single basis point at origin :math:`(0, 0)`.
     """
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
@@ -68,7 +106,7 @@ def square(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
 
 
 def triangular(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
-    """
+    r"""
     Generate a Qbits object in triangular lattice geometry.
 
     Parameters
@@ -86,6 +124,25 @@ def triangular(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qb
     -------
     Qbits
         The Qbits lattice.
+    
+    Examples
+    ----
+    .. jupyter-execute::
+
+        import qse
+        qbit = qse.lattices.triangular(
+            lattice_spacing=2.0,
+            repeats_x=3, repeats_y=3)
+        qbit.draw(radius=3)
+
+    Note
+    -----
+    For the triangular lattice the unit vectors are
+
+    .. math::
+        A_1 = (a, 0) \quad A_2 = (\frac 12 a,\frac{\sqrt{3}}{2} a)
+
+    with the single basis point at origin :math:`(0, 0)`.
     """
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
@@ -97,7 +154,7 @@ def triangular(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qb
 
 
 def hexagonal(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
-    """
+    r"""
     Generate a Qbits object in hexagonal lattice geometry.
 
     Parameters
@@ -115,6 +172,26 @@ def hexagonal(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbi
     -------
     Qbits
         The Qbits lattice.
+
+    Examples
+    ----
+    .. jupyter-execute::
+
+        import qse
+        qbit = qse.lattices.hexagonal(
+            lattice_spacing=2.0,
+            repeats_x=3, repeats_y=3)
+        qbit.draw(radius=3)
+
+    Note
+    -----
+    For the hexagonal lattice the unit vectors are
+
+    .. math::
+        A_1 = (\frac 32 a, \frac{\sqrt{3}}{2} a)\quad
+        A_2 = (\frac 32 a, -\frac{\sqrt{3}}{2} a)
+
+    with two basis points at :math:`(0, 0)` and :math:`(a, 0)`.
     """
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
@@ -128,7 +205,7 @@ def hexagonal(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbi
 
 
 def kagome(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
-    """
+    r"""
     Generate a Qbits object in kagome lattice geometry.
 
     Parameters
@@ -146,6 +223,29 @@ def kagome(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
     -------
     Qbits
         The Qbits lattice.
+
+    Examples
+    ----
+    .. jupyter-execute::
+    
+        import qse
+        qbit = qse.lattices.kagome(
+            lattice_spacing=2.0,
+            repeats_x=3, repeats_y=3)
+        qbit.draw(radius=3)
+
+    Note
+    -----
+    For the kagome lattice the unit vectors are
+
+    .. math::
+        A_1 = (2a, 0)\quad
+        A_2 = (a, \sqrt{3}a)
+
+    with three basis points at 
+    
+    .. math::
+        (0, 0)\quad (a, 0) \quad (\frac 12 a, \frac{\sqrt{3}}{2}a)
     """
     _check_repeats(repeats_x, "repeats_x")
     _check_repeats(repeats_y, "repeats_y")
@@ -166,12 +266,12 @@ def kagome(lattice_spacing: float, repeats_x: int, repeats_y: int) -> qse.Qbits:
 
 
 def ring(spacing: float, nqbits: int) -> qse.Qbits:
-    """
+    r"""
     Generate a Qbits object in a ring geometry.
 
     Parameters
     ----------
-    radius : float
+    spacing : float
         The spacing between the qubits.
     nqbits : int
         Number of qubits on the ring.
@@ -180,6 +280,33 @@ def ring(spacing: float, nqbits: int) -> qse.Qbits:
     -------
     Qbits
         The Qbits object.
+    
+    Examples
+    --------
+    .. jupyter-execute::
+    
+        import qse
+        qbit = qse.lattices.ring(
+            spacing=1.0,
+            nqbits=9)
+        qbit.draw(radius=3)
+
+    Note
+    ----
+    This can be thought of as 1D chain where you connect
+    the end point and place them on a circular shape.
+
+    :math:`n` points placed on a circle of radius :math:`r`
+    have coordinates :math:`X_l = (r\cos\theta_l, r\sin\theta_l)`,
+    where :math:`l` ranges from 0 to :math:`n-1` and
+    :math:`\theta_l = \frac{2\pi l}{n}`.
+
+    If the qubit spacing supplied is :math:`a`, then we compute the
+    appropriate radius by solving :math:`a = |X_{l+1} - X_l|`, which
+    gives us the radius :math:`r` as
+
+    .. math::
+        r = \frac{a} {\sqrt{2 (1 - \cos{\frac{2\pi}{n}})}}
     """
     # Using cosine rule
     # spacing^2 = 2radius^2 [ 1 - cos(2pi/nqubits) ]
@@ -211,6 +338,22 @@ def torus(
     -------
     Qbits
         The Qbits object.
+    
+    Examples
+    --------
+    .. jupyter-execute::
+
+        import qse
+        qbit = qse.lattices.torus(
+            n_outer=12, n_inner=12,
+            inner_radius=5.0,
+            outer_radius=6.0)
+        qbit.draw()
+
+    Note
+    ----
+    Though its not a commonly explored geometry, it represents
+    the 2D version of a ring, with periodic connection built in.
     """
     theta = (2.0 * np.pi / n_outer) * np.arange(n_outer)
     phi = (2.0 * np.pi / n_inner) * np.arange(n_inner)

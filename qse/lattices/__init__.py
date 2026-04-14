@@ -17,9 +17,10 @@ Generic Definition
 ------------------
 
 Any arbitrary periodic structure is defined in terms of two
-objects, :math:`(i)` a set of points that are chosen, and
-:math:`(ii)` a set of linearly independent vectors, called
-primitive lattice vectors, through which we translate the points.
+objects, :math:`(i)` a set of points that are chosen, called
+basis; and :math:`(ii)` a set of linearly independent vectors,
+called primitive lattice vectors, or just **lattice vectors**,
+through which we translate the points.
 
 For example, for 2D square lattice, one has just one point at
 origin :math:`(0, 0)`, and two lattice vectors :math:`{\bf A_1} = (a, 0)`
