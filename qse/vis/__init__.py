@@ -11,6 +11,7 @@ to draw the qubits.
 
 """
 
+__all__ = ["bar", "draw_qbits", "draw_signal", "view_matrix"]
 from qse.vis.qbits import draw_qbits
 from qse.vis.signal import draw_signal
 from qse.vis.visualise import bar, view_matrix

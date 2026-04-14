@@ -32,7 +32,7 @@ __all__ = [
     "Signal",
     "Signals",
     "utils",
-    "visualise",
+    "vis",
 ]
 import importlib.metadata
 
