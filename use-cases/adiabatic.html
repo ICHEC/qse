@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Finite geometries &#8212; QSE</title>
+    <title>Quantum Adiabatic Pulses &#8212; QSE</title>
   
   
   
@@ -67,11 +67,15 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/finite-geometries';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'use-cases/adiabatic';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Computing spatial correlation in magnetic models" href="../theory/spatial-correlation.html" />
+    <link rel="prev" title="Simulating the SSH model" href="ssh_model.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -123,8 +127,6 @@
       
       
       
-        
-      
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
@@ -175,14 +177,14 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="creating_and_manipulating_qbits.html">Creating and manipulating Qbits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="generating_lattices.html">Generating Lattices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pulser-calc-example.html">Calculation Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/creating_and_manipulating_qbits.html">Creating and manipulating Qbits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/generating_lattices.html">Generating Lattices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/pulser-calc-example.html">Calculation Example</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Use-Cases</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../use-cases/ssh_model.html">Simulating the SSH model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use-cases/adiabatic.html">Quantum Adiabatic Pulses</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ssh_model.html">Simulating the SSH model</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Quantum Adiabatic Pulses</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul class="nav bd-sidenav">
@@ -272,7 +274,7 @@
       
       
       
-      <li><a href="../_sources/tutorials/finite-geometries.ipynb" target="_blank"
+      <li><a href="../_sources/use-cases/adiabatic.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -346,7 +348,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Finite geometries</h1>
+    <h1>Quantum Adiabatic Pulses</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -360,127 +362,121 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="finite-geometries">
-<h1>Finite geometries<a class="headerlink" href="#finite-geometries" title="Link to this heading">#</a></h1>
-<p>Here we list a few examples of manipulating finite geometries. First we import the necessary modules.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="quantum-adiabatic-pulses">
+<h1>Quantum Adiabatic Pulses<a class="headerlink" href="#quantum-adiabatic-pulses" title="Link to this heading">#</a></h1>
+<p>Here we prepare a ground state of a Hamiltonian using an adiabatic pulse. See […] for more details on the adiabatic theorem.</p>
+<p>Recall the Rydberg Hamiltonian is</p>
+<div class="math notranslate nohighlight">
+\[
+H = \frac{\hbar \Omega(t)}{2} \sum_i  X_i - \hbar \delta(t) \sum_i  N_i + \sum_{i&lt;j} \frac{C_6}{r_{ij}^6}N_i N_j 
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Omega\)</span> is the Rabi frequency, <span class="math notranslate nohighlight">\(\delta\)</span> is the detuning, <span class="math notranslate nohighlight">\(C_6\)</span> is a device specific constant and <span class="math notranslate nohighlight">\(r_{ij}\)</span> is the distance between qubits <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>.</p>
+<p>We will choose the signals so that the initial Hamiltonian will be</p>
+<div class="math notranslate nohighlight">
+\[
+H_i = - \hbar \delta_i \sum_i  N_i + \sum_{i&lt;j} \frac{C_6}{r_{ij}^6}N_i N_j 
+\]</div>
+<p>by choosing a suitably negative value for <span class="math notranslate nohighlight">\(\delta_i\)</span> we ensure the ground state of the <span class="math notranslate nohighlight">\(H_i\)</span> is the all <span class="math notranslate nohighlight">\(0\)</span> state, which is the state we start in.</p>
+<p>We will choose the signals so that the final Hamiltonian will be</p>
+<div class="math notranslate nohighlight">
+\[
+H_f = \frac{\hbar \Omega_f}{2} \sum_i  X_i + \sum_{i&lt;j} \frac{C_6}{r_{ij}^6}N_i N_j 
+\]</div>
+<p>and this is the Hamiltonian’s whose ground state we want to prepare.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now we generate a hexagon.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qhex</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">ring</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
-<span class="n">qhex</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">delta_initial</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span>
+<span class="n">omega_final</span> <span class="o">=</span> <span class="mf">2.0</span>
+
+<span class="n">r_b</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">blockade_radius</span><span class="p">(</span><span class="n">omega_final</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">ring</span><span class="p">(</span><span class="n">r_b</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">qbits</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;µm&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b09e00fed0e09284b23998e68fc0b5acedfb7d476e517cecedd21ef44260eb06.png" src="../_images/b09e00fed0e09284b23998e68fc0b5acedfb7d476e517cecedd21ef44260eb06.png" />
+<img alt="../_images/6345445369cd75c318bea27e7655fe75552dde37fda3248053e3273a87ddff44.png" src="../_images/6345445369cd75c318bea27e7655fe75552dde37fda3248053e3273a87ddff44.png" />
 </div>
 </div>
-<p>Now lets rotate it by 30 degrees.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qhex</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
-<span class="n">qhex</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">qhex</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">duration</span> <span class="o">=</span> <span class="mi">5000</span>  <span class="c1"># ns</span>
+<span class="n">amplitude</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">omega_final</span><span class="p">,</span> <span class="n">duration</span><span class="p">))</span>
+<span class="n">detuning</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">delta_initial</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">duration</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">amplitude</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">detuning</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Detuning&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (ns)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Signal (rad/µs)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0.866025  0.5     ]
- [ 0.        1.      ]
- [-0.866025  0.5     ]
- [-0.866025 -0.5     ]
- [-0.       -1.      ]
- [ 0.866025 -0.5     ]]
-</pre></div>
-</div>
-<img alt="../_images/95be9f7f530d3d6e951e0732b20bae907c896d8f9062e389fbef5fe4efc26e8a.png" src="../_images/95be9f7f530d3d6e951e0732b20bae907c896d8f9062e389fbef5fe4efc26e8a.png" />
+<img alt="../_images/09a532290b86aee737bcf7a4e9f89be37cfbc5c25636bce04c1f942769947501.png" src="../_images/09a532290b86aee737bcf7a4e9f89be37cfbc5c25636bce04c1f942769947501.png" />
 </div>
 </div>
-<p>Now we scale the positions of qubits. All the points are defined around origin, and we scale the alternating points inversely.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">qhex</span><span class="o">.</span><span class="n">positions</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">scale</span>
-<span class="n">qhex</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">*=</span> <span class="n">scale</span>
-<span class="n">qhex</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calc</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">Qutip</span><span class="p">(</span><span class="n">qbits</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">,</span> <span class="n">detuning</span><span class="p">)</span>
+
+<span class="c1"># We get the initial and final hamiltonians</span>
+<span class="n">h_i</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">get_hamiltonian</span><span class="p">(</span><span class="n">amplitude</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">detuning</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">h_f</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">get_hamiltonian</span><span class="p">(</span><span class="n">amplitude</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">detuning</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># We compute the expectations of both Hamiltonians</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">e_ops</span><span class="o">=</span><span class="p">[</span><span class="n">h_i</span><span class="p">,</span> <span class="n">h_f</span><span class="p">])</span>
+
+<span class="c1"># Let&#39;s compute the groun-state energies of the initial and final hamiltonians</span>
+<span class="n">e_i</span> <span class="o">=</span> <span class="n">h_i</span><span class="o">.</span><span class="n">eigenenergies</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">e_f</span> <span class="o">=</span> <span class="n">h_f</span><span class="o">.</span><span class="n">eigenenergies</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;expectations&quot;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\langle H_i \rangle$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">e_i</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$e_i$&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;expectations&quot;</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\langle H_f \rangle$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">e_f</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$e_f$&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (ns)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d249da7d83ae3a07cfbcf02381f97e93972e44837576e70e6e16c89860a94320.png" src="../_images/d249da7d83ae3a07cfbcf02381f97e93972e44837576e70e6e16c89860a94320.png" />
+<img alt="../_images/ac9a95508be267101e7d90cabd052e4210ad0d74999da3ab53909022b4acde30.png" src="../_images/ac9a95508be267101e7d90cabd052e4210ad0d74999da3ab53909022b4acde30.png" />
 </div>
 </div>
-<p>Let’s try another example with octagon geometry.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qoct</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">ring</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-<span class="n">qoct</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">probs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">probs_dict</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">binary_repr</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">qbits</span><span class="o">.</span><span class="n">nqbits</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">p</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">probs</span><span class="p">)}</span>
+<span class="n">probs_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">w</span><span class="p">:</span> <span class="n">probs_dict</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">probs_dict</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">probs_dict</span><span class="o">.</span><span class="n">get</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">probs_dict</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Probability&quot;</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mf">0.011</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3fedd45f48cb64edcd7df508f8c3972f28ea7f0f5121480be9fab5c57e9879e9.png" src="../_images/3fedd45f48cb64edcd7df508f8c3972f28ea7f0f5121480be9fab5c57e9879e9.png" />
-</div>
-</div>
-<p>Here also we scale inversely the alternating points.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">qoct</span><span class="o">.</span><span class="n">positions</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">scale</span>
-<span class="n">qoct</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">*=</span> <span class="n">scale</span>
-<span class="n">qoct</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/41894bf84e39449f68c5be63a9ec99a0fbcb7c0a675e8956674ee9587502bf27.png" src="../_images/41894bf84e39449f68c5be63a9ec99a0fbcb7c0a675e8956674ee9587502bf27.png" />
-</div>
-</div>
-<p>Here is a combined example with 12 points.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q12</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">ring</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
-<span class="n">q12</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">q12</span><span class="o">.</span><span class="n">positions</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">scale</span>
-<span class="n">q12</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">*=</span> <span class="n">scale</span>
-<span class="n">q12</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/1f04b1dcb03d6007b2d55302c0376c7a71986dd06a1ab5c280fb50f14d8859c6.png" src="../_images/1f04b1dcb03d6007b2d55302c0376c7a71986dd06a1ab5c280fb50f14d8859c6.png" />
-<img alt="../_images/4e7342a3cb1a75054f9c6dfa7ce7147732e8251ac925f4de6a4f3018838e52a1.png" src="../_images/4e7342a3cb1a75054f9c6dfa7ce7147732e8251ac925f4de6a4f3018838e52a1.png" />
-</div>
-</div>
-<p>We can also create structures by adding different <code class="docutils literal notranslate"><span class="pre">Qbits</span></code> objects. See below</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">npoints</span> <span class="o">=</span> <span class="mi">6</span>
-<span class="n">qq</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Qbits</span><span class="p">()</span>
-<span class="n">qq</span><span class="o">.</span><span class="n">remove_dim</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)):</span>
-    <span class="n">q</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">ring</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">npoints</span><span class="p">)</span>
-    <span class="n">q</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">180</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">npoints</span><span class="p">)</span>
-    <span class="n">qq</span> <span class="o">+=</span> <span class="n">q</span>
-<span class="n">qq</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">qq</span><span class="o">.</span><span class="n">nqbits</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12
-</pre></div>
-</div>
-<img alt="../_images/858e06e1349ea3349079128dba4df1287f3343f0506a9d9258949f16bd91d739.png" src="../_images/858e06e1349ea3349079128dba4df1287f3343f0506a9d9258949f16bd91d739.png" />
+<img alt="../_images/ed2afc55a52d1693768fcfdfd59ac7298f5f517ddda68ef217d90544c5f3c1e5.png" src="../_images/ed2afc55a52d1693768fcfdfd59ac7298f5f517ddda68ef217d90544c5f3c1e5.png" />
 </div>
 </div>
 </section>
@@ -498,7 +494,7 @@
         },
         kernelOptions: {
             name: "python3",
-            path: "./tutorials"
+            path: "./use-cases"
         },
         predefinedOutput: true
     }
@@ -515,6 +511,24 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="ssh_model.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Simulating the SSH model</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../theory/spatial-correlation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Computing spatial correlation in magnetic models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
