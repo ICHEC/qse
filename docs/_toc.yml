@@ -10,6 +10,7 @@ parts:
       - file: tutorials/creating_and_manipulating_qbits
       - file: tutorials/generating_lattices
       - file: tutorials/pulser-calc-example
+      - file: tutorials/finite-geometries
   - caption: Use-Cases
     chapters:
       - file: use-cases/ssh_model
