@@ -13,7 +13,7 @@ authors = [
     {name = "Sherry Blair", email = "sherry.blair@ichec.ie"},
     {name = "Pablo Suárez Vieites", email = "pablo.suarez@ichec.ie"},
     ]
-version = "1.1.11"
+version = "1.1.12"
 requires-python = ">=3.10"
 dependencies = [
     "numpy",
