@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>The Rydberg Blockade &#8212; QSE</title>
+    <title>Adiabatic Time Evolution &#8212; QSE</title>
   
   
   
@@ -69,13 +69,13 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'theory/blockade-radius';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'theory/adiabatic_evolution';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Adiabatic Time Evolution" href="adiabatic_evolution.html" />
-    <link rel="prev" title="Computing spatial correlation in magnetic models" href="spatial-correlation.html" />
+    <link rel="next" title="qse" href="../autoapi/qse/index.html" />
+    <link rel="prev" title="The Rydberg Blockade" href="blockade-radius.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -190,8 +190,8 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="spatial-correlation.html">Computing spatial correlation in magnetic models</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">The Rydberg Blockade</a></li>
-<li class="toctree-l1"><a class="reference internal" href="adiabatic_evolution.html">Adiabatic Time Evolution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blockade-radius.html">The Rydberg Blockade</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Adiabatic Time Evolution</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="nav bd-sidenav">
@@ -276,7 +276,7 @@
       
       
       
-      <li><a href="../_sources/theory/blockade-radius.ipynb" target="_blank"
+      <li><a href="../_sources/theory/adiabatic_evolution.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -352,7 +352,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>The Rydberg Blockade</h1>
+    <h1>Adiabatic Time Evolution</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -362,10 +362,8 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hamiltonian">Hamiltonian</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-atom-case">Two Atom Case</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-qubit-example">Single Qubit Example</a></li>
 </ul>
             </nav>
         </div>
@@ -377,150 +375,110 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="the-rydberg-blockade">
-<h1>The Rydberg Blockade<a class="headerlink" href="#the-rydberg-blockade" title="Link to this heading">#</a></h1>
-<p>This notebook is inspired by the review paper <a class="reference external" href="https://arxiv.org/pdf/2002.07413">“Many-Body Physics with Individually-Controlled Rydberg Atoms”</a> by Antoine Browaeys &amp; Thierry Lahaye. It’s aim is to introduce the The Rydberg Hamiltonian and the concept of the Rydberg Blockade.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="adiabatic-time-evolution">
+<h1>Adiabatic Time Evolution<a class="headerlink" href="#adiabatic-time-evolution" title="Link to this heading">#</a></h1>
+<section id="theory">
+<h2>Theory<a class="headerlink" href="#theory" title="Link to this heading">#</a></h2>
+<p>Suppose we have a Time-dependent Hamiltonian <span class="math notranslate nohighlight">\(H(t)\)</span> then the Schrödinger equation is
+$<span class="math notranslate nohighlight">\(
+i\hbar \frac{d}{dt}|\psi(t)\rangle = H(t)|\psi(t)\rangle.
+\)</span><span class="math notranslate nohighlight">\(
+We can write
+\)</span><span class="math notranslate nohighlight">\(
+|\psi(t)\rangle = \sum_n c_n(t)|n(t)\rangle
+\)</span><span class="math notranslate nohighlight">\(
+with 
+\)</span><span class="math notranslate nohighlight">\(
+H(t) |n(t)\rangle = e_n(t) |n(t)\rangle.
+\)</span>$</p>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Adiabatic_theorem">Adiabatic Theorem</a> states that if a system is evolved by a slowly varying time dependent Hamiltonian (i.e. <span class="math notranslate nohighlight">\(\dot H(t) \approx 0\)</span>) and as long as the eigenenergies don’t become degenerate (i.e. <span class="math notranslate nohighlight">\(e_n(t) - e_m(t) \ne 0\)</span>) then we will have
+$<span class="math notranslate nohighlight">\( |c_m(t)|^2 = |c_m(0)|^2.\)</span>$
+Thus as a consequence if the system is initially in the ground state of the Hamiltonian, if the evolution is adiabatic, it will remain in the Hamiltonian’s ground-state.</p>
+</section>
+<section id="single-qubit-example">
+<h2>Single Qubit Example<a class="headerlink" href="#single-qubit-example" title="Link to this heading">#</a></h2>
+<p>Consider the time dependent Hamiltonian
+$<span class="math notranslate nohighlight">\(
+\begin{split}
+H(t) &amp;= - f_Z(t) Z - g_X(t) X \\
+f_Z(t) &amp;= 1-t/T \\
+g_X(t) &amp;= t/T \\
+\end{split}
+\)</span>$
+Note that at:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(t=0\)</span>: <span class="math notranslate nohighlight">\(H(0) = -Z \)</span> and <span class="math notranslate nohighlight">\(|0\rangle\)</span> is the groundstate.</p></li>
+<li><p><span class="math notranslate nohighlight">\(t=T\)</span>: <span class="math notranslate nohighlight">\(H(T) = -X \)</span> and <span class="math notranslate nohighlight">\(|+\rangle\)</span> is the groundstate.</p></li>
+</ul>
+<p>The adiabatic theorem assues us that if we vary the Hamiltonian slowly enough (i.e. for a large value of <span class="math notranslate nohighlight">\(T\)</span>), the final evolved state will be the ground state of <span class="math notranslate nohighlight">\(H(T)\)</span> if we start in the ground state of <span class="math notranslate nohighlight">\(H(0)\)</span>.
+Note that <span class="math notranslate nohighlight">\(\dot H(t) = - (Z +X) /T\)</span> which tends to zero for large values of <span class="math notranslate nohighlight">\(T\)</span>, thus for large <span class="math notranslate nohighlight">\(T\)</span> the evolution will be adiabatic.
+In the cells below we start in the state <span class="math notranslate nohighlight">\(|0\rangle\)</span> and evolving slowly we will evolve to the state <span class="math notranslate nohighlight">\(|+\rangle\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qutip</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">qp</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">qutip</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">qp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
 </div>
-<section id="hamiltonian">
-<h2>Hamiltonian<a class="headerlink" href="#hamiltonian" title="Link to this heading">#</a></h2>
-<p>The general Rydberg Hamiltonain (where the Rydberg state is the same for all atoms) reads</p>
-<div class="math notranslate nohighlight">
-\[
-H = \frac{\hbar \Omega}{2} \sum_i  X_i - \hbar \delta \sum_i  N_i + \sum_{i&lt;j} \frac{C_6}{r_{ij}^6}N_i N_j 
-\]</div>
-<p>where</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\Omega\)</span> is the Rabi frequency, which may be time dependent</p></li>
-<li><p><span class="math notranslate nohighlight">\(\delta\)</span> is the detuning, which may be time dependent</p></li>
-<li><p><span class="math notranslate nohighlight">\(C_6\)</span> is a device specific constant</p></li>
-<li><p><span class="math notranslate nohighlight">\(r_{ij}\)</span> is the distance between qubits <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span></p></li>
-</ul>
-<p>We take <span class="math notranslate nohighlight">\(|0\rangle\)</span> and <span class="math notranslate nohighlight">\(|1\rangle\)</span> to be the ground and Rydberg state respectively. Then we have</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{split}
-X|0\rangle &amp;= |1\rangle \\
-X|1\rangle &amp;= |0\rangle \\
-\end{split}
-\end{split}\]</div>
-<p>and</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{split}
-N|0\rangle &amp;= 0 \\
-N|1\rangle &amp;= |1\rangle \\
-\end{split}
-\end{split}\]</div>
-<p>The Rydberg radius is defined as</p>
-<div class="math notranslate nohighlight">
-\[
-r_b^6 = \frac{C_6}{\hbar\Omega}
-\]</div>
-<p>i.e. for atoms separated by a distance equal to Rydberg radius the interaction term is as large as the Rabi term.</p>
-<p>Thus we can write (assuming <span class="math notranslate nohighlight">\(\Omega \ne 0\)</span>)</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{H}{\hbar\Omega} = \frac{1}{2} \sum_i  X_i - \frac{\delta}{\Omega} \sum_i  N_i + \sum_{i&lt;j} \frac{1}{(r_{ij}/r_b)^6}N_i N_j 
-\]</div>
-<section id="two-atom-case">
-<h3>Two Atom Case<a class="headerlink" href="#two-atom-case" title="Link to this heading">#</a></h3>
-<p>For two atoms separated by distance <span class="math notranslate nohighlight">\(r=\alpha r_b\)</span> we have</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{H}{\hbar\Omega} = \frac{1}{2} \sum_i  X_i - \frac{\delta}{\Omega} \sum_i  N_i + \frac{1}{\alpha^6} N_1 N_2 
-\]</div>
-<p>We can see that for large values of <span class="math notranslate nohighlight">\(\alpha\)</span> the atoms will behave like independent systems as the as the interaction term will be extremely small.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">create_two_atom_hamiltonian</span><span class="p">(</span><span class="n">delta_omega_ratio</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    delta_omega_ratio is delta / Omega</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">rabi_hamiltonian</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span>
-        <span class="n">qp</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">qp</span><span class="o">.</span><span class="n">sigmax</span><span class="p">(),</span> <span class="n">qp</span><span class="o">.</span><span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="n">qp</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">qp</span><span class="o">.</span><span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">qp</span><span class="o">.</span><span class="n">sigmax</span><span class="p">())</span>
-    <span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">duration</span> <span class="o">=</span> <span class="mf">10.0</span>
+<span class="n">sample_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
-    <span class="n">detuning_hamiltonian</span> <span class="o">=</span> <span class="o">-</span><span class="n">delta_omega_ratio</span> <span class="o">*</span> <span class="p">(</span>
-        <span class="n">qp</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">qp</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">qp</span><span class="o">.</span><span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="n">qp</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">qp</span><span class="o">.</span><span class="n">qeye</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">qp</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-    <span class="p">)</span>
+<span class="n">pulse_up</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span> <span class="o">/</span> <span class="n">duration</span>
+<span class="n">pulse_dn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">t</span> <span class="o">/</span> <span class="n">duration</span>
 
-    <span class="n">int_hamiltonian</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">qp</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">qp</span><span class="o">.</span><span class="n">num</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">alpha</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">rabi_hamiltonian</span> <span class="o">+</span> <span class="n">detuning_hamiltonian</span> <span class="o">+</span> <span class="n">int_hamiltonian</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_ham</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">pulse_dn</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">qp</span><span class="o">.</span><span class="n">sigmaz</span><span class="p">()</span> <span class="o">-</span> <span class="n">pulse_up</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">qp</span><span class="o">.</span><span class="n">sigmax</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Let’s plot the state probability evolution for two different values of <span class="math notranslate nohighlight">\(\alpha\)</span>. In the plot below we see that decreasing <span class="math notranslate nohighlight">\(\alpha\)</span> means that the state <span class="math notranslate nohighlight">\(|11\rangle\)</span> is surpressed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_probs</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-
-
-<span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-
-<span class="n">delta_omega_ratio</span> <span class="o">=</span> <span class="mf">0.8</span>
-
-<span class="n">alpha</span> <span class="o">=</span> <span class="mf">10.0</span>
-<span class="n">hamiltonain</span> <span class="o">=</span> <span class="n">create_two_atom_hamiltonian</span><span class="p">(</span><span class="n">delta_omega_ratio</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
-
-<span class="n">initial_state</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">qp</span><span class="o">.</span><span class="n">fock</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">qp</span><span class="o">.</span><span class="n">fock</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-<span class="n">evolved_states_iso</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">sesolve</span><span class="p">(</span><span class="n">hamiltonain</span><span class="p">,</span> <span class="n">initial_state</span><span class="p">,</span> <span class="n">times</span><span class="p">)</span>
-<span class="n">probs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">get_probs</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">full</span><span class="p">())</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">evolved_states_iso</span><span class="o">.</span><span class="n">states</span><span class="p">])</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-        <span class="n">times</span><span class="p">,</span> <span class="n">probs</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$|</span><span class="si">%s</span><span class="s2">\rangle$&quot;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">binary_repr</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="p">)</span>
-
-
-<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.7</span>
-<span class="n">hamiltonain</span> <span class="o">=</span> <span class="n">create_two_atom_hamiltonian</span><span class="p">(</span><span class="n">delta_omega_ratio</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
-<span class="n">evolved_states_int</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">sesolve</span><span class="p">(</span><span class="n">hamiltonain</span><span class="p">,</span> <span class="n">initial_state</span><span class="p">,</span> <span class="n">times</span><span class="p">)</span>
-<span class="n">probs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">get_probs</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">full</span><span class="p">())</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">evolved_states_int</span><span class="o">.</span><span class="n">states</span><span class="p">])</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">probs</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sample_times</span><span class="p">,</span> <span class="n">pulse_up</span><span class="p">(</span><span class="n">sample_times</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$g_X$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sample_times</span><span class="p">,</span> <span class="n">pulse_dn</span><span class="p">(</span><span class="n">sample_times</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$f_Z$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;State Probability&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Value&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2adef7720685043c8690deeae33ca8b7f3240e763de9e5144e9229b058467bb3.png" src="../_images/2adef7720685043c8690deeae33ca8b7f3240e763de9e5144e9229b058467bb3.png" />
+<img alt="../_images/76c9cf93b73e937366993c3e8bbb960b608cb7213b738c285133a16c905e3c96.png" src="../_images/76c9cf93b73e937366993c3e8bbb960b608cb7213b738c285133a16c905e3c96.png" />
 </div>
 </div>
-<p>By printing out the eigenvalues of the reduced density matrix of atom 1, we see that for large <span class="math notranslate nohighlight">\(\alpha\)</span> there is almost no entanglement between the atoms, while for a smaller <span class="math notranslate nohighlight">\(\alpha\)</span> entanglement is present.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psi1</span> <span class="o">=</span> <span class="n">evolved_states_iso</span><span class="o">.</span><span class="n">final_state</span><span class="o">.</span><span class="n">ptrace</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">psi1</span><span class="o">.</span><span class="n">full</span><span class="p">()))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">initial_state</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">fock</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">states</span> <span class="o">=</span> <span class="n">qp</span><span class="o">.</span><span class="n">sesolve</span><span class="p">(</span>
+    <span class="n">get_ham</span><span class="p">,</span> <span class="n">initial_state</span><span class="p">,</span> <span class="n">sample_times</span><span class="p">,</span> <span class="n">e_ops</span><span class="o">=</span><span class="p">[</span><span class="n">qp</span><span class="o">.</span><span class="n">sigmaz</span><span class="p">(),</span> <span class="n">qp</span><span class="o">.</span><span class="n">sigmax</span><span class="p">()]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">states</span><span class="o">.</span><span class="n">e_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;&lt;Z&gt;&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">states</span><span class="o">.</span><span class="n">e_data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;&lt;X&gt;&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Expectation Value&quot;</span><span class="p">)</span>
 
-<span class="n">psi2</span> <span class="o">=</span> <span class="n">evolved_states_int</span><span class="o">.</span><span class="n">final_state</span><span class="o">.</span><span class="n">ptrace</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">psi2</span><span class="o">.</span><span class="n">full</span><span class="p">()))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1.00000000e+00-6.04092904e-18j 1.61653032e-14-2.17146466e-17j]
-[0.95052887+4.56917150e-18j 0.04947113+2.31864041e-17j]
-</pre></div>
+<img alt="../_images/365459c354299992ccfd506e07128ad59ae55224c78e218d7599cdee330ea439.png" src="../_images/365459c354299992ccfd506e07128ad59ae55224c78e218d7599cdee330ea439.png" />
 </div>
 </div>
-</div>
-</section>
+<p>We see that initially <span class="math notranslate nohighlight">\(\langle Z \rangle=1\)</span> (since we start in the state <span class="math notranslate nohighlight">\(|0\rangle\)</span>) but after the evolution we have <span class="math notranslate nohighlight">\(\langle x\rangle=1\)</span> which shows we have correctly evolved to the state <span class="math notranslate nohighlight">\(|+\rangle\)</span>.</p>
 </section>
 </section>
 
@@ -555,20 +513,20 @@ r_b^6 = \frac{C_6}{\hbar\Omega}
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="spatial-correlation.html"
+       href="blockade-radius.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Computing spatial correlation in magnetic models</p>
+        <p class="prev-next-title">The Rydberg Blockade</p>
       </div>
     </a>
     <a class="right-next"
-       href="adiabatic_evolution.html"
+       href="../autoapi/qse/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Adiabatic Time Evolution</p>
+        <p class="prev-next-title">qse</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -590,10 +548,8 @@ r_b^6 = \frac{C_6}{\hbar\Omega}
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hamiltonian">Hamiltonian</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-atom-case">Two Atom Case</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-qubit-example">Single Qubit Example</a></li>
 </ul>
   </nav></div>
 
