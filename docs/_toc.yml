@@ -13,6 +13,7 @@ parts:
   - caption: Use-Cases
     chapters:
       - file: use-cases/ssh_model
+      - file: use-cases/adiabatic
     #  - file: ../examples/pulser-myqlm-conversion
   - caption: Theory
     chapters:
