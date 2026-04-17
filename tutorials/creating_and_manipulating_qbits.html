@@ -548,6 +548,32 @@
 <img alt="../_images/3debb87ec8980f4c5deee06959fc90e41e4eb63689c39410716ad61c6f94b788.png" src="../_images/3debb87ec8980f4c5deee06959fc90e41e4eb63689c39410716ad61c6f94b788.png" />
 </div>
 </div>
+<p>One can often use mathematical transformations to generate more complex lattice structures. Below is an illustration to generate triangular lattice using square lattices.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">qbits</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">lattices</span><span class="o">.</span><span class="n">square</span><span class="p">(</span>
+    <span class="n">lattice_spacing</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">repeats_x</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">repeats_y</span><span class="o">=</span><span class="mi">4</span>
+<span class="p">)</span>  <span class="c1"># square lattice</span>
+<span class="n">qbits</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+<span class="n">shift</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">a</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+<span class="c1"># shift alternating rows by half of lattice spacing</span>
+<span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">shift</span>
+<span class="c1"># scale the y-coordinates to insure nearest neighbour</span>
+<span class="c1"># spacing is &#39;a&#39;</span>
+
+<span class="n">qbits</span><span class="o">.</span><span class="n">positions</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="n">scale</span>
+<span class="n">qbits</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e72ee10f7de19c2b1c61c1703a8f9a1654c1bdc08155e1f83923287f31953523.png" src="../_images/e72ee10f7de19c2b1c61c1703a8f9a1654c1bdc08155e1f83923287f31953523.png" />
+<img alt="../_images/f3183c680950b78193150af0f95aef9daa2b0229c3635f77717873792be0fb2d.png" src="../_images/f3183c680950b78193150af0f95aef9daa2b0229c3635f77717873792be0fb2d.png" />
+</div>
+</div>
 </section>
 </section>
 </section>
