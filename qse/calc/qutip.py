@@ -48,7 +48,7 @@ class Qutip(Calculator):
 
         result = {"state": state.full()}
         if e_ops is not None:
-            result["expectations" : np.array(exps)]
+            result["expectations"] = np.array(exps)
 
         return result
 
