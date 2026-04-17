@@ -10,6 +10,7 @@ parts:
       - file: tutorials/creating_and_manipulating_qbits
       - file: tutorials/generating_lattices
       - file: tutorials/pulser-calc-example
+      - file: tutorials/finite-geometries
   - caption: Use-Cases
     chapters:
       - file: use-cases/ssh_model
@@ -19,6 +20,7 @@ parts:
     chapters:
       - file: theory/spatial-correlation
       - file: theory/blockade-radius
+      - file: theory/adiabatic_evolution
   - caption: API Reference
     chapters:
       - file: autoapi/qse/index # This is where sphinx-autoapi dumps the docs
