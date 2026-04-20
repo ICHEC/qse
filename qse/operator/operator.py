@@ -108,4 +108,4 @@ def _qutip_converter(op):
         return qp.sigmaz()
 
     if op == "N":
-        return 0.5 * (1 - qp.sigmaz())
+        return qp.num(2)

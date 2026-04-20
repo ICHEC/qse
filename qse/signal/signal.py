@@ -2,10 +2,14 @@
 
 import numpy as np
 
+from qse.vis import draw_signal
+
 
 class Signal:
     """
     The Signal class represents a 1D signal with values and duration.
+    The duration must be divisble by the number of values and each value
+    is assume to last for an equal duration.
 
     Parameters
     ----------
@@ -17,38 +21,38 @@ class Signal:
 
     Examples
     --------
-    One can create a signal by passing an array of values:
+    To create a constant signal, passing a single value:
 
-    >>> qse.Signal([1, 2, 3], 100)
-    ... Signal(duration=100, values=[1. 2. 3.])
+    .. jupyter-execute::
+
+        import qse
+        s = qse.Signal([1], 10)
+        print(s)
+
+
+    To create an arbitrary signal, pass an array
+    whose length is equal to the duration:
+
+    .. jupyter-execute::
+
+        import qse
+        import numpy as np
+
+        ss = qse.Signal(np.linspace(0, 1, 5), 5)
+        print(ss)
 
     Arithmetic operations with scalars is supported.
     Adding or multiplying a scalar to a Signal returns
     a new Signal with modified values and the same duration.
     For example:
 
-    >>> signal = qse.Signal([1, 1])
-    >>> signal * 3 + 0.5
-    ... Signal(duration=2, values=[3.5 3.5])
+    .. jupyter-execute::
 
-    Two Signals can be added together which
-    concatenates their values and sums their durations.
-    So if w1, w2 are instantiation of Signal, then
-    w = w1 + w2 gives signal with concatenated values, i.e.,
-    w.values = [w1.values, w2.values], and added duration
-    w.duration = w1.duration + w2.duration.
-    For example:
+        import qse
+        signal = qse.Signal([1, 1])
+        signal = signal * 3 + 0.5
+        print(signal)
 
-    >>> signal_1 = qse.Signal([1, 1], 5)
-    >>> signal_2 = qse.Signal([2, 2], 2)
-    >>> signal_1 + signal_2
-    ... Signal(duration=7, values=[1. 1. 2. 2.])
-
-    Notes
-    -----
-    Currently, the object gets created for multi-dim arrays as well.
-    However, it should be used for 1D only, we haven't made it useful
-    or consistent for multi-dim usage.
     """
 
     def __init__(self, values, duration=None) -> None:
@@ -117,12 +121,7 @@ class Signal:
         TypeError
             If the operand type is unsupported.
         """
-        if isinstance(other, Signal):
-            return Signal(
-                values=np.append(self.values, other.values),
-                duration=self.duration + other.duration,
-            )
-        elif isinstance(other, (float, int)):
+        if isinstance(other, (float, int)):
             return Signal(values=self.values + other, duration=self.duration)
         else:
             raise TypeError(f"Unsupported operand type for +: {type(other)}")
@@ -157,10 +156,7 @@ class Signal:
         TypeError
             If the operand type is unsupported.
         """
-        if isinstance(other, Signal):
-            self.values = np.append(self.values, other.values)
-            self.duration = self.duration + other.duration
-        elif isinstance(other, (float, int)):
+        if isinstance(other, (float, int)):
             self.values = self.values + other
         else:
             raise TypeError(f"Unsupported operand type for +=: {type(other)}")
@@ -237,5 +233,74 @@ class Signal:
         """
         return f"Signal(duration={self.duration}, values={self.values})"
 
-    # TODO: Define interpolating scheme to resample points
-    # if duration is changed externally.
+    def __len__(self):
+        return len(self.values)
+
+    @property
+    def duration(self):
+        return self._duration
+
+    @duration.setter
+    def duration(self, new_duration):
+        if not isinstance(new_duration, int):
+            raise ValueError("The duration must be an ints")
+
+        if new_duration % len(self) != 0:
+            raise ValueError("The number of values must divide the duration.")
+
+        self._duration = new_duration
+
+    def time_per_value(self):
+        """
+        Get the duration per value. Recall that the values are equally
+        spaced over the total duration.
+
+        Returns
+        -------
+        int
+            The duration of each value.
+        """
+        return self.duration // len(self)
+
+    def expand(self):
+        """
+        Get an array of length 'duration' whose entries are the signal values.
+
+        Returns
+        -------
+        np.ndarray
+            An array representing the signal.
+        """
+        return np.concatenate([[i] * self.time_per_value() for i in self.values])
+
+    def to_pulser(self):
+        """
+        Convert to a Pulser Waveform.
+
+        Returns
+        -------
+        pulser.waveforms.Waveform
+            The waveform.
+        """
+        from pulser.waveforms import ConstantWaveform, CustomWaveform
+
+        if len(self) == 1:
+            return ConstantWaveform(duration=self.duration, value=self.values[0])
+        return CustomWaveform(self.expand())
+
+    def draw(self, time_units=None, signal_units=None, title=None):
+        """
+        Draw the signal.
+
+        Parameters
+        ----------
+        time_units : str, optional
+            The units of the duration.
+        signal_units : str, optional
+            The units of the signal.
+        title : str, optional
+            A title for the plot.
+        """
+        return draw_signal(
+            self, time_units=time_units, signal_units=signal_units, title=title
+        )
