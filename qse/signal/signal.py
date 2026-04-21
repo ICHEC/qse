@@ -18,6 +18,8 @@ class Signal:
     duration : int
         Duration of the signal.
         Defaults to the length of the passed values.
+    name : str, optional
+        The name of the signal.
 
     Examples
     --------
@@ -55,9 +57,10 @@ class Signal:
 
     """
 
-    def __init__(self, values, duration=None) -> None:
+    def __init__(self, values, duration=None, name=None) -> None:
         self.values = np.asarray(values, dtype=float)
         self.duration = len(self.values) if duration is None else int(duration)
+        self.name = name
 
     def __iter__(self):
         """
