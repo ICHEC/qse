@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+**/_build
+
 # notebook to use as scratch
 scratch.ipynb
 

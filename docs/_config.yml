@@ -1,0 +1,101 @@
+# Project information
+title: QSE
+author: ICHEC
+logo: logo.svg  # Ensure this file is in your docs/ folder
+
+# Execution settings (Replaces nbsphinx_execute)
+execute:
+  execute_notebooks: auto # Only runs if notebook has changed
+  cache: ""               # Use jupyter-cache for faster builds
+
+# Parsing settings
+parse:
+  myst_enable_extensions:
+    - colon_fence        # Required for "::: " blocks
+    - dollarmath
+    - amsmath
+
+# HTML Header / Repo settings
+repository:
+  url: https://github.com/ICHEC/qse
+  branch: main
+  path_to_docs: docs
+
+launch_buttons:
+  notebook_interface: "jupyterlab"
+  thebe: true
+  repository_button: true
+  issues_button: true
+
+html:
+  show_nav_level: 4     # Shows the top module + 1 level of submodules
+  max_navbar_depth: 5   # Allows user to expand manually down to 4 levels
+
+# Sphinx-specific overrides (The core of your conf.py)
+sphinx:
+  extra_extensions:
+    - jupyter_sphinx
+    - sphinx.ext.autodoc
+    - sphinx.ext.coverage
+    - sphinx.ext.napoleon
+    - sphinx.ext.viewcode
+    - sphinx_togglebutton
+    - sphinx_copybutton
+    - sphinxcontrib.mermaid
+    - autoapi.extension
+  
+  config:
+    # This forces the inclusion of the Widget Manager JS library
+    # which is required for the 'click and drag' to work.
+    html_js_files:
+      - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js
+      - https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js
+    
+    # This tells Sphinx to ignore the "external-toc" warnings 
+    # specifically for the auto-generated API files.
+    suppress_warnings:
+      - etoc.toctree
+      - app.add_node
+      - app.add_directive
+    
+    html_theme_options:
+      show_nav_level: 4
+      collapse_navigation: false
+
+    # Adding the root to sys.path so autodoc finds 'qse'
+    # Jupyter Book handles the pathing relative to the config file
+    autoapi_dirs: ['../qse']
+    # autoapi_type: 'python3'
+    autoapi_add_toctree_entry: false
+    # --- The Customization Magic ---
+    autoapi_options:
+      - members                # Show functions/classes with docstrings
+      - special-members        # Show __init__, __repr__ etc.
+      - show-inheritance       # Show "Bases: MyParentClass"
+      - show-module-summary    # Create a nice table at the top of each module
+      - imported-members       # Only if you want to show things imported into __init__.py
+    # Explicitly ignore files you don't want documented
+    autoapi_ignore:
+      - '*test*'
+      - 'setup.py'
+      - 'conf.py'
+      - 'qse_logo.py'
+    
+    # Sort members by their order in the source code (rather than alphabetical)
+    autoapi_member_order: 'bysource'
+    
+    # Keep the sidebar clean
+    autoapi_add_toctree_entry: true
+
+    # Napoleon settings from your conf.py
+    napoleon_numpy_docstring: true
+    napoleon_google_docstring: false
+    napoleon_use_param: false
+    napoleon_use_ivar: true
+    napoleon_use_rtype: false
+    
+    # Mermaid settings
+    mermaid_version: "10.4.0"
+    
+    # Static paths
+    html_static_path: ["_static"]

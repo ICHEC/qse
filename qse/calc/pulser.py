@@ -2,12 +2,14 @@
 This module Provides QSE calculator interface to Pulser. It is derived from
 the ASE's CP2K calculator, though at the end it may look very different from
 ASE calculator.
-https://pulser.readthedocs.io/en/stable/
+
+It defines the `Pulser backend <https://pulser.readthedocs.io/en/stable/>`_
+for analog computation.
 """
 
 from time import time
 
-from qse import Signal
+from qse import Signal, Signals
 from qse.calc.calculator import Calculator
 
 try:
@@ -28,9 +30,9 @@ class Pulser(Calculator):
     ----------
     qbits: qse.Qbits
         The qbits object.
-    amplitude: qse.Signal, pulser.waveforms.Waveform
+    amplitude: qse.Signal, qse.Signals, pulser.waveforms.Waveform
         The amplitude pulse.
-    detuning: qse.Signal, pulser.waveforms.Waveform
+    detuning: qse.Signal, qse.Signals, pulser.waveforms.Waveform
         The detuning pulse.
     channel : str
         Which channel to use. For example "rydberg_global" for Rydberg or
@@ -56,16 +58,20 @@ class Pulser(Calculator):
     --------
     A simple example of using the Pulser calculator:
 
-    >>> qbits = qse.lattices.chain(4.0, 4)
-    >>> duration = 400
-    >>> pulser_calc = qse.calc.Pulser(
-    ...     qbits=qbits,
-    ...     amplitude=qse.Signal(np.ones(6) * 1.01, duration),
-    ...     detuning=qse.Signal(np.ones(6) * 0.12, duration),
-    ... )
-    >>> pulser_calc.build_sequence()
-    >>> pulser_calc.calculate()
-    >>> pulser_calc.get_spins()
+    .. jupyter-execute::
+
+        import qse
+        qbits = qse.lattices.square(4.0, 3, 3)
+        duration = 400
+        amp = qse.Signal([1.01], duration)
+        det = qse.Signal([0.12], duration)
+        pcalc = qse.calc.Pulser(
+            qbits=qbits,
+            amplitude=amp,
+            detuning=det)
+        pcalc.build_sequence()
+        pcalc.calculate()
+        pcalc.get_spins()
 
     Notes
     -----
@@ -145,12 +151,6 @@ class Pulser(Calculator):
         self._detuning = _format_pulse(detuning)
 
     @property
-    def coords(self):
-        if self._qbits is None:
-            return None
-        return self._qbits.positions[:, :2]
-
-    @property
     def register(self):
         return self._qbits.to_pulser()
 
@@ -211,17 +211,10 @@ class Pulser(Calculator):
 def _format_pulse(pulse):
     if pulse is None or isinstance(pulse, pulser.waveforms.Waveform):
         return pulse
-    if isinstance(pulse, Signal):
-        # pulser.waveforms.InterpolatedWaveform needs minimum 2
-        # values. In the case where we have a single value,
-        # we use pulser.waveforms.ConstantWaveform.
-        if len(pulse.values) == 1:
-            return pulser.waveforms.ConstantWaveform(
-                duration=pulse.duration, value=pulse.values
-            )
-        return pulser.waveforms.InterpolatedWaveform(
-            duration=pulse.duration, values=pulse.values
-        )
+    if isinstance(pulse, (Signal, Signals)):
+        return pulse.to_pulser()
+
     raise Exception(
-        "Pulses must be either `qse.Signal` or `pulser.waveforms.Waveform`."
+        "Pulses must be either `qse.Signal`, `qse.Signals` "
+        "or `pulser.waveforms.Waveform`."
     )

@@ -7,11 +7,11 @@ import warnings
 from math import cos, sin
 
 import numpy as np
-from ase.cell import Cell
 
+from qse.cell import Cell
 from qse.operator import Operator, Operators
 from qse.qbit import Qbit
-from qse.visualise import draw as _draw
+from qse.vis import draw_qbits
 
 
 class Qbits:
@@ -32,15 +32,11 @@ class Qbits:
         A list of strings corresponding to a label for each qubit.
     states: list of 2-length arrays.
         State of each qubit.
-    cell: 3x3 matrix or length 3 or 6 vector
-        Unit cell vectors.  Can also be given as just three
-        numbers for orthorhombic cells, or 6 numbers, where
-        first three are lengths of unit cell vectors, and the
-        other three are angles between them (in degrees), in following order:
-        [len(a), len(b), len(c), angle(b,c), angle(a,c), angle(a,b)].
-        First vector will lie in x-direction, second in xy-plane,
-        and the third one in z-positive subspace.
-        Default value: [0, 0, 0].
+    cell: qse.Cell | np.ndarray
+        Unit cell vectors.
+        Either pass a matrix where each row corresponds to a lattice vector
+        or a qse.Cell object.
+        Default value is all zeros.
     pbc: one or three bool
         Periodic boundary conditions flags.  Examples: True,
         False, 0, 1, (1, 1, 0), (True, False, False).  Default
@@ -49,36 +45,47 @@ class Qbits:
         Used to attach a calculator for doing computation.
 
     Examples
-    --------
+    ========
+
     Empty Qbits object:
 
-    >>> qs = qse.Qbits()
+    .. jupyter-execute::
+
+        import qse
+        qs = qse.Qbits()
+        print(qs)
 
     These are equivalent:
 
-    >>> a = qse.Qbits(
-    ...     positions=np.array([(0, 0, 0), (0, 0, 2)])
-    ...     labels=['qb1', 'qb2'],
-    ... )
-    >>> a = qse.Qbits.from_qbit_list(
-    ...     [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))]
-    ... )
+    .. jupyter-execute::
 
-    >>> xd = np.array(
-    ...    [[0, 0, 0],
-    ...     [0.5, 0.5, 0.5]]
-    ... )
-    >>> qdim = qse.Qbits(xd)
-    >>> qdim.cell = [1,1,1]
-    >>> qdim.pbc = True
-    >>> qlat = qdim.repeat([3,3,3])
+        from qse import Qbit, Qbits
+        import numpy as np
 
-    The qdim will have shape = (2,1,1) and qlat will have shape = (6, 3, 3)
+        # below two methods are equivalent
+        a = Qbits(
+            positions=np.array([(0, 0, 0), (0, 0, 2)]),
+            labels=['qb1', 'qb2'])
 
-    Notes
-    -----
-    In order to do computation, a calculator object has to attached
-    to the qbits object.
+        a = Qbits.from_qbit_list(
+            [Qbit('qb1', position=(0, 0, 0)), Qbit('qb2', position=(0, 0, 2))])
+        print(a)
+
+        xd = np.array([[0, 0, 0], [0.5, 0.5, 0.5]])
+        qdim = Qbits(xd)
+        qdim.cell = np.eye(3)
+        qdim.pbc = True
+        qlat = qdim.repeat([3,3,3])
+        print(qlat)
+
+    The qdim will have shape = (1,1,1) and qlat will have shape = (3, 3, 3)
+
+    .. note::
+        In order to do computation, a calculator object has to attached
+        to the qbits object.
+
+    See the Qbits tutorial :doc:`/tutorials/creating_and_manipulating_qbits`
+    for more details.
     """
 
     def __init__(
@@ -110,17 +117,22 @@ class Qbits:
         # We allow for labels up to length 12.
         self.new_array("labels", labels, "<U12")
 
-        # cell
-        self._cellobj = Cell.new()
-        if cell is None:
-            cell = np.zeros((3, 3))
-        self.set_cell(cell)
-
         # positions
         if positions is None:
-            positions = np.zeros((nqbits, 3))
+            # If a cell is passed we can infer the dimension, otherwise default to 3.
+            if cell is None:
+                dim = 3
+            else:
+                dim = cell.dim if isinstance(cell, Cell) else Cell(cell).dim
+            positions = np.zeros((nqbits, dim))
 
         self.new_array("positions", positions, float)
+
+        # cell
+        if cell is None:
+            self._cell = None
+        else:
+            self.cell = cell
 
         # states
         if states is None:
@@ -129,7 +141,7 @@ class Qbits:
         self.new_array("states", states, complex, (2,))
 
         # shape
-        self._shape = (self.nqbits, 1, 1)
+        self.shape = (1,) * self.dim
 
         # pbc
         self._pbc = np.zeros(3, bool)
@@ -148,18 +160,6 @@ class Qbits:
             for name in ["label", "state", "position"]
         }
         return Qbits(**data)
-
-    @property
-    def shape(self):
-        """The shape of the qbits"""
-        return self._shape
-
-    @shape.setter
-    def shape(self, new_shape):
-        """Update the shape to new shape"""
-        if self.nqbits != np.prod(new_shape):
-            raise AssertionError(f"no. of qubits= {self.nqbits}, yet shape {new_shape}")
-        self._shape = new_shape
 
     @property
     def calc(self):
@@ -188,82 +188,21 @@ class Qbits:
     def nqbits(self):
         return len(self)
 
-    def set_cell(self, cell, scale_qbits=False):
-        """
-        Set unit cell vectors.
+    @property
+    def cell(self):
+        return self._cell
 
-        Parameters
-        ----------
-        cell: 3x3 matrix or length 3 or 6 vector
-            Unit cell.  A 3x3 matrix (the three unit cell vectors) or
-            just three numbers for an orthorhombic cell. Another option is
-            6 numbers, which describes unit cell with lengths of unit cell
-            vectors and with angles between them (in degrees), in following
-            order: [len(a), len(b), len(c), angle(b,c), angle(a,c),
-            angle(a,b)].  First vector will lie in x-direction, second in
-            xy-plane, and the third one in z-positive subspace.
-        scale_qbits: bool
-            Fix qbit positions or move qbits with the unit cell?
-            Default behavior is to *not* move the qbits (scale_qbits=False).
+    @cell.setter
+    def cell(self, new_cell):
+        if not isinstance(new_cell, Cell):
+            new_cell = Cell(new_cell)
 
-        Examples
-        --------
-        Two equivalent ways to define an orthorhombic cell:
+        if new_cell.dim != self.dim:
+            raise Exception(
+                "The dimension of the cell must match the dimension of the qubits."
+            )
 
-        >>> qbits = Qbits('He')
-        >>> a, b, c = 7, 7.5, 8
-        >>> qbits.set_cell([a, b, c])
-        >>> qbits.set_cell([(a, 0, 0), (0, b, 0), (0, 0, c)])
-
-        FCC unit cell:
-
-        >>> qbits.set_cell([(0, b, b), (b, 0, b), (b, b, 0)])
-
-        Hexagonal unit cell:
-
-        >>> qbits.set_cell([a, a, c, 90, 90, 120])
-
-        Rhombohedral unit cell:
-
-        >>> alpha = 77
-        >>> qbits.set_cell([a, a, a, alpha, alpha, alpha])
-        """
-
-        # Override pbcs if and only if given a Cell object:
-        # print('here', cell)
-        cell = Cell.new(cell)
-
-        if scale_qbits:
-            M = np.linalg.solve(self.cell.complete(), cell.complete())
-            self.positions[:] = np.dot(self.positions, M)
-
-        self.cell[:] = cell
-
-    def get_cell(self, complete=False):
-        """Get the three unit cell vectors as a `class`:ase.cell.Cell` object.
-
-        The Cell object resembles a 3x3 ndarray, and cell[i, j]
-        is the jth Cartesian coordinate of the ith cell vector."""
-        if complete:
-            return self.cell.complete()
-        return self.cell.copy()
-
-    def get_reciprocal_cell(self):
-        """
-        Get the three reciprocal lattice vectors as a 3x3 ndarray.
-
-        Returns
-        -------
-        np.ndarray
-            The reciprocal cell.
-
-        Notes
-        -----
-        The commonly used factor of 2 pi for Fourier
-        transforms is not included here.
-        """
-
-        return self.cell.reciprocal()
+        self._cell = new_cell
 
     @property
     def pbc(self):
@@ -366,17 +305,15 @@ class Qbits:
             qbits.arrays[name] = a.copy()
 
         qbits.shape = self.shape  # this was necessary, and took long time to realise!
-
         return qbits
 
     def todict(self):
         """For basic JSON (non-database) support."""
-        # d = dict(self.arrays)
         d = {}
         d["labels"] = self.arrays["labels"]
         d["positions"] = self.arrays["positions"]
         d["states"] = self.arrays["states"]
-        d["cell"] = self.cell  # np.asarray(self.cell)
+        d["cell"] = self.cell
         d["pbc"] = self.pbc
 
         return d
@@ -424,13 +361,9 @@ class Qbits:
             txt = "pbc={0}".format(self.pbc[0])
         tokens.append(txt + ",\n")
 
-        cell = self.cell
-        if cell:
-            if cell.orthorhombic:
-                cell = cell.lengths().tolist()
-            else:
-                cell = cell.tolist()
-            tokens.append("cell={0}".format(cell) + ",\n")
+        if self.cell is not None:
+            tokens.append("cell=\n{0}".format(self.cell.to_str()) + ",\n")
+
         if self._calc is not None:
             tokens.append("calculator={0}".format(self._calc.__class__.__name__))
         txt = "{0}(\n{1}{2})".format(
@@ -554,31 +487,50 @@ class Qbits:
     def __imul__(self, m):
         """In-place repeat of qbits."""
         if isinstance(m, int):
-            m = (m, m, m)
+            m = (m,) * self.dim
 
-        for x, vec in zip(m, self.cell):
+        for x, vec in zip(m, self.cell.lattice_vectors):
             if x != 1 and not vec.any():
                 raise ValueError("Cannot repeat along undefined lattice " "vector")
 
-        M = np.prod(m)
+        fac = np.prod(m)
         n = len(self)
 
         for name, a in self.arrays.items():
-            self.arrays[name] = np.tile(a, (M,) + (1,) * (len(a.shape) - 1))
+            self.arrays[name] = np.tile(a, (fac,) + (1,) * (len(a.shape) - 1))
 
         positions = self.arrays["positions"]
+
         i0 = 0
-        for m0 in range(m[0]):
-            for m1 in range(m[1]):
-                for m2 in range(m[2]):
+
+        if self.dim == 1:
+            for m0 in range(m[0]):
+                i1 = i0 + n
+                positions[i0:i1] += np.dot((m0), self.cell.lattice_vectors)
+                i0 = i1
+
+        elif self.dim == 2:
+            for m0 in range(m[0]):
+                for m1 in range(m[1]):
                     i1 = i0 + n
-                    positions[i0:i1] += np.dot((m0, m1, m2), self.cell)
+                    positions[i0:i1] += np.dot((m0, m1), self.cell.lattice_vectors)
                     i0 = i1
 
-        self.cell = np.array([m[c] * self.cell[c] for c in range(3)])
+        elif self.dim == 3:
+            for m0 in range(m[0]):
+                for m1 in range(m[1]):
+                    for m2 in range(m[2]):
+                        i1 = i0 + n
+                        positions[i0:i1] += np.dot(
+                            (m0, m1, m2), self.cell.lattice_vectors
+                        )
+                        i0 = i1
 
-        new_shape = tuple(self.shape * np.array(m))
-        self.shape = new_shape
+        self.cell.lattice_vectors = np.array(
+            [m[c] * self.cell.lattice_vectors[c] for c in range(self.dim)]
+        )
+
+        self.shape = tuple(self.shape * np.array(m))
         return self
 
     def draw(
@@ -616,7 +568,7 @@ class Qbits:
         --------
         qse.draw
         """
-        _draw(
+        draw_qbits(
             self,
             radius=radius,
             show_labels=show_labels,
@@ -719,12 +671,20 @@ class Qbits:
         The following all rotate 90 degrees anticlockwise around the z-axis,
         so that the x-axis is rotated into the y-axis:
 
-        >>> qbits.rotate(90)
-        >>> qbits.rotate(90, 'z')
-        >>> qbits.rotate(90, (0, 0, 1))
-        >>> qbits.rotate(-90, '-z')
-        >>> qbits.rotate('x', 'y')
-        >>> qbits.rotate((1, 0, 0), (0, 1, 0))
+        .. jupyter-execute::
+
+            import qse
+            q2d = qse.lattices.square(1.0, 3, 3)
+            q2d.draw()
+            q2d.rotate(45)
+            q2d.draw()
+            q2d.rotate(45, 'x')
+            q2d.draw()
+            # q2d.rotate(90, 'z')
+            # q2d.rotate(90, (0, 0, 1))
+            # q2d.rotate(-90, '-z')
+            # q2d.rotate('x', 'y')
+            # q2d.rotate((1, 0, 0), (0, 1, 0))
 
         Notes
         -----
@@ -789,20 +749,18 @@ class Qbits:
             self.remove_dim("z")
 
         if rotate_cell:
-            rotcell = self.get_cell()
-            rotcell[:] = (
-                c * rotcell
-                - np.cross(rotcell, s * v)
-                + np.outer(np.dot(rotcell, v), (1.0 - c) * v)
+            self.cell.lattice_vectors = (
+                c * self.cell.lattice_vectors
+                - np.cross(self.cell.lattice_vectors, s * v)
+                + np.outer(np.dot(self.cell.lattice_vectors, v), (1.0 - c) * v)
             )
-            self.set_cell(rotcell)
 
     def _centering_as_array(self, center):
         if isinstance(center, str):
             if center.lower() == "cop":
                 center = self.get_centroid()
             elif center.lower() == "cou":
-                center = self.get_cell().sum(axis=0) / 2
+                center = self.cell.lattice_vectors.sum(axis=0) / 2
             else:
                 raise ValueError("Cannot interpret center")
         else:
@@ -1196,16 +1154,6 @@ class Qbits:
         else:
             return not eq
 
-    def get_volume(self):
-        """Get volume of unit cell."""
-        if self.cell.rank != 3:
-            raise ValueError(
-                "You have {0} lattice vectors: volume not defined".format(
-                    self.cell.rank
-                )
-            )
-        return self.cell.volume
-
     # Rajarshi: Below these three written to add attribute of states
     def _get_states(self):
         """Return reference to states-array for in-place manipulations."""
@@ -1236,16 +1184,6 @@ class Qbits:
     labels = property(
         _get_labels, _set_labels, doc="Attribute for direct manipulation of labels"
     )
-
-    @property
-    def cell(self):
-        """The :class:`ase.cell.Cell` for direct manipulation."""
-        return self._cellobj
-
-    @cell.setter
-    def cell(self, cell):
-        cell = Cell.ascell(cell)
-        self._cellobj[:] = cell
 
     def write(self, filename, format=None, **kwargs):
         """Write qbits object to a file.
@@ -1311,35 +1249,29 @@ class Qbits:
         --------
         To create a ZZ Hamiltonian for only nearest neighbour qubits
 
-        >>> spacing = 1.0
-        >>> qbits = qse.lattices.chain(spacing, 4)
-        >>> coupling = -2.
-        >>> qbits.compute_interaction_hamiltonian(
-        ...     lambda x: coupling*np.isclose(x, spacing), "Z"
-        ... )
-        ... Number of qubits: 4
-        ... Number of terms: 3
-        ...
-        ... -2.00 Z0 Z1
-        ... -2.00 Z1 Z2
-        ... -2.00 Z2 Z3
+        .. jupyter-execute::
+
+            import qse
+            spacing = 1.0
+            qbits = qse.lattices.square(spacing, 2, 2)
+            coupling = -2.
+            H = qbits.compute_interaction_hamiltonian(
+                lambda x: coupling*np.isclose(x, spacing), "Z")
+            print(H)
 
         To create an XY Hamiltonian based on distance
 
-        >>> spacing = 1.0
-        >>> qbits = qse.lattices.chain(spacing, 2)
-        >>> coupling = 1.
-        >>> hamiltonian = qbits.compute_interaction_hamiltonian(
-        ...     lambda x: coupling / x**3, ["X", "Y"]
-        ... )
-        >>> hamiltonian += qbits.compute_interaction_hamiltonian(
-        ...     lambda x: coupling / x**3, ["Y", "X"]
-        ... )
-        ... Number of qubits: 2
-        ... Number of terms: 2
-        ...
-        ... 1.00 X0 Y1
-        ... 1.00 Y0 X1
+        .. jupyter-execute::
+
+            import qse
+            spacing = 1.0
+            qbits = qse.lattices.square(spacing, 2, 2)
+            coupling = 1.
+            H = qbits.compute_interaction_hamiltonian(
+                lambda x: coupling / x**3, ["X", "Y"])
+            H += qbits.compute_interaction_hamiltonian(
+                lambda x: coupling / x**3, ["Y", "X"])
+            print(H)
         """
         ops = []
 
@@ -1391,7 +1323,7 @@ class Qbits:
         np.ndarray
             The positions in units of the unit cell.
         """
-        return np.dot(self.positions, np.linalg.inv(self.cell))
+        return np.dot(self.positions, np.linalg.inv(self.cell.lattice_vectors))
 
 
 def _norm_vector(v):

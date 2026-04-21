@@ -16,11 +16,16 @@ _repeats = [2, 3]
 
 
 def _lattice_checker(
-    qbits, expected_qbits, lattice_spacing, expected_cell, expected_positions
+    qbits,
+    expected_qbits,
+    lattice_spacing,
+    expected_cell,
+    expected_positions,
+    expected_dim=2,
 ):
     assert isinstance(qbits, qse.Qbits)
     assert qbits.nqbits == expected_qbits
-    assert qbits.positions.shape == (expected_qbits, 3)
+    assert qbits.positions.shape == (expected_qbits, expected_dim)
 
     # Check the labels
     assert all(qbits.labels[i] == str(i) for i in range(qbits.nqbits))
@@ -30,7 +35,7 @@ def _lattice_checker(
     assert np.isclose(qbits.get_all_distances()[0][1:].min(), lattice_spacing)
 
     # Check the cell
-    assert np.allclose(qbits.cell, expected_cell)
+    assert np.allclose(qbits.cell.lattice_vectors, expected_cell)
 
     # Check the positions
     assert np.allclose(qbits.positions, expected_positions)
@@ -40,10 +45,9 @@ def _lattice_checker(
 @pytest.mark.parametrize("N", _repeats)
 def test_linear(lattice_spacing, N):
     qbits = chain(lattice_spacing, N)
-    expected_cell = np.zeros((3, 3))
-    expected_cell[0, 0] = lattice_spacing * N
-    expected_positions = lattice_spacing * np.array([[i, 0, 0] for i in range(N)])
-    _lattice_checker(qbits, N, lattice_spacing, expected_cell, expected_positions)
+    expected_cell = np.array([[lattice_spacing * N]])
+    expected_positions = np.array([[i * lattice_spacing] for i in range(N)])
+    _lattice_checker(qbits, N, lattice_spacing, expected_cell, expected_positions, 1)
 
 
 def test_linear_fail():
@@ -58,11 +62,11 @@ def test_linear_fail():
 @pytest.mark.parametrize("N2", _repeats)
 def test_square(lattice_spacing, N1, N2):
     qbits = square(lattice_spacing, N1, N2)
-    expected_cell = np.zeros((3, 3))
+    expected_cell = np.zeros((2, 2))
     expected_cell[0, 0] = lattice_spacing * N1
     expected_cell[1, 1] = lattice_spacing * N2
     expected_positions = lattice_spacing * np.array(
-        [[i, j, 0.0] for i in range(N1) for j in range(N2)]
+        [[i, j] for i in range(N1) for j in range(N2)]
     )
     _lattice_checker(
         qbits,
@@ -81,18 +85,13 @@ def test_triangular(lattice_spacing, N1, N2):
 
     expected_cell = lattice_spacing * np.array(
         [
-            [N1, 0.0, 0.0],
-            [N2 * np.cos(np.pi / 3), N2 * np.sin(np.pi / 3), 0.0],
-            [0.0, 0.0, 0.0],
+            [N1, 0.0],
+            [N2 * np.cos(np.pi / 3), N2 * np.sin(np.pi / 3)],
         ]
     )
 
     expected_positions = lattice_spacing * np.array(
-        [
-            [(i + j * 0.5), j * np.sqrt(3) * 0.5, 0.0]
-            for i in range(N1)
-            for j in range(N2)
-        ]
+        [[(i + j * 0.5), j * np.sqrt(3) * 0.5] for i in range(N1) for j in range(N2)]
     )
     _lattice_checker(
         qbits,
@@ -115,23 +114,22 @@ def test_hexagonal(lattice_spacing, N1, N2):
         * 0.5
         * np.array(
             [
-                [N1 * np.sqrt(3), N1, 0.0],
-                [N2 * np.sqrt(3), -N2, 0.0],
-                [0.0, 0.0, 0.0],
+                [N1 * np.sqrt(3), N1],
+                [N2 * np.sqrt(3), -N2],
             ]
         )
     )
 
     arr1 = lattice_spacing * np.array(
         [
-            [(i + j) * 1.5, (i - j) * np.sqrt(3) * 0.5, 0.0]
+            [(i + j) * 1.5, (i - j) * np.sqrt(3) * 0.5]
             for i in range(N1)
             for j in range(N2)
         ]
     )
     arr2 = arr1.copy()
     arr2[:, 0] += lattice_spacing
-    expected_positions = np.zeros((len(arr1) + len(arr2), 3))
+    expected_positions = np.zeros((len(arr1) + len(arr2), 2))
     expected_positions[0::2] = arr1
     expected_positions[1::2] = arr2
     _lattice_checker(
@@ -151,21 +149,20 @@ def test_kagome(lattice_spacing, N1, N2):
 
     expected_cell = lattice_spacing * np.array(
         [
-            [N1 * 2, 0.0, 0.0],
-            [N2, N2 * np.sqrt(3), 0.0],
-            [0.0, 0.0, 0.0],
+            [N1 * 2, 0.0],
+            [N2, N2 * np.sqrt(3)],
         ]
     )
 
     arr1 = lattice_spacing * np.array(
-        [[(2 * i + j), j * np.sqrt(3), 0.0] for i in range(N1) for j in range(N2)]
+        [[(2 * i + j), j * np.sqrt(3)] for i in range(N1) for j in range(N2)]
     )
     arr2 = arr1.copy()
     arr2[:, 0] += lattice_spacing
     arr3 = arr1.copy()
     arr3[:, 0] += lattice_spacing * 0.5
     arr3[:, 1] += np.sqrt(3) * lattice_spacing / 2
-    expected_positions = np.zeros((len(arr1) + len(arr2) + len(arr3), 3))
+    expected_positions = np.zeros((len(arr1) + len(arr2) + len(arr3), 2))
     expected_positions[0::3] = arr1
     expected_positions[1::3] = arr2
     expected_positions[2::3] = arr3
