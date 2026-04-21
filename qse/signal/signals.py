@@ -15,6 +15,8 @@ class Signals:
     ----------
     signals : list[qse.Signal], optional
         The signals.
+    name : str, optional
+        The name of the signal.
 
     Examples
     --------
@@ -36,13 +38,14 @@ class Signals:
     As shown above, one can also create Signals by adding two signals.
     """
 
-    def __init__(self, signals=None):
+    def __init__(self, signals=None, name=None):
         if signals is None:
             signals = []
         else:
             if not isinstance(signals, list) or not isinstance(signals[0], Signal):
                 raise Exception("signals must be a list of Signal objects.")
         self._signals = signals
+        self.name = name
 
     def __add__(self, other):
         if isinstance(other, Signal):
