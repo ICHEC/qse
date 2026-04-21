@@ -60,7 +60,7 @@ This project is under active development.
 
 `Qbit` is the smallest class that represents just one qubits. `Qbits` is the primary class that represents a collection of qubits.
 It can be instantiated by providing a list of coordinates, or as an empty class.
-See the [Qbits examples](https://github/ICHEC/qse/docs/build/html/tutorials/creating_and_manipulating_qbits.html) for more details.
+See the [Qbits examples](https://ichec.github.io/qse/tutorials/creating_and_manipulating_qbits.html) for more details.
 
 
 
