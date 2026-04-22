@@ -11,6 +11,7 @@ parts:
       - file: tutorials/generating_lattices
       - file: tutorials/pulser-calc-example
       - file: tutorials/finite-geometries
+      - file: tutorials/vqe_qiskit
   - caption: Use-Cases
     chapters:
       - file: use-cases/ssh_model

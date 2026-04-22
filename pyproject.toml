@@ -53,6 +53,7 @@ docs = [
     "ipywidgets",
     "ipympl",
     "pulser",  # required for creating the docs
+    "qiskit"
 ]
 
 [tool.black]
