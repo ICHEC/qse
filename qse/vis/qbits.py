@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from .colours import qbits_palette
+from .colours import qse_palette
 
-colors = qbits_palette["colors"]
-rads = qbits_palette["rads"]
+colors = qse_palette["colors"]
+rads = qse_palette["rads"]
 
 
 def draw_qbits(
