@@ -23,6 +23,7 @@ Functions
 .. autoapisummary::
 
    qse.vis.draw_qbits
+   qse.vis.draw_amp_and_det
    qse.vis.draw_signal
    qse.vis.bar
    qse.vis.view_matrix
@@ -50,11 +51,23 @@ Package Contents
                   Defaults to True.
 
 
+.. py:function:: draw_amp_and_det(amplitude, detuning, time_units=None, signal_units=None, title=None)
+
+   Draw a signal amplitude together with a signal detuning.
+
+   :Parameters: * **amplitude** (*qse.Signal | qse.Signals*) -- The amplitude to be drawn.
+                * **detuning** (*qse.Signal | qse.Signals*) -- The detuning to be drawn.
+                * **time_units** (*str, optional*) -- The units of the duration.
+                * **signal_units** (*str, optional*) -- The units of the signal.
+                * **title** (*str, optional*) -- A title for the plot.
+
+
 .. py:function:: draw_signal(signal, time_units=None, signal_units=None, title=None)
 
    Draw the signal.
 
-   :Parameters: * **time_units** (*str, optional*) -- The units of the duration.
+   :Parameters: * **signal** (*qse.Signal | qse.Signals*) -- The signal to be drawn.
+                * **time_units** (*str, optional*) -- The units of the duration.
                 * **signal_units** (*str, optional*) -- The units of the signal.
                 * **title** (*str, optional*) -- A title for the plot.
 

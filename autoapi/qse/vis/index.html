@@ -364,6 +364,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.draw_qbits"><code class="docutils literal notranslate"><span class="pre">draw_qbits()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.draw_amp_and_det"><code class="docutils literal notranslate"><span class="pre">draw_amp_and_det()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.draw_signal"><code class="docutils literal notranslate"><span class="pre">draw_signal()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.bar"><code class="docutils literal notranslate"><span class="pre">bar()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.view_matrix"><code class="docutils literal notranslate"><span class="pre">view_matrix()</span></code></a></li>
@@ -394,13 +395,16 @@ to draw the qubits.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#qse.vis.draw_qbits" title="qse.vis.draw_qbits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_qbits</span></code></a>(qbits[, radius, show_labels, colouring, ...])</p></td>
 <td><p>Visualize the positions of a set of qubits.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#qse.vis.draw_signal" title="qse.vis.draw_signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_signal</span></code></a>(signal[, time_units, signal_units, title])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#qse.vis.draw_amp_and_det" title="qse.vis.draw_amp_and_det"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_amp_and_det</span></code></a>(amplitude, detuning[, time_units, ...])</p></td>
+<td><p>Draw a signal amplitude together with a signal detuning.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#qse.vis.draw_signal" title="qse.vis.draw_signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_signal</span></code></a>(signal[, time_units, signal_units, title])</p></td>
 <td><p>Draw the signal.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#qse.vis.bar" title="qse.vis.bar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bar</span></code></a>(dict[, cutoff, ylabel])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#qse.vis.bar" title="qse.vis.bar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bar</span></code></a>(dict[, cutoff, ylabel])</p></td>
 <td><p>Plot a bar chart from a dictionary, filtering values below a cutoff.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#qse.vis.view_matrix" title="qse.vis.view_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_matrix</span></code></a>(matrix[, labels_x, labels_y, vcenter])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#qse.vis.view_matrix" title="qse.vis.view_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_matrix</span></code></a>(matrix[, labels_x, labels_y, vcenter])</p></td>
 <td><p>Visualise a matrix.</p></td>
 </tr>
 </tbody>
@@ -435,12 +439,30 @@ Defaults to True.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="qse.vis.draw_amp_and_det">
+<span class="sig-prename descclassname"><span class="pre">qse.vis.</span></span><span class="sig-name descname"><span class="pre">draw_amp_and_det</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amplitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detuning</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/vis/signal.html#draw_amp_and_det"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.vis.draw_amp_and_det" title="Link to this definition">#</a></dt>
+<dd><p>Draw a signal amplitude together with a signal detuning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>amplitude</strong> (<em>qse.Signal | qse.Signals</em>) – The amplitude to be drawn.</p></li>
+<li><p><strong>detuning</strong> (<em>qse.Signal | qse.Signals</em>) – The detuning to be drawn.</p></li>
+<li><p><strong>time_units</strong> (<em>str, optional</em>) – The units of the duration.</p></li>
+<li><p><strong>signal_units</strong> (<em>str, optional</em>) – The units of the signal.</p></li>
+<li><p><strong>title</strong> (<em>str, optional</em>) – A title for the plot.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="qse.vis.draw_signal">
 <span class="sig-prename descclassname"><span class="pre">qse.vis.</span></span><span class="sig-name descname"><span class="pre">draw_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/qse/vis/signal.html#draw_signal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#qse.vis.draw_signal" title="Link to this definition">#</a></dt>
 <dd><p>Draw the signal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>signal</strong> (<em>qse.Signal | qse.Signals</em>) – The signal to be drawn.</p></li>
 <li><p><strong>time_units</strong> (<em>str, optional</em>) – The units of the duration.</p></li>
 <li><p><strong>signal_units</strong> (<em>str, optional</em>) – The units of the signal.</p></li>
 <li><p><strong>title</strong> (<em>str, optional</em>) – A title for the plot.</p></li>
@@ -555,6 +577,7 @@ Default is 0.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.draw_qbits"><code class="docutils literal notranslate"><span class="pre">draw_qbits()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.draw_amp_and_det"><code class="docutils literal notranslate"><span class="pre">draw_amp_and_det()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.draw_signal"><code class="docutils literal notranslate"><span class="pre">draw_signal()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.bar"><code class="docutils literal notranslate"><span class="pre">bar()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qse.vis.view_matrix"><code class="docutils literal notranslate"><span class="pre">view_matrix()</span></code></a></li>

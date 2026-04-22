@@ -416,18 +416,13 @@ H_f = \frac{\hbar \Omega_f}{2} \sum_i  X_i + \sum_{i&lt;j} \frac{C_6}{r_{ij}^6}N
 <span class="n">amplitude</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">omega_final</span><span class="p">,</span> <span class="n">duration</span><span class="p">))</span>
 <span class="n">detuning</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">delta_initial</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">duration</span><span class="p">))</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">amplitude</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">detuning</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Detuning&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (ns)&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Signal (rad/µs)&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">draw_amp_and_det</span><span class="p">(</span><span class="n">amplitude</span><span class="p">,</span> <span class="n">detuning</span><span class="p">,</span> <span class="s2">&quot;ns&quot;</span><span class="p">,</span> <span class="s2">&quot;rad/µs&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/09a532290b86aee737bcf7a4e9f89be37cfbc5c25636bce04c1f942769947501.png" src="../_images/09a532290b86aee737bcf7a4e9f89be37cfbc5c25636bce04c1f942769947501.png" />
+<img alt="../_images/64bf770455d53015f017bf4b830ddc74b1e61c60da3ad4314b429f0e7b269f2a.png" src="../_images/64bf770455d53015f017bf4b830ddc74b1e61c60da3ad4314b429f0e7b269f2a.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -450,11 +445,15 @@ H_f = \frac{\hbar \Omega_f}{2} \sum_i  X_i + \sum_{i&lt;j} \frac{C_6}{r_{ij}^6}N
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;expectations&quot;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\langle H_i \rangle$&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">e_i</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$e_i$&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;expectations&quot;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\langle H_i \rangle$&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">qse_green</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">e_i</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$e_i$&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">qse_green</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;expectations&quot;</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\langle H_f \rangle$&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">e_f</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;C1&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$e_f$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;expectations&quot;</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\langle H_f \rangle$&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">qse_red</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">e_f</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$e_f$&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">qse</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">qse_red</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (ns)&quot;</span><span class="p">)</span>
@@ -464,7 +463,7 @@ H_f = \frac{\hbar \Omega_f}{2} \sum_i  X_i + \sum_{i&lt;j} \frac{C_6}{r_{ij}^6}N
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ac9a95508be267101e7d90cabd052e4210ad0d74999da3ab53909022b4acde30.png" src="../_images/ac9a95508be267101e7d90cabd052e4210ad0d74999da3ab53909022b4acde30.png" />
+<img alt="../_images/b520ae7cd23fd22aa539e1d2ee5fe9adb8a3cccaa6ca100d261c187a2984810d.png" src="../_images/b520ae7cd23fd22aa539e1d2ee5fe9adb8a3cccaa6ca100d261c187a2984810d.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -479,7 +478,7 @@ H_f = \frac{\hbar \Omega_f}{2} \sum_i  X_i + \sum_{i&lt;j} \frac{C_6}{r_{ij}^6}N
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/688b6a9cbb2cdff576fd063436fc221d81d3275e54a5dce396aa8598165d70fb.png" src="../_images/688b6a9cbb2cdff576fd063436fc221d81d3275e54a5dce396aa8598165d70fb.png" />
+<img alt="../_images/ed2afc55a52d1693768fcfdfd59ac7298f5f517ddda68ef217d90544c5f3c1e5.png" src="../_images/ed2afc55a52d1693768fcfdfd59ac7298f5f517ddda68ef217d90544c5f3c1e5.png" />
 </div>
 </div>
 </section>

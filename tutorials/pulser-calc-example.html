@@ -436,35 +436,20 @@ the nearest neighbours antiferromagnetic.</p>
 <span class="n">amplitude_afm</span> <span class="o">+=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="n">omega_max</span><span class="p">],</span> <span class="n">t_sweep</span><span class="p">)</span>
 <span class="n">amplitude_afm</span> <span class="o">+=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">omega_max</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">t_fall</span><span class="p">))</span>
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">amplitude_afm</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;ns&quot;</span><span class="p">,</span> <span class="s2">&quot;rad/µs&quot;</span><span class="p">,</span> <span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/97c772f3d38142d89b8e1ba4f3d51514198953450c96baa224f7c8e4da843d96.png" src="../_images/97c772f3d38142d89b8e1ba4f3d51514198953450c96baa224f7c8e4da843d96.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">detuning_afm</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signals</span><span class="p">()</span>
+<span class="n">detuning_afm</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signals</span><span class="p">()</span>
 <span class="n">detuning_afm</span> <span class="o">+=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="n">delta_0</span><span class="p">],</span> <span class="n">t_rise</span><span class="p">)</span>
 <span class="n">detuning_afm</span> <span class="o">+=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">delta_0</span><span class="p">,</span> <span class="n">delta_f</span><span class="p">,</span> <span class="n">t_sweep</span><span class="p">))</span>
 <span class="n">detuning_afm</span> <span class="o">+=</span> <span class="n">qse</span><span class="o">.</span><span class="n">Signal</span><span class="p">([</span><span class="n">delta_f</span><span class="p">],</span> <span class="n">t_fall</span><span class="p">)</span>
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">detuning_afm</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;ns&quot;</span><span class="p">,</span> <span class="s2">&quot;rad/µs&quot;</span><span class="p">,</span> <span class="s2">&quot;Detuning&quot;</span><span class="p">)</span>
+<span class="c1"># Check both signals have the same duration</span>
+<span class="k">assert</span> <span class="n">amplitude_afm</span><span class="o">.</span><span class="n">duration</span> <span class="o">==</span> <span class="n">detuning_afm</span><span class="o">.</span><span class="n">duration</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">qse</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">draw_amp_and_det</span><span class="p">(</span><span class="n">amplitude_afm</span><span class="p">,</span> <span class="n">detuning_afm</span><span class="p">,</span> <span class="s2">&quot;ns&quot;</span><span class="p">,</span> <span class="s2">&quot;rad/µs&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c9f36650ad98ce71ee04a49cd3f43f31f49c4c6f2c1455ccba14e18034f9ff91.png" src="../_images/c9f36650ad98ce71ee04a49cd3f43f31f49c4c6f2c1455ccba14e18034f9ff91.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check both signals have the same duration</span>
-<span class="k">assert</span> <span class="n">amplitude_afm</span><span class="o">.</span><span class="n">duration</span> <span class="o">==</span> <span class="n">detuning_afm</span><span class="o">.</span><span class="n">duration</span>
-</pre></div>
-</div>
+<img alt="../_images/47650d00b04f62514de3d3e02a35553906c89e0fd84dfa25b90d5b9dc760fd50.png" src="../_images/47650d00b04f62514de3d3e02a35553906c89e0fd84dfa25b90d5b9dc760fd50.png" />
 </div>
 </div>
 </section>
@@ -510,7 +495,7 @@ the nearest neighbours antiferromagnetic.</p>
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total run time:   0.03s
-time in compute and simulation = 0.08966779708862305 s.
+time in compute and simulation = 0.09455585479736328 s.
 </pre></div>
 </div>
 </div>
@@ -528,7 +513,7 @@ time in compute and simulation = 0.08966779708862305 s.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5ef5f12c38c60d7d63b7fdbeec4f3279577351f16b23f20af31740caba9409b4.png" src="../_images/5ef5f12c38c60d7d63b7fdbeec4f3279577351f16b23f20af31740caba9409b4.png" />
+<img alt="../_images/ba941a0329a5ab68489fb9cf66a416bed574d69480d0504ec594fd0509740112.png" src="../_images/ba941a0329a5ab68489fb9cf66a416bed574d69480d0504ec594fd0509740112.png" />
 </div>
 </div>
 <p>The states <code class="docutils literal notranslate"><span class="pre">011001</span></code> and <code class="docutils literal notranslate"><span class="pre">100110</span></code> are the most prevalent, we can visualise them using the <code class="docutils literal notranslate"><span class="pre">colouring</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">draw</span></code>.
