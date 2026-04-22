@@ -1,8 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-rads = np.linspace(12, 1, 10)
-colors = np.sqrt(np.linspace(0.1, 0.9, 10))
+from .colours import qse_palette
+
+colors = qse_palette["colors"]
+rads = qse_palette["rads"]
 
 
 def draw_qbits(
