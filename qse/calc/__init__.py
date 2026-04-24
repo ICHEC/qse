@@ -1,4 +1,10 @@
-"""Interface to different QSE calculators."""
+"""
+Calculators
+-----------
+
+Calculators are high level wrappers on different backend
+and let us offload the computational workload.
+"""
 
 __all__ = [
     "blockade_radius",
