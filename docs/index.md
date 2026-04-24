@@ -14,50 +14,39 @@ mystnb:
 
 # Quantum Simulation Environment (QSE)
 
+```{important}
+This project is under active development.
+```
+
 The **Quantum Simulation Environment (QSE)** is a flexible, modular, high-level Python library designed to
 decouple the essence of the quantum simulation problem from the technicalities of the backend software/hardware.
 
 
-## 🎯 The Philosophy: Separation of Concerns
+```{mermaid}
+:config: {"layout": "tidy-tree"}
 
-The core value of QSE is the strict separation between **Problem Framing** and **Problem Execution**
-
-| Phase             | Responsibility       | User Focus |
-| ----------------- | -------------------- | ---------- |
-| Problem Framing   | `Qbits` & `Lattices` |	Defining geometry, positions, and quantum degrees of freedom. |
-| Backend Execution | `Calculators`        | Handling SDK-specific syntax, hardware constraints, and simulators. |
-
-```{admonition} Why this matters:
-:class: note
-
-1. **Backend Agnostic:** Frame your problem once; simulate it on Pulser, myQLM, or QuTiP just by switching one line of code.
-2. **No More "Jargon":** You don't need to learn the specific pulse sequences or gate-level syntax of every vendor to get started. You focus on the lattice and the physics.
-3. **Reproducibility:** Your problem definition remains a "clean" representation of the physical model, making it easier to share and verify across different research groups.
+mindmap
+   root((QSE))
+      Qbits
+         Qbit
+         Cell
+      Calculator
+         Pulser
+         MyQLM
+         Qutip
+      Utils
+         Magnetic
+         Signals
+      lattices
+         2D
+         3D
+      Visualise
 ```
 
 ## Architectural Overview
 
 QSE organizes these concerns into modular components. The user interacts primarily
 with the `Qbits` and `Lattices` to frame the problem, then attaches a `Calculator`.
-
-
-```{mermaid}
-graph TD
-    subgraph Framing [Problem Framing - User Level]
-        Lattices --> Qbits
-        Utils --> Qbits
-    end
-
-    subgraph Interface [The Connection]
-        Qbits --- Calculator
-    end
-
-    subgraph Execution [Backend Execution - Jargon Level]
-        Calculator --> Pulser
-        Calculator --> MyQLM
-        Calculator --> Qutip
-    end
-```
 
 ### Core Components
 
@@ -116,6 +105,41 @@ simulation.
 - [Qutip](https://qutip.org/)
 
 
+```{mermaid}
+graph LR
+    subgraph Framing [Problem Framing]
+        Lattices --> Qbits
+        Utils --> Qbits
+    end
+
+    subgraph Interface [The Connection]
+        Qbits --- Calculator
+    end
+
+    subgraph Execution [Backend Execution]
+        Calculator ---> Pulser
+        Calculator ---> MyQLM
+        Calculator ---> Qutip
+    end
+```
+
+## 🎯 The Philosophy: Separation of Concerns
+
+The core value of QSE is the strict separation between **Problem Framing** and **Problem Execution**
+
+| Phase             | Responsibility       | User Focus |
+| ----------------- | -------------------- | ---------- |
+| Problem Framing   | `Qbits` & `Lattices` |	Defining geometry, positions, and quantum degrees of freedom. |
+| Backend Execution | `Calculators`        | Handling SDK-specific syntax, hardware constraints, and simulators. |
+
+```{admonition} Why this matters:
+:class: note
+
+1. **Backend Agnostic:** Frame your problem once; simulate it on Pulser, myQLM, or QuTiP just by switching one line of code.
+2. **No More "Jargon":** You don't need to learn the specific pulse sequences or gate-level syntax of every vendor to get started. You focus on the lattice and the physics.
+3. **Reproducibility:** Your problem definition remains a "clean" representation of the physical model, making it easier to share and verify across different research groups.
+```
+
 ## 📍Position-Dependent Quantum Degrees of Freedom
 
 Unlike standard gate-based frameworks where qubits are abstract entities in a register, QSE treats qubits as physical objects with coordinates. This is crucial for simulations where the interaction strength between qubits is a function of their spatial separation.
@@ -152,30 +176,6 @@ By keeping the problem definition independent of the backend, QSE ensures that t
 remains portable even as the quantum hardware landscape changes.
 ```
 
-```{mermaid}
-:config: {"layout": "tidy-tree"}
-
-mindmap
-   root((QSE))
-      Qbits
-         Qbit
-         Cell
-      Calculator
-         Pulser
-         MyQLM
-         Qutip
-      Utils
-         Magnetic
-         Signals
-      lattices
-         2D
-         3D
-      Visualise
-```
 
 
-```{note}
-
-This project is under active development.
-```
 
