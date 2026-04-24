@@ -752,10 +752,24 @@ window.runMermaid = runMermaid;</script>
                   
   <h1>Source code for qse.calc.myqlm</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This module Provides QSE calculator interface to MyQLM. It is derived from</span>
-<span class="sd">the ASE&#39;s calculator, though at the end it may look very different from</span>
-<span class="sd">ASE calculator.</span>
-<span class="sd">https://myqlm.github.io/</span>
+
+<span class="sd">Myqlm Calculator</span>
+<span class="sd">----------------</span>
+
+<span class="sd">This module Provides QSE calculator interface to MyQLM backend.</span>
+
+<span class="sd">Ref: https://myqlm.github.io/</span>
+
+<span class="sd">`myqlm` is a software middleware to potentially several quantum</span>
+<span class="sd">hardware providers, such as Pasqal devices for analog quantum</span>
+<span class="sd">computing.</span>
+
+<span class="sd">It lets one offload an analog quantum workflow to myqlm middleware</span>
+<span class="sd">which could be simulated ot real quantum device.</span>
+
+<span class="sd">It has been tested in HPC setting for simulated backend, and</span>
+<span class="sd">will be tested when we get access to a real Pasqal device.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>

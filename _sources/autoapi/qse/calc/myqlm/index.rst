@@ -5,10 +5,22 @@ qse.calc.myqlm
 
 .. autoapi-nested-parse::
 
-   This module Provides QSE calculator interface to MyQLM. It is derived from
-   the ASE's calculator, though at the end it may look very different from
-   ASE calculator.
-   https://myqlm.github.io/
+   Myqlm Calculator
+   ----------------
+
+   This module Provides QSE calculator interface to MyQLM backend.
+
+   Ref: https://myqlm.github.io/
+
+   `myqlm` is a software middleware to potentially several quantum
+   hardware providers, such as Pasqal devices for analog quantum
+   computing.
+
+   It lets one offload an analog quantum workflow to myqlm middleware
+   which could be simulated ot real quantum device.
+
+   It has been tested in HPC setting for simulated backend, and
+   will be tested when we get access to a real Pasqal device.
 
 
 

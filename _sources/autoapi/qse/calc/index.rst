@@ -5,7 +5,11 @@ qse.calc
 
 .. autoapi-nested-parse::
 
-   Interface to different QSE calculators.
+   Calculators
+   -----------
+
+   Calculators are high level wrappers on different backend
+   and let us offload the computational workload.
 
 
 
