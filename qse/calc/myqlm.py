@@ -7,7 +7,7 @@ This module Provides QSE calculator interface to MyQLM backend.
 
 Ref: https://myqlm.github.io/
 
-`myqlm` is a software backend to potentially several quantum
+`myqlm` is a software middleware to potentially several quantum
 hardware providers, such as Pasqal devices for analog quantum
 computing.
 
