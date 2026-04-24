@@ -11,7 +11,7 @@ Ref: https://myqlm.github.io/
 hardware providers, such as Pasqal devices for analog quantum
 computing.
 
-It lets one offload an analog quantum workflow to myqlm backend
+It lets one offload an analog quantum workflow to myqlm middleware
 which could be simulated ot real quantum device.
 
 It has been tested in HPC setting for simulated backend, and
