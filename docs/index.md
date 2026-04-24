@@ -90,7 +90,7 @@ qsqr.draw(radius=5.0)
 
 ### Qbits
 
-`Qbit` is the smallest class that represents just one qubits. `Qbits` is the primary class that represents a collection of qubits.
+`Qbit` is the smallest class that represents just one qubit. `Qbits` is the primary class that represents a collection of qubits.
 It can be instantiated by providing a list of coordinates, or as an empty class.
 See the [Qbits examples](https://ichec.github.io/qse/tutorials/creating_and_manipulating_qbits.html) for more details.
 
