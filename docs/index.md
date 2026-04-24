@@ -157,7 +157,7 @@ In QSE, you don't manually calculate these interaction terms. By defining the sp
 #### The Mapping Process
 
 1. **Define Geometry:** You place qubits in a 1D, 2D, or 3D arrangement.
-2. **Assign Degrees of Freedom:** Each position is assigned quantum properties (e.g., ground and Rydberg states).
+2. **Assign Degrees of Freedom:** Each qubit is assigned quantum properties (e.g., ground and Rydberg states).
 3. **Automatic Interaction Mapping:** The `Calculator` uses the spatial data to build the interaction matrix (e.g., $\frac{1}{r^6}$ or $\frac {1}{r^3}$ scaling) specific to that backend’s hardware logic.
 
 ## Status & Contribution
