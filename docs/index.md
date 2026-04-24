@@ -163,7 +163,7 @@ In QSE, you don't manually calculate these interaction terms. By defining the sp
 ## Status & Contribution
 
 QSE is currently under active development (TRL 7-8). This project was initially developed and supported
-by the HPCQS project and is currently supported by the upcoming QEX project. We are focused on expanding
+by the HPCQS project and is currently supported by the QEX project. We are focused on expanding
 our calculator suite to support more backends and post-processing tools.
 
 - **Target Users:** Scientific researchers in quantum optimization and many-body physics.
