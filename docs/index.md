@@ -146,7 +146,7 @@ Unlike standard gate-based frameworks where qubits are abstract entities in a re
 
 ### Why Positions Matter
 
-In many physical implementations of quantum simulators—such as Rydberg Atom Arrays or Trapped Ions—the Hamiltonian of the system is governed by the distance Rij​ between qubits i and j:
+In many physical implementations of quantum simulators—such as Rydberg Atom Arrays or Trapped Ions—the Hamiltonian of the system is governed by the distance $R_{ij}​=|{\bf R}_i - {\bf R}_j|$ between qubits $i$ and $j$:
 
 $$
 H = \sum_i \Omega_i\sigma_i^x - \sum_i \delta_i n_i + \sum_{i<j}{C_6 \over |{\bf R}_i - {\bf R}_j|^6} n_i n_j
