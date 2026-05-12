@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: pre-push-gatekeeper
+        name: Master Gatekeeper
+        entry: python scripts/pre-push.py
+        language: system
+        stages: [pre-push]
+        pass_filenames: false
