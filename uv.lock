@@ -4011,13 +4011,13 @@ dependencies = [
     { name = "matplotlib" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.4.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "pre-commit" },
     { name = "qutip" },
 ]
 
 [package.optional-dependencies]
 dev = [
     { name = "ipykernel" },
+    { name = "pre-commit" },
     { name = "pulser" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -4078,7 +4078,7 @@ requires-dist = [
     { name = "myqlm", marker = "extra == 'myqlm'" },
     { name = "myst-nb", marker = "extra == 'docs'", specifier = ">=1.1.0" },
     { name = "numpy" },
-    { name = "pre-commit", extras = ["dev"], specifier = ">=4.6.0" },
+    { name = "pre-commit", marker = "extra == 'dev'" },
     { name = "pulser", marker = "extra == 'dev'" },
     { name = "pulser", marker = "extra == 'docs'" },
     { name = "pulser", marker = "extra == 'pulser'" },
