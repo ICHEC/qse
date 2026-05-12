@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main  # or your default branch
-    paths-ignore:
-      - 'pyproject.toml'
   workflow_dispatch:
 
 permissions:
@@ -15,22 +13,25 @@ jobs:
   deploy-book:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      # 1. Setup uv (Massive speed boost for docs dependencies)
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: "3.12"
+          enable-cache: true
 
+      # 2. Install dependencies (Jupyter Book, Myst-NB, Sphinx-AutoAPI, etc.)
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install ".[docs]"
+          uv pip install ".[docs]"
 
+      # 3. Build the book using uv run
       - name: Build the book
         run: |
-          jupyter-book build docs/
+          uv run jupyter-book build docs/
 
+      # 4. Deploy to GitHub Pages (Only if on the main branch)
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
