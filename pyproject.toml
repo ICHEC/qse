@@ -35,6 +35,7 @@ dev = [
     "ipykernel",
     "ruff",      # Replaced flake8, black, isort, Flake8-pyproject
     "pulser",    # required for tests
+    "pre-commit",
 ]
 pulser = ["pulser"]
 myqlm = ["myqlm"]
@@ -51,6 +52,27 @@ docs = [
     "ipympl",
     "pulser",    # required for creating the docs
     "qiskit"
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.2.0",
+    "ipympl>=0.10.0",
+    "ipywidgets>=8.1.8",
+    "jupyter-book>=1.0.0,<2.0.0",
+    "jupyter-sphinx>=0.5.3",
+    "myst-nb>=1.1.0",
+    "pre-commit>=4.6.0",
+    "pulser>=1.8.0",
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "pytest-sugar>=1.1.1",
+    "qiskit>=2.4.1",
+    "ruff>=0.15.12",
+    "sphinx-autoapi>=3.0.0",
+    "sphinx-copybutton>=0.5.2",
+    "sphinx-togglebutton>=0.4.5",
+    "sphinxcontrib-mermaid>=2.0.2",
 ]
 
 [tool.mypy]
@@ -74,7 +96,7 @@ extend-include = ["*.ipynb"]
 # I: isort
 select = ["E", "F", "I"]
 
-ignore = [
-    "E741", # Do not use variables named 'I', 'O', or 'l'
-    # Note: Ruff inherently ignores E203 and W503 as they conflict with its formatter.
-]
+ignore = ["E741"]
+# Do not use variables named 'I', 'O', or 'l'
+# Note: Ruff inherently ignores E203 and W503 as they conflict with its formatter.
+
