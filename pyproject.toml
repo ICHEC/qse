@@ -96,7 +96,7 @@ extend-include = ["*.ipynb"]
 # I: isort
 select = ["E", "F", "I"]
 
-ignore = ["E741"]
+ignore = ["E741", "E731"]
 # Do not use variables named 'I', 'O', or 'l'
 # Note: Ruff inherently ignores E203 and W503 as they conflict with its formatter.
 
