@@ -491,7 +491,7 @@ class Qbits:
 
         for x, vec in zip(m, self.cell.lattice_vectors):
             if x != 1 and not vec.any():
-                raise ValueError("Cannot repeat along undefined lattice " "vector")
+                raise ValueError("Cannot repeat along undefined lattice vector")
 
         fac = np.prod(m)
         n = len(self)
@@ -1161,9 +1161,9 @@ class Qbits:
 
     def _set_states(self, sts):
         """Set states directly, bypassing constraints."""
-        self.arrays["states"][
-            :
-        ] = sts  # (sts.T / np.linalg.norm(sts, axis=1)).T # need to be normalized
+        self.arrays["states"][:] = (
+            sts  # (sts.T / np.linalg.norm(sts, axis=1)).T # need to be normalized
+        )
 
     # below is equivalent to defining @property states
     states = property(
