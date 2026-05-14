@@ -1,10 +1,10 @@
-import pathlib
 import subprocess
 import sys
 
 # --- CONFIGURATION ---
-SRC = ["qse", "scripts"]  # Only check your new Python code
-PYPROJECT_PATH = pathlib.Path("pyproject.toml")
+SRC = [
+    ".",
+]  # Only check your new Python code
 
 
 def run_check(name, command):
@@ -20,7 +20,9 @@ def run_check(name, command):
 def main():
 
     # Step 1: Ruff Check
-    run_check("Ruff Check:", f"uv run ruff check {' '.join(SRC)}")
+    run_check(
+        "Ruff Check:", f"uv run ruff check {' '.join(SRC)} --output-format grouped"
+    )
 
     # Step 2: Ruff Format
     run_check("Ruff Format:", f"uv run ruff format --check {' '.join(SRC)}")

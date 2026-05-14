@@ -91,9 +91,11 @@ addopts = "--cov=qse"
 
 # --- New Ruff Configuration ---
 [tool.ruff]
+output-format = "grouped"
 line-length = 88
 # This allows Ruff to format and lint Jupyter Notebooks just like black[jupyter] did
 extend-include = ["*.ipynb"]
+exclude = ["build", "dist", ".git", ".venv",]
 
 [tool.ruff.lint]
 # E: pycodestyle (flake8 default)
