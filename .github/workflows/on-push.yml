@@ -27,7 +27,7 @@ jobs:
     # 2. Install qse using uv
     - name: Install qse and testing dependencies
       run: |
-        uv pip install ".[dev]"
+        uv sync --dev
 
     # 3. Lint & Format (replaces flake8, isort, and black)
     - name: Lint and Format with Ruff
