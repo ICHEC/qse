@@ -23,9 +23,17 @@ dependencies = [
 
 [tool.setuptools.package-dir]
 qse = "qse"
+keywords = ["Quantum Simulation", "Analog Quantum Computing", "Lattice Models", "Python"]
+
+classifiers = [
+    "Programming Language :: Python"
+]
 
 [project.urls]
 homepage = "https://github.com/ichec/qse"
+Documentation = "https://ichec.github.io/qse"
+Repository = "https://github.com/ICHEC/qse.git"
+Issues = "https://github.com/ICHEC/qse/issues"
 
 [project.optional-dependencies]
 dev = [
