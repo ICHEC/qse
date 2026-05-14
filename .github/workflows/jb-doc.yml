@@ -3,37 +3,65 @@ name: jb-docs
 on:
   push:
     branches:
-      - main  # or your default branch
+      - main
   workflow_dispatch:
 
+# Required permissions for the official GitHub Pages deployment flow
 permissions:
-  contents: write
+  contents: read       # You only need to read the code to build it
+  pages: write         # Required to upload the site to the Pages server
+  id-token: write      # Required to verify the identity of the runner (OIDC)
+
+# Ensure only one deployment runs at a time to prevent race conditions
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   deploy-book:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v6
-      # 1. Setup uv (Massive speed boost for docs dependencies)
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      # 1. Setup uv (Node 24 compatible version)
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v8
         with:
           python-version: "3.12"
           enable-cache: true
 
-      # 2. Install dependencies (Jupyter Book, Myst-NB, Sphinx-AutoAPI, etc.)
+      # 2. Install dependencies
       - name: Install dependencies
         run: |
           uv pip install ".[docs]"
 
-      # 3. Build the book using uv run
+      # 3. Build the book
       - name: Build the book
         run: |
           uv run jupyter-book build docs/
 
-      # 4. Deploy to GitHub Pages (Only if on the main branch)
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      # 4. Upload Pages Artifact (The missing bridge)
+      # This packs the HTML into a specific format for the deployer
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/_build/html
+          path: docs/_build/html
+
+      # 5. Deploy to GitHub Pages
+      # This takes the artifact from Step 4 and makes it live
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      
+      # 6. Backup/Preview upload (Standard Artifact)
+      # Note: 'archive: false' is removed because it fails on directories in v7.
+      - name: Upload Docs Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: html-docs-snapshot
+          path: docs/_build/html
+          retention-days: 7
