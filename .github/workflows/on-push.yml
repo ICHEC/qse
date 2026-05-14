@@ -32,7 +32,7 @@ jobs:
     # 3. Lint & Format (replaces flake8, isort, and black)
     - name: Lint and Format with Ruff
       run: |
-        uv run ruff check .
+        uv run ruff check . --output-format github
         uv run ruff format --check .
 
     # 4. Test with pytest
