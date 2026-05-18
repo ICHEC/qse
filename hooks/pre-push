@@ -52,23 +52,17 @@ done
 
 #!/bin/bash
 
-echo "Running isort and black checks before push..."
+echo "Running  before push..."
 
-isort . --check --diff
+uv run ruff check .
 if [ $? -ne 0 ]; then
-  echo "isort failed. Please fix the import order."
+  echo "ruff check failed. Please check the errors."
   exit 1
 fi
 
-black . --check --diff
-if [ $? -ne 0 ]; then
-  echo "black failed. Please format your code."
-  exit 1
-fi
-
-flake8 qse
+uv run ruff format --check .
 if [ $?  -ne 0 ]; then
-  echo "flake8 failed. Please check the errors."
+  echo "uv ruff format failed. Please check the errors."
   exit 1
 fi
 

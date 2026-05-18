@@ -12,7 +12,7 @@ authors = [
     {name = "James Nelson", email = "james.nelson@ichec.ie"},
     {name = "Sherry Blair", email = "sherry.blair@ichec.ie"},
     {name = "Pablo Suárez Vieites", email = "pablo.suarez@ichec.ie"},
-    ]
+]
 version = "1.1.14"
 requires-python = ">=3.10"
 dependencies = [
@@ -20,12 +20,17 @@ dependencies = [
     "matplotlib",
     "qutip",
 ]
+keywords = ["Quantum Simulation", "Analog Quantum Computing", "Lattice Models", "Python"]
+classifiers = ["Programming Language :: Python",]
 
 [tool.setuptools.package-dir]
 qse = "qse"
 
 [project.urls]
 homepage = "https://github.com/ichec/qse"
+Documentation = "https://ichec.github.io/qse"
+Repository = "https://github.com/ICHEC/qse.git"
+Issues = "https://github.com/ICHEC/qse/issues"
 
 [project.optional-dependencies]
 dev = [
@@ -33,11 +38,9 @@ dev = [
     "pytest-cov",
     "pytest-sugar",
     "ipykernel",
-    "flake8", 
-    "black[jupyter]",
-    "isort",
-    "Flake8-pyproject",
-    "pulser",  # required for tests
+    "ruff",      # Replaced flake8, black, isort, Flake8-pyproject
+    "pulser",    # required for tests
+    "pre-commit",
 ]
 pulser = ["pulser"]
 myqlm = ["myqlm"]
@@ -52,35 +55,55 @@ docs = [
     "ipykernel",
     "ipywidgets",
     "ipympl",
-    "pulser",  # required for creating the docs
+    "pulser",    # required for creating the docs
     "qiskit"
 ]
 
-[tool.black]
-line-length = 88
+[dependency-groups]
+dev = [
+    "ipykernel>=7.2.0",
+    "ipympl>=0.10.0",
+    "ipywidgets>=8.1.8",
+    "jupyter-book>=1.0.0,<2.0.0",
+    "jupyter-sphinx>=0.5.3",
+    "myst-nb>=1.1.0",
+    "pre-commit>=4.6.0",
+    "pulser>=1.8.0",
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "pytest-sugar>=1.1.1",
+    "qiskit>=2.4.1",
+    "ruff>=0.15.12",
+    "sphinx-autoapi>=3.0.0",
+    "sphinx-copybutton>=0.5.2",
+    "sphinx-togglebutton>=0.4.5",
+    "sphinxcontrib-mermaid>=2.0.2",
+]
 
 [tool.mypy]
 ignore_missing_imports = true
 no_implicit_optional = false
 enable_error_code = 'ignore-without-code'
 
-[tool.isort]
-profile = "black"
-
 [tool.pytest.ini_options]
 testpaths = "tests"
 addopts = "--cov=qse"
 
-[tool.flake8]
-count = true
-# Recommend matching the black line length (default 88)
-# rather than using the flake8 default of 79:
-max-line-length = 88
-ignore = [
-    "E203", # Whitespace before ':' , see https://github.com/PyCQA/pycodestyle/issues/373
-    "E741", # Do not use variables named 'I', 'O', or 'l', may remove in future
-    "W503", # Line break occurred before a binary operator
-]
-statistics = true
-show-source = true
-#
+# --- New Ruff Configuration ---
+[tool.ruff]
+output-format = "grouped"
+line-length = 88
+# This allows Ruff to format and lint Jupyter Notebooks just like black[jupyter] did
+extend-include = ["*.ipynb"]
+exclude = ["build", "dist", ".git", ".venv",]
+
+[tool.ruff.lint]
+# E: pycodestyle (flake8 default)
+# F: pyflakes (flake8 default)
+# I: isort
+select = ["E", "F", "I"]
+
+ignore = ["E741", "E731"]
+# Do not use variables named 'I', 'O', or 'l'
+# Note: Ruff inherently ignores E203 and W503 as they conflict with its formatter.
+
