@@ -19,19 +19,19 @@ class BaseResult(ABC):
     The most common, core methods are listed here.
     They should exist regardless of the execution path.
     """
-    
+
     def __init__(self, metadata: dict = None) -> None:
         self.metadata = metadata or {}
-    
+
     @abstractmethod
-    def get_counts(self, shots: int=1024) -> Dict[str, int]:
+    def get_counts(self, shots: int = 1024) -> Dict[str, int]:
         """
-        Returns bitstring frequencies. Calculated 
-        i. via math for sim, 
+        Returns bitstring frequencies. Calculated
+        i. via math for sim,
         ii. via physical measurement for hardware
         """
         pass
-    
+
     @abstractmethod
     def get_expectation(self, observable: Any) -> float:
         """Returns expectation value.
@@ -50,12 +50,11 @@ class SimResult(BaseResult):
     to be pure, vendor-agnostic, and gives access to the quantum state.
     """
 
-    def __init__(self,
-                 statevector_func: Callable,
-                 counts_func: Callable,
-                 metadata: dict = None):
+    def __init__(
+        self, statevector_func: Callable, counts_func: Callable, metadata: dict = None
+    ):
         """init function"""
-        super().__init__(metadata) # Hand metadata to the base class.
+        super().__init__(metadata)  # Hand metadata to the base class.
         self._get_statevector = statevector_func
         self._get_counts = counts_func
         self._cached_state = None
@@ -69,7 +68,7 @@ class SimResult(BaseResult):
 
     def get_counts(self, shots: int = 1024) -> Dict[str, int]:
         return self._get_counts(shots)
-    
+
     def states(self) -> Generator[np.ndarray, None, None]:
         """
         Yields the statevector at each time step dt.
@@ -87,12 +86,13 @@ class HardwareResult(BaseResult):
     def __init__(self, counts_func: Callable, metadata: Dict = None) -> None:
         super().__init__(metadata)
         self._get_counts = counts_func
-    
+
     def get_counts(self, shots: int = 1024) -> Dict[str, int]:
-        # Implementation: Extract the actual physical measurement counts returned by the QPU
+        # Implementation: Extract the actual
+        # physical measurement counts returned by the QPU
         return self._get_counts(shots)
 
-    #def get_expectation(self, observable: Any) -> float:
+    # def get_expectation(self, observable: Any) -> float:
     # Implementation: Statistical estimation based on the physical shot counts
     # pass
 
