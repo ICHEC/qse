@@ -22,13 +22,15 @@ except ImportError:
     CALCULATOR_AVAILABLE = False
 
 from functools import partial
+
 from qse.results import SimResult
 
 # ==========================================
 # GLOBAL EXTRACTORS (Pure Functions)
 # ==========================================
-# These functions know nothing about the Calculator. 
+# These functions know nothing about the Calculator.
 # They only know how to translate a Pulser result into QSE format.
+
 
 def extract_pulser_statevector(raw_results: Any) -> np.ndarray:
     """Extracts the final dense complex array."""
@@ -40,14 +42,17 @@ def extract_pulser_statevector(raw_results: Any) -> np.ndarray:
         state_array = state_array[::-1]
     return state_array
 
+
 def extract_pulser_counts(raw_results: Any, shots: int) -> Dict[str, int]:
     """Samples the final state hardware style."""
     return dict(raw_results.sample_final_state(N_samples=shots))
+
 
 def extract_pulser_expectation(raw_results: Any, observable: Any) -> float:
     """Delegates expectation value calculations to QuTiP."""
     exp_array = raw_results.expect([observable])[0]
     return float(exp_array[-1])
+
 
 def extract_pulser_states(raw_results: Any) -> Generator[np.ndarray, None, None]:
     """Yields the statevector at every intermediate time step."""
@@ -225,7 +230,7 @@ class Pulser(Calculator):
         if self.wtimes:
             t1 = time()
 
-        # Execute the pulser backend
+        # Execute the pulser backend
         raw_results = self.sim.run(progress_bar=progress)
 
         # Extract metadata from self.sim
@@ -234,12 +239,13 @@ class Pulser(Calculator):
             "basis": getattr(self.sim, "basis_name", "unknown"),
             "total_duration_ns": getattr(self.sim, "total_duration_ns", -1),
             "n_time_steps": len(self.sim.evaluation_times),
-            "has_noise": hasattr(self.sim, "noise_model") and self.sim.noise_model is not None,
-            "noise_model": getattr(self.sim, "noise_model", "unknown")
+            "has_noise": hasattr(self.sim, "noise_model")
+            and self.sim.noise_model is not None,
+            "noise_model": getattr(self.sim, "noise_model", "unknown"),
         }
 
         # bind local result to the global extractor functions using "partial"
-        # This creates new functions/callables that already have results loaded
+        # This creates new functions/callables that already have results loaded
         # as their first argument.
 
         bind_statevector = partial(extract_pulser_statevector, raw_results)
@@ -260,7 +266,7 @@ class Pulser(Calculator):
         if self.wtimes:
             t2 = time()
             print(f"time in compute and simulation = {t2 - t1} s.")
-        
+
         # Return the clean SimResult
         # SimResult can now call bound_statevector() with zero arguments!
         return SimResult(
@@ -268,7 +274,7 @@ class Pulser(Calculator):
             counts_func=bind_counts,
             expectation_func=bind_expectation,
             states_generator=bind_states,
-            metadata=metadata
+            metadata=metadata,
         )
 
 
