@@ -22,8 +22,10 @@ except ImportError:
     CALCULATOR_AVAILABLE = False
 
 from functools import partial
-import numpy as np
 from typing import Any, Dict, Generator
+
+import numpy as np
+
 from qse.results import SimResult
 
 # ==========================================
