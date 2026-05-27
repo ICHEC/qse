@@ -1,7 +1,7 @@
 import pathlib
 
 import qse.magnetic as magnetic
-
+from qse.calc.results import BaseResult
 
 class Parameters(dict):
     """
@@ -122,6 +122,17 @@ class Calculator:
         """
         raise NotImplementedError
 
+    @property
+    def results(self) -> BaseResult:
+        """Common getter to safely access the attached result."""
+        if self._results is None:
+            raise ValueError("No results available. Run calculate() first.")
+        return self._results
+    
+    def reset(self):
+        """Reset the calculator. Free up the data."""
+        self._results = None
+        
     def get_spins(self):
         """
         Get spin expectation values.
@@ -139,7 +150,7 @@ class Calculator:
         if self.results is None:
             self.calculate()
 
-        return magnetic.get_spins(self.statevector, len(self.qbits))
+        return magnetic.get_spins(self.results.statevector, len(self.qbits))
 
     def get_sij(self):
         r"""
@@ -158,7 +169,7 @@ class Calculator:
         if self.results is None:
             self.calculate()
 
-        sij = magnetic.get_sisj(self.statevector, len(self.qbits))
+        sij = magnetic.get_sisj(self.results.statevector, len(self.qbits))
         self.sij = sij  # quick fix. TODO: proper property setup done
         return sij
 
