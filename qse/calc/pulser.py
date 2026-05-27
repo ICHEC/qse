@@ -26,7 +26,34 @@ from typing import Any, Dict, Generator
 
 import numpy as np
 
-from qse.results import SimResult
+from qse.calc.results import SimResult
+
+
+
+# Function to extract metadata from Pulser's simulation
+def extract_safe_metadata(obj, backend_name: str) -> dict:
+    """
+    Dynamically sweep an object for primitive attributes to build metadata.
+    Ignore callables, complex objects, and dunder methods.
+    TODO: Need to investigate some _ functions that give useful info.
+    """
+    metadata = {"backend": backend_name}
+    
+    for attr in dir(obj):
+        # Optionally skip dunders, but Pulser keeps good stuff in _basis_name
+        if attr.startswith('__'): 
+            continue
+            
+        try:
+            val = getattr(obj, attr)
+            # Only extract basic serializable types
+            if isinstance(val, (int, float, str, bool, tuple)):
+                # Clean up the key name (e.g., '_basis_name' -> 'basis_name')
+                clean_key = attr.lstrip('_')
+                metadata[clean_key] = val
+        except Exception:
+            pass # Ignore properties that raise errors on access
+    return metadata
 
 # ==========================================
 # GLOBAL EXTRACTORS (Pure Functions)
@@ -160,7 +187,7 @@ class Pulser(Calculator):
         self.device = pulser.devices.MockDevice if device is None else device
         self.emulator = QutipEmulator if emulator is None else emulator
         self.wtimes = wtimes
-        self.results = None
+        self._results = None
         self.channel = channel
         self.magnetic_field = magnetic_field
 
@@ -200,6 +227,14 @@ class Pulser(Calculator):
     def sequence(self):
         return self._sequence
 
+    @property
+    def results(self) -> SimResult:
+        """
+        By simply overriding the property signature and calling super(), 
+        Pylance instantly knows this branch returns a SimResult.
+        """
+        return super().results  # type: ignore
+
     def build_sequence(self):
         """
         Build the sequence of operations involving the qubit coordinates,
@@ -224,7 +259,7 @@ class Pulser(Calculator):
     def sim(self):
         return self._sim
 
-    def calculate(self, progress=True):
+    def calculate(self, progress=True) -> SimResult:
         """
         Run the calculation.
         """
@@ -237,15 +272,16 @@ class Pulser(Calculator):
         raw_results = self.sim.run(progress_bar=progress)
 
         # Extract metadata from self.sim
-        metadata = {
-            "backend": "pulser",
-            "basis": getattr(self.sim, "basis_name", "unknown"),
-            "total_duration_ns": getattr(self.sim, "total_duration_ns", -1),
-            "n_time_steps": len(self.sim.evaluation_times),
-            "has_noise": hasattr(self.sim, "noise_model")
-            and self.sim.noise_model is not None,
-            "noise_model": getattr(self.sim, "noise_model", "unknown"),
-        }
+        metadata = extract_safe_metadata(self.sim, "pulser")
+        # metadata = {
+        #    "backend": "pulser",
+        #    "basis": getattr(self.sim, "basis_name", "unknown"),
+        #    "total_duration_ns": getattr(self.sim, "total_duration_ns", -1),
+        #    "n_time_steps": len(self.sim.evaluation_times),
+        #    "has_noise": hasattr(self.sim, "noise_model")
+        #    and self.sim.noise_model is not None,
+        #    "noise_model": getattr(self.sim, "noise_model", "unknown"),
+        # }
 
         # bind local result to the global extractor functions using "partial"
         # This creates new functions/callables that already have results loaded
@@ -256,29 +292,27 @@ class Pulser(Calculator):
         bind_expectation = partial(extract_pulser_expectation, raw_results)
         bind_states = partial(extract_pulser_states, raw_results)
 
-        final_state = self.results.get_final_state()
-
         # In the qutip backend pulser uses the convention of 0 (1) being
         # the excited (ground) state. Hence we must reverse the state vector.
-        self.statevector = final_state.full().flatten()
-        if self.channel == "rydberg_global":
-            self.statevector = self.statevector[::-1]
         # at the moment there does not seem an effective or better alternative than
-        self.spins = self.get_spins()
+        # self.spins = self.get_spins()
 
         if self.wtimes:
             t2 = time()
-            print(f"time in compute and simulation = {t2 - t1} s.")
+            exec_time = t2 - t1
+            metadata["exec_time"] = exec_time
+            print(f"time in compute and simulation = {exec_time} s.")
 
         # Return the clean SimResult
         # SimResult can now call bound_statevector() with zero arguments!
-        return SimResult(
+        self._results = SimResult(
             statevector_func=bind_statevector,
             counts_func=bind_counts,
             expectation_func=bind_expectation,
             states_generator=bind_states,
-            metadata=metadata,
-        )
+            metadata=metadata)
+        return self.results
+
 
 
 def _format_pulse(pulse):
