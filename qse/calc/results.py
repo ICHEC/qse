@@ -43,7 +43,7 @@ class BaseResult(ABC):
         )
 
         # 4. Format the output block
-        computed_props = list(self.properties.keys()) if self.properties else 'None'
+        computed_props = list(self.properties.keys()) if self.properties else "None"
         lines = [
             f"<{self.__class__.__name__} | Backend: {backend}>",
             f"  • Execution Time : {time_str}",
