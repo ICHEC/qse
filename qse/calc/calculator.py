@@ -3,6 +3,7 @@ import pathlib
 import qse.magnetic as magnetic
 from qse.calc.results import BaseResult
 
+
 class Parameters(dict):
     """
     Dictionary for parameters.
@@ -128,11 +129,11 @@ class Calculator:
         if self._results is None:
             raise ValueError("No results available. Run calculate() first.")
         return self._results
-    
+
     def reset(self):
         """Reset the calculator. Free up the data."""
         self._results = None
-        
+
     def get_spins(self):
         """
         Get spin expectation values.

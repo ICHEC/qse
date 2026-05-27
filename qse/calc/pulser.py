@@ -29,7 +29,6 @@ import numpy as np
 from qse.calc.results import SimResult
 
 
-
 # Function to extract metadata from Pulser's simulation
 def extract_safe_metadata(obj, backend_name: str) -> dict:
     """
@@ -38,22 +37,23 @@ def extract_safe_metadata(obj, backend_name: str) -> dict:
     TODO: Need to investigate some _ functions that give useful info.
     """
     metadata = {"backend": backend_name}
-    
+
     for attr in dir(obj):
         # Optionally skip dunders, but Pulser keeps good stuff in _basis_name
-        if attr.startswith('__'): 
+        if attr.startswith("__"):
             continue
-            
+
         try:
             val = getattr(obj, attr)
             # Only extract basic serializable types
             if isinstance(val, (int, float, str, bool, tuple)):
                 # Clean up the key name (e.g., '_basis_name' -> 'basis_name')
-                clean_key = attr.lstrip('_')
+                clean_key = attr.lstrip("_")
                 metadata[clean_key] = val
         except Exception:
-            pass # Ignore properties that raise errors on access
+            pass  # Ignore properties that raise errors on access
     return metadata
+
 
 # ==========================================
 # GLOBAL EXTRACTORS (Pure Functions)
@@ -230,7 +230,7 @@ class Pulser(Calculator):
     @property
     def results(self) -> SimResult:
         """
-        By simply overriding the property signature and calling super(), 
+        By simply overriding the property signature and calling super(),
         Pylance instantly knows this branch returns a SimResult.
         """
         return super().results  # type: ignore
@@ -310,9 +310,9 @@ class Pulser(Calculator):
             counts_func=bind_counts,
             expectation_func=bind_expectation,
             states_generator=bind_states,
-            metadata=metadata)
+            metadata=metadata,
+        )
         return self.results
-
 
 
 def _format_pulse(pulse):
