@@ -8,8 +8,13 @@ rads = qse_palette["rads"]
 
 
 def draw_qbits(
-    qbits, radius=None, show_labels=False, colouring=None, units=None, equal_aspect=True,
-    alpha_min=0.0
+    qbits,
+    radius=None,
+    show_labels=False,
+    colouring=None,
+    units=None,
+    equal_aspect=True,
+    alpha_min=0.0,
 ):
     """
     Visualize the positions of a set of qubits.

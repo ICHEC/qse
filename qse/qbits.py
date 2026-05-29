@@ -540,7 +540,7 @@ class Qbits:
         colouring=None,
         units=None,
         equal_aspect=True,
-        alpha_min=0.0
+        alpha_min=0.0,
     ):
         """
         Visualize the positions of a set of qubits.
@@ -579,7 +579,7 @@ class Qbits:
             colouring=colouring,
             units=units,
             equal_aspect=equal_aspect,
-            alpha_min=alpha_min
+            alpha_min=alpha_min,
         )
 
     def repeat(self, rep):
