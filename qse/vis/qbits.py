@@ -8,7 +8,8 @@ rads = qse_palette["rads"]
 
 
 def draw_qbits(
-    qbits, radius=None, show_labels=False, colouring=None, units=None, equal_aspect=True
+    qbits, radius=None, show_labels=False, colouring=None, units=None, equal_aspect=True,
+    alpha_min=0.0
 ):
     """
     Visualize the positions of a set of qubits.
@@ -34,6 +35,10 @@ def draw_qbits(
     equal_aspect : bool, optional
         Whether to have the same scaling for the axes.
         Defaults to True.
+    alpha_min : float, optional
+        Minimum alpha for bond opacity. Bond alphas are linearly rescaled
+        from (alpha_min, 1), where 1 is the shortest bond and alpha_min
+        is the longest. Defaults to 0.0.
     """
     if colouring is not None:
         if len(colouring) != qbits.nqbits:
@@ -59,7 +64,7 @@ def draw_qbits(
         ax.set_aspect("equal")
 
     if qbits.dim == 3:
-        _draw_3d(qbits, draw_bonds, radius, rij, min_dist, ax)
+        _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, ax)
     else:
         _draw_2d(
             qbits,
@@ -67,6 +72,7 @@ def draw_qbits(
             radius,
             rij,
             min_dist,
+            alpha_min,
             units,
             colouring,
             show_labels,
@@ -75,7 +81,7 @@ def draw_qbits(
     return fig
 
 
-def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, ax):
+def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, ax):
     positions = qbits.positions
 
     if draw_bonds:
@@ -85,7 +91,7 @@ def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, ax):
         ii, jj = np.where(neighbours)
         X, Y, Z = positions[ii].T
         U, V, W = (positions[jj] - positions[ii]).T
-        alpha = (min_dist / rij[neighbours]) ** 3
+        alpha = alpha_min + (1 - alpha_min) * (min_dist / rij[neighbours]) ** 3
 
         ax.quiver(
             X,
@@ -111,6 +117,7 @@ def _draw_2d(
     radius,
     rij,
     min_dist,
+    alpha_min,
     units,
     colouring,
     show_labels,
@@ -136,7 +143,7 @@ def _draw_2d(
             ]
         )
         for i, j in neighbours:
-            alpha = (min_dist / rij[i, j]) ** 3
+            alpha = alpha_min + (1 - alpha_min) * (min_dist / rij[i, j]) ** 3
             ax.plot([x[i], x[j]], [y[i], y[j]], c="gray", alpha=alpha, zorder=-1)
 
     if colouring is not None:

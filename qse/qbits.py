@@ -540,6 +540,7 @@ class Qbits:
         colouring=None,
         units=None,
         equal_aspect=True,
+        alpha_min=0.0
     ):
         """
         Visualize the positions of a set of qubits.
@@ -563,7 +564,10 @@ class Qbits:
         equal_aspect : bool, optional
             Whether to have the same scaling for the axes.
             Defaults to True.
-
+        alpha_min : float, optional
+            Minimum alpha for bond opacity. Bond alphas are linearly rescaled
+            from (alpha_min, 1), where 1 is the shortest bond and alpha_min
+            is the longest. Defaults to 0.0.
         See Also
         --------
         qse.draw
@@ -575,6 +579,7 @@ class Qbits:
             colouring=colouring,
             units=units,
             equal_aspect=equal_aspect,
+            alpha_min=alpha_min
         )
 
     def repeat(self, rep):
