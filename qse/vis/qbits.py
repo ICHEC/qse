@@ -62,14 +62,15 @@ def draw_qbits(
         elif min_dist > radius:
             draw_bonds = False
 
-    fig = plt.figure()
+    figsize = (10, 8) if qbits.dim == 3 else (6.4, 4.8)
+    fig = plt.figure(figsize=figsize)
     projection = "3d" if qbits.dim == 3 else None
     ax = fig.add_subplot(projection=projection)
     if equal_aspect:
         ax.set_aspect("equal")
 
     if qbits.dim == 3:
-        _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, colouring, ax)
+        _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, units, colouring, show_labels, ax)
     else:
         _draw_2d(
             qbits,
@@ -86,8 +87,13 @@ def draw_qbits(
     return fig
 
 
-def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, colouring, ax):
+def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, units, colouring, show_labels, ax):
     positions = qbits.positions
+
+    ax.set_xlabel("x" + f" ({units})" if units is not None else "x")
+    ax.set_ylabel("y" + f" ({units})" if units is not None else "y")
+    ax.set_zlabel("z" + f" ({units})" if units is not None else "z")
+    ax.figure.subplots_adjust(right=0.85)
 
     if draw_bonds:
         f_tol = 1.01  # fractional tolerance
@@ -137,6 +143,10 @@ def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, colouring, ax)
     else:
         for r, c in zip(rads, colors):
             ax.scatter(x, y, z, s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8)
+
+    if show_labels:
+        for ind in range(qbits.nqbits):
+            ax.text(x[ind], y[ind], z[ind], s=qbits.labels[ind])
 
 
 def _draw_2d(
