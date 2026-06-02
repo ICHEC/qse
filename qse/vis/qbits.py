@@ -69,7 +69,7 @@ def draw_qbits(
         ax.set_aspect("equal")
 
     if qbits.dim == 3:
-        _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, ax)
+        _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, colouring, ax)
     else:
         _draw_2d(
             qbits,
@@ -86,7 +86,7 @@ def draw_qbits(
     return fig
 
 
-def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, ax):
+def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, colouring, ax):
     positions = qbits.positions
 
     if draw_bonds:
@@ -112,8 +112,31 @@ def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, ax):
         )
     x, y, z = positions.T
 
-    for r, c in zip(rads, colors):
-        ax.scatter(x, y, z, s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8)
+    if colouring is not None:
+        inds0 = [j == 0 for j in colouring]
+        inds1 = [j == 1 for j in colouring]
+        for r, c in zip(rads, colors):
+            ax.scatter(
+                x[inds0],
+                y[inds0],
+                z[inds0],
+                s=r**2,
+                color=(0.1, c, 0.5),
+                zorder=1,
+                alpha=0.8,
+            )
+            ax.scatter(
+                x[inds1],
+                y[inds1],
+                z[inds1],
+                s=r**2,
+                color=(c, 0.1, 0.5),
+                zorder=1,
+                alpha=0.8,
+            )
+    else:
+        for r, c in zip(rads, colors):
+            ax.scatter(x, y, z, s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8)
 
 
 def _draw_2d(
