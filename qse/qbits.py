@@ -11,7 +11,7 @@ import numpy as np
 from qse.cell import Cell
 from qse.operator import Operator, Operators
 from qse.qbit import Qbit
-from qse.vis import draw_qbits
+from qse.vis import draw_3d_qbits_interactive, draw_qbits
 
 
 class Qbits:
@@ -541,6 +541,7 @@ class Qbits:
         units=None,
         equal_aspect=True,
         alpha_min=0.0,
+        interactive=False,
     ):
         """
         Visualize the positions of a set of qubits.
@@ -568,19 +569,33 @@ class Qbits:
             Minimum alpha for bond opacity. Bond alphas are linearly rescaled
             from (alpha_min, 1), where 1 is the shortest bond and alpha_min
             is the longest. Defaults to 0.0.
+        interactive : bool, optional
+            If True, render an interactive 3D Plotly figure (3D lattices only).
+            Requires ``plotly`` to be installed. Defaults to False.
+
         See Also
         --------
         qse.draw
         """
-        draw_qbits(
-            self,
-            radius=radius,
-            show_labels=show_labels,
-            colouring=colouring,
-            units=units,
-            equal_aspect=equal_aspect,
-            alpha_min=alpha_min,
-        )
+        if interactive:
+            draw_3d_qbits_interactive(
+                self,
+                radius=radius,
+                show_labels=show_labels,
+                colouring=colouring,
+                units=units,
+                alpha_min=alpha_min,
+            )
+        else:
+            return draw_qbits(
+                self,
+                radius=radius,
+                show_labels=show_labels,
+                colouring=colouring,
+                units=units,
+                equal_aspect=equal_aspect,
+                alpha_min=alpha_min,
+            )
 
     def repeat(self, rep):
         """Create new repeated qbits object.
