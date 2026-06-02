@@ -70,7 +70,18 @@ def draw_qbits(
         ax.set_aspect("equal")
 
     if qbits.dim == 3:
-        _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, units, colouring, show_labels, ax)
+        _draw_3d(
+            qbits,
+            draw_bonds,
+            radius,
+            rij,
+            min_dist,
+            alpha_min,
+            units,
+            colouring,
+            show_labels,
+            ax,
+        )
     else:
         _draw_2d(
             qbits,
@@ -87,7 +98,18 @@ def draw_qbits(
     return fig
 
 
-def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, alpha_min, units, colouring, show_labels, ax):
+def _draw_3d(
+    qbits,
+    draw_bonds,
+    radius,
+    rij,
+    min_dist,
+    alpha_min,
+    units,
+    colouring,
+    show_labels,
+    ax,
+):
     positions = qbits.positions
 
     ax.set_xlabel("x" + f" ({units})" if units is not None else "x")
