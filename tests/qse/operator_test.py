@@ -86,6 +86,13 @@ def test_operator_fail(qubits, operator):
         qse.Operator(operator, qubits, nqubits=4)
 
 
+@pytest.mark.parametrize("qubits", [-1, 4, [-1, 2], [3, 4]])
+def test_operator_fail_qubit_index(qubits):
+    """Test the class raises an error for a qubit outside the index range."""
+    with pytest.raises(Exception):
+        qse.Operator("Z", qubits, nqubits=4)
+
+
 def test_operator_mul():
     """Test multiplying an Operator by a scalar."""
     op = qse.Operator("X", 0, nqbits=2, coef=1.0)
