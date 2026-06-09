@@ -79,6 +79,17 @@ class Operators:
         else:
             raise Exception("other must be Operators or Operator.")
 
+    def copy(self):
+        """
+        Creates a copy of the Operators object.
+
+        Returns
+        -------
+        Operators
+            A copy of the current Operators object.
+        """
+        return Operators(self.operator_list.copy())
+
     def __add__(self, other):
         op = self.copy()
         op += other
@@ -97,6 +108,22 @@ class Operators:
 
     def __getitem__(self, i):
         return self.operator_list[i]
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            return Operators([op * other for op in self.operator_list])
+        else:
+            raise NotImplementedError("Multiplication only supported for scalars.")
+
+    def __imul__(self, other):
+        if isinstance(other, (int, float)):
+            self.operator_list = [op * other for op in self.operator_list]
+            return self
+        else:
+            raise NotImplementedError("Multiplication only supported for scalars.")
+        
+    def __rmul__(self, other):
+        return self.__mul__(other)
 
     @property
     def nqbits(self):
