@@ -121,7 +121,7 @@ class Operators:
             return self
         else:
             raise NotImplementedError("Multiplication only supported for scalars.")
-        
+
     def __rmul__(self, other):
         return self.__mul__(other)
 

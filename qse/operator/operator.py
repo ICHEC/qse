@@ -109,17 +109,15 @@ class Operator:
 
     def __mul__(self, other):
         if isinstance(other, (int, float)):
-            return Operator(
-                self.operator, self.qubits, self.nqbits, self.coef * other
-            )
+            return Operator(self.operator, self.qubits, self.nqbits, self.coef * other)
         else:
             raise NotImplementedError("Multiplication only supported for scalars.")
-    
+
     def __imul__(self, other):
         if isinstance(other, (int, float)):
             self.coef *= other
             return self
-    
+
     def __rmul__(self, other):
         return self.__mul__(other)
 
