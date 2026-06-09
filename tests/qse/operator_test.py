@@ -99,6 +99,7 @@ def test_operator_mul():
     op *= 2.0
     assert np.isclose(op.coef, 2.0)
 
+
 def test_operators_init():
     """Test initializing empty Operators."""
     ops = qse.Operators()
@@ -137,10 +138,13 @@ def test_operators_qutip():
     op_sum = op1.to_qutip() + op2.to_qutip()
     assert np.allclose(op_sum.full(), ops.to_qutip().full())
 
+
 def test_operators_mul():
     """Test multiplying Operators by a scalar."""
     nqbits = 4
-    ops = qse.Operators([qse.Operator("X", i, nqbits=nqbits+5) for i in range(nqbits)])
+    ops = qse.Operators(
+        [qse.Operator("X", i, nqbits=nqbits + 5) for i in range(nqbits)]
+    )
     assert all(np.isclose(op.coef, 1.0) for op in ops)
 
     ops_scaled = ops * 2.5
