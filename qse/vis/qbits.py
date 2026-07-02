@@ -8,7 +8,7 @@ rads = qse_palette["rads"]
 
 
 def draw_qbits(
-    qbits, radius=None, show_labels=False, colouring=None, units=None, equal_aspect=True
+    qbits, radius=None, show_labels=False, colouring=None, units=None
 ):
     """
     Visualize the positions of a set of qubits.
@@ -31,9 +31,6 @@ def draw_qbits(
         Must have the same length as the number of Qubits.
     units : str, optional
         The units of distance.
-    equal_aspect : bool, optional
-        Whether to have the same scaling for the axes.
-        Defaults to True.
     """
     if colouring is not None:
         if len(colouring) != qbits.nqbits:
@@ -53,15 +50,12 @@ def draw_qbits(
             draw_bonds = False
 
     fig = plt.figure()
-    projection = "3d" if qbits.dim == 3 else None
-    ax = fig.add_subplot(projection=projection)
-    if equal_aspect:
-        ax.set_aspect("equal")
+    ax = fig.add_subplot(projection="3d" if qbits.dim == 3 else None)
 
     if qbits.dim == 3:
         _draw_3d(qbits, draw_bonds, radius, rij, min_dist, ax)
     else:
-        _draw_2d(
+        _draw_1_or_2d(
             qbits,
             draw_bonds,
             radius,
@@ -105,7 +99,7 @@ def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, ax):
         ax.scatter(x, y, z, s=r**2, color=(0.1, c, 0.5), zorder=1, alpha=0.8)
 
 
-def _draw_2d(
+def _draw_1_or_2d(
     qbits,
     draw_bonds,
     radius,
@@ -117,13 +111,14 @@ def _draw_2d(
     ax,
 ):
     ax.set_xlabel("x" + f" ({units})" if units is not None else "x")
-    ax.set_ylabel("y" + f" ({units})" if units is not None else "y")
 
     if qbits.dim == 2:
         x, y = qbits.positions.T
+        ax.set_ylabel("y" + f" ({units})" if units is not None else "y")
     else:
         x = qbits.positions.T.flatten()
         y = np.zeros(qbits.nqbits)
+        ax.set_yticks([]) # remove y-ticks for 1d plot.
 
     if draw_bonds:
         f_tol = 1.01  # fractional tolerance

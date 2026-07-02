@@ -539,7 +539,6 @@ class Qbits:
         show_labels=False,
         colouring=None,
         units=None,
-        equal_aspect=True,
     ):
         """
         Visualize the positions of a set of qubits.
@@ -560,9 +559,6 @@ class Qbits:
             Must have the same length as the number of Qubits.
         units : str, optional
             The units of distance.
-        equal_aspect : bool, optional
-            Whether to have the same scaling for the axes.
-            Defaults to True.
 
         See Also
         --------
@@ -574,7 +570,6 @@ class Qbits:
             show_labels=show_labels,
             colouring=colouring,
             units=units,
-            equal_aspect=equal_aspect,
         )
 
     def repeat(self, rep):
