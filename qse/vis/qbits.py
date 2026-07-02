@@ -71,6 +71,7 @@ def draw_qbits(
 
 def _draw_3d(qbits, draw_bonds, radius, rij, min_dist, ax):
     positions = qbits.positions
+    ax.set_aspect("equal")
 
     if draw_bonds:
         f_tol = 1.01  # fractional tolerance
@@ -115,6 +116,8 @@ def _draw_1_or_2d(
     if qbits.dim == 2:
         x, y = qbits.positions.T
         ax.set_ylabel("y" + f" ({units})" if units is not None else "y")
+        ax.set_aspect("equal")
+
     else:
         x = qbits.positions.T.flatten()
         y = np.zeros(qbits.nqbits)
