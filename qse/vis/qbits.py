@@ -7,9 +7,7 @@ colors = qse_palette["colors"]
 rads = qse_palette["rads"]
 
 
-def draw_qbits(
-    qbits, radius=None, show_labels=False, colouring=None, units=None
-):
+def draw_qbits(qbits, radius=None, show_labels=False, colouring=None, units=None):
     """
     Visualize the positions of a set of qubits.
 
@@ -121,7 +119,7 @@ def _draw_1_or_2d(
     else:
         x = qbits.positions.T.flatten()
         y = np.zeros(qbits.nqbits)
-        ax.set_yticks([]) # remove y-ticks for 1d plot.
+        ax.set_yticks([])  # remove y-ticks for 1d plot.
 
     if draw_bonds:
         f_tol = 1.01  # fractional tolerance
