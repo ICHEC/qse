@@ -12,8 +12,8 @@ class Operator:
         Currently only a string or list containing "X", "Y", "Z", "N" are supported.
         "N" the number operator is defined as 0.5*(1-Z).
         If a list is passed, it must be equal in length to the size of
-        the qubits list.
-    qubits: int | list[int]
+        the indicies list.
+    indicies: int | list[int]
         A single integer or list of integers representing the qubits
         the operator acts on.
     nqbits: int
@@ -35,21 +35,21 @@ class Operator:
     ... 1.00 Y2 Z4
     """
 
-    def __init__(self, operator, qubits, nqbits, coef=1.0):
-        if isinstance(qubits, int):
-            qubits = [qubits]
+    def __init__(self, operator, indicies, nqbits, coef=1.0):
+        if isinstance(indicies, int):
+            indicies = [indicies]
         if isinstance(operator, str):
-            operator = [operator] * len(qubits)
+            operator = [operator] * len(indicies)
 
         _check_operator(operator)
 
-        if len(qubits) != len(operator):
+        if len(indicies) != len(operator):
             raise Exception(
                 "The number of passed qubits must equal the number of passed operators."
             )
 
         self.operator = operator
-        self.qubits = qubits
+        self.indicies = indicies
         self.nqbits = nqbits
         self.coef = coef
 
@@ -64,10 +64,10 @@ class Operator:
         -------
         str
             A string of length `nqbits`, with "I" at all positions except for the
-            qubits in `qubits`, which are replaced by the associated operator.
+            qubits in `indicies`, which are replaced by the associated operator.
         """
         op = ["I"] * self.nqbits
-        for qi, op_str in zip(self.qubits, self.operator):
+        for qi, op_str in zip(self.indicies, self.operator):
             op[qi] = op_str
         return "".join(op)
 
@@ -81,13 +81,13 @@ class Operator:
             The QuTiP operator.
         """
         op = [qp.qeye(2)] * self.nqbits
-        for qi, op_str in zip(self.qubits, self.operator):
+        for qi, op_str in zip(self.indicies, self.operator):
             op[qi] = _qutip_converter(op_str)
         return self.coef * qp.tensor(op)
 
     def __repr__(self):
         return f"{self.coef:.2f} " + " ".join(
-            [f"{op}{q}" for op, q in zip(self.operator, self.qubits)]
+            [f"{op}{q}" for op, q in zip(self.operator, self.indicies)]
         )
 
 

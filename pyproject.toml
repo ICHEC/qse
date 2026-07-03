@@ -56,7 +56,8 @@ docs = [
     "ipywidgets",
     "ipympl",
     "pulser",    # required for creating the docs
-    "qiskit"
+    "qiskit",
+    "pennylane",
 ]
 
 [dependency-groups]
