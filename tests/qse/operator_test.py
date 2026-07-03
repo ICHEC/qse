@@ -12,7 +12,7 @@ pauli_dict = {
 
 
 @pytest.mark.parametrize(
-    "qubits, operator, expected_str",
+    "indicies, operator, expected_str",
     [
         (0, "X", "XI"),
         (0, ["X"], "XI"),
@@ -22,9 +22,9 @@ pauli_dict = {
         ([1, 0], ["X", "Y"], "YX"),
     ],
 )
-def test_operator_2qubits(qubits, operator, expected_str):
+def test_operator_2qubits(indicies, operator, expected_str):
     """Test creating an Operator with 2 qubits."""
-    op = qse.Operator(operator, qubits, nqbits=2)
+    op = qse.Operator(operator, indicies, nqbits=2)
 
     assert isinstance(op, qse.Operator)
     assert op.to_str() == expected_str
@@ -37,7 +37,7 @@ def test_operator_2qubits(qubits, operator, expected_str):
 
 
 @pytest.mark.parametrize(
-    "qubits, operator, expected_str",
+    "indicies, operator, expected_str",
     [
         (0, "X", "XIII"),
         (1, ["X"], "IXII"),
@@ -45,9 +45,9 @@ def test_operator_2qubits(qubits, operator, expected_str):
         ([1, 2], ["Z", "Y"], "IZYI"),
     ],
 )
-def test_operator_4qubits(qubits, operator, expected_str):
+def test_operator_4qubits(indicies, operator, expected_str):
     """Test creating an Operator with 4 qubits."""
-    op = qse.Operator(operator, qubits, nqbits=4)
+    op = qse.Operator(operator, indicies, nqbits=4)
 
     assert isinstance(op, qse.Operator)
     assert op.to_str() == expected_str
