@@ -1,7 +1,7 @@
 import pathlib
 
 import qse.magnetic as magnetic
-from qse.calc.results import BaseResult
+from qse.calc.results import BaseResult, SimResult
 
 
 class Parameters(dict):
@@ -150,8 +150,9 @@ class Calculator:
         """
         if self.results is None:
             self.calculate()
-
-        return magnetic.get_spins(self.results.statevector, len(self.qbits))
+        spins = magnetic.get_spins(self.results.statevector, len(self.qbits))
+        self._results.properties["spins"] = spins
+        return spins
 
     def get_sij(self):
         r"""
@@ -170,8 +171,14 @@ class Calculator:
         if self.results is None:
             self.calculate()
 
+        if not isinstance(self.results, SimResult):
+            raise TypeError(
+                f"get_spins requires a SimResult. "
+                f"Got {type(self.results).__name__} instead. "
+                f"Are you running on physical hardware?" 
+            )
         sij = magnetic.get_sisj(self.results.statevector, len(self.qbits))
-        self.sij = sij  # quick fix. TODO: proper property setup done
+        self._results.properties["sij"] = sij
         return sij
 
     def structure_factor_from_sij(self, L1: int, L2: int, L3: int):
@@ -196,4 +203,12 @@ class Calculator:
         --------
         qse.magnetic.structure_factor_from_sij for more details.
         """
-        return magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
+        if not isinstance(self.results, SimResult):
+            raise TypeError(
+                f"get_spins requires a SimResult. "
+                f"Got {type(self.results).__name__} instead. "
+                f"Are you running on physical hardware?" 
+            )
+        struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
+        self._results.properties["struc_fac"] = struc_fac
+        return struc_fac

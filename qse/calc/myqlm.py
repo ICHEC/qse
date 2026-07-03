@@ -24,6 +24,7 @@ from time import time
 import numpy as np
 
 from qse.calc.calculator import Calculator
+from qse.calc.results import SimResult
 
 qat_available = False
 qlmaas_available = False
@@ -127,7 +128,7 @@ class Myqlm(Calculator):
         self.qpu = AQPU() if qpu is None else qpu
         self.label = label
         self.wtimes = wtimes
-        self.results = None
+        self._results = None
         self.system = "rydberg"
 
         self.params = dict(default_params[self.system])
@@ -176,6 +177,14 @@ class Myqlm(Calculator):
             (1, H_interact),
         ]
 
+    @property
+    def results(self) -> SimResult:
+        """
+        By simply overriding the property signature and calling super(),
+        Pylance instantly knows this branch returns a SimResult.
+        """
+        return super().results  # type: ignore
+    
     def calculate(self):
         """
         Run the calculation.
