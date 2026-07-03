@@ -5,7 +5,7 @@
 The **Quantum Simulation Environment (QSE)** is a flexible, modular, high-level Python library designed to
 decouple the essence of the quantum simulation problem from the technicalities of the backend software/hardware.
 
->> [!important] This project is under active development.
+> [!important] This project is under active development.
 
 ## Architectural Overview
 
@@ -68,7 +68,7 @@ simulation.
 - [myQLM](https://myqlm.github.io/), and
 - [Qutip](https://qutip.org/)
 
-## 🎯 The Philosophy: Separation of Concerns
+## The Philosophy: Separation of Concerns
 
 The core value of QSE is the strict separation between **Problem Framing** and **Problem Execution**
 
@@ -77,18 +77,19 @@ The core value of QSE is the strict separation between **Problem Framing** and *
 | Problem Framing   | `Qbits` & `Lattices` |	Defining geometry, positions, and quantum degrees of freedom. |
 | Backend Execution | `Calculators`        | Handling SDK-specific syntax, hardware constraints, and simulators. |
 
->> [!IMPORTANT] Why this matters
->> 1. **Backend Agnostic:** Frame your problem once; simulate it on Pulser, myQLM, or QuTiP just by switching one line of code.
->> 2. **No More "Jargon":** You don't need to learn the specific pulse sequences or gate-level syntax of every vendor to get started. You focus on the lattice and the physics.
->> 3. **Reproducibility:** Your problem definition remains a "clean" representation of the physical model, making it easier to share and verify across different research groups.
+> [!IMPORTANT] Why this matters
+> 1. **Backend Agnostic:** Frame your problem once; simulate it on Pulser, myQLM, or QuTiP just by switching one line of code.
+> 2. **No More "Jargon":** You don't need to learn the specific pulse sequences or gate-level syntax of every vendor to get started. You focus on the lattice and the physics.
+> 3. **Reproducibility:** Your problem definition remains a "clean" representation of the physical model, making it easier to share and verify across different research groups.
 
-## 📍Position-Dependent Quantum Degrees of Freedom
+## Position-Dependent Quantum Degrees of Freedom
 
 Unlike standard gate-based frameworks where qubits are abstract entities in a register, QSE treats qubits as physical objects with coordinates. This is crucial for simulations where the interaction strength between qubits is a function of their spatial separation.
 
 ### Why Positions Matter
 
-In many physical implementations of quantum simulators—such as Rydberg Atom Arrays or Trapped Ions—the Hamiltonian of the system is governed by the distance $R_{ij}​=|{\bf R}_i - {\bf R}_j|$ between qubits $i$ and $j$:
+In many physical implementations of quantum simulators—such as Rydberg Atom Arrays or Trapped Ions—the Hamiltonian of the system is governed by
+the distance $R_{ij}​=|{\bf R}_i - {\bf R}_j|$ between qubits $i $ and $j $:
 
 $$
 H = \sum_i \Omega_i\sigma_i^x - \sum_i \delta_i n_i + \sum_{i<j}{C_6 \over |{\bf R}_i - {\bf R}_j|^6} n_i n_j
