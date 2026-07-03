@@ -59,7 +59,7 @@ def test_operator_4qubits(indicies, operator, expected_str):
 @pytest.mark.parametrize("coef", [0.1, -0.45, 1j + 53])
 def test_operator_4qubits_coef(op1, op2, coef):
     """Test creating an Operator with 4 qubits and a coefficient."""
-    op = qse.Operator(operator=[op1, op2], qubits=[1, 2], nqbits=4, coef=coef)
+    op = qse.Operator(operator=[op1, op2], indicies=[1, 2], nqbits=4, coef=coef)
 
     assert isinstance(op, qse.Operator)
     assert op.to_str() == "I" + op1 + op2 + "I"
@@ -73,17 +73,17 @@ def test_operator_4qubits_coef(op1, op2, coef):
 
 
 @pytest.mark.parametrize(
-    "qubits, operator",
+    "indicies, operator",
     [
         (0, "x"),
         (0, ["X", "Y"]),
         (0, "XY"),
     ],
 )
-def test_operator_fail(qubits, operator):
+def test_operator_fail(indicies, operator):
     """Test creating an Operator with 4 qubits."""
     with pytest.raises(Exception):
-        qse.Operator(operator, qubits, nqubits=4)
+        qse.Operator(operator, indicies, nqubits=4)
 
 
 def test_operators_init():
