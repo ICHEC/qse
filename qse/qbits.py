@@ -1105,21 +1105,6 @@ class Qbits:
             else:
                 self.positions[ind] -= (x * (1.0 - fix)) * distance_vec
 
-    def wrap(self, **wrap_kw):
-        """Wrap positions to unit cell.
-
-        Parameters:
-
-        wrap_kw: (keyword=value) pairs
-            optional keywords `pbc`, `center`, `pretty_translation`, `eps`,
-            see :func:`ase.geometry.wrap_positions`
-        """
-
-        if "pbc" not in wrap_kw:
-            wrap_kw["pbc"] = self.pbc
-
-        self.positions[:] = self.get_positions(wrap=True, **wrap_kw)
-
     def __eq__(self, other):
         """Check for identity of two qbits objects.
 
