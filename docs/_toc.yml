@@ -17,6 +17,7 @@ parts:
       - file: use-cases/ssh_model
       - file: use-cases/adiabatic
     #  - file: ../examples/pulser-myqlm-conversion
+      - file: use-cases/preparing_zoderings
   - caption: Theory
     chapters:
       - file: theory/spatial-correlation
