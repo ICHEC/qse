@@ -35,21 +35,21 @@ class Operator:
     ... 1.00 Y2 Z4
     """
 
-    def __init__(self, operator, indicies, nqbits, coef=1.0):
-        if isinstance(indicies, int):
-            indicies = [indicies]
+    def __init__(self, operator, indices, nqbits, coef=1.0):
+        if isinstance(indices, int):
+            indices = [indices]
         if isinstance(operator, str):
-            operator = [operator] * len(indicies)
+            operator = [operator] * len(indices)
 
         _check_operator(operator)
 
-        if len(indicies) != len(operator):
+        if len(indices) != len(operator):
             raise Exception(
                 "The number of passed qubits must equal the number of passed operators."
             )
 
         self.operator = operator
-        self.indicies = indicies
+        self.indices = indices
         self.nqbits = nqbits
         self.coef = coef
 
@@ -64,10 +64,10 @@ class Operator:
         -------
         str
             A string of length `nqbits`, with "I" at all positions except for the
-            qubits in `indicies`, which are replaced by the associated operator.
+            qubits in `indices`, which are replaced by the associated operator.
         """
         op = ["I"] * self.nqbits
-        for qi, op_str in zip(self.indicies, self.operator):
+        for qi, op_str in zip(self.indices, self.operator):
             op[qi] = op_str
         return "".join(op)
 
@@ -81,13 +81,13 @@ class Operator:
             The QuTiP operator.
         """
         op = [qp.qeye(2)] * self.nqbits
-        for qi, op_str in zip(self.indicies, self.operator):
+        for qi, op_str in zip(self.indices, self.operator):
             op[qi] = _qutip_converter(op_str)
         return self.coef * qp.tensor(op)
 
     def __repr__(self):
         return f"{self.coef:.2f} " + " ".join(
-            [f"{op}{q}" for op, q in zip(self.operator, self.indicies)]
+            [f"{op}{q}" for op, q in zip(self.operator, self.indices)]
         )
 
 
