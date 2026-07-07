@@ -12,8 +12,8 @@ class Operator:
         Currently only a string or list containing "X", "Y", "Z", "N" are supported.
         "N" the number operator is defined as 0.5*(1-Z).
         If a list is passed, it must be equal in length to the size of
-        the indicies list.
-    indicies: int | list[int]
+        the indices list.
+    indices: int | list[int]
         A single integer or list of integers representing the qubits
         the operator acts on.
     nqbits: int

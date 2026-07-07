@@ -12,7 +12,7 @@ pauli_dict = {
 
 
 @pytest.mark.parametrize(
-    "indicies, operator, expected_str",
+    "indices, operator, expected_str",
     [
         (0, "X", "XI"),
         (0, ["X"], "XI"),
