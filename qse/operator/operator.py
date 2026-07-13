@@ -100,7 +100,7 @@ class Operator:
         Operator
             A new instance of Operator with the same attributes.
         """
-        return Operator(self.operator, self.qubits, self.nqbits, self.coef)
+        return Operator(self.operator, self.indices, self.nqbits, self.coef)
 
     def __repr__(self):
         return f"{self.coef:.2f} " + " ".join(
@@ -109,7 +109,7 @@ class Operator:
 
     def __mul__(self, other):
         if isinstance(other, (int, float)):
-            return Operator(self.operator, self.qubits, self.nqbits, self.coef * other)
+            return Operator(self.operator, self.indices, self.nqbits, self.coef * other)
         else:
             raise NotImplementedError("Multiplication only supported for scalars.")
 
