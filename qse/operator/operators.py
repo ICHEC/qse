@@ -59,6 +59,24 @@ class Operators:
             [i.coef for i in self.operator_list],
         )
 
+    def to_pennylane(self):
+        """
+        Generates a pennylane representation of the sum of operators.
+
+        Returns
+        -------
+        pennylane.pauli.pauli_arithmetic.PauliSentence
+            The pennylane PauliSentence.
+        """
+        from pennylane.pauli import PauliSentence, PauliWord
+
+        return PauliSentence(
+            {
+                PauliWord({i: j for i, j in zip(h.indicies, h.operator)}): h.coef
+                for h in self.operator_list
+            }
+        )
+
     def extend(self, other):
         """
         Extend Operators object by appending terms from other Operators
@@ -69,7 +87,8 @@ class Operators:
         other: Operators or Operator
             The operators to be added to the current object.
         """
-        if other.nqbits != self.nqbits:
+        # We only check qubits are compatible if nterms > 0.
+        if self.nterms and other.nqbits != self.nqbits:
             raise Exception("other must have the same number of qubits.")
 
         if isinstance(other, Operator):
@@ -100,11 +119,13 @@ class Operators:
         return self
 
     def __repr__(self):
-        return (
-            f"Number of qubits: {self.nqbits}"
-            + f"\nNumber of terms: {self.nterms}\n\n"
-            + "\n".join([op.__repr__() for op in self.operator_list])
-        )
+        if self.nterms:
+            return (
+                f"Number of qubits: {self.nqbits}"
+                + f"\nNumber of terms: {self.nterms}\n\n"
+                + "\n".join([op.__repr__() for op in self.operator_list])
+            )
+        return "Number of terms: 0"
 
     def __getitem__(self, i):
         return self.operator_list[i]

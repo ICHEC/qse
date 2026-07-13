@@ -12,7 +12,7 @@ pauli_dict = {
 
 
 @pytest.mark.parametrize(
-    "qubits, operator, expected_str",
+    "indices, operator, expected_str",
     [
         (0, "X", "XI"),
         (0, ["X"], "XI"),
@@ -22,9 +22,9 @@ pauli_dict = {
         ([1, 0], ["X", "Y"], "YX"),
     ],
 )
-def test_operator_2qubits(qubits, operator, expected_str):
+def test_operator_2qubits(indices, operator, expected_str):
     """Test creating an Operator with 2 qubits."""
-    op = qse.Operator(operator, qubits, nqbits=2)
+    op = qse.Operator(operator, indices, nqbits=2)
 
     assert isinstance(op, qse.Operator)
     assert op.to_str() == expected_str
@@ -37,7 +37,7 @@ def test_operator_2qubits(qubits, operator, expected_str):
 
 
 @pytest.mark.parametrize(
-    "qubits, operator, expected_str",
+    "indices, operator, expected_str",
     [
         (0, "X", "XIII"),
         (1, ["X"], "IXII"),
@@ -45,9 +45,9 @@ def test_operator_2qubits(qubits, operator, expected_str):
         ([1, 2], ["Z", "Y"], "IZYI"),
     ],
 )
-def test_operator_4qubits(qubits, operator, expected_str):
+def test_operator_4qubits(indices, operator, expected_str):
     """Test creating an Operator with 4 qubits."""
-    op = qse.Operator(operator, qubits, nqbits=4)
+    op = qse.Operator(operator, indices, nqbits=4)
 
     assert isinstance(op, qse.Operator)
     assert op.to_str() == expected_str
@@ -59,7 +59,7 @@ def test_operator_4qubits(qubits, operator, expected_str):
 @pytest.mark.parametrize("coef", [0.1, -0.45, 1j + 53])
 def test_operator_4qubits_coef(op1, op2, coef):
     """Test creating an Operator with 4 qubits and a coefficient."""
-    op = qse.Operator(operator=[op1, op2], qubits=[1, 2], nqbits=4, coef=coef)
+    op = qse.Operator(operator=[op1, op2], indices=[1, 2], nqbits=4, coef=coef)
 
     assert isinstance(op, qse.Operator)
     assert op.to_str() == "I" + op1 + op2 + "I"
@@ -73,17 +73,17 @@ def test_operator_4qubits_coef(op1, op2, coef):
 
 
 @pytest.mark.parametrize(
-    "qubits, operator",
+    "indices, operator",
     [
         (0, "x"),
         (0, ["X", "Y"]),
         (0, "XY"),
     ],
 )
-def test_operator_fail(qubits, operator):
+def test_operator_fail(indices, operator):
     """Test creating an Operator with 4 qubits."""
     with pytest.raises(Exception):
-        qse.Operator(operator, qubits, nqubits=4)
+        qse.Operator(operator, indices, nqubits=4)
 
 
 @pytest.mark.parametrize("qubits", [-1, 4, [-1, 2], [3, 4]])
