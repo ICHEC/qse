@@ -922,7 +922,7 @@ class Qbits:
         """
         indices = np.array(indices)
         if indices.shape[1] != 3:
-            raise Exception("The indicies must be of shape (-1, 3).")
+            raise Exception("The indices must be of shape (-1, 3).")
         return np.array([self.get_angle(i, j, k) for i, j, k in indices])
 
     def set_angle(
