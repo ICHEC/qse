@@ -59,6 +59,24 @@ class Operators:
             [i.coef for i in self.operator_list],
         )
 
+    def to_pennylane(self):
+        """
+        Generates a pennylane representation of the sum of operators.
+
+        Returns
+        -------
+        pennylane.pauli.pauli_arithmetic.PauliSentence
+            The pennylane PauliSentence.
+        """
+        from pennylane.pauli import PauliSentence, PauliWord
+
+        return PauliSentence(
+            {
+                PauliWord({i: j for i, j in zip(h.indices, h.operator)}): h.coef
+                for h in self.operator_list
+            }
+        )
+
     def extend(self, other):
         """
         Extend Operators object by appending terms from other Operators
@@ -69,7 +87,8 @@ class Operators:
         other: Operators or Operator
             The operators to be added to the current object.
         """
-        if other.nqbits != self.nqbits:
+        # We only check qubits are compatible if nterms > 0.
+        if self.nterms and other.nqbits != self.nqbits:
             raise Exception("other must have the same number of qubits.")
 
         if isinstance(other, Operator):
@@ -78,6 +97,17 @@ class Operators:
             self.operator_list += other.operator_list
         else:
             raise Exception("other must be Operators or Operator.")
+
+    def copy(self):
+        """
+        Creates a copy of the Operators object.
+
+        Returns
+        -------
+        Operators
+            A copy of the current Operators object.
+        """
+        return Operators(self.operator_list.copy())
 
     def __add__(self, other):
         op = self.copy()
@@ -89,14 +119,32 @@ class Operators:
         return self
 
     def __repr__(self):
-        return (
-            f"Number of qubits: {self.nqbits}"
-            + f"\nNumber of terms: {self.nterms}\n\n"
-            + "\n".join([op.__repr__() for op in self.operator_list])
-        )
+        if self.nterms:
+            return (
+                f"Number of qubits: {self.nqbits}"
+                + f"\nNumber of terms: {self.nterms}\n\n"
+                + "\n".join([op.__repr__() for op in self.operator_list])
+            )
+        return "Number of terms: 0"
 
     def __getitem__(self, i):
         return self.operator_list[i]
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            return Operators([op * other for op in self.operator_list])
+        else:
+            raise NotImplementedError("Multiplication only supported for scalars.")
+
+    def __imul__(self, other):
+        if isinstance(other, (int, float)):
+            self.operator_list = [op * other for op in self.operator_list]
+            return self
+        else:
+            raise NotImplementedError("Multiplication only supported for scalars.")
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
 
     @property
     def nqbits(self):
