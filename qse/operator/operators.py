@@ -72,7 +72,7 @@ class Operators:
 
         return PauliSentence(
             {
-                PauliWord({i: j for i, j in zip(h.indicies, h.operator)}): h.coef
+                PauliWord({i: j for i, j in zip(h.indices, h.operator)}): h.coef
                 for h in self.operator_list
             }
         )
