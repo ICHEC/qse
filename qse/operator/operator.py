@@ -43,6 +43,12 @@ class Operator:
 
         _check_operator(operator)
 
+        for i in indices:
+            if i < 0 or i >= nqbits:
+                raise Exception(
+                    "Qubit indices must be between 0 and nqbits-1, inclusive."
+                )
+
         if len(indices) != len(operator):
             raise Exception(
                 "The number of passed qubits must equal the number of passed operators."
@@ -85,10 +91,35 @@ class Operator:
             op[qi] = _qutip_converter(op_str)
         return self.coef * qp.tensor(op)
 
+    def copy(self):
+        """
+        Creates a copy of the operator.
+
+        Returns
+        -------
+        Operator
+            A new instance of Operator with the same attributes.
+        """
+        return Operator(self.operator, self.indices, self.nqbits, self.coef)
+
     def __repr__(self):
         return f"{self.coef:.2f} " + " ".join(
             [f"{op}{q}" for op, q in zip(self.operator, self.indices)]
         )
+
+    def __mul__(self, other):
+        if isinstance(other, (int, float)):
+            return Operator(self.operator, self.indices, self.nqbits, self.coef * other)
+        else:
+            raise NotImplementedError("Multiplication only supported for scalars.")
+
+    def __imul__(self, other):
+        if isinstance(other, (int, float)):
+            self.coef *= other
+            return self
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
 
 
 def _check_operator(op_list):

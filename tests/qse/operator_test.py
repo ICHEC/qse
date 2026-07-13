@@ -86,6 +86,27 @@ def test_operator_fail(indices, operator):
         qse.Operator(operator, indices, nqubits=4)
 
 
+@pytest.mark.parametrize("qubits", [-1, 4, [-1, 2], [3, 4]])
+def test_operator_fail_qubit_index(qubits):
+    """Test the class raises an error for a qubit outside the index range."""
+    with pytest.raises(Exception):
+        qse.Operator("Z", qubits, nqubits=4)
+
+
+def test_operator_mul():
+    """Test multiplying an Operator by a scalar."""
+    op = qse.Operator("X", 0, nqbits=2, coef=1.0)
+
+    op_scaled = op * 3.5
+
+    assert isinstance(op_scaled, qse.Operator)
+    assert op_scaled.to_str() == "XI"
+    assert np.isclose(op_scaled.coef, 3.5)
+
+    op *= 2.0
+    assert np.isclose(op.coef, 2.0)
+
+
 def test_operators_init():
     """Test initializing empty Operators."""
     ops = qse.Operators()
@@ -123,3 +144,18 @@ def test_operators_qutip():
 
     op_sum = op1.to_qutip() + op2.to_qutip()
     assert np.allclose(op_sum.full(), ops.to_qutip().full())
+
+
+def test_operators_mul():
+    """Test multiplying Operators by a scalar."""
+    nqbits = 4
+    ops = qse.Operators(
+        [qse.Operator("X", i, nqbits=nqbits + 5) for i in range(nqbits)]
+    )
+    assert all(np.isclose(op.coef, 1.0) for op in ops)
+
+    ops_scaled = ops * 2.5
+    assert all(np.isclose(op.coef, 2.5) for op in ops_scaled)
+
+    ops *= 3.5
+    assert all(np.isclose(op.coef, 3.5) for op in ops)
