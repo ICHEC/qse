@@ -19,6 +19,7 @@ parts:
       - file: use-cases/adiabatic
       - file: use-cases/time_evo
     #  - file: ../examples/pulser-myqlm-conversion
+      - file: use-cases/preparing_zoderings
   - caption: Theory
     chapters:
       - file: theory/spatial-correlation
