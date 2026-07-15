@@ -1112,9 +1112,8 @@ class Qbits:
         Parameters
         ----------
         radius : float, optional
-            The distance which defines nearest-neighbours.
-            If passed all qubits separated by this distance
-            will be considered to be connected.
+            The distance which defines nearest-neighbours. If passed, all qubits
+            separated by this distance will be considered to be connected.
             If not passed the distance between the closest qubits will be used.
 
         Returns
