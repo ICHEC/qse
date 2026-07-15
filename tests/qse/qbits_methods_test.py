@@ -515,3 +515,19 @@ def test_get_scaled_positions(scaled_positions, cell):
     qbits = qse.Qbits(positions=positions, cell=cell)
     assert np.allclose(scaled_positions, qbits.get_scaled_positions())
     assert qbits.positions.shape == scaled_positions.shape
+
+
+@pytest.mark.parametrize("radius", [1.0, None, 2.0])
+def test_adjacency(radius):
+    n = 5
+    qbits = qse.lattices.ring(1.0, n)
+    a_mat = qbits.get_adjacency_matrix(radius)
+
+    if radius and np.isclose(radius, 2.0):
+        assert np.allclose(a_mat, np.zeros((n, n)))
+
+    else:
+        a_theory = np.diag(np.ones(n - 1), 1) + np.diag(np.ones(n - 1), -1)
+        a_theory[0, -1] = 1.0
+        a_theory[-1, 0] = 1.0
+        assert np.allclose(a_mat, a_theory)
