@@ -1105,6 +1105,31 @@ class Qbits:
             else:
                 self.positions[ind] -= (x * (1.0 - fix)) * distance_vec
 
+    def get_adjacency_matrix(self, radius=None):
+        """
+        Compute the adjacency matrix.
+
+        Parameters
+        ----------
+        radius : float, optional
+            The distance which defines nearest-neighbours. If passed, all qubits
+            separated by this distance will be considered to be connected.
+            If not passed the distance between the closest qubits will be used.
+
+        Returns
+        -------
+        np.ndarray
+            The adjacency matrix.
+
+        Notes
+        -----
+        See https://en.wikipedia.org/wiki/Adjacency_matrix for more details.
+        """
+        dists = self.get_all_distances()
+        if radius is None:
+            radius = np.min(dists[~np.eye(*dists.shape, dtype=bool)])
+        return np.isclose(dists, radius) * 1
+
     def wrap(self, **wrap_kw):
         """Wrap positions to unit cell.
 
