@@ -76,6 +76,18 @@ class Signals:
     def duration(self):
         return sum([signal.duration for signal in self])
 
+    @property
+    def values(self):
+        """Get the raw values of the singals components, concatenated.
+
+        Returns
+        -------
+        np.ndarray
+            Array representing the values of the signals.
+        """
+        return self.expand()
+
+
     def to_pulser(self):
         """
         Convert to a Pulser Waveform.
