@@ -9,11 +9,11 @@ and let us offload the computational workload.
 __all__ = [
     "blockade_radius",
     "Calculator",
+    "evolve",
     "ExactSimulator",
     "Pulser",
     "Myqlm",
     "Qutip",
-    "solve_single_particle",
 ]
 
 from qse.calc.blockade_radius import blockade_radius
@@ -22,4 +22,4 @@ from qse.calc.exact import ExactSimulator
 from qse.calc.myqlm import Myqlm
 from qse.calc.pulser import Pulser
 from qse.calc.qutip import Qutip
-from qse.calc.single_particle import solve_single_particle
+from qse.calc.time_evolution import evolve
