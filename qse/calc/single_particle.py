@@ -1,11 +1,11 @@
 import numpy as np
-
 from scipy.linalg import expm
 
 
 def solve_single_particle(hamiltonian, duration, n_samples, initial_state=None):
     r"""
-    Simulate the time evolution of a single quantum particle under a time-independent Hamiltonian.
+    Simulate the time evolution of a single quantum particle under a
+    time-independent Hamiltonian.
 
     Parameters
     ----------

@@ -1345,32 +1345,6 @@ class Qbits:
         """
         return np.dot(self.positions, np.linalg.inv(self.cell.lattice_vectors))
 
-    def get_adjacency_matrix(self, radius=None):
-        """
-        Compute the adjacency matrix.
-
-        Parameters
-        ----------
-        radius : float, optional
-            The distance which defines nearest-neighbours.
-            If passed all qubits separated by this distance
-            will be considered to be connected.
-            If not passed the distance between the closest qubits will be used.
-
-        Returns
-        -------
-        ndarray
-            The adjacency matrix.
-
-        Notes
-        -----
-        See https://en.wikipedia.org/wiki/Adjacency_matrix for more details.
-        """
-        dists = self.get_all_distances()
-        if radius is None:
-            radius = np.min(dists[~np.eye(*dists.shape, dtype=bool)])
-        return np.isclose(dists, radius) * 1
-
 
 def _norm_vector(v):
     normv = np.linalg.norm(v)

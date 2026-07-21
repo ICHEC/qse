@@ -13,6 +13,7 @@ __all__ = [
     "Pulser",
     "Myqlm",
     "Qutip",
+    "solve_single_particle",
 ]
 
 from qse.calc.blockade_radius import blockade_radius
