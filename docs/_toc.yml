@@ -11,12 +11,15 @@ parts:
       - file: tutorials/generating_lattices
       - file: tutorials/pulser-calc-example
       - file: tutorials/finite-geometries
+      - file: tutorials/operators
       - file: tutorials/vqe_qiskit
   - caption: Use-Cases
     chapters:
       - file: use-cases/ssh_model
       - file: use-cases/adiabatic
+      - file: use-cases/time_evo
     #  - file: ../examples/pulser-myqlm-conversion
+      - file: use-cases/preparing_zoderings
   - caption: Theory
     chapters:
       - file: theory/spatial-correlation
