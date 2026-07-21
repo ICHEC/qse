@@ -2,9 +2,9 @@ import numpy as np
 from scipy.linalg import expm
 
 
-def solve_single_particle(hamiltonian, duration, n_samples, initial_state=None):
+def evolve(hamiltonian, duration, n_samples, initial_state=None):
     r"""
-    Simulate the time evolution of a single quantum particle under a
+    Simulate the time evolution of a quantum system under a
     time-independent Hamiltonian.
 
     Parameters
@@ -36,7 +36,7 @@ def solve_single_particle(hamiltonian, duration, n_samples, initial_state=None):
     Examples
     --------
     >>> H = np.array([[0, 1], [1, 0]])  # Pauli-X Hamiltonian
-    >>> states = solve_single_particle(H, 1.0, 10)
+    >>> states = evolve(H, 1.0, 10)
     >>> states.shape
     (11, 2)
     """
