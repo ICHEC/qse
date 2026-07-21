@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def draw_scalar(qbits, scalar, radius=None, show_labels=False, units=None):
+def qbits_heatmap(qbits, scalar, radius=None, show_labels=False, units=None):
     """
     Visualize the positions of a set of qubits with some scalar quantity.
 
@@ -12,7 +12,8 @@ def draw_scalar(qbits, scalar, radius=None, show_labels=False, units=None):
     qbits: qse.Qbits
         The Qbits object.
     scalar: list | np.ndarray
-        Must have the same length as the number of Qubits.
+        The scalar quantity to define the heatmap.
+        Must have the same length as the number of qubits.
     radius: float | str
         A cutoff radius for visualizing bonds.
         Pass 'nearest' to set the radius to the smallest
