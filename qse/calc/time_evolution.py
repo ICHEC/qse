@@ -29,9 +29,10 @@ def evolve(hamiltonian, duration, n_samples, initial_state=None):
     -----
     The Hamiltonian is of form
 
-     H = \sum_{ij} h_{ij} |i\rangle\langle j|
+    .. math::
+        H = \sum_{ij} h_{ij} |i\rangle\langle j|
 
-    Where $|i\rangle$ is the ith basis state.
+    Where :math:`|i\rangle` is the ith basis state.
 
     Examples
     --------
@@ -40,7 +41,8 @@ def evolve(hamiltonian, duration, n_samples, initial_state=None):
     >>> states.shape
     (11, 2)
     """
-    assert hamiltonian.ndim == 2 and (hamiltonian.shape[0] == hamiltonian.shape[1])
+    if hamiltonian.ndim != 2 or (hamiltonian.shape[0] != hamiltonian.shape[1]):
+        raise Exception("The Hamiltonian must be square.")
 
     dt = duration / n_samples
     unitary = expm(-1j * hamiltonian * dt)
