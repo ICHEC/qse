@@ -1,6 +1,6 @@
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-import matplotlib as mpl
 
 
 def draw_scalar(qbits, scalar, radius=None, show_labels=False, units=None):
@@ -67,7 +67,6 @@ def draw_scalar(qbits, scalar, radius=None, show_labels=False, units=None):
         for i, j in neighbours:
             alpha = (min_dist / rij[i, j]) ** 3
             ax.plot([x[i], x[j]], [y[i], y[j]], c="gray", alpha=alpha, zorder=-1)
-
 
     ax.scatter(x, y, c="k", s=110, alpha=0.5)
     scatter = ax.scatter(x, y, c=scalar, s=100, cmap=mpl.colormaps["Blues"])
