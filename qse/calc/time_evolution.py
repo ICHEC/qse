@@ -9,21 +9,23 @@ def evolve(hamiltonian, duration, n_samples, initial_state=None):
 
     Parameters
     ----------
-    hamiltonian : ndarray, shape (n, n)
+    hamiltonian : ndarray
         The time-independent Hamiltonian matrix of the system. Must be square.
     duration : float
         Total duration of the simulation.
     n_samples : int
         Number of time steps to sample the evolution.
-    initial_state : ndarray, shape (n,), optional
+    initial_state : ndarray, optional
         Initial quantum state vector.
         If None, defaults to the first basis state |0⟩ = [1, 0, 0, ..., 0].
 
     Returns
     -------
-    ndarray, shape (n_samples + 1, n)
-        Array of quantum state vectors at each time step, including the initial state.
-        Each row is a state vector of shape (n,).
+    (np.ndarray, np.ndarray)
+        A tuple containing the array of times sampled at and a
+        matrix of quantum state vectors at each time step,
+        including the initial state (each row is a state vector
+        of dimension n).
 
     Notes
     -----
@@ -37,7 +39,7 @@ def evolve(hamiltonian, duration, n_samples, initial_state=None):
     Examples
     --------
     >>> H = np.array([[0, 1], [1, 0]])  # Pauli-X Hamiltonian
-    >>> states = evolve(H, 1.0, 10)
+    >>> _, states = evolve(H, 1.0, 10)
     >>> states.shape
     (11, 2)
     """

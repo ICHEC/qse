@@ -55,5 +55,6 @@ def test_single_qubit(omega, delta):
 
 def test_evolve():
     H = np.array([[0, 1], [1, 0]])  # Pauli-X Hamiltonian
-    states = qse.calc.evolve(H, 1.0, 10)
+    times, states = qse.calc.evolve(H, 1.0, 10)
     assert states.shape == (11, 2)
+    assert times.shape == (10,)
