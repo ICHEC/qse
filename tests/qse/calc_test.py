@@ -53,8 +53,11 @@ def test_single_qubit(omega, delta):
     assert _infidelity(exact_result, exact_calc.statevector) < 1e-10
 
 
-def test_evolve():
+@pytest.mark.parametrize("n_samples", [1, 2, 10])
+def test_evolve(n_samples):
     H = np.array([[0, 1], [1, 0]])  # Pauli-X Hamiltonian
-    times, states = qse.calc.evolve(H, 1.0, 10)
-    assert states.shape == (11, 2)
-    assert times.shape == (10,)
+    times, states = qse.calc.evolve(H, 1.0, n_samples)
+    assert states.shape == (n_samples+1, 2)
+    assert times.shape == (n_samples+1,)
+
+    assert np.allclose(times, np.linspace(0., 1., n_samples+1))
