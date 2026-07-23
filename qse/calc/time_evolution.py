@@ -54,13 +54,14 @@ def evolve(hamiltonian, duration, n_samples, initial_state=None):
     if initial_state is None:
         states[0] = np.array([1] + [0] * (dim - 1))
     else:
-        states[0] = initial_state
         if initial_state.shape != (dim,):
             raise Exception(
                 f"initial_state must have shape ({dim},), "
                 f"got {initial_state.shape}."
             )
+        states[0] = initial_state
+
     for i in range(n_samples):
         states[i + 1] = unitary @ states[i]
 
-    return times, states
+    return dt*np.arange(n_samples+1), states
