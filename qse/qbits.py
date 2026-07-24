@@ -7,6 +7,7 @@ import warnings
 from math import cos, sin
 
 import numpy as np
+from scipy.spatial.distance import pdist, squareform
 
 from qse.cell import Cell
 from qse.operator import Operator, Operators
@@ -1034,12 +1035,7 @@ class Qbits:
         np.ndarray
             An array of shape (nqbits, nqbits) containing the distances.
         """
-        distances = np.zeros((self.nqbits, self.nqbits))
-        for i in range(self.nqbits - 1):
-            for j in range(i + 1, self.nqbits):
-                distances[i, j] = distances[j, i] = self.get_distance(i, j)
-
-        return distances
+        return squareform(pdist(self.positions))
 
     def set_distance(
         self,
