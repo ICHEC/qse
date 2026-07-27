@@ -101,7 +101,8 @@ def extract_myqlm_statevector(raw_results: Any, num_qubits: int) -> np.ndarray:
     # 2. Reconstruct the full Hilbert space (your zero-padding logic)
     if amplitudes.shape[0] < hsize:
         statevector = np.zeros(hsize, dtype=complex)
-        # Advanced indexing drops the surviving amplitudes into their exact integer positions
+        # Advanced indexing drops the surviving amplitudes
+        # into their exact integer positions
         statevector[basis] = amplitudes
         return statevector
 
@@ -143,7 +144,8 @@ def extract_myqlm_states(raw_results: Any) -> Any:
         states = raw_results.states
     else:
         states = None
-    # Generating the full basis ensures it perfectly aligns with the zero-padded statevector
+    # Generating the full basis ensures it perfectly
+    # aligns with the zero-padded statevector
     # [format(i, f'0{num_qubits}b') for i in range(2**num_qubits)]
     return states
 
