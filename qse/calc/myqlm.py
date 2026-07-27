@@ -21,7 +21,7 @@ will be tested when we get access to a real Pasqal device.
 
 from functools import partial
 from time import time
-from typing import Any, Dict, Generator
+from typing import Any
 
 import numpy as np
 
