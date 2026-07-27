@@ -19,7 +19,9 @@ will be tested when we get access to a real Pasqal device.
 
 """
 
+from functools import partial
 from time import time
+from typing import Any, Dict, Generator
 
 import numpy as np
 
@@ -82,6 +84,70 @@ default_params = {
 }
 
 
+def extract_myqlm_statevector(raw_results: Any, num_qubits: int) -> np.ndarray:
+    """
+    Reconstructs the full 2^N dense statevector from myQLM's truncated iterable.
+    Guarantees the output array size matches the Hilbert space dimension.
+    """
+    # Guard clause: No amplitudes returned (e.g., in purely noisy runs)
+    if not hasattr(raw_results[0], "amplitude"):
+        return None 
+    hsize = 2**num_qubits
+    
+    # 1. Extract the surviving basis integers and their complex amplitudes
+    basis = np.fromiter((s.state.int for s in raw_results), dtype=int)
+    amplitudes = np.fromiter((s.amplitude for s in raw_results), dtype=complex)
+    
+    # 2. Reconstruct the full Hilbert space (your zero-padding logic)
+    if amplitudes.shape[0] < hsize:
+        statevector = np.zeros(hsize, dtype=complex)
+        # Advanced indexing drops the surviving amplitudes into their exact integer positions
+        statevector[basis] = amplitudes
+        return statevector
+        
+    return amplitudes
+
+
+def extract_myqlm_counts(raw_results: Any, shots: int) -> dict:
+    """
+    Map the bitstring basis states to their probabilities.
+    """
+    counts = {}
+    for sample in raw_results:
+        # Convert the integer state to a zero-padded bitstring
+        # bitstring = format(sample.state.int, f'0{num_qubits}b')
+        bit_int = sample.state.int
+        counts[bit_int] = int(sample.probability * shots)
+    return counts
+
+
+def extract_myqlm_expectation(raw_results) -> float:
+    """
+    Extracts the expectation value if the job was an observable measurement.
+    """
+    # If the job was an observable (not a standard statevector simulation),
+    # myQLM stores the expectation result in the .value attribute.
+    if hasattr(raw_results, 'value') and raw_results.value is not None:
+        return raw_results.value
+        
+    # If it was a standard sampling/statevector job, expectation is N/A here.
+    return None
+
+
+def extract_myqlm_states(raw_results: Any) -> Any:
+    """
+    Returns the basis states as a list of bitstrings.
+    To match the zero-padded statevector, we generate the full 2^N Hilbert space basis.
+    """
+    if hasattr(raw_results, 'states'):
+        states = raw_results.states
+    else:
+        states = None
+    # Generating the full basis ensures it perfectly aligns with the zero-padded statevector
+    # [format(i, f'0{num_qubits}b') for i in range(2**num_qubits)]
+    return states
+
+
 class Myqlm(Calculator):
     """
     QSE-Calculator for MyQLM.
@@ -112,6 +178,7 @@ class Myqlm(Calculator):
         qpu=None,
         label="myqlm-run",
         wtimes=True,
+        shots=1024
     ):
         installation_message = (
             "myQLM is not installed. To install, "
@@ -128,6 +195,7 @@ class Myqlm(Calculator):
         self.qpu = AQPU() if qpu is None else qpu
         self.label = label
         self.wtimes = wtimes
+        self.shots = shots
         self._results = None
         self.system = "rydberg"
 
@@ -198,30 +266,43 @@ class Myqlm(Calculator):
         self.schedule = qat.core.Schedule(drive=self.Hamiltonian, tmax=tmax)
         self.job = self.schedule.to_job()
         self.async_result = self.qpu.submit(self.job)
-        self.results = self.async_result.join()
+        raw_results = self.async_result.join()
 
-        self.probabities = np.fromiter(
-            (s.probability for s in self.results), dtype=float
+        # get the number of qubits
+        num_qubits = raw_results.nbqbits or len(self.qbits)
+
+        # Bind the parsers
+
+        bind_statevector = partial(extract_myqlm_statevector, raw_results, num_qubits)
+        bind_counts = partial(extract_myqlm_counts, raw_results)
+        bind_expectation = partial(extract_myqlm_expectation, raw_results)
+        bind_states = partial(extract_myqlm_states, raw_results)        
+
+        # 2. Build the metadata from the wrapper attributes
+        metadata = {
+            "backend": "myqlm",
+            "num_qubits": num_qubits,
+            "has_statevector": getattr(raw_results, 'has_statevector', False),
+            "myqlm_metadata": getattr(raw_results, 'meta_data', {}),
+            "raw_results": raw_results
+        }
+
+        # 3. Instantiate the Result
+        self._results = SimResult(
+            statevector_func=bind_statevector,
+            counts_func=bind_counts,
+            expectation_func=bind_expectation,
+            states_generator=bind_states,
+            metadata=metadata,
         )
-        self.basis = np.fromiter((s.state.int for s in self.results), dtype=int)
 
-        # don't know why result.statevector is Nonetype, fill it with state
-        if hasattr(self.results[0], "amplitude"):
-            statevector = np.fromiter(
-                (s.amplitude for s in self.results), dtype=complex
-            )
-            N = len(self.qbits)
-            hsize = 2**N
-            if statevector.shape[0] < hsize:
-                coeff0 = np.zeros(hsize, dtype=complex)
-                coeff0[self.basis] = statevector
-                statevector = coeff0
-            self.statevector = statevector
-        self.spins = self.get_spins()
-        # self.sij = self.get_sij()
+        # self.spins = self.get_spins()
+        ## self.sij = self.get_sij()
         if self.wtimes:
             t2 = time()
             print(f"time in compute and simulation = {t2 - t1} s.")
+
+        return self.results
 
 
 def _waveform(pulse):
