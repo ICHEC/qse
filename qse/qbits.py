@@ -7,6 +7,7 @@ import warnings
 from math import cos, sin
 
 import numpy as np
+from scipy.spatial.distance import pdist, squareform
 
 from qse.cell import Cell
 from qse.operator import Operator, Operators
@@ -1034,12 +1035,17 @@ class Qbits:
         np.ndarray
             An array of shape (nqbits, nqbits) containing the distances.
         """
-        distances = np.zeros((self.nqbits, self.nqbits))
-        for i in range(self.nqbits - 1):
-            for j in range(i + 1, self.nqbits):
-                distances[i, j] = distances[j, i] = self.get_distance(i, j)
+        # pdist returns a 1d array of pairwise distances
+        # squareform converts the 1d array into a 2d square array
+        #
+        # Compared to a for-loop and numpy vectorization, this is
+        # the fastest method for computing pairwise distances.
+        # For 100 qubits the benchmarked times were:
+        #   naive for-loop: 0.0081s
+        #   Numpy vectorization: 0.0006s
+        #   This method: 0.0002s
 
-        return distances
+        return squareform(pdist(self.positions))
 
     def set_distance(
         self,
