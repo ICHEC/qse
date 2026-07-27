@@ -76,6 +76,23 @@ def test_get_distances(nqbits):
     assert np.allclose(qbits.get_distances(0, inds), d)
 
 
+@pytest.mark.parametrize("dim", [1, 2, 3])
+@pytest.mark.parametrize("nqbits", [4, 10])
+def test_two_methods(nqbits, dim):
+    """
+    Test that the current method for `get_all_distances` matches
+    a simple forloop method.
+    """
+    qbits = qse.Qbits(np.random.rand(nqbits, dim))
+
+    distances = np.zeros((qbits.nqbits, qbits.nqbits))
+    for i in range(qbits.nqbits - 1):
+        for j in range(i + 1, qbits.nqbits):
+            distances[i, j] = distances[j, i] = qbits.get_distance(i, j)
+
+    assert np.allclose(distances, qbits.get_all_distances())
+
+
 def test_get_all_distances():
     """Test get_all_distances on a simple set of qbits."""
     positions = np.array(
