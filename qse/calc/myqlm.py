@@ -91,20 +91,20 @@ def extract_myqlm_statevector(raw_results: Any, num_qubits: int) -> np.ndarray:
     """
     # Guard clause: No amplitudes returned (e.g., in purely noisy runs)
     if not hasattr(raw_results[0], "amplitude"):
-        return None 
+        return None
     hsize = 2**num_qubits
-    
+
     # 1. Extract the surviving basis integers and their complex amplitudes
     basis = np.fromiter((s.state.int for s in raw_results), dtype=int)
     amplitudes = np.fromiter((s.amplitude for s in raw_results), dtype=complex)
-    
+
     # 2. Reconstruct the full Hilbert space (your zero-padding logic)
     if amplitudes.shape[0] < hsize:
         statevector = np.zeros(hsize, dtype=complex)
         # Advanced indexing drops the surviving amplitudes into their exact integer positions
         statevector[basis] = amplitudes
         return statevector
-        
+
     return amplitudes
 
 
@@ -115,7 +115,7 @@ def extract_myqlm_counts(raw_results: Any, shots: int) -> dict:
     counts = {}
     for sample in raw_results:
         # Convert the integer state to a zero-padded bitstring
-        # bitstring = format(sample.state.int, f'0{num_qubits}b')
+        # bitstring = format(sample.state.int, f'0{num_qubits}b')
         bit_int = sample.state.int
         counts[bit_int] = int(sample.probability * shots)
     return counts
@@ -127,9 +127,9 @@ def extract_myqlm_expectation(raw_results) -> float:
     """
     # If the job was an observable (not a standard statevector simulation),
     # myQLM stores the expectation result in the .value attribute.
-    if hasattr(raw_results, 'value') and raw_results.value is not None:
+    if hasattr(raw_results, "value") and raw_results.value is not None:
         return raw_results.value
-        
+
     # If it was a standard sampling/statevector job, expectation is N/A here.
     return None
 
@@ -139,7 +139,7 @@ def extract_myqlm_states(raw_results: Any) -> Any:
     Returns the basis states as a list of bitstrings.
     To match the zero-padded statevector, we generate the full 2^N Hilbert space basis.
     """
-    if hasattr(raw_results, 'states'):
+    if hasattr(raw_results, "states"):
         states = raw_results.states
     else:
         states = None
@@ -178,7 +178,7 @@ class Myqlm(Calculator):
         qpu=None,
         label="myqlm-run",
         wtimes=True,
-        shots=1024
+        shots=1024,
     ):
         installation_message = (
             "myQLM is not installed. To install, "
@@ -252,7 +252,7 @@ class Myqlm(Calculator):
         Pylance instantly knows this branch returns a SimResult.
         """
         return super().results  # type: ignore
-    
+
     def calculate(self):
         """
         Run the calculation.
@@ -276,15 +276,15 @@ class Myqlm(Calculator):
         bind_statevector = partial(extract_myqlm_statevector, raw_results, num_qubits)
         bind_counts = partial(extract_myqlm_counts, raw_results)
         bind_expectation = partial(extract_myqlm_expectation, raw_results)
-        bind_states = partial(extract_myqlm_states, raw_results)        
+        bind_states = partial(extract_myqlm_states, raw_results)
 
         # 2. Build the metadata from the wrapper attributes
         metadata = {
             "backend": "myqlm",
             "num_qubits": num_qubits,
-            "has_statevector": getattr(raw_results, 'has_statevector', False),
-            "myqlm_metadata": getattr(raw_results, 'meta_data', {}),
-            "raw_results": raw_results
+            "has_statevector": getattr(raw_results, "has_statevector", False),
+            "myqlm_metadata": getattr(raw_results, "meta_data", {}),
+            "raw_results": raw_results,
         }
 
         # 3. Instantiate the Result

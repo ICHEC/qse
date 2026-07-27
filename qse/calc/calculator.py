@@ -175,7 +175,7 @@ class Calculator:
             raise TypeError(
                 f"get_spins requires a SimResult. "
                 f"Got {type(self.results).__name__} instead. "
-                f"Are you running on physical hardware?" 
+                f"Are you running on physical hardware?"
             )
         sij = magnetic.get_sisj(self.results.statevector, len(self.qbits))
         self._results.properties["sij"] = sij
@@ -207,7 +207,7 @@ class Calculator:
             raise TypeError(
                 f"get_spins requires a SimResult. "
                 f"Got {type(self.results).__name__} instead. "
-                f"Are you running on physical hardware?" 
+                f"Are you running on physical hardware?"
             )
         struc_fac = magnetic.structure_factor_from_sij(L1, L2, L3, self.qbits, self.sij)
         self._results.properties["struc_fac"] = struc_fac

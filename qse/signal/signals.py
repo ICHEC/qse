@@ -87,7 +87,6 @@ class Signals:
         """
         return self.expand()
 
-
     def to_pulser(self):
         """
         Convert to a Pulser Waveform.
