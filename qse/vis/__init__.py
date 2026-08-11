@@ -12,6 +12,7 @@ to draw the qubits.
 """
 
 __all__ = [
+    "animate_qbits",
     "bar",
     "draw_amp_and_det",
     "draw_qbits",
@@ -21,6 +22,7 @@ __all__ = [
     "qse_green",
     "qse_red",
 ]
+from qse.vis.animate import animate_qbits
 from qse.vis.colours import qse_green, qse_red
 from qse.vis.qbits import draw_qbits
 from qse.vis.scalar import qbits_heatmap
