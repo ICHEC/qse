@@ -1,45 +1,86 @@
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.animation import FuncAnimation
 
 viridis = mpl.colormaps["viridis"]
 
 
-def animate_qbits(qbits, quantity):
+def animate_qbits(qbits, scalar, radius=None):
+    """
+    Animate the evolution of some scalar quantity.
+
+    Parameters
+    ----------
+    qbits: qse.Qbits
+        The Qbits object.
+    scalar: list | np.ndarray
+        The scalar quantity to define the animation.
+        Must have the same length as the number of qubits.
+    radius: float | str
+        A cutoff radius for visualizing bonds.
+        Pass 'nearest' to set the radius to the smallest
+        distance between the passed qubits.
+        If no value is passed the bonds will not be visualized.
+    """
+    if len(scalar) != qbits.nqbits:
+        raise Exception("The length of scalar must equal the number of Qubits.")
+
+    draw_bonds = False if radius is None else True
+    rij = None
+    min_dist = None
+
+    if draw_bonds:
+        rij = qbits.get_all_distances()
+        min_dist = rij[np.logical_not(np.eye(qbits.nqbits, dtype=bool))].min()
+        if radius == "nearest":
+            radius = min_dist
+        elif min_dist > radius:
+            draw_bonds = False
 
     # Set up the figure and axis
     fig, ax = plt.subplots(figsize=(6, 6))
     ax.set_aspect("equal")
     ax.axis("off")  # Hide axes
 
-    for i in range(qbits.nqbits - 1):
-        for j in range(i + 1, qbits.nqbits):
-            # if laplacian[i,j] == -1:
-            ax.plot(
-                [qbits[i].x, qbits[j].x],
-                [qbits[i].y, qbits[j].y],
-                zorder=-1,
-                c="k",
-                alpha=0.3,
-            )
+    if qbits.dim == 2:
+        x, y = qbits.positions.T
+
+    else:
+        x = qbits.positions.T.flatten()
+        y = np.zeros(qbits.nqbits)
+
+    if draw_bonds:
+        f_tol = 1.01  # fractional tolerance
+        neighbours = np.array(
+            [
+                (i, j)
+                for i in range(qbits.nqbits - 1)
+                for j in range(i + 1, qbits.nqbits)
+                if rij[i, j] <= radius * f_tol
+            ]
+        )
+        for i, j in neighbours:
+            alpha = (min_dist / rij[i, j]) ** 3
+            ax.plot([x[i], x[j]], [y[i], y[j]], c="gray", alpha=alpha, zorder=-1)
 
     circles = []
     for q in qbits:
-        circle = plt.Circle((q.x, q.y), 0.1, color=viridis(quantity[0, q.index]))
+        circle = plt.Circle((q.x, q.y), 0.1, color=viridis(scalar[0, q.index]))
         ax.add_patch(circle)
         circles.append(circle)
 
     # Animation update function
     def update(frame):
         for q in qbits:
-            circles[q.index].set_color(viridis(quantity[frame, q.index]))
+            circles[q.index].set_color(viridis(scalar[frame, q.index]))
         return circles
 
     # Create the animation
     ani = FuncAnimation(
         fig,
         update,
-        frames=len(quantity),
+        frames=len(scalar),
         interval=200,  # 50ms between frames
         blit=True,
     )
