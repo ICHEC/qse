@@ -26,22 +26,8 @@ def animate_qbits(qbits, scalar, radius=None):
     if len(scalar) != qbits.nqbits:
         raise Exception("The length of scalar must equal the number of Qubits.")
 
-    draw_bonds = False if radius is None else True
-    rij = None
-    min_dist = None
-
-    if draw_bonds:
-        rij = qbits.get_all_distances()
-        min_dist = rij[np.logical_not(np.eye(qbits.nqbits, dtype=bool))].min()
-        if radius == "nearest":
-            radius = min_dist
-        elif min_dist > radius:
-            draw_bonds = False
-
     # Set up the figure and axis
-    fig, ax = plt.subplots(figsize=(6, 6))
-    ax.set_aspect("equal")
-    ax.axis("off")  # Hide axes
+    fig, ax = plt.subplots()
 
     if qbits.dim == 2:
         x, y = qbits.positions.T
@@ -50,19 +36,7 @@ def animate_qbits(qbits, scalar, radius=None):
         x = qbits.positions.T.flatten()
         y = np.zeros(qbits.nqbits)
 
-    if draw_bonds:
-        f_tol = 1.01  # fractional tolerance
-        neighbours = np.array(
-            [
-                (i, j)
-                for i in range(qbits.nqbits - 1)
-                for j in range(i + 1, qbits.nqbits)
-                if rij[i, j] <= radius * f_tol
-            ]
-        )
-        for i, j in neighbours:
-            alpha = (min_dist / rij[i, j]) ** 3
-            ax.plot([x[i], x[j]], [y[i], y[j]], c="gray", alpha=alpha, zorder=-1)
+    _draw_bonds(qbits, ax, radius, x, y)
 
     circles = []
     for q in qbits:
@@ -76,6 +50,11 @@ def animate_qbits(qbits, scalar, radius=None):
             circles[q.index].set_color(viridis(scalar[frame, q.index]))
         return circles
 
+    ax.set_aspect("equal")
+    ax.axis("off")  # Hide axes
+    ax.set_xlim(x.min() - 0.5, x.max() + 0.5)
+    ax.set_ylim(y.min() - 0.5, y.max() + 0.5)
+
     # Create the animation
     ani = FuncAnimation(
         fig,
@@ -85,3 +64,28 @@ def animate_qbits(qbits, scalar, radius=None):
         blit=True,
     )
     return ani
+
+
+def _draw_bonds(qbits, ax, radius, x, y):
+    if radius is None:
+        return
+
+    rij = qbits.get_all_distances()
+    min_dist = rij[np.logical_not(np.eye(qbits.nqbits, dtype=bool))].min()
+    if radius == "nearest":
+        radius = min_dist
+    elif min_dist > radius:
+        return
+
+    f_tol = 1.01  # fractional tolerance
+    neighbours = np.array(
+        [
+            (i, j)
+            for i in range(qbits.nqbits - 1)
+            for j in range(i + 1, qbits.nqbits)
+            if rij[i, j] <= radius * f_tol
+        ]
+    )
+    for i, j in neighbours:
+        alpha = (min_dist / rij[i, j]) ** 3
+        ax.plot([x[i], x[j]], [y[i], y[j]], c="gray", alpha=alpha, zorder=-1)
